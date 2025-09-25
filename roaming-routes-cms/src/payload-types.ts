@@ -191,48 +191,63 @@ export interface Media {
 export interface Trip {
   id: number;
   title: string;
-  slug?: string | null;
+  urlKey: string;
   description: string;
-  coverImage: number | Media;
+  period?: string | null;
   country: string;
-  tripDetails?: {
-    startDate?: string | null;
-    endDate?: string | null;
-    budget?: number | null;
-    currency?: ('EUR' | 'USD' | 'GBP') | null;
-  };
-  itinerary: DayStep[];
+  capital?: string | null;
+  languages?:
+    | {
+        language: string;
+        id?: string | null;
+      }[]
+    | null;
+  currency?: string | null;
+  budget?: string | null;
+  religion?: string | null;
+  travelTime?: string | null;
+  bestTravelTime?: string | null;
+  activities?:
+    | {
+        activity: string;
+        id?: string | null;
+      }[]
+    | null;
+  accommodations?:
+    | {
+        accommodation: string;
+        id?: string | null;
+      }[]
+    | null;
+  vegetarianFood?:
+    | {
+        note: string;
+        id?: string | null;
+      }[]
+    | null;
+  coverImage?: (number | null) | Media;
+  travelItinerary: ItineraryStep[];
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "DayStep".
+ * via the `definition` "ItineraryStep".
  */
-export interface DayStep {
-  dayNumber: number;
-  title: string;
-  /**
-   * @minItems 2
-   * @maxItems 2
-   */
-  location?: [number, number] | null;
-  activities?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  accommodation?: string | null;
+export interface ItineraryStep {
+  step: number;
+  time: string;
+  locationName: string;
+  locationGpsLat?: number | null;
+  locationGpsLon?: number | null;
+  description: string;
+  activities?:
+    | {
+        activity: string;
+        id?: string | null;
+      }[]
+    | null;
+  accommodationTip?: string | null;
   gallery?:
     | {
         image: number | Media;
@@ -242,7 +257,7 @@ export interface DayStep {
     | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'dayStep';
+  blockType: 'itineraryStep';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -385,36 +400,67 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface TripsSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
+  urlKey?: T;
   description?: T;
-  coverImage?: T;
+  period?: T;
   country?: T;
-  tripDetails?:
+  capital?: T;
+  languages?:
     | T
     | {
-        startDate?: T;
-        endDate?: T;
-        budget?: T;
-        currency?: T;
+        language?: T;
+        id?: T;
       };
-  itinerary?:
+  currency?: T;
+  budget?: T;
+  religion?: T;
+  travelTime?: T;
+  bestTravelTime?: T;
+  activities?:
     | T
     | {
-        dayStep?: T | DayStepSelect<T>;
+        activity?: T;
+        id?: T;
+      };
+  accommodations?:
+    | T
+    | {
+        accommodation?: T;
+        id?: T;
+      };
+  vegetarianFood?:
+    | T
+    | {
+        note?: T;
+        id?: T;
+      };
+  coverImage?: T;
+  travelItinerary?:
+    | T
+    | {
+        itineraryStep?: T | ItineraryStepSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "DayStep_select".
+ * via the `definition` "ItineraryStep_select".
  */
-export interface DayStepSelect<T extends boolean = true> {
-  dayNumber?: T;
-  title?: T;
-  location?: T;
-  activities?: T;
-  accommodation?: T;
+export interface ItineraryStepSelect<T extends boolean = true> {
+  step?: T;
+  time?: T;
+  locationName?: T;
+  locationGpsLat?: T;
+  locationGpsLon?: T;
+  description?: T;
+  activities?:
+    | T
+    | {
+        activity?: T;
+        id?: T;
+      };
+  accommodationTip?: T;
   gallery?:
     | T
     | {

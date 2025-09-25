@@ -1,59 +1,94 @@
 import { CollectionConfig, Block } from 'payload/types';
 import { slugify } from '../utils/slugify';
 
-// First, we define a "Block" for a single day in the itinerary.
-// Using a Block is powerful because you could add other types of content later,
-// like a "Travel Tip Block" or a "Photo Gallery Block".
-const DayStepBlock: Block = {
-  slug: 'dayStep',
-  interfaceName: 'DayStep', // For generated TypeScript types
+// Itinerary step block - matches your new YAML format
+const ItineraryStepBlock: Block = {
+  slug: 'itineraryStep',
+  interfaceName: 'ItineraryStep',
   fields: [
     {
-      type: 'row', // Organizes fields side-by-side in the admin UI
+      type: 'row',
       fields: [
         {
-          name: 'dayNumber',
+          name: 'step',
           type: 'number',
           required: true,
+          admin: {
+            width: '20%',
+          },
+        },
+        {
+          name: 'time',
+          type: 'text',
+          required: true,
+          label: 'Duration',
           admin: {
             width: '30%',
           },
         },
         {
-          name: 'title',
+          name: 'locationName',
           type: 'text',
           required: true,
-          label: 'Day Title', // e.g., "Arrival in Bishkek & Chong-Kemin"
+          label: 'Location Name',
           admin: {
-            width: '70%',
+            width: '50%',
           },
         },
       ],
     },
     {
-      name: 'location',
-      type: 'point', // Stores [longitude, latitude] for map integration
-      label: 'GPS Location (Longitude, Latitude)',
+      type: 'row',
+      fields: [
+        {
+          name: 'locationGpsLat',
+          type: 'number',
+          label: 'Latitude',
+          admin: {
+            width: '50%',
+          },
+        },
+        {
+          name: 'locationGpsLon',
+          type: 'number',
+          label: 'Longitude',
+          admin: {
+            width: '50%',
+          },
+        },
+      ],
+    },
+    {
+      name: 'description',
+      type: 'textarea',
+      required: true,
     },
     {
       name: 'activities',
-      type: 'richText', // A rich text editor is much more flexible than a simple list
-      label: 'Daily Plan & Activities',
+      type: 'array',
+      label: 'Activities',
+      fields: [
+        {
+          name: 'activity',
+          type: 'textarea',
+          required: true,
+        },
+      ],
     },
     {
-      name: 'accommodation',
-      type: 'text',
+      name: 'accommodationTip',
+      type: 'textarea',
+      label: 'Accommodation Tip',
     },
     {
       name: 'gallery',
       type: 'array',
-      label: 'Daily Photos',
-      minRows: 1,
+      label: 'Photos',
       fields: [
         {
           name: 'image',
           type: 'upload',
-          relationTo: 'media', // This links to the Media collection below
+          relationTo: 'media',
           required: true,
         },
         {
@@ -65,12 +100,12 @@ const DayStepBlock: Block = {
   ],
 };
 
-// Now, we define the main "Trips" collection.
+// Main Trips collection matching your new YAML format
 export const Trips: CollectionConfig = {
   slug: 'trips',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'country', 'updatedAt'],
+    defaultColumns: ['title', 'country', 'period', 'updatedAt'],
   },
   fields: [
     {
@@ -79,16 +114,18 @@ export const Trips: CollectionConfig = {
       required: true,
     },
     {
-      name: 'slug',
+      name: 'urlKey',
       type: 'text',
       unique: true,
       index: true,
+      required: true,
+      label: 'URL Key',
       admin: {
         position: 'sidebar',
       },
       hooks: {
         beforeValidate: [
-          ({ value, data }) => slugify(value || data.title),
+          ({ value, data }: { value?: string; data: any }) => slugify(value || data.title),
         ],
       },
     },
@@ -98,10 +135,12 @@ export const Trips: CollectionConfig = {
       required: true,
     },
     {
-      name: 'coverImage',
-      type: 'upload',
-      relationTo: 'media',
-      required: true,
+      name: 'period',
+      type: 'text',
+      label: 'Travel Period',
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'country',
@@ -112,40 +151,114 @@ export const Trips: CollectionConfig = {
       },
     },
     {
-      name: 'tripDetails',
-      type: 'group',
-      label: 'Trip Details',
+      name: 'capital',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'languages',
+      type: 'array',
+      label: 'Languages',
       admin: {
         position: 'sidebar',
       },
       fields: [
         {
-          name: 'startDate',
-          type: 'date',
-        },
-        {
-          name: 'endDate',
-          type: 'date',
-        },
-        {
-          name: 'budget',
-          type: 'number',
-        },
-        {
-          name: 'currency',
-          type: 'select',
-          options: ['EUR', 'USD', 'GBP'],
-          defaultValue: 'EUR',
+          name: 'language',
+          type: 'text',
+          required: true,
         },
       ],
     },
     {
-      name: 'itinerary',
-      label: 'Daily Itinerary',
+      name: 'currency',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'budget',
+      type: 'text',
+      label: 'Budget per Person',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'religion',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'travelTime',
+      type: 'text',
+      label: 'Travel Time from Home',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'bestTravelTime',
+      type: 'text',
+      label: 'Best Travel Time',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'activities',
+      type: 'array',
+      label: 'Main Activities',
+      fields: [
+        {
+          name: 'activity',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'accommodations',
+      type: 'array',
+      label: 'Types of Accommodation',
+      fields: [
+        {
+          name: 'accommodation',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'vegetarianFood',
+      type: 'array',
+      label: 'Vegetarian Food Notes',
+      fields: [
+        {
+          name: 'note',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'coverImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Header Image',
+    },
+    {
+      name: 'travelItinerary',
+      label: 'Travel Itinerary',
       type: 'blocks',
       required: true,
       minRows: 1,
-      blocks: [DayStepBlock], // Here we use the DayStepBlock defined above
+      blocks: [ItineraryStepBlock],
     },
   ],
 };
