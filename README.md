@@ -135,14 +135,22 @@ Data Model Reference: The structure of C# models can be used as a reference when
 Local development notes
 -----------------------
 
+### Quick start (Docker Compose - Recommended)
+```powershell
+cd roaming-routes-cms
+docker compose up
+```
+This starts both Postgres + PostGIS and the Payload CMS together. The CMS will be available at `http://localhost:3000`.
+
+### Manual setup (alternative)
 - Payload CMS (local): the CMS lives in `roaming-routes-cms/`. Start it from that folder with `npm run dev` after creating a `.env` that contains `DATABASE_URL`, `PAYLOAD_SECRET` and other settings.
-- Postgres + PostGIS: the CMS requires a Postgres database with the `postgis` extension. For local development the easiest approach is Docker:
+- Postgres + PostGIS: the CMS requires a Postgres database with the `postgis` extension. For local development you can use Docker:
 
 ```powershell
-docker run --name rr-postgres -e POSTGRES_PASSWORD=<your_password> -e POSTGRES_USER=rruser -e POSTGRES_DB=roamingroutes -p 5432:5432 -d postgis/postgis:15-3.4
+docker run --name rr-postgres -e POSTGRES_PASSWORD=z8ZWOUcPaXKgiAn0sATYNb7N61Lth0JyLbH -e POSTGRES_USER=rruser -e POSTGRES_DB=roamingroutes -p 5432:5432 -d postgis/postgis:15-3.4
 ```
 
-- After starting Postgres, update `roaming-routes-cms/.env` with the matching `DATABASE_URL` (example: `postgresql://rruser:<your_password>@127.0.0.1:5432/roamingroutes`).
+- After starting Postgres, update `roaming-routes-cms/.env` with the matching `DATABASE_URL` (example: `postgresql://rruser:z8ZWOUcPaXKgiAn0sATYNb7N61Lth0JyLbH@127.0.0.1:5432/roamingroutes`).
 - Start the CMS: `npm run dev` from `roaming-routes-cms/`. Watch logs for DB connection and PostGIS extension messages.
 
 Content workflow
