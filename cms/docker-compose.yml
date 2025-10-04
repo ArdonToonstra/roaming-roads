@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgis/postgis:15-3.4
     environment:
-      POSTGRES_DB: roamingroutes
+      POSTGRES_DB: roamingroads
       POSTGRES_USER: rruser
       POSTGRES_PASSWORD: z8ZWOUcPaXKgiAn0sATYNb7N61Lth0JyLbH
     ports:
@@ -10,7 +10,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U rruser -d roamingroutes"]
+      test: ["CMD-SHELL", "pg_isready -U rruser -d roamingroads"]
       interval: 5s
       timeout: 5s
       retries: 5

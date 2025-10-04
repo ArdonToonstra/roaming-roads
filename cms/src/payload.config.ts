@@ -9,7 +9,9 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
-import { Trips } from './collections/Trips';
+import { Trips } from './collections/Trips'
+import Activities from './collections/Activities'
+import Countries from './collections/Countries'
 
 
 
@@ -23,7 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Trips],
+  collections: [Users, Media, Trips, Activities, Countries],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

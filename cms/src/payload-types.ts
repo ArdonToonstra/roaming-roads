@@ -196,35 +196,15 @@ export interface Trip {
   period?: string | null;
   country: string;
   capital?: string | null;
-  languages?:
-    | {
-        language: string;
-        id?: string | null;
-      }[]
-    | null;
+  languages?: string[] | null;
   currency?: string | null;
   budget?: string | null;
   religion?: string | null;
   travelTime?: string | null;
   bestTravelTime?: string | null;
-  activities?:
-    | {
-        activity: string;
-        id?: string | null;
-      }[]
-    | null;
-  accommodations?:
-    | {
-        accommodation: string;
-        id?: string | null;
-      }[]
-    | null;
-  vegetarianFood?:
-    | {
-        note: string;
-        id?: string | null;
-      }[]
-    | null;
+  activities?: string[] | null;
+  accommodations?: string[] | null;
+  vegetarianFood?: string[] | null;
   coverImage?: (number | null) | Media;
   travelItinerary: ItineraryStep[];
   updatedAt: string;
@@ -243,8 +223,8 @@ export interface ItineraryStep {
   description: string;
   activities?:
     | {
+        id: string;
         activity: string;
-        id?: string | null;
       }[]
     | null;
   accommodationTip?: string | null;
@@ -405,35 +385,15 @@ export interface TripsSelect<T extends boolean = true> {
   period?: T;
   country?: T;
   capital?: T;
-  languages?:
-    | T
-    | {
-        language?: T;
-        id?: T;
-      };
+  languages?: T;
   currency?: T;
   budget?: T;
   religion?: T;
   travelTime?: T;
   bestTravelTime?: T;
-  activities?:
-    | T
-    | {
-        activity?: T;
-        id?: T;
-      };
-  accommodations?:
-    | T
-    | {
-        accommodation?: T;
-        id?: T;
-      };
-  vegetarianFood?:
-    | T
-    | {
-        note?: T;
-        id?: T;
-      };
+  activities?: T;
+  accommodations?: T;
+  vegetarianFood?: T;
   coverImage?: T;
   travelItinerary?:
     | T
@@ -457,8 +417,8 @@ export interface ItineraryStepSelect<T extends boolean = true> {
   activities?:
     | T
     | {
-        activity?: T;
         id?: T;
+        activity?: T;
       };
   accommodationTip?: T;
   gallery?:

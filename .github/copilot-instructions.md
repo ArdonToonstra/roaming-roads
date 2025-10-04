@@ -1,19 +1,19 @@
-# Roaming Routes AI Assistant Instructions
+# Roaming Roads AI Assistant Instructions
 
-Welcome! This guide will help you understand the Roaming Routes project structure, architecture, and development workflows.
+Welcome! This guide will help you understand the Roaming Roads project structure, architecture, and development workflows.
 
 ## Big Picture: A Tale of Two Stacks
 
 This repository contains two separate applications in a monorepo structure:
 
-1.  **`roaming-routes-cms/`**: The **current, active project**. It's a headless setup using **Next.js (React/TypeScript)** for the frontend and **Payload CMS** for the backend.
-2.  **`legacy-blazor/`**: The **original application**, built with **.NET 8 Blazor WASM**. It is kept for reference, especially for its data models and UI structure. **New development should happen in `roaming-routes-cms`**.
+1.  **`roaming-roads-cms/`**: The **current, active project**. It's a headless setup using **Next.js (React/TypeScript)** for the frontend and **Payload CMS** for the backend.
+2.  **`legacy-blazor/`**: The **original application**, built with **.NET 8 Blazor WASM**. It is kept for reference, especially for its data models and UI structure. **New development should happen in `roaming-roads-cms`**.
 
 The overall goal is to rebuild the Blazor-based website using the modern Next.js and Payload CMS stack.
 
 ---
 
-## 🚀 Current Project: `roaming-routes-cms` (Next.js + Payload)
+## 🚀 Current Project: `roaming-roads-cms` (Next.js + Payload)
 
 This is a headless CMS architecture. The Payload backend provides a content API that the Next.js frontend consumes.
 
@@ -21,7 +21,7 @@ This is a headless CMS architecture. The Payload backend provides a content API 
 
 -   **Backend (Payload CMS)**: A Node.js-based CMS that provides a GraphQL and REST API. Configuration is code-first.
 -   **Frontend (Next.js)**: A React framework for building the user-facing website. It fetches data from the Payload API at build time and client-side.
--   **Data Models**: The content structure is defined in TypeScript files within `roaming-routes-cms/src/collections/`. These models (e.g., `Trips.ts`) are based on the YAML files found in the `legacy-blazor` project.
+-   **Data Models**: The content structure is defined in TypeScript files within `roaming-roads-cms/src/collections/`. These models (e.g., `Trips.ts`) are based on the YAML files found in the `legacy-blazor` project.
 -   **Content Management**: Content (trips, media, etc.) is managed through the Payload admin panel, which runs locally at `http://localhost:3000/admin`.
 
 ### Developer Workflow
@@ -30,23 +30,23 @@ The entire local environment (Payload CMS, Postgres database with PostGIS) is ma
 
 **To start the local development server:**
 
-1.  Navigate to the CMS directory: `cd roaming-routes-cms`
+1.  Navigate to the CMS directory: `cd roaming-roads-cms`
 2.  Run Docker Compose: `docker compose up`
 
 This will start the CMS, which will be accessible at `http://localhost:3000`.
 
 ### Key Files
 
--   `roaming-routes-cms/docker-compose.yml`: Defines the local development services (Postgres, Payload).
--   `roaming-routes-cms/src/payload.config.ts`: The main configuration file for the Payload CMS, where collections and globals are defined.
--   `roaming-routes-cms/src/collections/Trips.ts`: Defines the data structure for "Trips". A key file to understand the content model.
--   `roaming-routes-cms/src/app/(frontend)/page.tsx`: The Next.js homepage, demonstrating how data is fetched and rendered.
+-   `roaming-roads-cms/docker-compose.yml`: Defines the local development services (Postgres, Payload).
+-   `roaming-roads-cms/src/payload.config.ts`: The main configuration file for the Payload CMS, where collections and globals are defined.
+-   `roaming-roads-cms/src/collections/Trips.ts`: Defines the data structure for "Trips". A key file to understand the content model.
+-   `roaming-roads-cms/src/app/(frontend)/page.tsx`: The Next.js homepage, demonstrating how data is fetched and rendered.
 
 ---
 
 ## 📚 Reference Project: `legacy-blazor`
 
-This is the original Blazor application. Do not add new features here. Use it as a reference for business logic and data structures when building out the new `roaming-routes-cms` application.
+This is the original Blazor application. Do not add new features here. Use it as a reference for business logic and data structures when building out the new `roaming-roads-cms` application.
 
 ### Key Concepts & Architecture
 

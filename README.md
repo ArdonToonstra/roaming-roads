@@ -1,5 +1,5 @@
 Project Plan: Travel Itinerary Website Rebuild
-Objective: Rebuild the Blazor-based travel itinerary website using a modern, flexible, and cost-effective tech stack. The new site will be a visually rich, content-driven platform, similar in concept to Polarsteps, but focused on displaying pre-made travel routes.
+Objective: Rebuild the Blazor-based travel itinerary website using a modern, flexible, and cost-effective tech stack. The new site will be a visually rich, content-driven platform, similar in concept to Polarsteps, but focused on displaying pre-made travel roads.
 
 Status: In Progress 🚀
 

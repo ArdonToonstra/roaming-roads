@@ -61,10 +61,10 @@ npm-debug.log*
 out/
 
 # Payload / CMS
-roaming-routes-cms/.cache
-roaming-routes-cms/.next
-roaming-routes-cms/node_modules/
-roaming-routes-cms/.env
+roaming-roads-cms/.cache
+roaming-roads-cms/.next
+roaming-roads-cms/node_modules/
+roaming-roads-cms/.env
 
 # Docker
 *.local.env
@@ -95,9 +95,9 @@ build/
 _contentCache/
 RoamingRoutes/_contentCache/
 
-RoamingRoutes/roamingroutes.db
-RoamingRoutes/roamingroutes.db-shm
-RoamingRoutes/roamingroutes.db-wal
+RoamingRoutes/roamingroads.db
+RoamingRoutes/roamingroads.db-shm
+RoamingRoutes/roamingroads.db-wal
 
 
 # Oude lokale content mappen
