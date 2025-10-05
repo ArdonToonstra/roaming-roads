@@ -70,7 +70,6 @@ export interface Config {
     users: User;
     media: Media;
     trips: Trip;
-    activities: Activity;
     countries: Country;
     accommodations: Accommodation;
     'payload-locked-documents': PayloadLockedDocument;
@@ -82,7 +81,6 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     trips: TripsSelect<false> | TripsSelect<true>;
-    activities: ActivitiesSelect<false> | ActivitiesSelect<true>;
     countries: CountriesSelect<false> | CountriesSelect<true>;
     accommodations: AccommodationsSelect<false> | AccommodationsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -159,29 +157,15 @@ export interface Media {
    * Optional caption to display with the media
    */
   caption?: string | null;
-  /**
-   * Type of media content
-   */
-  mediaType?: ('photo' | 'video' | 'audio' | 'document') | null;
-  /**
-   * Categorize the media for better organization
-   */
-  category?:
-    | (
-        | 'landscape'
-        | 'portrait'
-        | 'food'
-        | 'architecture'
-        | 'culture'
-        | 'activity'
-        | 'accommodation'
-        | 'transportation'
-        | 'map'
-        | 'document'
-        | 'other'
-      )
-    | null;
   location?: {
+    /**
+     * Country where this media was captured
+     */
+    country?: (number | null) | Country;
+    /**
+     * Name of the place (e.g., "Issyk-Kul Lake, Kyrgyzstan")
+     */
+    locationName?: string | null;
     /**
      * Where this photo/video was taken
      *
@@ -189,23 +173,15 @@ export interface Media {
      * @maxItems 2
      */
     gps?: [number, number] | null;
-    /**
-     * Name of the place (e.g., "Issyk-Kul Lake, Kyrgyzstan")
-     */
-    locationName?: string | null;
-    /**
-     * Country where this media was captured
-     */
-    country?: (number | null) | Country;
   };
   /**
    * Trip this media is associated with
    */
   relatedTrip?: (number | null) | Trip;
   /**
-   * Activities shown or related to this media
+   * Type of media content
    */
-  relatedActivities?: (number | Activity)[] | null;
+  mediaType?: ('photo' | 'video' | 'audio' | 'document') | null;
   photographyInfo?: {
     /**
      * Camera model used
@@ -334,27 +310,11 @@ export interface Country {
    */
   currencyName?: string | null;
   /**
-   * Approximate population count
-   */
-  population?: number | null;
-  /**
    * List of official languages
    */
   officialLanguages?:
     | {
         language: string;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * List of time zones used in the country
-   */
-  timeZones?:
-    | {
-        /**
-         * e.g., UTC+6, GMT+1
-         */
-        timezone: string;
         id?: string | null;
       }[]
     | null;
@@ -391,29 +351,23 @@ export interface Country {
    */
   safetyLevel?: ('very_safe' | 'safe' | 'moderate' | 'caution' | 'high_risk') | null;
   /**
-   * Recommended months to visit with explanations
+   * Select the recommended months to visit this country
    */
   bestTimeToVisit?:
-    | {
-        month:
-          | 'january'
-          | 'february'
-          | 'march'
-          | 'april'
-          | 'may'
-          | 'june'
-          | 'july'
-          | 'august'
-          | 'september'
-          | 'october'
-          | 'november'
-          | 'december';
-        /**
-         * Why this month is good for visiting
-         */
-        reason?: string | null;
-        id?: string | null;
-      }[]
+    | (
+        | 'january'
+        | 'february'
+        | 'march'
+        | 'april'
+        | 'may'
+        | 'june'
+        | 'july'
+        | 'august'
+        | 'september'
+        | 'october'
+        | 'november'
+        | 'december'
+      )[]
     | null;
   /**
    * Important emergency contact numbers
@@ -477,44 +431,30 @@ export interface Trip {
     currency?: string | null;
     perPerson?: boolean | null;
   };
-  characteristics?: {
-    /**
-     * Select and rank the main activities that defined this trip
-     */
-    mainActivities?:
-      | {
-          activity: number | Activity;
-          priority?: ('primary' | 'secondary' | 'notable') | null;
-          /**
-           * Approximate days dedicated to this activity
-           */
-          daysSpent?: number | null;
-          personalRating?: ('1' | '2' | '3' | '4' | '5') | null;
-          /**
-           * Your experience, tips, or memorable moments with this activity
-           */
-          notes?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-    /**
-     * Select accommodations you want to highlight from this trip
-     */
-    featuredAccommodations?:
-      | {
-          accommodation: number | Accommodation;
-          /**
-           * How many nights you stayed here during this trip
-           */
-          nights?: number | null;
-          /**
-           * Your personal experience at this accommodation during this specific trip
-           */
-          tripNotes?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
+  activities?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Highlight up to 5 key accommodations used during this trip
+   */
+  featuredAccommodations?:
+    | {
+        accommodation: number | Accommodation;
+        id?: string | null;
+      }[]
+    | null;
   itinerary?:
     | (
         | {
@@ -545,21 +485,7 @@ export interface Trip {
               };
               [k: string]: unknown;
             } | null;
-            accommodation?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
+            accommodation?: (number | null) | Accommodation;
             transportation?: {
               arrivalMethod?:
                 | (
@@ -604,61 +530,6 @@ export interface Trip {
                */
               transportationNotes?: string | null;
             };
-            accommodationDetails?: {
-              accommodation?: (number | null) | Accommodation;
-              /**
-               * If not in the accommodations database
-               */
-              alternativeAccommodation?: string | null;
-              checkIn?: string | null;
-              checkOut?: string | null;
-              /**
-               * e.g., "Double room", "Dormitory bed", "Private yurt"
-               */
-              roomType?: string | null;
-              /**
-               * Your experience, what was included, pros/cons
-               */
-              accommodationNotes?: {
-                root: {
-                  type: string;
-                  children: {
-                    type: string;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              } | null;
-            };
-            expenses?:
-              | {
-                  category:
-                    | 'accommodation'
-                    | 'food'
-                    | 'transportation'
-                    | 'activities'
-                    | 'shopping'
-                    | 'fuel'
-                    | 'entrance_fees'
-                    | 'tips'
-                    | 'emergency'
-                    | 'other';
-                  description?: string | null;
-                  amount?: number | null;
-                  currency?: string | null;
-                  /**
-                   * If paid in local currency
-                   */
-                  exchangeRate?: number | null;
-                  paymentMethod?: ('cash' | 'card' | 'mobile' | 'transfer') | null;
-                  id?: string | null;
-                }[]
-              | null;
             gallery?:
               | {
                   media: number | Media;
@@ -674,6 +545,21 @@ export interface Trip {
         | {
             locationName: string;
             description?: string | null;
+            activities?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
             /**
              * @minItems 2
              * @maxItems 2
@@ -696,142 +582,6 @@ export interface Trip {
           }
       )[]
     | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "activities".
- */
-export interface Activity {
-  id: number;
-  /**
-   * Select the type of activity or choose "Other" to specify a custom activity
-   */
-  activityType:
-    | 'roadtrip'
-    | 'citytrip'
-    | 'backpacking'
-    | 'cultural-tour'
-    | 'hiking'
-    | 'trekking'
-    | 'mountain-climbing'
-    | 'rock-climbing'
-    | 'camping'
-    | 'wildlife-safari'
-    | 'diving'
-    | 'snorkeling'
-    | 'swimming'
-    | 'kayaking'
-    | 'rafting'
-    | 'surfing'
-    | 'fishing'
-    | 'horseback-riding'
-    | 'cave-exploring'
-    | 'zip-lining'
-    | 'paragliding'
-    | 'skydiving'
-    | 'bungee-jumping'
-    | 'museum-visit'
-    | 'historical-site'
-    | 'local-market'
-    | 'food-tour'
-    | 'cooking-class'
-    | 'language-exchange'
-    | 'spa-wellness'
-    | 'yoga-retreat'
-    | 'beach-relaxation'
-    | 'hot-springs'
-    | 'public-transport'
-    | 'car-rental'
-    | 'flight'
-    | 'border-crossing'
-    | 'other';
-  /**
-   * Specify the custom activity name when "Other" is selected
-   */
-  customActivityName?: string | null;
-  /**
-   * Auto-generated from activity type or custom name, can be overridden
-   */
-  displayName?: string | null;
-  /**
-   * Categorize the activity for better organization
-   */
-  category?:
-    | (
-        | 'travel-transport'
-        | 'outdoor-adventure'
-        | 'water-sports'
-        | 'cultural-educational'
-        | 'relaxation-wellness'
-        | 'extreme-sports'
-        | 'food-dining'
-        | 'shopping-markets'
-        | 'nightlife-entertainment'
-        | 'photography-sightseeing'
-      )
-    | null;
-  difficulty?: ('easy' | 'moderate' | 'challenging' | 'expert' | 'na') | null;
-  duration?: {
-    value?: number | null;
-    unit?: ('minutes' | 'hours' | 'days' | 'weeks') | null;
-    /**
-     * e.g., "Half day", "Full day", "Multi-day trek"
-     */
-    note?: string | null;
-  };
-  /**
-   * Brief description of what this activity involves
-   */
-  description?: string | null;
-  requirements?: {
-    physicalFitness?: ('none' | 'basic' | 'good' | 'excellent') | null;
-    equipment?:
-      | {
-          item?: string | null;
-          essential?: boolean | null;
-          id?: string | null;
-        }[]
-      | null;
-    skills?: string | null;
-    permits?: string | null;
-  };
-  costInfo?: {
-    priceRange?: ('free' | 'budget' | 'moderate' | 'expensive' | 'luxury' | 'variable') | null;
-    averageCost?: number | null;
-    currency?: string | null;
-    /**
-     * Additional cost information, seasonal variations, etc.
-     */
-    costNotes?: string | null;
-  };
-  seasonality?: {
-    bestMonths?: ('01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11' | '12')[] | null;
-    weatherDependency?: ('none' | 'low' | 'medium' | 'high') | null;
-    seasonalNotes?: string | null;
-  };
-  safety?: {
-    riskLevel?: ('low' | 'moderate' | 'high' | 'extreme') | null;
-    /**
-     * Important safety considerations, warnings, precautions
-     */
-    safetyNotes?: string | null;
-    emergencyInfo?: string | null;
-  };
-  /**
-   * Tags for easier searching and filtering (e.g., "family-friendly", "solo-travel", "instagram-worthy")
-   */
-  tags?:
-    | {
-        tag?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Activities that are commonly done together or as alternatives
-   */
-  relatedActivities?: (number | Activity)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -879,10 +629,6 @@ export interface Accommodation {
     [k: string]: unknown;
   } | null;
   /**
-   * Brief summary for listings and previews
-   */
-  shortDescription?: string | null;
-  /**
    * Exact location coordinates
    *
    * @minItems 2
@@ -894,7 +640,7 @@ export interface Accommodation {
    */
   address: {
     street?: string | null;
-    city: string;
+    city?: string | null;
     region?: string | null;
     postalCode?: string | null;
     /**
@@ -915,35 +661,11 @@ export interface Accommodation {
      * Contact email address
      */
     email?: string | null;
-    /**
-     * Links to book this accommodation on various platforms
-     */
-    bookingPlatforms?:
-      | {
-          platform: 'booking_com' | 'airbnb' | 'hotels_com' | 'expedia' | 'agoda' | 'hostelworld' | 'other';
-          url: string;
-          id?: string | null;
-        }[]
-      | null;
   };
-  pricing: {
-    /**
-     * General price category for this accommodation
-     */
-    priceRange: 'budget' | 'midrange' | 'luxury' | 'ultra_luxury';
-    /**
-     * Average price per night in EUR
-     */
-    averagePrice?: number | null;
-    /**
-     * Local currency code (e.g., EUR, USD, KGS)
-     */
-    currency?: string | null;
-    /**
-     * Information about price variations by season
-     */
-    seasonalPricing?: string | null;
-  };
+  /**
+   * General price category for this accommodation
+   */
+  priceRange?: ('budget' | 'midrange' | 'luxury' | 'ultra_luxury') | null;
   quality?: {
     /**
      * Our star rating or equivalent
@@ -1063,10 +785,6 @@ export interface PayloadLockedDocument {
         value: number | Trip;
       } | null)
     | ({
-        relationTo: 'activities';
-        value: number | Activity;
-      } | null)
-    | ({
         relationTo: 'countries';
         value: number | Country;
       } | null)
@@ -1145,17 +863,15 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
-  mediaType?: T;
-  category?: T;
   location?:
     | T
     | {
-        gps?: T;
-        locationName?: T;
         country?: T;
+        locationName?: T;
+        gps?: T;
       };
   relatedTrip?: T;
-  relatedActivities?: T;
+  mediaType?: T;
   photographyInfo?:
     | T
     | {
@@ -1285,27 +1001,12 @@ export interface TripsSelect<T extends boolean = true> {
         currency?: T;
         perPerson?: T;
       };
-  characteristics?:
+  activities?: T;
+  featuredAccommodations?:
     | T
     | {
-        mainActivities?:
-          | T
-          | {
-              activity?: T;
-              priority?: T;
-              daysSpent?: T;
-              personalRating?: T;
-              notes?: T;
-              id?: T;
-            };
-        featuredAccommodations?:
-          | T
-          | {
-              accommodation?: T;
-              nights?: T;
-              tripNotes?: T;
-              id?: T;
-            };
+        accommodation?: T;
+        id?: T;
       };
   itinerary?:
     | T
@@ -1339,27 +1040,6 @@ export interface TripsSelect<T extends boolean = true> {
                         };
                     transportationNotes?: T;
                   };
-              accommodationDetails?:
-                | T
-                | {
-                    accommodation?: T;
-                    alternativeAccommodation?: T;
-                    checkIn?: T;
-                    checkOut?: T;
-                    roomType?: T;
-                    accommodationNotes?: T;
-                  };
-              expenses?:
-                | T
-                | {
-                    category?: T;
-                    description?: T;
-                    amount?: T;
-                    currency?: T;
-                    exchangeRate?: T;
-                    paymentMethod?: T;
-                    id?: T;
-                  };
               gallery?:
                 | T
                 | {
@@ -1376,6 +1056,7 @@ export interface TripsSelect<T extends boolean = true> {
           | {
               locationName?: T;
               description?: T;
+              activities?: T;
               location?: T;
               regionProvince?: T;
               gallery?:
@@ -1394,70 +1075,6 @@ export interface TripsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "activities_select".
- */
-export interface ActivitiesSelect<T extends boolean = true> {
-  activityType?: T;
-  customActivityName?: T;
-  displayName?: T;
-  category?: T;
-  difficulty?: T;
-  duration?:
-    | T
-    | {
-        value?: T;
-        unit?: T;
-        note?: T;
-      };
-  description?: T;
-  requirements?:
-    | T
-    | {
-        physicalFitness?: T;
-        equipment?:
-          | T
-          | {
-              item?: T;
-              essential?: T;
-              id?: T;
-            };
-        skills?: T;
-        permits?: T;
-      };
-  costInfo?:
-    | T
-    | {
-        priceRange?: T;
-        averageCost?: T;
-        currency?: T;
-        costNotes?: T;
-      };
-  seasonality?:
-    | T
-    | {
-        bestMonths?: T;
-        weatherDependency?: T;
-        seasonalNotes?: T;
-      };
-  safety?:
-    | T
-    | {
-        riskLevel?: T;
-        safetyNotes?: T;
-        emergencyInfo?: T;
-      };
-  tags?:
-    | T
-    | {
-        tag?: T;
-        id?: T;
-      };
-  relatedActivities?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "countries_select".
  */
 export interface CountriesSelect<T extends boolean = true> {
@@ -1466,30 +1083,17 @@ export interface CountriesSelect<T extends boolean = true> {
   capital?: T;
   currency?: T;
   currencyName?: T;
-  population?: T;
   officialLanguages?:
     | T
     | {
         language?: T;
         id?: T;
       };
-  timeZones?:
-    | T
-    | {
-        timezone?: T;
-        id?: T;
-      };
   mainReligion?: T;
   mainReligionPercentage?: T;
   visaRequirements?: T;
   safetyLevel?: T;
-  bestTimeToVisit?:
-    | T
-    | {
-        month?: T;
-        reason?: T;
-        id?: T;
-      };
+  bestTimeToVisit?: T;
   emergencyNumbers?:
     | T
     | {
@@ -1509,7 +1113,6 @@ export interface AccommodationsSelect<T extends boolean = true> {
   name?: T;
   type?: T;
   description?: T;
-  shortDescription?: T;
   location?: T;
   address?:
     | T
@@ -1526,22 +1129,8 @@ export interface AccommodationsSelect<T extends boolean = true> {
         website?: T;
         phone?: T;
         email?: T;
-        bookingPlatforms?:
-          | T
-          | {
-              platform?: T;
-              url?: T;
-              id?: T;
-            };
       };
-  pricing?:
-    | T
-    | {
-        priceRange?: T;
-        averagePrice?: T;
-        currency?: T;
-        seasonalPricing?: T;
-      };
+  priceRange?: T;
   quality?:
     | T
     | {

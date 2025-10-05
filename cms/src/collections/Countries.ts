@@ -79,15 +79,6 @@ const Countries: CollectionConfig = {
       },
     },
     {
-      name: 'population',
-      label: 'Population',
-      type: 'number',
-      min: 0,
-      admin: {
-        description: 'Approximate population count',
-      },
-    },
-    {
       name: 'officialLanguages',
       label: 'Official Languages',
       type: 'array',
@@ -101,25 +92,6 @@ const Countries: CollectionConfig = {
       ],
       admin: {
         description: 'List of official languages',
-      },
-    },
-    {
-      name: 'timeZones',
-      label: 'Time Zones',
-      type: 'array',
-      fields: [
-        {
-          name: 'timezone',
-          label: 'Time Zone',
-          type: 'text',
-          required: true,
-          admin: {
-            description: 'e.g., UTC+6, GMT+1',
-          },
-        },
-      ],
-      admin: {
-        description: 'List of time zones used in the country',
       },
     },
     {
@@ -178,39 +150,24 @@ const Countries: CollectionConfig = {
     {
       name: 'bestTimeToVisit',
       label: 'Best Time to Visit',
-      type: 'array',
-      fields: [
-        {
-          name: 'month',
-          label: 'Month',
-          type: 'select',
-          options: [
-            { label: 'January', value: 'january' },
-            { label: 'February', value: 'february' },
-            { label: 'March', value: 'march' },
-            { label: 'April', value: 'april' },
-            { label: 'May', value: 'may' },
-            { label: 'June', value: 'june' },
-            { label: 'July', value: 'july' },
-            { label: 'August', value: 'august' },
-            { label: 'September', value: 'september' },
-            { label: 'October', value: 'october' },
-            { label: 'November', value: 'november' },
-            { label: 'December', value: 'december' },
-          ],
-          required: true,
-        },
-        {
-          name: 'reason',
-          label: 'Reason',
-          type: 'textarea',
-          admin: {
-            description: 'Why this month is good for visiting',
-          },
-        },
+      type: 'select',
+      hasMany: true,
+      options: [
+        { label: 'January', value: 'january' },
+        { label: 'February', value: 'february' },
+        { label: 'March', value: 'march' },
+        { label: 'April', value: 'april' },
+        { label: 'May', value: 'may' },
+        { label: 'June', value: 'june' },
+        { label: 'July', value: 'july' },
+        { label: 'August', value: 'august' },
+        { label: 'September', value: 'september' },
+        { label: 'October', value: 'october' },
+        { label: 'November', value: 'november' },
+        { label: 'December', value: 'december' },
       ],
       admin: {
-        description: 'Recommended months to visit with explanations',
+        description: 'Select the recommended months to visit this country',
       },
     },
     {

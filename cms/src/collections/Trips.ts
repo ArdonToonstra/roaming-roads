@@ -1,12 +1,12 @@
 import type { CollectionConfig } from 'payload';
-import { FullDay } from '../blocks/FullDay'; 
+import { FullDay } from '../blocks/FullDay';
 import { Waypoint } from '../blocks/WayPoint';
 
 const Trips: CollectionConfig = {
   slug: 'trips',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'country', 'status'], 
+    defaultColumns: ['title', 'country', 'status'],
   },
   fields: [
     {
@@ -25,7 +25,7 @@ const Trips: CollectionConfig = {
       ],
       defaultValue: 'draft',
       admin: {
-        position: 'sidebar', 
+        position: 'sidebar',
       }
     },
     {
@@ -147,124 +147,38 @@ const Trips: CollectionConfig = {
                 { name: 'perPerson', type: 'checkbox', label: 'Per person', defaultValue: true },
               ]
             },
+            { name: 'activities', type: 'richText', label: 'Main activities to do in this country/trip.' },
             {
-              name: 'characteristics',
-              label: 'Characteristics',
-              type: 'group',
+              name: 'featuredAccommodations',
+              label: 'Featured Accommodations',
+              type: 'array',
+              minRows: 0,
+              maxRows: 5,
               fields: [
                 {
-                  name: 'mainActivities',
-                  label: 'Main Trip Activities',
-                  type: 'array',
-                  minRows: 1,
-                  maxRows: 8,
-                  fields: [
-                    {
-                      name: 'activity',
-                      type: 'relationship',
-                      relationTo: 'activities',
-                      required: true,
-                    },
-                    {
-                      name: 'priority',
-                      type: 'select',
-                      label: 'Activity Priority',
-                      options: [
-                        { label: 'Primary Highlight', value: 'primary' },
-                        { label: 'Secondary Highlight', value: 'secondary' },
-                        { label: 'Notable Experience', value: 'notable' },
-                      ],
-                      defaultValue: 'notable',
-                    },
-                    {
-                      name: 'daysSpent',
-                      type: 'number',
-                      label: 'Days Spent on Activity',
-                      min: 0,
-                      admin: {
-                        description: 'Approximate days dedicated to this activity',
-                      },
-                    },
-                    {
-                      name: 'personalRating',
-                      type: 'select',
-                      label: 'Personal Rating',
-                      options: [
-                        { label: '⭐ Poor', value: '1' },
-                        { label: '⭐⭐ Fair', value: '2' },
-                        { label: '⭐⭐⭐ Good', value: '3' },
-                        { label: '⭐⭐⭐⭐ Great', value: '4' },
-                        { label: '⭐⭐⭐⭐⭐ Excellent', value: '5' },
-                      ],
-                    },
-                    {
-                      name: 'notes',
-                      type: 'textarea',
-                      label: 'Personal Notes',
-                      admin: {
-                        description: 'Your experience, tips, or memorable moments with this activity',
-                      },
-                    },
-                  ],
-                  admin: {
-                    description: 'Select and rank the main activities that defined this trip',
-                  },
+                  name: 'accommodation',
+                  type: 'relationship',
+                  relationTo: 'accommodations',
+                  required: true,
                 },
-                {
-                  name: 'featuredAccommodations',
-                  label: 'Featured Accommodations',
-                  type: 'array',
-                  minRows: 0,
-                  maxRows: 5,
-                  fields: [
-                    {
-                      name: 'accommodation',
-                      type: 'relationship',
-                      relationTo: 'accommodations',
-                      required: true,
-                    },
-                    {
-                      name: 'nights',
-                      type: 'number',
-                      label: 'Nights Stayed',
-                      min: 1,
-                      admin: {
-                        description: 'How many nights you stayed here during this trip',
-                      },
-                    },
-                    {
-                      name: 'tripNotes',
-                      type: 'textarea',
-                      label: 'Trip-Specific Notes',
-                      admin: {
-                        description: 'Your personal experience at this accommodation during this specific trip',
-                      },
-                    },
-                  ],
-                  admin: {
-                    description: 'Select accommodations you want to highlight from this trip',
-                  },
-                },
-              ]
-            }
-          ],
-        },
-        {
-          label: 'Itinerary',
-          fields: [
-            {
-              name: 'itinerary',
-              label: 'Daily Schedule',
-              type: 'blocks', 
-              minRows: 1,
-              blocks: [
-                FullDay,
-                Waypoint
-              ]
+              ],
+              admin: {
+                description: 'Highlight up to 5 key accommodations used during this trip',
+              },
             },
           ]
-        },
+        }
       ],
+    },
+    {
+      name: 'itinerary',
+      label: 'Daily Schedule',
+      type: 'blocks',
+      minRows: 1,
+      blocks: [
+        FullDay,
+        Waypoint
+      ]
     },
   ],
 };

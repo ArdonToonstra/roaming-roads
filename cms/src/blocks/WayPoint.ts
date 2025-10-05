@@ -9,6 +9,7 @@ export const Waypoint: Block = {
   fields: [
     { name: 'locationName', type: 'text', label: 'Waypoint Name', required: true },
     { name: 'description', type: 'textarea', label: 'Description' },
+    { name: 'activities', type: 'richText', label: 'Activities and details' },
     { name: 'location', type: 'point', label: 'GPS Coordinates' },
     {
       name: 'regionProvince',

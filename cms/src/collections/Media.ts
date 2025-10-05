@@ -4,7 +4,7 @@ export const Media: CollectionConfig = {
   slug: 'media',
   admin: {
     useAsTitle: 'alt',
-    defaultColumns: ['alt', 'mediaType', 'location', 'createdAt'],
+    defaultColumns: ['alt', 'mediaType', 'country', 'relatedTrip'],
     group: 'Media',
   },
   upload: {
@@ -56,6 +56,47 @@ export const Media: CollectionConfig = {
         description: 'Optional caption to display with the media',
       },
     },
+        {
+      name: 'location',
+      label: 'Location Information',
+      type: 'group',
+      fields: [
+        {
+          name: 'country',
+          label: 'Country',
+          type: 'relationship',
+          relationTo: 'countries',
+          admin: {
+            description: 'Country where this media was captured',
+          },
+        },
+        {
+          name: 'locationName',
+          label: 'Location Name',
+          type: 'text',
+          admin: {
+            description: 'Name of the place (e.g., "Issyk-Kul Lake, Kyrgyzstan")',
+          },
+        },
+        {
+          name: 'gps',
+          label: 'GPS Coordinates',
+          type: 'point',
+          admin: {
+            description: 'Where this photo/video was taken',
+          },
+        }, 
+      ],
+    },
+    {
+      name: 'relatedTrip',
+      label: 'Related Trip',
+      type: 'relationship',
+      relationTo: 'trips',
+      admin: {
+        description: 'Trip this media is associated with',
+      },
+    },
     {
       name: 'mediaType',
       label: 'Media Type',
@@ -69,78 +110,6 @@ export const Media: CollectionConfig = {
       defaultValue: 'photo',
       admin: {
         description: 'Type of media content',
-      },
-    },
-    {
-      name: 'category',
-      label: 'Media Category',
-      type: 'select',
-      options: [
-        { label: 'Landscape', value: 'landscape' },
-        { label: 'Portrait', value: 'portrait' },
-        { label: 'Food', value: 'food' },
-        { label: 'Architecture', value: 'architecture' },
-        { label: 'Culture', value: 'culture' },
-        { label: 'Activity', value: 'activity' },
-        { label: 'Accommodation', value: 'accommodation' },
-        { label: 'Transportation', value: 'transportation' },
-        { label: 'Map', value: 'map' },
-        { label: 'Document', value: 'document' },
-        { label: 'Other', value: 'other' },
-      ],
-      admin: {
-        description: 'Categorize the media for better organization',
-      },
-    },
-    {
-      name: 'location',
-      label: 'Location Information',
-      type: 'group',
-      fields: [
-        {
-          name: 'gps',
-          label: 'GPS Coordinates',
-          type: 'point',
-          admin: {
-            description: 'Where this photo/video was taken',
-          },
-        },
-        {
-          name: 'locationName',
-          label: 'Location Name',
-          type: 'text',
-          admin: {
-            description: 'Name of the place (e.g., "Issyk-Kul Lake, Kyrgyzstan")',
-          },
-        },
-        {
-          name: 'country',
-          label: 'Country',
-          type: 'relationship',
-          relationTo: 'countries',
-          admin: {
-            description: 'Country where this media was captured',
-          },
-        },
-      ],
-    },
-    {
-      name: 'relatedTrip',
-      label: 'Related Trip',
-      type: 'relationship',
-      relationTo: 'trips',
-      admin: {
-        description: 'Trip this media is associated with',
-      },
-    },
-    {
-      name: 'relatedActivities',
-      label: 'Related Activities',
-      type: 'relationship',
-      relationTo: 'activities',
-      hasMany: true,
-      admin: {
-        description: 'Activities shown or related to this media',
       },
     },
     {

@@ -64,3 +64,64 @@ This is the original Blazor application. Do not add new features here. Use it as
 -   `legacy-blazor/RoamingRoutes.Client/Pages/TripDetail.razor`: A primary frontend component for displaying trip details.
 -   `legacy-blazor/RoamingRoutes.Client/wwwroot/js/site.js`: Contains the JavaScript functions for Leaflet map integration.
 -   `legacy-blazor/RoamingRoutes/_contentCache/Trips/kyrgyzstan.yaml`: An example of the source data structure that informs the new Payload collections.
+
+---
+
+## 🧪 Schema Iteration & Migration Guidance (For AI + Contributors)
+
+While the data model is still evolving, prefer fast, disposable workflows over intricate in-place migrations. Use this decision flow:
+
+1. Did we radically change field types (array → select, text → richText, relationship reshapes)?
+    - If YES and no critical content entered: reset DB volume.
+    - If YES and content matters: generate a migration OR snapshot/export content first.
+
+2. Enum rename prompt appears (old vs new enum name):
+    - Choose RENAME when value set is identical.
+    - Choose CREATE when it’s a truly new conceptual set.
+    - Never map unrelated enums across collections.
+
+3. Column prompts after refactor (e.g. `_order` → `order`, `month` → `value`): pick rename to preserve existing ordering & data.
+
+4. RichText adoption: converting `text` → `richText` requires JSON (`jsonb`) column; Postgres cannot auto-cast. Easiest early: reset database. Production: write manual USING cast or content migration script.
+
+5. Locked documents rels constraint error (`payload_locked_documents_rels_*_fk does not exist`): indicates partially applied push. Preferred fix early: reset volume. Advanced fix: recreate missing FK then retry.
+
+### Reset Database (Dev Only)
+```powershell
+docker compose down
+docker volume rm cms_postgres_data
+docker compose up
+```
+
+### Generate Durable Migrations Once Stable
+```powershell
+docker exec -it cms-payload-1 npx payload generate:migration
+docker exec -it cms-payload-1 npx payload migrate
+```
+Commit the generated `src/migrations/*` files.
+
+### Import Map (Rich Text / Lexical)
+If you see `PayloadComponent not found`:
+```powershell
+docker exec -it cms-payload-1 npx payload generate:importmap
+```
+`docker-compose.yml` auto-runs this now, but keep for reference.
+
+### Interactive Prompts Tips
+- `stdin_open: true` and `tty: true` are enabled for the `payload` service.
+- If interaction fails: `docker attach cms-payload-1` or run a foreground dev container:
+  ```powershell
+  docker compose run --service-ports payload sh -c "npm install && npm run dev"
+  ```
+
+### Minimal Cheat Sheet
+| Situation | Action |
+|-----------|--------|
+| Heavy schema churn | Reset DB |
+| Enum same values, new name | Rename enum |
+| Field array→multi-select | Rename enum + columns |
+| text→richText | Reset or manual cast |
+| FK constraint missing | Reset or recreate FK |
+| RichText component missing | generate:importmap |
+
+Keep answers concise for routine queries; expand only when user asks for deeper migration strategies.

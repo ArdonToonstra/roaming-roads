@@ -160,3 +160,77 @@ Content workflow
 - The legacy Blazor app is kept in `legacy-blazor/` for reference when modelling collections and UI.
 
 If you want, I can add a `docker-compose.yml` to run PostGIS + the CMS together with a small wait-for-db step.
+
+Schema & Migrations (Payload + Postgres)
+---------------------------------------
+
+During early schema iteration you will see interactive prompts from Payload asking how to handle new enums, renamed columns, etc. To avoid getting into a half-applied state ("constraint does not exist" / data loss warnings), follow these guidelines:
+
+1. Fast iteration (throw‑away data) strategy
+	- Prefer wiping the dev database instead of forcing complex diffs while the model is still changing daily.
+	- Commands (PowerShell):
+	  ```powershell
+	  docker compose down
+	  docker volume rm cms_postgres_data
+	  docker compose up
+	  ```
+	- This guarantees a clean schema that matches the current code.
+
+2. Converting field types safely
+	- Array of objects  -> multi-select: expect enum rename prompts. Choose the option that *renames* the old enum to the new one (preserves values) instead of creating a brand new enum, to avoid leaving orphan enum types.
+	- text -> richText: Postgres cannot automatically cast `text` to `jsonb`. Either reset the DB (fast) or perform a manual migration with a USING clause.
+
+3. Enum prompts
+	- Create enum: use when the value set is truly new.
+	- Rename enum: use when you refactored a field (e.g. renamed or changed structure) but the underlying set of values is identical.
+	- Do NOT map unrelated enums across collections (e.g. don’t rename an activities enum to a countries enum) – it will corrupt other schemas.
+
+4. Column rename prompts (order / _order / month → value)
+	- When converting an array-of-objects field to a `select` with `hasMany`, you’ll often see `_order` -> `order` and `month` -> `value`. Prefer renaming so ordering and values are preserved.
+	- Remove obsolete columns (e.g. `reason`) unless you plan to keep that data elsewhere.
+
+5. Locked documents relation constraint errors
+	- Error like: `DROP CONSTRAINT "payload_locked_documents_rels_activities_fk" ... does not exist` means a previous diff partially applied.
+	- Easiest fix in early dev: reset the DB (see step 1).
+	- If you must keep data: recreate the missing FK then restart.
+
+6. Moving to durable migrations (when schema stabilizes)
+	- Generate migration files instead of relying on interactive push diffs:
+	  ```powershell
+	  docker exec -it cms-payload-1 npx payload generate:migration
+	  docker exec -it cms-payload-1 npx payload migrate
+	  ```
+	- Commit the generated files (usually in `src/migrations`).
+
+7. Rich text / import map issues
+	- If you see `PayloadComponent not found ... generate:importmap`, run:
+	  ```powershell
+	  docker exec -it cms-payload-1 npx payload generate:importmap
+	  ```
+	- We bake this into `docker-compose.yml` (`npx payload generate:importmap && npm run dev`).
+
+8. Interactive terminal reliability
+	- `stdin_open: true` and `tty: true` are set for the `payload` service so you can answer prompts.
+	- If arrow keys don’t work: `docker attach cms-payload-1` or run a one-off interactive container:
+	  ```powershell
+	  docker compose run --service-ports payload sh -c "npm install && npm run dev"
+	  ```
+
+Decision cheat sheet
+--------------------
+| Scenario | Recommended Action |
+|----------|--------------------|
+| Early heavy schema churn | Reset DB volume |
+| Convert array-of-objects to multi-select | Rename old enum & columns |
+| Change text → richText | Reset DB or custom cast migration |
+| Orphan enum types piling up | Reset DB or drop unused enums manually |
+| FK constraint missing in locked documents table | Reset DB (preferred) or recreate FK |
+
+Manual FK recreation example (only if preserving data):
+```sql
+ALTER TABLE payload_locked_documents_rels
+ADD CONSTRAINT payload_locked_documents_rels_activities_fk
+FOREIGN KEY (activities_id) REFERENCES activities(id) ON DELETE CASCADE;
+```
+
+When in doubt during early development: reset, don’t wrestle. Once the model stabilizes, switch to generated migrations for reproducible environments (staging/production).

@@ -52,15 +52,6 @@ const Accommodations: CollectionConfig = {
       },
     },
     {
-      name: 'shortDescription',
-      label: 'Short Description',
-      type: 'textarea',
-      maxLength: 500,
-      admin: {
-        description: 'Brief summary for listings and previews',
-      },
-    },
-    {
       name: 'location',
       label: 'GPS Coordinates',
       type: 'point',
@@ -82,7 +73,6 @@ const Accommodations: CollectionConfig = {
           name: 'city',
           label: 'City',
           type: 'text',
-          required: true,
         },
         {
           name: 'region',
@@ -144,87 +134,21 @@ const Accommodations: CollectionConfig = {
             description: 'Contact email address',
           },
         },
-        {
-          name: 'bookingPlatforms',
-          label: 'Booking Platforms',
-          type: 'array',
-          fields: [
-            {
-              name: 'platform',
-              label: 'Platform Name',
-              type: 'select',
-              options: [
-                { label: 'Booking.com', value: 'booking_com' },
-                { label: 'Airbnb', value: 'airbnb' },
-                { label: 'Hotels.com', value: 'hotels_com' },
-                { label: 'Expedia', value: 'expedia' },
-                { label: 'Agoda', value: 'agoda' },
-                { label: 'Hostelworld', value: 'hostelworld' },
-                { label: 'Other', value: 'other' },
-              ],
-              required: true,
-            },
-            {
-              name: 'url',
-              label: 'Booking URL',
-              type: 'text',
-              required: true,
-            },
-          ],
-          admin: {
-            description: 'Links to book this accommodation on various platforms',
-          },
-        },
-      ],
+      ]
     },
     {
-      name: 'pricing',
-      label: 'Pricing Information',
-      type: 'group',
-      fields: [
-        {
-          name: 'priceRange',
-          label: 'Price Range',
-          type: 'select',
-          required: true,
-          options: [
-            { label: 'Budget (€) - Under €50/night', value: 'budget' },
-            { label: 'Mid-range (€€) - €50-150/night', value: 'midrange' },
-            { label: 'Luxury (€€€) - €150-300/night', value: 'luxury' },
-            { label: 'Ultra-luxury (€€€€) - Over €300/night', value: 'ultra_luxury' },
-          ],
-          admin: {
-            description: 'General price category for this accommodation',
-          },
-        },
-        {
-          name: 'averagePrice',
-          label: 'Average Price per Night',
-          type: 'number',
-          min: 0,
-          admin: {
-            description: 'Average price per night in EUR',
-            step: 1,
-          },
-        },
-        {
-          name: 'currency',
-          label: 'Local Currency',
-          type: 'text',
-          maxLength: 3,
-          admin: {
-            description: 'Local currency code (e.g., EUR, USD, KGS)',
-          },
-        },
-        {
-          name: 'seasonalPricing',
-          label: 'Seasonal Pricing Notes',
-          type: 'textarea',
-          admin: {
-            description: 'Information about price variations by season',
-          },
-        },
+      name: 'priceRange',
+      label: 'Price Range',
+      type: 'select',
+      options: [
+        { label: 'Budget (€) - Under €50/night', value: 'budget' },
+        { label: 'Mid-range (€€) - €50-150/night', value: 'midrange' },
+        { label: 'Luxury (€€€) - €150-300/night', value: 'luxury' },
+        { label: 'Ultra-luxury (€€€€) - Over €300/night', value: 'ultra_luxury' },
       ],
+      admin: {
+        description: 'General price category for this accommodation',
+      },
     },
     {
       name: 'quality',
