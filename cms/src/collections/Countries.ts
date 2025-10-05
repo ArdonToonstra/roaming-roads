@@ -5,7 +5,6 @@ const Countries: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'countryCode', 'capital', 'currency'],
-    group: 'Geography',
   },
   access: {
     read: () => true,

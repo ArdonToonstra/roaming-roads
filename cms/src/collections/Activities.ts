@@ -5,7 +5,6 @@ const Activities: CollectionConfig = {
   admin: {
     useAsTitle: 'displayName',
     defaultColumns: ['displayName', 'category', 'difficulty', 'duration'],
-    group: 'Travel Content',
   },
   fields: [
     {

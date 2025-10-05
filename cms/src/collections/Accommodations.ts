@@ -5,7 +5,6 @@ const Accommodations: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'type', 'starRating', 'priceRange', 'country'],
-    group: 'Travel',
   },
   access: {
     read: () => true,
