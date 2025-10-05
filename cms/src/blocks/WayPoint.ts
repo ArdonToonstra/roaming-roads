@@ -1,4 +1,4 @@
-import { Block } from 'payload/types';
+import type { Block } from 'payload';
 
 export const Waypoint: Block = {
   slug: 'waypoint',
@@ -20,14 +20,14 @@ export const Waypoint: Block = {
         {
           name: 'media',
           type: 'upload',
-          relationTo: 'media', // Make sure you have a 'media' collection
+          relationTo: 'media', 
           required: true,
         },
         {
           name: 'caption',
           type: 'text',
           label: 'Caption',
-          localized: true, // Captions can be translated
+          localized: true, 
         },
       ]
     }

@@ -70,6 +70,9 @@ export interface Config {
     users: User;
     media: Media;
     trips: Trip;
+    activities: Activity;
+    countries: Country;
+    accommodations: Accommodation;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -79,6 +82,9 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     trips: TripsSelect<false> | TripsSelect<true>;
+    activities: ActivitiesSelect<false> | ActivitiesSelect<true>;
+    countries: CountriesSelect<false> | CountriesSelect<true>;
+    accommodations: AccommodationsSelect<false> | AccommodationsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -191,53 +197,134 @@ export interface Media {
 export interface Trip {
   id: number;
   title: string;
-  urlKey: string;
-  description: string;
+  status?: ('draft' | 'published') | null;
+  coverImage: number | Media;
+  description?: string | null;
+  country: number | Country;
   period?: string | null;
-  country: string;
-  capital?: string | null;
-  languages?: string[] | null;
-  currency?: string | null;
-  budget?: string | null;
-  religion?: string | null;
-  travelTime?: string | null;
-  bestTravelTime?: string | null;
-  activities?: string[] | null;
-  accommodations?: string[] | null;
-  vegetarianFood?: string[] | null;
-  coverImage?: (number | null) | Media;
-  travelItinerary: ItineraryStep[];
+  budget?: {
+    amount?: number | null;
+    currency?: string | null;
+    perPerson?: boolean | null;
+  };
+  characteristics?: {
+    activities?: (number | Activity)[] | null;
+    accommodations?: (number | Accommodation)[] | null;
+  };
+  itinerary?:
+    | (
+        | {
+            time?: string | null;
+            locationName: string;
+            /**
+             * @minItems 2
+             * @maxItems 2
+             */
+            location?: [number, number] | null;
+            description?: string | null;
+            activities?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            accommodation?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            gallery?:
+              | {
+                  media: number | Media;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'fullDay';
+          }
+        | {
+            locationName: string;
+            description?: string | null;
+            /**
+             * @minItems 2
+             * @maxItems 2
+             */
+            location?: [number, number] | null;
+            gallery?:
+              | {
+                  media: number | Media;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'waypoint';
+          }
+      )[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ItineraryStep".
+ * via the `definition` "countries".
  */
-export interface ItineraryStep {
-  step: number;
-  time: string;
-  locationName: string;
-  locationGpsLat?: number | null;
-  locationGpsLon?: number | null;
-  description: string;
-  activities?:
-    | {
-        id: string;
-        activity: string;
-      }[]
-    | null;
-  accommodationTip?: string | null;
-  gallery?:
-    | {
-        image: number | Media;
-        caption?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'itineraryStep';
+export interface Country {
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activities".
+ */
+export interface Activity {
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "accommodations".
+ */
+export interface Accommodation {
+  id: number;
+  name: string;
+  type?: ('hotel' | 'hostel' | 'camping' | 'guesthouse' | 'resort' | 'apartment' | 'other') | null;
+  description?: string | null;
+  /**
+   * @minItems 2
+   * @maxItems 2
+   */
+  location?: [number, number] | null;
+  website?: string | null;
+  priceRange?: ('budget' | 'midrange' | 'luxury') | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -257,6 +344,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'trips';
         value: number | Trip;
+      } | null)
+    | ({
+        relationTo: 'activities';
+        value: number | Activity;
+      } | null)
+    | ({
+        relationTo: 'countries';
+        value: number | Country;
+      } | null)
+    | ({
+        relationTo: 'accommodations';
+        value: number | Accommodation;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -380,56 +479,97 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface TripsSelect<T extends boolean = true> {
   title?: T;
-  urlKey?: T;
-  description?: T;
-  period?: T;
-  country?: T;
-  capital?: T;
-  languages?: T;
-  currency?: T;
-  budget?: T;
-  religion?: T;
-  travelTime?: T;
-  bestTravelTime?: T;
-  activities?: T;
-  accommodations?: T;
-  vegetarianFood?: T;
+  status?: T;
   coverImage?: T;
-  travelItinerary?:
+  description?: T;
+  country?: T;
+  period?: T;
+  budget?:
     | T
     | {
-        itineraryStep?: T | ItineraryStepSelect<T>;
+        amount?: T;
+        currency?: T;
+        perPerson?: T;
+      };
+  characteristics?:
+    | T
+    | {
+        activities?: T;
+        accommodations?: T;
+      };
+  itinerary?:
+    | T
+    | {
+        fullDay?:
+          | T
+          | {
+              time?: T;
+              locationName?: T;
+              location?: T;
+              description?: T;
+              activities?: T;
+              accommodation?: T;
+              gallery?:
+                | T
+                | {
+                    media?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        waypoint?:
+          | T
+          | {
+              locationName?: T;
+              description?: T;
+              location?: T;
+              gallery?:
+                | T
+                | {
+                    media?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ItineraryStep_select".
+ * via the `definition` "activities_select".
  */
-export interface ItineraryStepSelect<T extends boolean = true> {
-  step?: T;
-  time?: T;
-  locationName?: T;
-  locationGpsLat?: T;
-  locationGpsLon?: T;
+export interface ActivitiesSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "countries_select".
+ */
+export interface CountriesSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "accommodations_select".
+ */
+export interface AccommodationsSelect<T extends boolean = true> {
+  name?: T;
+  type?: T;
   description?: T;
-  activities?:
-    | T
-    | {
-        id?: T;
-        activity?: T;
-      };
-  accommodationTip?: T;
-  gallery?:
-    | T
-    | {
-        image?: T;
-        caption?: T;
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
+  location?: T;
+  website?: T;
+  priceRange?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

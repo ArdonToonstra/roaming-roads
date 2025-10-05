@@ -1,6 +1,6 @@
-import { CollectionConfig } from 'payload/types';
+import type { CollectionConfig } from 'payload';
 import { FullDay } from '../blocks/FullDay'; // We'll create these blocks next
-import { Waypoint } from '../blocks/Waypoint';
+import { Waypoint } from '../blocks/WayPoint';
 
 const Trips: CollectionConfig = {
   slug: 'trips',
@@ -84,10 +84,10 @@ const Trips: CollectionConfig = {
                   hasMany: true,
                 },
                 {
-                  name: 'accomodations',
+                  name: 'accommodations',
                   label: 'Accommodations',
                   type: 'relationship',
-                  relationTo: 'accomodations',
+                  relationTo: 'accommodations',
                   hasMany: true,
                 },
               ]
