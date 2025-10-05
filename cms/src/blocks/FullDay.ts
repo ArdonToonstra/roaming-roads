@@ -10,6 +10,14 @@ export const FullDay: Block = {
     { name: 'time', type: 'text', label: 'Time Span (e.g., 1 day - 1 night)' },
     { name: 'locationName', type: 'text', label: 'Location Name', required: true },
     { name: 'location', type: 'point', label: 'GPS Coordinates' },
+    {
+      name: 'regionProvince',
+      type: 'text',
+      label: 'Region/Province',
+      admin: {
+        description: 'Which region/province this location is in (e.g., "Issyk-Kul Region", "Naryn Province")',
+      },
+    },
     { name: 'description', type: 'textarea', label: 'Short description' },
     { name: 'activities', type: 'richText', label: 'Activities and details' },
     { name: 'accommodation', type: 'richText', label: 'Accommodation' },

@@ -10,6 +10,14 @@ export const Waypoint: Block = {
     { name: 'locationName', type: 'text', label: 'Waypoint Name', required: true },
     { name: 'description', type: 'textarea', label: 'Description' },
     { name: 'location', type: 'point', label: 'GPS Coordinates' },
+    {
+      name: 'regionProvince',
+      type: 'text',
+      label: 'Region/Province',
+      admin: {
+        description: 'Which region/province this waypoint is in (e.g., "Issyk-Kul Region", "Naryn Province")',
+      },
+    },
 
     {
       name: 'gallery',
