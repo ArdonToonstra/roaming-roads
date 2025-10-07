@@ -1,0 +1,17 @@
+{
+  "buildCommand": "cd cms && npm run build",
+  "outputDirectory": "cms/.next",
+  "installCommand": "cd cms && npm install",
+  "framework": "nextjs",
+  "functions": {
+    "cms/src/app/(payload)/api/**": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/cms/$1"
+    }
+  ]
+}
