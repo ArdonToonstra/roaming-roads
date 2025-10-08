@@ -35,7 +35,7 @@ export default buildConfig({
             React.createElement('span', null, 'Roaming Roads CMS')
           )
         }) as any,
-        Icon: (() => React.createElement('img', { src: '/admin-logo.png', alt: 'RR', style: { height: 24, width: 24, objectFit: 'contain' } })) as any,
+        Icon: (() => React.createElement('img', { src: '/roaming-roads-logo.png', alt: 'RR', style: { height: 24, width: 24, objectFit: 'contain' } })) as any,
       },
       // You can add future custom Nav or Dashboard components here
     },
