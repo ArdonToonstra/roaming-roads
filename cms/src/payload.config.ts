@@ -31,7 +31,7 @@ export default buildConfig({
           return React.createElement(
             'div',
             { style: { display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600, fontSize: '1rem' } },
-            React.createElement('img', { src: '/admin-logo.png', alt: 'Roaming Roads', style: { height: 32, width: 'auto' } }),
+            React.createElement('img', { src: '/roaming-roads-logo.png', alt: 'Roaming Roads', style: { height: 32, width: 'auto' } }),
             React.createElement('span', null, 'Roaming Roads CMS')
           )
         }) as any,
@@ -41,15 +41,19 @@ export default buildConfig({
     },
   },
   // Public base URL of the deployed CMS (used for generating absolute asset URLs)
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL,
-  // Allow frontend origins (comma-separated list in ALLOWED_ORIGINS) or default to serverURL
-  cors: (process.env.ALLOWED_ORIGINS
-    ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim()).filter(Boolean)
-    : [process.env.NEXT_PUBLIC_SERVER_URL || '']).filter(Boolean),
-  // CSRF protection origins (usually same as CORS for browser POST forms)
-  csrf: (process.env.CSRF_ORIGINS
-    ? process.env.CSRF_ORIGINS.split(',').map(o => o.trim()).filter(Boolean)
-    : [process.env.NEXT_PUBLIC_SERVER_URL || '']).filter(Boolean),
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined),
+  // Build allowed origin arrays only if we actually have values; otherwise let Payload defaults apply
+  ...(function(){
+    const resolvedServer = process.env.NEXT_PUBLIC_SERVER_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined)
+    const corsList = (process.env.ALLOWED_ORIGINS?.split(',') || []).map(o=>o.trim()).filter(Boolean)
+    const csrfList = (process.env.CSRF_ORIGINS?.split(',') || []).map(o=>o.trim()).filter(Boolean)
+    if (resolvedServer && !corsList.length) corsList.push(resolvedServer)
+    if (resolvedServer && !csrfList.length) csrfList.push(resolvedServer)
+    const conf:any = {}
+    if (corsList.length) conf.cors = corsList
+    if (csrfList.length) conf.csrf = csrfList
+    return conf
+  })(),
   collections: [Users, Media, Trips, Countries, Accommodations],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
