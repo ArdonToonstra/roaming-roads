@@ -6,6 +6,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import React from 'react'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -23,6 +24,20 @@ export default buildConfig({
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+    components: {
+      graphics: {
+        Logo: (() => {
+          return React.createElement(
+            'div',
+            { style: { display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600, fontSize: '1rem' } },
+            React.createElement('img', { src: '/admin-logo.png', alt: 'Roaming Roads', style: { height: 32, width: 'auto' } }),
+            React.createElement('span', null, 'Roaming Roads CMS')
+          )
+        }) as any,
+        Icon: (() => React.createElement('img', { src: '/admin-logo.png', alt: 'RR', style: { height: 24, width: 24, objectFit: 'contain' } })) as any,
+      },
+      // You can add future custom Nav or Dashboard components here
     },
   },
   // Public base URL of the deployed CMS (used for generating absolute asset URLs)
