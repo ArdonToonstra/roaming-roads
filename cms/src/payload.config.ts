@@ -28,15 +28,8 @@ export default buildConfig({
     },
     components: {
       graphics: {
-        Logo: (() => {
-          return React.createElement(
-            'div',
-            { style: { display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600, fontSize: '1rem' } },
-            React.createElement('img', { src: '/roaming-roads-logo.png', alt: 'Roaming Roads', style: { height: 32, width: 'auto' } }),
-            React.createElement('span', null, 'Roaming Roads CMS')
-          )
-        }) as any,
-        Icon: (() => React.createElement('img', { src: '/roaming-roads-logo.png', alt: 'RR', style: { height: 24, width: 24, objectFit: 'contain' } })) as any,
+        Logo: './components/AdminGraphics#Logo',
+        Icon: './components/AdminGraphics#Icon',
       },
       // You can add future custom Nav or Dashboard components here
     },
