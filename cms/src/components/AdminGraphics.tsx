@@ -11,7 +11,7 @@ export const Logo: React.FC = () => {
       fontSize: '1rem' 
     }}>
       <img 
-        src="/roaming-roads-logo.png" 
+        src="/roaming-roads-logo-transparent.png" 
         alt="Roaming Roads" 
         style={{ height: 32, width: 'auto' }} 
       />
@@ -23,7 +23,7 @@ export const Logo: React.FC = () => {
 export const Icon: React.FC = () => {
   return (
     <img 
-      src="/roaming-roads-logo.png" 
+      src="/roaming-roads-logo-transparent.png" 
       alt="RR" 
       style={{ height: 24, width: 24, objectFit: 'contain' }} 
     />
