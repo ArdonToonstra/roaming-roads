@@ -1,0 +1,45 @@
+﻿@import 'tailwindcss';
+
+:root {
+  --background: 30 50% 96%; /* #F4F1ED */
+  --foreground: 210 17% 20%; /* #263238 */
+  --card: 0 0% 100%; /* #FFFFFF */
+  --card-foreground: 210 17% 20%; /* #263238 */
+  --popover: 0 0% 100%; /* #FFFFFF */
+  --popover-foreground: 210 17% 20%; /* #263238 */
+  --primary: 16 90% 64%; /* #F57D50 */
+  --primary-foreground: 0 0% 100%; /* #FFFFFF */
+  --secondary: 173 58% 39%; /* #2A9D8F */
+  --secondary-foreground: 0 0% 100%; /* #FFFFFF */
+  --muted: 30 50% 96%; /* #F4F1ED */
+  --muted-foreground: 255 35% 35%; /* #4C3A7A */
+  --accent: 16 90% 64%; /* #F57D50 */
+  --accent-foreground: 0 0% 100%; /* #FFFFFF */
+  --destructive: 0 84% 60%; /* #EF4444 */
+  --destructive-foreground: 0 0% 100%; /* #FFFFFF */
+  --border: 214 32% 91%; /* #E5E7EB */
+  --input: 214 32% 91%; /* #E5E7EB */
+  --ring: 16 90% 64%; /* #F57D50 */
+  --radius: 0.5rem;
+
+  /* These are populated via next/font in layout.tsx */
+  --font-sans: var(--loaded-font-sans, ui-sans-serif, system-ui);
+  --font-heading: var(--loaded-font-heading, ui-sans-serif, system-ui);
+}
+
+@layer base {
+  body {
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+  }
+
+  h1 { font-size: 2.25rem; line-height: 2.5rem; }
+  h2 { font-size: 1.875rem; line-height: 2.25rem; }
+  h3 { font-size: 1.5rem; line-height: 2rem; }
+}

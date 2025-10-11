@@ -125,3 +125,133 @@ docker exec -it cms-payload-1 npx payload generate:importmap
 | RichText component missing | generate:importmap |
 
 Keep answers concise for routine queries; expand only when user asks for deeper migration strategies.
+
+---
+
+## 🧵 Frontend (Next.js + Tailwind v4) Current State & Troubleshooting
+
+> This section documents recent issues encountered while bringing up the standalone `frontend/` Next.js application (separate from `roaming-roads-cms/`) and the resolutions / preferred patterns going forward.
+
+### Stack Snapshot
+
+- Location: `frontend/`
+- Framework: Next.js 15 (App Router, Turbopack)
+- Styling: Tailwind CSS v4 (new single `@import 'tailwindcss';` entrypoint) + custom CSS variables
+- Fonts: Loaded with `next/font` (replace any Google Fonts `@import` in CSS)
+- Config files of interest:
+    - `tailwind.config.js` (authoritative – keep only one Tailwind config; prefer JS OR TS, not both)
+    - `postcss.config.mjs`
+    - `src/app/globals.css`
+    - `src/app/layout.tsx`
+
+### Theme Strategy
+
+We expose design tokens as CSS custom properties (HSL components – NOT `hsl(var(--token))` in the variable itself) and then map them in Tailwind:
+
+```css
+:root {
+    --background: 30 50% 96%; /* H S L */
+    --primary: 16 90% 64%;
+    /* etc. */
+}
+
+body { background: hsl(var(--background)); }
+```
+
+Tailwind color extensions use `hsl(var(--token))` so utilities like `bg-background` work.
+
+### Font Loading Pattern
+
+Use `next/font/google` in `layout.tsx`:
+
+```ts
+import { Lato, Poppins } from 'next/font/google';
+const lato = Lato({ subsets: ['latin'], weight: ['400','700'], variable: '--loaded-font-sans' });
+const poppins = Poppins({ subsets: ['latin'], weight: ['700'], variable: '--loaded-font-heading' });
+
+<body className={`${lato.variable} ${poppins.variable}`}>...</body>
+```
+
+Then in `globals.css` set fallbacks:
+
+```css
+--font-sans: var(--loaded-font-sans, ui-sans-serif, system-ui);
+--font-heading: var(--loaded-font-heading, ui-sans-serif, system-ui);
+```
+
+Remove any `@import url('https://fonts.googleapis.com/...')` lines – they broke ordering (`@import` must appear before any other rules) and caused duplication when the file was repeatedly recreated.
+
+### Common Issues & Fixes
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| `Cannot apply unknown utility class 'bg-background'` | Tailwind didn't see custom color mapping or config not loaded | Ensure a single `tailwind.config.(js|ts)` with `extend.colors.background: 'hsl(var(--background))'`. Remove duplicate config file (keep one). Restart dev server after adding config. |
+| `@import rules must precede all rules` with huge line numbers (e.g. 900+) | Stale Turbopack cache held old concatenated `globals.css` copies | Delete `.next/` + restart. If persists, also remove `node_modules/.cache` and re-run `pnpm install`. |
+| File showed few lines on disk but build referenced hundreds | Turbopack cache corruption | Full cache purge (see below) |
+| Fonts not applying | Still using Google CSS imports | Switch to `next/font` variables, remove `@import` |
+
+### Full Cache Purge Procedure
+
+```powershell
+Stop-Process -Name node -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force .next
+Remove-Item -Recurse -Force node_modules/.cache -ErrorAction SilentlyContinue
+pnpm install
+pnpm run dev
+```
+
+### Do NOT
+
+- Keep both `tailwind.config.js` and `tailwind.config.ts` – pick one (JS currently primary). Remove the unused one to avoid ambiguity.
+- Use `@apply bg-background` inside `globals.css` if the utility isn't recognized yet. Prefer direct CSS `background: hsl(var(--background));` during bootstrap.
+
+### Recommended Cleanup (Actionable)
+
+1. Delete `tailwind.config.ts` (JS version present) OR migrate entirely to TS – avoid duplicates.
+2. Ensure `globals.css` only imports Tailwind once at top: `@import 'tailwindcss';`.
+3. Replace any lingering Google Font imports with `next/font` usage.
+4. Audit components for hard-coded colors; replace with semantic utilities (`bg-primary`, `text-foreground`).
+
+---
+
+## ✅ Frontend TODO (High-Level)
+
+See `frontend/TODO.md` for the living, granular list. High-level themes:
+
+1. Stabilize styling system (single Tailwind config, tokens, fonts)
+2. Implement Trips listing & detail pages wired to CMS API
+3. Add map rendering for waypoints (Leaflet / MapLibre)
+4. Add image optimization & responsive components
+5. Accessibility & performance pass (lighthouse baseline)
+6. Content model sync (ensure Payload blocks mirror frontend renderers)
+7. Add integration + e2e tests for critical routes
+
+---
+
+## 🔍 Quick Diagnosis Flow (Frontend Build Issues)
+
+1. Build error mentions unknown utility → check Tailwind config loaded / duplication.
+2. Line numbers far beyond file length → purge `.next/` cache.
+3. Fonts flashing / layout shift → confirm `next/font` usage & variable classes on `<body>`.
+4. Color mismatch → inspect computed style: ensure `hsl(var(--token))` not double-wrapped.
+
+---
+
+## 🧪 Minimal Verification Steps After Styling Changes
+
+```powershell
+pnpm run dev
+Start-Sleep 2
+curl http://localhost:3000 -UseBasicParsing | Select-String "Roaming" # sanity content check
+```
+
+If failure persists, run full purge (above) then retry.
+
+---
+
+## 🤖 AI Assistant Expectations (Frontend Scope)
+
+- Prefer direct edits to `tailwind.config.js` over scattering design primitives.
+- When adding a new semantic color / token, update both: CSS variable in `globals.css` + mapping in Tailwind config.
+- Always restart dev server after adding or deleting Tailwind config files.
+

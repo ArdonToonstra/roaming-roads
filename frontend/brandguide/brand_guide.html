@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roaming Roads | Interactive Brand Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Roaming Roads Official Palette (Warm Sand, Deep Charcoal, Sunset Orange) -->
+    <!-- Application Structure Plan: A single-page application with a fixed left-sidebar for primary navigation and a dynamic main content area. This structure was chosen for its task-oriented usability, allowing users (designers, writers) to instantly access specific sections like 'Colors' or 'Voice' without linear scrolling. The main content area uses interactive components (clickable color swatches, toggles, charts) to turn the static guide into a functional toolkit. Navigation is handled by JS, which dynamically shows the relevant content section, creating a seamless, app-like experience. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Core Values -> Goal: Inform -> Presentation: Interactive Cards -> Interaction: Hover effect -> Justification: More engaging than a static list.
+        - Report Info: Brand Voice Characteristics -> Goal: Organize/Compare -> Viz: Radar Chart (Chart.js) -> Interaction: Tooltips -> Justification: Provides a quick visual "personality profile" of the brand's voice, making it more memorable than a table.
+        - Report Info: Color Palette -> Goal: Inform/Utility -> Presentation: Interactive Grid of Swatches -> Interaction: Click-to-copy hex code -> Justification: Turns the guide into a practical tool for designers.
+        - Report Info: Typography -> Goal: Demonstrate -> Presentation: Live text examples -> Interaction: None, direct demonstration -> Justification: Shows the fonts in their intended use case.
+        - Report Info: Voice Do/Don't -> Goal: Compare -> Presentation: Toggleable content blocks -> Interaction: Click to switch views -> Justification: Direct comparison is more effective for learning the brand voice.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+        h1, h2, h3, h4, .font-poppins {
+            font-family: 'Poppins', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#F4F1ED] text-[#263238]">
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-white/50 backdrop-blur-sm p-8 border-r border-black/5 hidden md:flex flex-col flex-shrink-0">
+            <div class="flex items-center justify-center mb-12">
+                <img src="C:\git\roaming-roads\frontend\brandguide\roaming-roads-logo-transparent.png" alt="Roaming Roads Logo" class="h-24">
+            </div>
+            <nav class="space-y-4">
+                <a href="#essence" class="nav-link text-lg font-poppins block p-2 rounded-lg hover:bg-[#F57D50]/20 transition-colors duration-200">Brand Essence</a>
+                <a href="#voice" class="nav-link text-lg font-poppins block p-2 rounded-lg hover:bg-[#F57D50]/20 transition-colors duration-200">Brand Voice</a>
+                <a href="#visuals" class="nav-link text-lg font-poppins block p-2 rounded-lg hover:bg-[#F57D50]/20 transition-colors duration-200">Visual Identity</a>
+                <a href="#action" class="nav-link text-lg font-poppins block p-2 rounded-lg hover:bg-[#F57D50]/20 transition-colors duration-200">In Action</a>
+            </nav>
+        </aside>
+
+        <!-- Mobile Header -->
+        <header class="md:hidden fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-10 border-b border-black/5 p-4 flex justify-between items-center">
+             <img src="C:\git\roaming-roads\frontend\brandguide\roaming-roads-logo-transparent.png" alt="Roaming Roads Logo" class="h-12">
+             <select id="mobile-nav" class="bg-[#F4F1ED] border border-[#4C3A7A] rounded-lg p-2 font-poppins">
+                <option value="#essence">Brand Essence</option>
+                <option value="#voice">Brand Voice</option>
+                <option value="#visuals">Visual Identity</option>
+                <option value="#action">In Action</option>
+            </select>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 sm:p-8 md:p-12 mt-16 md:mt-0">
+            <div id="content-container">
+                <!-- Section: Brand Essence -->
+                <section id="essence" class="content-section">
+                    <h1 class="text-5xl font-poppins font-bold text-[#4C3A7A] mb-4">Our Essence: The Compass</h1>
+                    <p class="text-lg mb-8 leading-relaxed max-w-3xl">This is the core of 'roaming roads'. Our mission, vision, and values form the compass for every journey we share and every decision we make. They define who we are and why we do this: to inspire authentic travel.</p>
+                    
+                    <h2 class="text-3xl font-poppins font-bold text-[#2A9D8F] mb-6">Our Core Values</h2>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <h3 class="font-poppins text-2xl font-bold text-[#F57D50] mb-2">Adventurous</h3>
+                            <p>We encourage exploration and stepping off the beaten path. We seek the unique and unexpected.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <h3 class="font-poppins text-2xl font-bold text-[#F57D50] mb-2">Independent</h3>
+                            <p>100% ad-free and affiliate-free. Our content is unbiased and driven by genuine experience.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <h3 class="font-poppins text-2xl font-bold text-[#F57D50] mb-2">Honest</h3>
+                            <p>We provide a real, unfiltered look at travel - the good, the bad, and the unexpected.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Brand Voice -->
+                <section id="voice" class="content-section hidden">
+                    <h1 class="text-5xl font-poppins font-bold text-[#4C3A7A] mb-4">Our Voice: The Travel Companion</h1>
+                    <p class="text-lg mb-8 leading-relaxed max-w-3xl">Our tone is a balance of practical and playful. We are the knowledgeable, down-to-earth friend you ask for real travel advice. Our voice is short, powerful, and lively, reflecting the joy of travel.</p>
+                    
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h2 class="text-3xl font-poppins font-bold text-[#2A9D8F] mb-6">Character Profile</h2>
+                            <div class="chart-container bg-white p-4 rounded-xl shadow-sm">
+                                <canvas id="voiceChart"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-poppins font-bold text-[#2A9D8F] mb-6">In Practice</h2>
+                            <div class="bg-white p-6 rounded-xl shadow-sm">
+                                <div class="flex border-b mb-4">
+                                    <button id="do-btn" class="voice-toggle-btn flex-1 p-3 font-poppins text-xl bg-[#F57D50] text-white rounded-t-lg">Do</button>
+                                    <button id="dont-btn" class="voice-toggle-btn flex-1 p-3 font-poppins text-xl bg-gray-200 rounded-t-lg">Don't</button>
+                                </div>
+                                <div id="do-content" class="voice-content">
+                                    <p class="text-lg font-bold mb-2 text-green-700">✓ Practical & Lively</p>
+                                    <p class="text-base leading-relaxed">"Pro tip: the best coffee is actually found in a tiny, unmarked shop around the corner from the main square. We've marked it on the map."</p>
+                                </div>
+                                <div id="dont-content" class="voice-content hidden">
+                                    <p class="text-lg font-bold mb-2 text-red-700">✗ Formal & Distant</p>
+                                    <p class="text-base leading-relaxed">"Our research indicates that a premier coffee establishment is situated in close proximity to the central plaza."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Visual Identity -->
+                <section id="visuals" class="content-section hidden">
+                    <h1 class="text-5xl font-poppins font-bold text-[#4C3A7A] mb-4">Our Look: The Horizon</h1>
+                    <p class="text-lg mb-8 leading-relaxed max-w-3xl">Our visual identity evokes a feeling of energy, adventure, and discovery. It's professional, modern, and inspiring, with a clean aesthetic that lets our photography shine.</p>
+                    
+                     <h2 class="text-3xl font-poppins font-bold text-[#2A9D8F] mb-6">Logo</h2>
+                    <div class="grid md:grid-cols-2 gap-8 items-center mb-12">
+                        <div class="bg-white p-8 rounded-xl shadow-sm flex items-center justify-center">
+                            <img src="C:\git\roaming-roads\frontend\brandguide\roaming-roads-logo-transparent.png" alt="Roaming Roads Logo" class="h-40">
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm">
+                            <h4 class="font-poppins font-bold text-xl mb-3">Usage Guidelines</h4>
+                             <ul class="list-disc list-inside space-y-2">
+                                <li>The circular form represents the globe and a complete journey.</li>
+                                <li>Colors evoke sunrise and sunset over diverse landscapes.</li>
+                                <li>Maintain a clear space around the logo equal to the height of the 'r' in 'roaming'.</li>
+                                <li class="text-red-700"><strong>Don't:</strong> stretch, distort, re-color, or alter the logo in any way.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h2 class="text-3xl font-poppins font-bold text-[#2A9D8F] mb-6">Color Palette</h2>
+                    <p class="mb-6">Click a color to copy the hex code.</p>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
+                        <div class="color-swatch" data-color="#F57D50">
+                            <div class="h-24 rounded-lg" style="background-color: #F57D50;"></div>
+                            <h4 class="font-poppins mt-2 font-bold">Sunset Orange</h4>
+                            <p class="text-sm">#F57D50</p>
+                        </div>
+                        <div class="color-swatch" data-color="#4C3A7A">
+                            <div class="h-24 rounded-lg" style="background-color: #4C3A7A;"></div>
+                            <h4 class="font-poppins mt-2 font-bold">Twilight Purple</h4>
+                            <p class="text-sm">#4C3A7A</p>
+                        </div>
+                        <div class="color-swatch" data-color="#2A9D8F">
+                            <div class="h-24 rounded-lg" style="background-color: #2A9D8F;"></div>
+                            <h4 class="font-poppins mt-2 font-bold">Ocean Teal</h4>
+                            <p class="text-sm">#2A9D8F</p>
+                        </div>
+                        <div class="color-swatch" data-color="#263238">
+                            <div class="h-24 rounded-lg" style="background-color: #263238;"></div>
+                            <h4 class="font-poppins mt-2 font-bold">Deep Charcoal</h4>
+                            <p class="text-sm">#263238</p>
+                        </div>
+                        <div class="color-swatch" data-color="#F4F1ED">
+                            <div class="h-24 rounded-lg border" style="background-color: #F4F1ED;"></div>
+                            <h4 class="font-poppins mt-2 font-bold">Warm Sand</h4>
+                            <p class="text-sm">#F4F1ED</p>
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-3xl font-poppins font-bold text-[#2A9D8F] mb-6">Typography</h2>
+                    <div class="grid md:grid-cols-2 gap-8 mb-12">
+                        <div class="bg-white p-6 rounded-xl shadow-sm">
+                            <h3 class="font-poppins text-3xl font-bold mb-4">Headings: Poppins Bold</h3>
+                            <p>Used for all titles and major headlines to create impact and grab attention.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm">
+                            <h3 class="text-3xl mb-4" style="font-family: 'Lato', sans-serif; font-weight: 400;">Body: Lato Regular</h3>
+                            <p class="text-lg">This is the Lato font, chosen for its clarity and readability. It ensures a comfortable reading experience, even for longer travel stories. The focus is on clarity.</p>
+                        </div>
+                    </div>
+
+                    <h2 class="text-3xl font-poppins font-bold text-[#2A9D8F] mb-6">Photography Style</h2>
+                     <div class="bg-white p-8 rounded-xl shadow-sm">
+                        <p class="text-lg mb-4">Authentic, high-quality photography is the heart of our brand. It must feel real and immersive.</p>
+                        <ul class="list-disc list-inside space-y-3">
+                            <li><strong>Content:</strong> Dynamic, real moments. We capture vibrant landscapes, interesting details, and genuine travel experiences. Our photos should <span class="font-bold">never</span> look like generic stock images.</li>
+                            <li><strong>Editing Style:</strong> Photos should be edited to be bright, crisp, and colorful. The style should be consistent (e.g., using the same preset), enhancing natural beauty without looking fake. Think vibrant colors, good contrast, and a clean finish.</li>
+                        </ul>
+                    </div>
+
+                </section>
+
+                <!-- Section: In Action -->
+                <section id="action" class="content-section hidden">
+                    <h1 class="text-5xl font-poppins font-bold text-[#4C3A7A] mb-4">In Action: The Destination</h1>
+                    <p class="text-lg mb-8 leading-relaxed max-w-3xl">Here you can see how all the elements of the brand guide come together in practice. These are the blueprints for our main content formats, designed for an immersive and user-friendly experience.</p>
+                    
+                    <div class="space-y-8">
+                        <div class="bg-white p-8 rounded-xl shadow-sm">
+                            <h2 class="text-3xl font-poppins font-bold text-[#2A9D8F] mb-4">Homepage Header</h2>
+                            <ul class="list-disc list-inside space-y-2 text-base leading-relaxed">
+                                <li><strong>Visual:</strong> A full-width, breathtaking photo of a scenic road or landscape.</li>
+                                <li><strong>Layout:</strong> Logo centered at the top.</li>
+                                <li><strong>Headline:</strong> A powerful, central headline in <span class="font-poppins font-bold">Poppins Bold</span>: <span class="font-poppins font-bold text-[#F57D50]">FIND YOUR NEXT ROAD.</span></li>
+                                <li><strong>Sub-headline:</strong> A clear mission statement in Lato: "Authentic travel guides, honestly written. No ads. No affiliate links. Ever."</li>
+                                <li><strong>CTA:</strong> A prominent button in <span class="font-bold" style="color: #F57D50;">Sunset Orange</span> with the text "EXPLORE GUIDES".</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-8 rounded-xl shadow-sm">
+                            <h2 class="text-3xl font-poppins font-bold text-[#2A9D8F] mb-4">Travel Story / Blog Post</h2>
+                            <ul class="list-disc list-inside space-y-3 text-base leading-relaxed">
+                                <li><strong>Interactive Map:</strong> A central element of the page. The map displays the entire route with numbered pins for each step or major point of interest.</li>
+                                <li><strong>Numbered Steps:</strong> A list of steps corresponds to the pins on the map. Clicking a step (e.g., "Day 1: Arrival & Exploration") scrolls to that section and highlights the pin on the map.</li>
+                                <li><strong>Header:</strong> The post title in <span class="font-poppins font-bold">Poppins Bold</span> over a full-width hero image from the trip.</li>
+                                <li><strong>Step-by-Step Content:</strong> The body text is broken down by the numbered steps. Each section contains the story, photos, and tips related to that part of the journey.</li>
+                                <li><strong>Structure:</strong> Subheadings in <span class="font-poppins font-bold">Poppins Bold</span> are used within each step's content for clarity.</li>
+                                <li><strong>Practical Tips:</strong> A "Trip Notes" box with a <span style="background-color: #F4F1ED; padding: 0 4px; border-radius: 4px;">Warm Sand</span> background can be used within each step for specific advice (e.g., restaurant recommendation, ticket info).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const mobileNav = document.getElementById('mobile-nav');
+        const contentSections = document.querySelectorAll('.content-section');
+        const voiceToggleButtons = document.querySelectorAll('.voice-toggle-btn');
+        const voiceContents = document.querySelectorAll('.voice-content');
+        const colorSwatches = document.querySelectorAll('.color- swatch');
+
+        const setActiveSection = (targetId) => {
+            contentSections.forEach(section => {
+                section.classList.toggle('hidden', section.id !== targetId);
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle('font-bold', link.getAttribute('href') === `#${targetId}`);
+                link.classList.toggle('text-[#F57D50]', link.getAttribute('href') === `#${targetId}`);
+            });
+            if (mobileNav.value !== `#${targetId}`) {
+                mobileNav.value = `#${targetId}`;
+            }
+        };
+
+        const handleNavClick = (target) => {
+             if (target) {
+                setActiveSection(target.substring(1));
+            }
+        };
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleNavClick(e.currentTarget.getAttribute('href'));
+            });
+        });
+
+        mobileNav.addEventListener('change', (e) => {
+             handleNavClick(e.target.value);
+        });
+
+        voiceToggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const isDoButton = button.id === 'do-btn';
+                document.getElementById('do-btn').classList.toggle('bg-[#F57D50]', isDoButton);
+                document.getElementById('do-btn').classList.toggle('text-white', isDoButton);
+                document.getElementById('do-btn').classList.toggle('bg-gray-200', !isDoButton);
+                document.getElementById('dont-btn').classList.toggle('bg-[#F57D50]', !isDoButton);
+                document.getElementById('dont-btn').classList.toggle('text-white', !isDoButton);
+                document.getElementById('dont-btn').classList.toggle('bg-gray-200', isDoButton);
+                
+                document.getElementById('do-content').classList.toggle('hidden', !isDoButton);
+                document.getElementById('dont-content').classList.toggle('hidden', isDoButton);
+            });
+        });
+
+        colorSwatches.forEach(swatch => {
+            swatch.addEventListener('click', () => {
+                const color = swatch.dataset.color;
+                navigator.clipboard.writeText(color).then(() => {
+                    const originalText = swatch.querySelector('p').innerText;
+                    swatch.querySelector('p').innerText = 'Copied!';
+                    setTimeout(() => {
+                         swatch.querySelector('p').innerText = originalText;
+                    }, 1500);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+            });
+             swatch.style.cursor = 'pointer';
+        });
+
+        const ctx = document.getElementById('voiceChart').getContext('2d');
+        const voiceChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Practical', 'Informative', 'Lively', 'Down-to-earth', 'Playful', 'Humor'],
+                datasets: [{
+                    label: 'Brand Voice Character',
+                    data: [9, 8, 8, 7, 6, 5],
+                    backgroundColor: 'rgba(245, 125, 80, 0.2)',
+                    borderColor: 'rgba(245, 125, 80, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(245, 125, 80, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(245, 125, 80, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: 'rgba(38, 50, 56, 0.2)'
+                        },
+                        grid: {
+                            color: 'rgba(38, 50, 56, 0.2)'
+                        },
+                        pointLabels: {
+                            font: {
+                                size: 14,
+                                family: "'Poppins', sans-serif"
+                            },
+                            color: '#263238'
+                        },
+                        ticks: {
+                            backdropColor: 'rgba(255, 255, 255, 0.75)',
+                            stepSize: 2,
+                            max: 10,
+                            min: 0
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        const initialHash = window.location.hash || '#essence';
+        handleNavClick(initialHash);
+
+    });
+</script>
+
+</body>
+</html>
+
