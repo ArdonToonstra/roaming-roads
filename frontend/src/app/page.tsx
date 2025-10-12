@@ -2,6 +2,7 @@
 import { payload } from '@/lib/api';
 import { Trip } from '@/types/payload';
 import { env } from '@/lib/config';
+import { getImageUrl } from '@/lib/images';
 
 async function getFeaturedTrips(): Promise<Trip[]> {
   try {
@@ -28,10 +29,7 @@ async function getFeaturedTrips(): Promise<Trip[]> {
 }
 
 function FeaturedTripCard({ trip }: { trip: Trip }) {
-  const coverImage = trip.coverImage;
-  const imageUrl = typeof coverImage === 'object' && coverImage.url 
-    ? coverImage.url 
-    : '/api/placeholder/400/300';
+  const imageUrl = getImageUrl(trip.coverImage);
   
   const country = typeof trip.country === 'object' ? trip.country.name : 'Adventure';
   

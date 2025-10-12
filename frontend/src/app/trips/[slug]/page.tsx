@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { MapPin, Calendar, Clock, Camera, DollarSign, ArrowLeft, Navigation } from 'lucide-react';
 import { Trip, Media, Country, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
 import { notFound } from 'next/navigation';
+import { getImageUrl } from '@/lib/images';
 
 interface TripPageProps {
   params: {
@@ -138,7 +139,7 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
               return (
                 <div key={idx} className="rounded-lg overflow-hidden">
                   <img 
-                    src={media.url || ''}
+                    src={getImageUrl(media.url)}
                     alt={item.caption || media.alt || `Photo ${idx + 1}`}
                     className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
                   />
@@ -310,7 +311,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                   return (
                     <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
                       <img 
-                        src={media.url || ''}
+                        src={getImageUrl(media.url)}
                         alt={highlight.caption || media.alt || `Highlight ${index + 1}`}
                         className="w-full h-64 object-cover"
                       />

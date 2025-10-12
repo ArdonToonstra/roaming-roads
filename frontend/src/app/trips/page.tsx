@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { MapPin, Calendar, Clock, Camera } from 'lucide-react';
 import { Trip, Media, Country } from '@/types/payload';
 import { env } from '@/lib/config';
+import { getImageUrl } from '@/lib/images';
 
 async function getTrips(): Promise<Trip[]> {
   try {
@@ -15,10 +16,7 @@ async function getTrips(): Promise<Trip[]> {
 }
 
 function TripCard({ trip }: { trip: Trip }) {
-  const coverImage = trip.coverImage;
-  const imageUrl = typeof coverImage === 'object' && coverImage.url 
-    ? coverImage.url 
-    : '/placeholder-trip.jpg';
+  const imageUrl = getImageUrl(trip.coverImage);
   
   const country = typeof trip.country === 'object' ? trip.country.name : 'Unknown';
   const highlightsCount = trip.highlightsMedia?.length || 0;

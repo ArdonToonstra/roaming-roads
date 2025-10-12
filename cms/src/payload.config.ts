@@ -62,7 +62,7 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    // Configure Vercel Blob storage for media uploads
+    // Use Vercel Blob storage for all environments
     vercelBlobStorage({
       collections: {
         media: true,

@@ -16,7 +16,7 @@ export const Media: CollectionConfig = {
     group: 'Media',
   },
   upload: {
-    // staticDir removed - using Vercel Blob storage via plugin
+    // Using Vercel Blob storage via plugin - no local staticDir needed
     imageSizes: [
       {
         name: 'thumbnail',
