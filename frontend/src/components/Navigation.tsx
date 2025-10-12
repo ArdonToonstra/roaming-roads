@@ -1,65 +1,131 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
-import { MapPin } from 'lucide-react';
+import { MapPin, Menu, X } from 'lucide-react';
 
 export default function Navigation() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+  const closeMenu = () => setIsOpen(false);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-black/5">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div 
-              className="w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200"
-              style={{ backgroundColor: '#F57D50' }}
-            >
-              <MapPin className="w-5 h-5 text-white" />
+          <Link href="/" className="flex items-center gap-3 group" onClick={closeMenu}>
+            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+              <MapPin className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="font-heading font-bold text-xl group-hover:text-[#F57D50] transition-colors" style={{ color: '#4C3A7A' }}>
+            <span className="font-heading font-bold text-xl text-muted-foreground group-hover:text-primary transition-colors">
               Roaming Roads
             </span>
           </Link>
           
-          {/* Navigation Links */}
+          {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
             <Link 
               href="/" 
-              className="font-medium hover:text-[#F57D50] transition-colors" 
-              style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}
+              className="font-medium text-foreground hover:text-primary transition-colors"
             >
               Home
             </Link>
             <Link 
-              href="/trips" 
-              className="font-medium hover:text-[#F57D50] transition-colors" 
-              style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}
+              href="/adventures" 
+              className="font-medium text-foreground hover:text-primary transition-colors"
             >
               Adventures
             </Link>
             <Link 
+              href="/globe" 
+              className="font-medium text-foreground hover:text-primary transition-colors"
+            >
+              Globe
+            </Link>
+            <Link 
               href="/about" 
-              className="font-medium hover:text-[#F57D50] transition-colors" 
-              style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}
+              className="font-medium text-foreground hover:text-primary transition-colors"
             >
               About
             </Link>
+            <Link 
+              href="/color-test" 
+              className="font-medium text-muted-foreground hover:text-primary transition-colors text-sm"
+            >
+              🎨 Colors
+            </Link>
           </div>
           
-          {/* CTA Button */}
+          {/* Desktop CTA Button */}
           <Link 
-            href="/trips" 
-            className="hidden sm:inline-block px-6 py-2 text-white font-heading font-bold text-sm rounded-full transition-colors duration-300 hover:opacity-90"
-            style={{ backgroundColor: '#2A9D8F' }}
+            href="/adventures" 
+            className="hidden md:inline-block px-6 py-2 bg-secondary text-secondary-foreground font-heading font-bold text-sm rounded-full transition-colors duration-300 hover:opacity-90"
           >
             Explore
           </Link>
           
           {/* Mobile Menu Button */}
-          <button className="md:hidden p-2" style={{ color: '#263238' }}>
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+          <button 
+            className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
+
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-card border-t border-border">
+              <Link 
+                href="/"
+                className="block px-3 py-2 text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
+                onClick={closeMenu}
+              >
+                Home
+              </Link>
+              <Link 
+                href="/adventures"
+                className="block px-3 py-2 text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
+                onClick={closeMenu}
+              >
+                Adventures
+              </Link>
+              <Link 
+                href="/globe"
+                className="block px-3 py-2 text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
+                onClick={closeMenu}
+              >
+                World Globe
+              </Link>
+              <Link 
+                href="/about"
+                className="block px-3 py-2 text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
+                onClick={closeMenu}
+              >
+                About
+              </Link>
+              
+              {/* Mobile CTA */}
+              <div className="pt-3 border-t border-border mt-3">
+                <Link 
+                  href="/adventures"
+                  className="block mx-3 px-6 py-3 bg-primary text-primary-foreground text-center font-heading font-bold rounded-full transition-colors duration-300 hover:opacity-90"
+                  onClick={closeMenu}
+                >
+                  Explore Adventures
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );

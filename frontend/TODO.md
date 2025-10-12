@@ -1,13 +1,22 @@
-# Frontend TODO / Roadmap
+# Fr## P0 – Stabilize Build & Styling
+- [x] Remove duplicate Tailwind config (decide: keep `tailwind.config.js`, delete `.ts`)
+- [x] Ensure `globals.css` only contains one `@import 'tailwindcss';` at top
+- [x] Switch fonts fully to `next/font` (Lato + Poppins) and remove any Google CSS imports
+- [x] Verify color utilities (`bg-background`, `text-foreground`, `bg-primary`, etc.) compile
+- [x] Make sure the brandguide is incorporated in the styling.
+- [x] Add a sample component using each semantic color for visual regression sanityTODO / Roadmap
 
 Status legend: (P0 = critical, P1 = high, P2 = normal, P3 = nice-to-have)
 
-## P0 – Stabilize Build & Styling
-- [ ] Remove duplicate Tailwind config (decide: keep `tailwind.config.js`, delete `.ts`)
-- [ ] Ensure `globals.css` only contains one `@import 'tailwindcss';` at top
-- [ ] Switch fonts fully to `next/font` (Lato + Poppins) and remove any Google CSS imports
-- [ ] Verify color utilities (`bg-background`, `text-foreground`, `bg-primary`, etc.) compile
-- [ ] Add a sample component using each semantic color for visual regression sanity
+## P0 – Navigation & Routing
+- [x] Add the following routing / pages and general content as far as possible:
+    - [x] home/: contains hero opening, then a random selection of 3 cards that contain a summary of trips
+    - [x] adventures/: will show all trips in nice cards (say 9 per page). If you click on it, you will be linked to the actual trip page. The adventure page will have some filter options to show cards based to be determined filter criteria.
+    - [x] globe/ (named world map or something fitting ): this page will show an interactive world map, where our trips are mapped to a country. Hovering over the country will show a trip summary card. Clicking on the country will link to the trip. For now, we will just have a 1:1 mapping. Later something smart may be created. We can use the 3 letter country code to map. For this, see also "P1 – Mapping & Geo" below.
+    - [x] about/: the current page. 
+- [x] Implement a footer with basic site info
+- [x] Create hambruger menu for mobile
+
 
 ## P1 – Data Integration
 - [ ] Create a lightweight client to fetch Trips from Payload CMS (REST or GraphQL)
@@ -29,7 +38,6 @@ Status legend: (P0 = critical, P1 = high, P2 = normal, P3 = nice-to-have)
 
 ## P2 – Design System Enhancements
 - [ ] Extract button, card, badge components using semantic tokens
-- [ ] Add dark mode toggle (next-themes) & define dark palette tokens
 - [ ] Typography scale audit (body, lead, small, meta)
 - [ ] Spacing & container utilities (content max-width)
 
