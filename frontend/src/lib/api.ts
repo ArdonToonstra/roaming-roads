@@ -16,9 +16,12 @@ class PayloadAPI {
         'Content-Type': 'application/json',
         ...options?.headers,
       },
-      next: {
-        revalidate: 3600, // Cache for 1 hour by default
-      },
+      // In development, disable caching to always get fresh data
+      // In production, cache for better performance
+      ...(env.NODE_ENV === 'development' 
+        ? { cache: 'no-store' as RequestCache }
+        : { next: { revalidate: 3600 } }
+      ),
       ...options,
     })
 
@@ -40,7 +43,7 @@ export const payload = {
     if (params?.limit) searchParams.set('limit', params.limit.toString())
     if (params?.where) searchParams.set('where', JSON.stringify(params.where))
     
-    // In development mode, include draft content
+    // In development mode, always include draft content
     if (env.NODE_ENV === 'development') {
       searchParams.set('draft', 'true')
     }

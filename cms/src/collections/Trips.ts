@@ -5,13 +5,19 @@ import { Waypoint } from '../blocks/WayPoint';
 const Trips: CollectionConfig = {
   slug: 'trips',
   access: {
-    // Allow public read access for published trips
+    // Allow public read access for published trips, and draft trips in development
     read: ({ req: { user }, data }) => {
       // If user is authenticated, allow all access
       if (user) {
         return true;
       }
-      // For public access, only allow published trips
+      
+      // In development mode, allow access to both published and draft trips
+      if (process.env.NODE_ENV === 'development') {
+        return true;
+      }
+      
+      // For public access in production, only allow published trips
       return {
         status: {
           equals: 'published',

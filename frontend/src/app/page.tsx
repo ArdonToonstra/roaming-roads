@@ -5,14 +5,8 @@ import { env } from '@/lib/config';
 
 async function getFeaturedTrips(): Promise<Trip[]> {
   try {
-    // In development mode, include draft trips
-    const statusFilter = env.NODE_ENV === 'development' 
-      ? { status: { in: ['published', 'draft'] } }
-      : { status: { equals: 'published' } };
-
     const response = await payload.getTrips({
       where: { 
-        ...statusFilter,
         featured: { equals: true }
       },
       limit: 3
@@ -21,7 +15,6 @@ async function getFeaturedTrips(): Promise<Trip[]> {
     // If no featured trips, get the 3 most recent trips
     if (response.docs.length === 0) {
       const fallbackResponse = await payload.getTrips({
-        where: statusFilter,
         limit: 3
       }) as { docs: Trip[] };
       return fallbackResponse.docs;
