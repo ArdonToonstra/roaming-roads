@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgis/postgis:15-3.4
+    environment:
+      POSTGRES_DB: roamingroads
+      POSTGRES_USER: rruser
+      POSTGRES_PASSWORD: z8ZWOUcPaXKgiAn0sATYNb7N61Lth0JyLbH
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rruser -d roamingroads"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  payload:
+    image: node:20-alpine
+    working_dir: /home/node/app
+    volumes:
+      - .:/home/node/app
+      - /home/node/app/node_modules  # anonymous volume to prevent overwriting
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    # Allocate TTY + keep STDIN open so we can answer Payload's migration prompts
+    stdin_open: true
+    tty: true
+    # Run install (first time), ensure import map is generated for richText, then start dev server
+    command: sh -c "npm install && npx payload generate:importmap && npm run dev"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+# This is the full local setup with database
+# To use: docker compose -f docker-compose.local-db.yml up

@@ -26,7 +26,7 @@ function TripCard({ trip }: { trip: Trip }) {
   
   return (
     <Link href={`/trips/${trip.slug || trip.id}`} className="group block">
-      <article className="bg-white rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+      <article className="bg-card rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden">
         <div className="relative">
           <img 
             src={imageUrl}
@@ -45,7 +45,7 @@ function TripCard({ trip }: { trip: Trip }) {
         </div>
         
         <div className="p-6">
-          <div className="flex items-center gap-2 text-sm mb-3" style={{ color: '#2A9D8F' }}>
+          <div className="flex items-center gap-2 text-sm mb-3 text-secondary">
             <MapPin className="w-4 h-4" />
             <span className="font-medium">{country}</span>
             {trip.period && (
@@ -56,32 +56,31 @@ function TripCard({ trip }: { trip: Trip }) {
             )}
           </div>
           
-          <h3 className="font-heading text-2xl font-bold mb-3 group-hover:text-[#F57D50] transition-colors duration-200" style={{ color: '#263238' }}>
+          <h3 className="font-heading text-2xl font-bold mb-3 group-hover:text-primary transition-colors duration-200 text-foreground">
             {trip.title}
           </h3>
           
-          <p className="mb-4 line-clamp-3" style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
+          <p className="mb-4 line-clamp-3 font-sans text-foreground">
             {trip.description}
           </p>
           
           {/* Regions visited */}
           {trip.regionsVisited && trip.regionsVisited.length > 0 && (
             <div className="mb-4">
-              <p className="text-sm font-medium mb-2" style={{ color: '#4C3A7A' }}>
+              <p className="text-sm font-medium mb-2 text-muted-foreground">
                 Regions explored:
               </p>
               <div className="flex flex-wrap gap-2">
                 {trip.regionsVisited.slice(0, 3).map((region, index) => (
                   <span 
                     key={index}
-                    className="px-3 py-1 text-xs rounded-full"
-                    style={{ backgroundColor: '#F4F1ED', color: '#263238' }}
+                    className="px-3 py-1 text-xs rounded-full bg-muted text-foreground"
                   >
                     {region.regionName}
                   </span>
                 ))}
                 {trip.regionsVisited.length > 3 && (
-                  <span className="text-xs" style={{ color: '#2A9D8F' }}>
+                  <span className="text-xs text-secondary">
                     +{trip.regionsVisited.length - 3} more
                   </span>
                 )}
@@ -92,7 +91,7 @@ function TripCard({ trip }: { trip: Trip }) {
           {/* Budget info */}
           {trip.budget && (
             <div className="flex items-center justify-between text-sm mb-4">
-              <div className="flex items-center gap-1" style={{ color: '#263238' }}>
+              <div className="flex items-center gap-1 text-foreground">
                 <span>Budget:</span>
                 <span className="font-medium">
                   {trip.budget.amount} {trip.budget.currency}
@@ -103,10 +102,7 @@ function TripCard({ trip }: { trip: Trip }) {
           )}
           
           <div className="pt-4 border-t border-gray-100">
-            <span 
-              className="inline-flex items-center text-sm font-medium group-hover:text-[#F57D50] transition-colors"
-              style={{ color: '#2A9D8F' }}
-            >
+            <span className="inline-flex items-center text-sm font-medium group-hover:text-primary transition-colors text-secondary">
               Read full story →
             </span>
           </div>
@@ -120,15 +116,15 @@ export default async function TripsPage() {
   const trips = await getTrips();
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#F4F1ED' }}>
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6" style={{ color: '#4C3A7A' }}>
+            <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6 text-muted-foreground">
               Our Travel Stories
             </h1>
-            <p className="text-xl max-w-3xl mx-auto leading-relaxed" style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
+            <p className="text-xl max-w-3xl mx-auto leading-relaxed font-sans text-foreground">
               Authentic adventures from around the world. No ads, no affiliate links, 
               just honest travel experiences to inspire your next journey.
             </p>
@@ -148,24 +144,23 @@ export default async function TripsPage() {
               </div>
               
               <div className="text-center mt-16">
-                <p className="text-lg" style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
+                <p className="text-lg font-sans text-foreground">
                   More adventures coming soon. Follow our journey as we explore the world authentically.
                 </p>
               </div>
             </>
           ) : (
             <div className="text-center py-16">
-              <div className="bg-white rounded-xl p-12 max-w-md mx-auto">
-                <h3 className="text-2xl font-heading font-bold mb-4" style={{ color: '#4C3A7A' }}>
+              <div className="bg-card rounded-xl p-12 max-w-md mx-auto">
+                <h3 className="text-2xl font-heading font-bold mb-4 text-muted-foreground">
                   Adventures Loading...
                 </h3>
-                <p className="mb-6" style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
+                <p className="mb-6 font-sans text-foreground">
                   We're currently adding our travel stories. Check back soon for authentic adventures!
                 </p>
                 <Link 
                   href="/"
-                  className="inline-block px-6 py-3 text-white font-heading font-bold rounded-full transition-colors duration-300 hover:opacity-90"
-                  style={{ backgroundColor: '#F57D50' }}
+                  className="inline-block px-6 py-3 bg-primary text-primary-foreground font-heading font-bold rounded-full transition-opacity duration-300 hover:opacity-90"
                 >
                   Back to Home
                 </Link>

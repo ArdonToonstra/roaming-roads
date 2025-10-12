@@ -19,9 +19,11 @@ Status legend: (P0 = critical, P1 = high, P2 = normal, P3 = nice-to-have)
 
 
 ## P1 – Data Integration
-- [ ] Create a lightweight client to fetch Trips from Payload CMS (REST or GraphQL)
-- [ ] Implement `/trips` list page consuming real data
-- [ ] Implement `/trips/[slug]` pulling itinerary blocks (FullDay, WayPoint)
+- [x] Create a lightweight client to fetch Trips from Payload CMS (REST or GraphQL) 
+- [x] Implement `/trips` list page consuming real data
+- [x] Implement `/trips/[slug]` pulling itinerary blocks (FullDay, WayPoint)
+- [x] Convert trips pages to use semantic colors
+- [ ] Test with live CMS connection and verify data flow
 - [ ] Graceful loading + error states
 - [ ] Basic caching strategy (ISR or fetch cache options)
 
