@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* Force usage of semantic utilities to guarantee emission */
+.probe {
+  @apply bg-primary text-primary-foreground bg-secondary text-secondary-foreground bg-accent text-accent-foreground bg-muted text-muted-foreground bg-destructive text-destructive-foreground border-border;
+}

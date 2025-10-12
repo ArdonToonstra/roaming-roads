@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { MapPin, Menu, X } from 'lucide-react';
+import Image from 'next/image';
+import { Menu, X } from 'lucide-react';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,8 +17,15 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group" onClick={closeMenu}>
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-              <MapPin className="w-5 h-5 text-primary-foreground" />
+            <div className="w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+              <Image 
+                src="/roaming-roads-logo-transparent_temp.svg" 
+                alt="Roaming Roads Logo"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain"
+                priority
+              />
             </div>
             <span className="font-heading font-bold text-xl text-muted-foreground group-hover:text-primary transition-colors">
               Roaming Roads
