@@ -23,8 +23,11 @@ Status legend: (P0 = critical, P1 = high, P2 = normal, P3 = nice-to-have)
 - [x] Implement `/trips` list page consuming real data
 - [x] Implement `/trips/[slug]` pulling itinerary blocks (FullDay, WayPoint)
 - [x] Convert trips pages to use semantic colors
-- [ ] Test with live CMS connection and verify data flow
-- [ ] Graceful loading + error states
+- [x] Set up local CMS development environment with live database
+- [x] Configure public access for Trips, Countries, and Media collections
+- [ ] Test with live CMS connection and verify data flow (API 403 → public access fix applied)
+- [ ] Remove hardcoded content, use only dynamic data from CMS
+- [ ] Graceful loading + error states  
 - [ ] Basic caching strategy (ISR or fetch cache options)
 
 ## P1 – Mapping & Geo

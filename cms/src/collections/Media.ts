@@ -2,6 +2,14 @@ import type { CollectionConfig } from 'payload';
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  access: {
+    // Allow public read access to media
+    read: () => true,
+    // Restrict other operations to authenticated users
+    create: ({ req: { user } }) => !!user,
+    update: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => !!user,
+  },
   admin: {
     useAsTitle: 'alt',
     defaultColumns: ['alt', 'mediaType', 'country', 'relatedTrip'],

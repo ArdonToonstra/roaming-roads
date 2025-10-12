@@ -4,6 +4,25 @@ import { Waypoint } from '../blocks/WayPoint';
 
 const Trips: CollectionConfig = {
   slug: 'trips',
+  access: {
+    // Allow public read access for published trips
+    read: ({ req: { user }, data }) => {
+      // If user is authenticated, allow all access
+      if (user) {
+        return true;
+      }
+      // For public access, only allow published trips
+      return {
+        status: {
+          equals: 'published',
+        },
+      };
+    },
+    // Restrict other operations to authenticated users
+    create: ({ req: { user } }) => !!user,
+    update: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => !!user,
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'country', 'status'],

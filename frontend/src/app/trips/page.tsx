@@ -2,11 +2,17 @@ import { payload } from '@/lib/api';
 import Link from 'next/link';
 import { MapPin, Calendar, Clock, Camera } from 'lucide-react';
 import { Trip, Media, Country } from '@/types/payload';
+import { env } from '@/lib/config';
 
 async function getTrips(): Promise<Trip[]> {
   try {
+    // In development mode, include draft trips
+    const statusFilter = env.NODE_ENV === 'development' 
+      ? { status: { in: ['published', 'draft'] } }
+      : { status: { equals: 'published' } };
+
     const response = await payload.getTrips({
-      where: { status: { equals: 'published' } }
+      where: statusFilter
     }) as { docs: Trip[] };
     return response.docs;
   } catch (error) {

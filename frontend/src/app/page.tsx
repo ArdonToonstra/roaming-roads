@@ -1,6 +1,83 @@
 ﻿import Link from 'next/link';
+import { payload } from '@/lib/api';
+import { Trip } from '@/types/payload';
+import { env } from '@/lib/config';
 
-export default function HomePage() {
+async function getFeaturedTrips(): Promise<Trip[]> {
+  try {
+    // In development mode, include draft trips
+    const statusFilter = env.NODE_ENV === 'development' 
+      ? { status: { in: ['published', 'draft'] } }
+      : { status: { equals: 'published' } };
+
+    const response = await payload.getTrips({
+      where: { 
+        ...statusFilter,
+        featured: { equals: true }
+      },
+      limit: 3
+    }) as { docs: Trip[] };
+    
+    // If no featured trips, get the 3 most recent trips
+    if (response.docs.length === 0) {
+      const fallbackResponse = await payload.getTrips({
+        where: statusFilter,
+        limit: 3
+      }) as { docs: Trip[] };
+      return fallbackResponse.docs;
+    }
+    
+    return response.docs;
+  } catch (error) {
+    console.error('Failed to fetch featured trips:', error);
+    return [];
+  }
+}
+
+function FeaturedTripCard({ trip }: { trip: Trip }) {
+  const coverImage = trip.coverImage;
+  const imageUrl = typeof coverImage === 'object' && coverImage.url 
+    ? coverImage.url 
+    : '/api/placeholder/400/300';
+  
+  const country = typeof trip.country === 'object' ? trip.country.name : 'Adventure';
+  
+  return (
+    <Link href={`/trips/${trip.slug || trip.id}`} className="group">
+      <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+        <div className="aspect-[4/3] bg-muted overflow-hidden">
+          <img 
+            src={imageUrl}
+            alt={trip.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        </div>
+        <div className="p-6">
+          <div className="flex flex-wrap gap-2 mb-3">
+            {trip.regionsVisited?.slice(0, 2).map((region, index) => (
+              <span key={index} className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md">
+                {region.regionName}
+              </span>
+            ))}
+          </div>
+          <h3 className="font-heading font-bold text-xl text-card-foreground mb-2 group-hover:text-primary transition-colors">
+            {trip.title}
+          </h3>
+          <p className="text-muted-foreground mb-4 line-clamp-3">
+            {trip.description}
+          </p>
+          <div className="flex items-center justify-between text-sm text-muted-foreground">
+            <span>{country}</span>
+            <span>{trip.period || 'Adventure'}</span>
+          </div>
+        </div>
+      </article>
+    </Link>
+  );
+}
+
+export default async function HomePage() {
+  const featuredTrips = await getFeaturedTrips();
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F4F1ED' }}>
       {/* Hero Section */}
@@ -51,116 +128,42 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Trip Card 1 - Kyrgyzstan */}
-            <Link href="/trips/kyrgyzstan-adventure" className="group">
-              <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                <div className="aspect-[4/3] bg-muted overflow-hidden">
-                  <img 
-                    src="/api/placeholder/400/300" 
-                    alt="Kyrgyzstan Adventure"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    <span className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md">
-                      Adventure
-                    </span>
-                    <span className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md">
-                      Mountains
-                    </span>
-                  </div>
-                  <h3 className="font-heading font-bold text-xl text-card-foreground mb-2 group-hover:text-primary transition-colors">
-                    Kyrgyzstan Adventure
-                  </h3>
-                  <p className="text-muted-foreground mb-4">
-                    A stunning journey through the mountains and valleys of Kyrgyzstan, discovering nomadic culture and breathtaking landscapes.
-                  </p>
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <span>14 days</span>
-                    <span>Aug 2024</span>
-                  </div>
-                </div>
-              </article>
-            </Link>
+          {featuredTrips.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {featuredTrips.map((trip) => (
+                  <FeaturedTripCard key={trip.id} trip={trip} />
+                ))}
+              </div>
 
-            {/* Trip Card 2 - Nepal */}
-            <Link href="/trips/nepal-trek" className="group">
-              <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                <div className="aspect-[4/3] bg-muted overflow-hidden">
-                  <img 
-                    src="/api/placeholder/400/300" 
-                    alt="Nepal Himalaya Trek"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    <span className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md">
-                      Trekking
-                    </span>
-                    <span className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md">
-                      Spiritual
-                    </span>
-                  </div>
-                  <h3 className="font-heading font-bold text-xl text-card-foreground mb-2 group-hover:text-primary transition-colors">
-                    Nepal Himalaya Trek
-                  </h3>
-                  <p className="text-muted-foreground mb-4">
-                    Trekking through the majestic Himalayas and experiencing the rich spiritual culture of Nepal's mountain communities.
-                  </p>
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <span>18 days</span>
-                    <span>Apr 2024</span>
-                  </div>
-                </div>
-              </article>
-            </Link>
-
-            {/* Trip Card 3 - Iceland */}
-            <Link href="/trips/iceland-roadtrip" className="group">
-              <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                <div className="aspect-[4/3] bg-muted overflow-hidden">
-                  <img 
-                    src="/api/placeholder/400/300" 
-                    alt="Iceland Ring Road"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    <span className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md">
-                      Road Trip
-                    </span>
-                    <span className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md">
-                      Nature
-                    </span>
-                  </div>
-                  <h3 className="font-heading font-bold text-xl text-card-foreground mb-2 group-hover:text-primary transition-colors">
-                    Iceland Ring Road
-                  </h3>
-                  <p className="text-muted-foreground mb-4">
-                    A complete circuit of Iceland discovering incredible waterfalls, glaciers, geysers, and the raw beauty of Nordic nature.
-                  </p>
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <span>12 days</span>
-                    <span>Mar 2024</span>
-                  </div>
-                </div>
-              </article>
-            </Link>
-          </div>
-
-          {/* Call to Action */}
-          <div className="text-center mt-12">
-            <Link 
-              href="/adventures"
-              className="inline-block px-8 py-3 bg-primary text-primary-foreground font-heading font-bold rounded-full hover:opacity-90 transition-opacity duration-300"
-            >
-              View All Adventures
-            </Link>
-          </div>
+              {/* Call to Action */}
+              <div className="text-center mt-12">
+                <Link 
+                  href="/trips"
+                  className="inline-block px-8 py-3 bg-primary text-primary-foreground font-heading font-bold rounded-full hover:opacity-90 transition-opacity duration-300"
+                >
+                  View All Adventures
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-12">
+              <div className="bg-card rounded-xl p-8 max-w-lg mx-auto border border-border">
+                <h3 className="text-2xl font-heading font-bold mb-4 text-card-foreground">
+                  Adventures Coming Soon
+                </h3>
+                <p className="mb-6 text-muted-foreground">
+                  We're currently adding our travel stories and adventures. Check back soon for authentic travel experiences!
+                </p>
+                <Link 
+                  href="/trips"
+                  className="inline-block px-6 py-3 bg-primary text-primary-foreground font-heading font-bold rounded-full hover:opacity-90 transition-opacity duration-300"
+                >
+                  Explore Trips
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </div>

@@ -40,6 +40,11 @@ export const payload = {
     if (params?.limit) searchParams.set('limit', params.limit.toString())
     if (params?.where) searchParams.set('where', JSON.stringify(params.where))
     
+    // In development mode, include draft content
+    if (env.NODE_ENV === 'development') {
+      searchParams.set('draft', 'true')
+    }
+    
     const query = searchParams.toString()
     const endpoint = `${API_ENDPOINTS.TRIPS}${query ? `?${query}` : ''}`
     
@@ -48,7 +53,16 @@ export const payload = {
 
   // Get single trip by slug
   getTrip: async (slug: string) => {
-    const endpoint = `${API_ENDPOINTS.TRIPS}?where[slug][equals]=${slug}&limit=1`
+    const searchParams = new URLSearchParams()
+    searchParams.set('where[slug][equals]', slug)
+    searchParams.set('limit', '1')
+    
+    // In development mode, include draft content
+    if (env.NODE_ENV === 'development') {
+      searchParams.set('draft', 'true')
+    }
+    
+    const endpoint = `${API_ENDPOINTS.TRIPS}?${searchParams.toString()}`
     const response = await api.get<{ docs: any[] }>(endpoint)
     return response.docs[0] || null
   },
