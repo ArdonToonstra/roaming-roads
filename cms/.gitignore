@@ -30,6 +30,12 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
+.env.production
+
+# Database sync files
+production-sync.sql
+production-backup.sql
 
 # vercel
 .vercel
