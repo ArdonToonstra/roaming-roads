@@ -21,15 +21,13 @@ export default function Navigation() {
               <Image 
                 src="/roaming-roads-logo-transparent_temp.svg" 
                 alt="Roaming Roads Logo"
-                width={48}
-                height={48}
+                width={98}
+                height={98}
                 className="w-full h-full object-contain"
                 priority
               />
             </div>
-            <span className="font-heading font-bold text-xl text-muted-foreground group-hover:text-primary transition-colors">
-              Roaming Roads
-            </span>
+           
           </Link>
           
           {/* Desktop Navigation Links */}
@@ -57,12 +55,6 @@ export default function Navigation() {
               className="font-medium text-foreground hover:text-primary transition-colors"
             >
               About
-            </Link>
-            <Link 
-              href="/color-test" 
-              className="font-medium text-muted-foreground hover:text-primary transition-colors text-sm"
-            >
-              🎨 Colors
             </Link>
           </div>
           

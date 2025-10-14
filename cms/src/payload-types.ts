@@ -388,6 +388,10 @@ export interface Country {
 export interface Trip {
   id: number;
   title: string;
+  /**
+   * URL-friendly version of the title (e.g., "kyrgyzstan-adventure")
+   */
+  slug?: string | null;
   status?: ('draft' | 'published') | null;
   coverImage: number | Media;
   /**
@@ -973,6 +977,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface TripsSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
   status?: T;
   coverImage?: T;
   highlightsMedia?:

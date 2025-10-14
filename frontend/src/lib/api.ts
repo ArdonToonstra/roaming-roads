@@ -54,10 +54,19 @@ export const payload = {
     return api.get(endpoint)
   },
 
-  // Get single trip by slug
-  getTrip: async (slug: string) => {
+  // Get single trip by slug or ID
+  getTrip: async (slugOrId: string) => {
     const searchParams = new URLSearchParams()
-    searchParams.set('where[slug][equals]', slug)
+    
+    // Try to determine if it's an ID (numeric) or slug (string)
+    if (/^\d+$/.test(slugOrId)) {
+      // It's an ID
+      searchParams.set('where[id][equals]', slugOrId)
+    } else {
+      // It's a slug
+      searchParams.set('where[slug][equals]', slugOrId)
+    }
+    
     searchParams.set('limit', '1')
     
     // In development mode, include draft content
@@ -66,6 +75,7 @@ export const payload = {
     }
     
     const endpoint = `${API_ENDPOINTS.TRIPS}?${searchParams.toString()}`
+    console.log('Making API request to:', endpoint)
     const response = await api.get<{ docs: any[] }>(endpoint)
     return response.docs[0] || null
   },

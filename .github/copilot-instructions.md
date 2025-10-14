@@ -2,68 +2,101 @@
 
 Welcome! This guide will help you understand the Roaming Roads project structure, architecture, and development workflows.
 
-## Big Picture: A Tale of Two Stacks
+## Big Picture: Modern Travel Blog Platform
 
-This repository contains two separate applications in a monorepo structure:
+This repository contains a modern travel blog platform built with a headless CMS architecture:
 
-1.  **`roaming-roads-cms/`**: The **current, active project**. It's a headless setup using **Next.js (React/TypeScript)** for the frontend and **Payload CMS** for the backend.
-2.  **`legacy-blazor/`**: The **original application**, built with **.NET 8 Blazor WASM**. It is kept for reference, especially for its data models and UI structure. **New development should happen in `roaming-roads-cms`**.
+1.  **`cms/`**: The **backend and admin interface** using **Payload CMS** (Next.js-based headless CMS)
+2.  **`frontend/`**: The **user-facing website** built with **Next.js (React/TypeScript)**
 
-The overall goal is to rebuild the Blazor-based website using the modern Next.js and Payload CMS stack.
+The architecture separates content management from content presentation, allowing for flexible deployment and scaling.
 
 ---
 
-## 🚀 Current Project: `roaming-roads-cms` (Next.js + Payload)
+## 🚀 Backend: `cms/` (Payload CMS)
 
-This is a headless CMS architecture. The Payload backend provides a content API that the Next.js frontend consumes.
+The CMS provides a headless backend with both admin interface and API endpoints.
 
 ### Key Concepts & Architecture
 
--   **Backend (Payload CMS)**: A Node.js-based CMS that provides a GraphQL and REST API. Configuration is code-first.
--   **Frontend (Next.js)**: A React framework for building the user-facing website. It fetches data from the Payload API at build time and client-side.
--   **Data Models**: The content structure is defined in TypeScript files within `roaming-roads-cms/src/collections/`. These models (e.g., `Trips.ts`) are based on the YAML files found in the `legacy-blazor` project.
--   **Content Management**: Content (trips, media, etc.) is managed through the Payload admin panel, which runs locally at `http://localhost:3000/admin`.
+-   **Payload CMS**: A Node.js-based headless CMS that provides GraphQL and REST APIs. Configuration is code-first.
+-   **Database**: Uses a cloud PostgreSQL database with PostGIS for location data
+-   **Data Models**: Content structure defined in TypeScript files within `cms/src/collections/` (e.g., `Trips.ts`, `Countries.ts`, `Media.ts`)
+-   **Admin Interface**: Available at `http://localhost:3000/admin` for content management
+-   **API Endpoints**: REST API at `/api/trips`, `/api/countries`, etc.
 
 ### Developer Workflow
 
-The entire local environment (Payload CMS, Postgres database with PostGIS) is managed with Docker.
+The local CMS environment connects to the production database and is managed with Docker.
 
-**To start the local development server:**
+**To start the CMS development server:**
 
-1.  Navigate to the CMS directory: `cd roaming-roads-cms`
+1.  Navigate to the CMS directory: `cd cms`
 2.  Run Docker Compose: `docker compose up`
 
-This will start the CMS, which will be accessible at `http://localhost:3000`.
+This starts the CMS at `http://localhost:3000` (admin at `/admin`, API at `/api/*`).
 
 ### Key Files
 
--   `roaming-roads-cms/docker-compose.yml`: Defines the local development services (Postgres, Payload).
--   `roaming-roads-cms/src/payload.config.ts`: The main configuration file for the Payload CMS, where collections and globals are defined.
--   `roaming-roads-cms/src/collections/Trips.ts`: Defines the data structure for "Trips". A key file to understand the content model.
--   `roaming-roads-cms/src/app/(frontend)/page.tsx`: The Next.js homepage, demonstrating how data is fetched and rendered.
+-   `cms/docker-compose.yml`: Defines the local development services
+-   `cms/src/payload.config.ts`: Main Payload CMS configuration
+-   `cms/src/collections/Trips.ts`: Trip data model and access controls
+-   `cms/src/collections/Countries.ts`: Country data model
+-   `cms/src/collections/Media.ts`: Media/image management
+-   `cms/src/blocks/`: Reusable content blocks (FullDay, WayPoint)
+
+### Access Control
+
+All collections follow this pattern:
+- **Read access**: Public (allows frontend API access)  
+- **Write access**: Authenticated users only (CMS admin users)
 
 ---
 
-## 📚 Reference Project: `legacy-blazor`
+## 🎨 Frontend: `frontend/` (Next.js)
 
-This is the original Blazor application. Do not add new features here. Use it as a reference for business logic and data structures when building out the new `roaming-roads-cms` application.
+The user-facing website that consumes data from the CMS API.
 
 ### Key Concepts & Architecture
 
--   **Architecture**: A .NET 8 ASP.NET Core host serves a Blazor WebAssembly (WASM) frontend. The backend also provides a JSON API for the frontend.
--   **Data Workflow**: This project has a unique, file-based content workflow.
-    1.  On application startup, the `DataSeeder.cs` service reads `.yaml` files from `legacy-blazor/RoamingRoutes/_contentCache/`.
-    2.  It parses these YAML files and uses them to populate a local SQLite database.
-    3.  The API controllers (`TripsController.cs`, etc.) read from this SQLite database to serve data to the Blazor frontend.
--   **Mapping**: The frontend uses Leaflet.js for interactive maps, controlled via .NET-to-JavaScript interop (`wwwroot/js/site.js`).
+-   **Next.js 15**: React framework with App Router and Turbopack
+-   **Styling**: Tailwind CSS v4 with custom design tokens
+-   **Data Fetching**: Fetches from CMS API endpoints (`http://localhost:3000/api/*`)
+-   **Fonts**: Loaded with `next/font` (Lato, Poppins)
+
+### Developer Workflow
+
+**To start the frontend development server:**
+
+1.  Navigate to the frontend directory: `cd frontend`  
+2.  Install dependencies: `pnpm install`
+3.  Start dev server: `pnpm dev`
+
+Frontend runs at `http://localhost:3001`.
 
 ### Key Files
 
--   `legacy-blazor/RoamingRoutes/Data/DataSeeder.cs`: The logic for the YAML-to-SQLite data seeding process.
--   `legacy-blazor/RoamingRoutes/Controllers/TripsController.cs`: Example of a backend API endpoint.
--   `legacy-blazor/RoamingRoutes.Client/Pages/TripDetail.razor`: A primary frontend component for displaying trip details.
--   `legacy-blazor/RoamingRoutes.Client/wwwroot/js/site.js`: Contains the JavaScript functions for Leaflet map integration.
--   `legacy-blazor/RoamingRoutes/_contentCache/Trips/kyrgyzstan.yaml`: An example of the source data structure that informs the new Payload collections.
+-   `frontend/src/app/`: Next.js app router pages
+-   `frontend/src/app/trips/page.tsx`: Trips listing page
+-   `frontend/src/app/trips/[slug]/page.tsx`: Trip detail pages
+-   `frontend/src/lib/api.ts`: CMS API client
+-   `frontend/src/lib/config.ts`: Environment configuration
+-   `frontend/src/types/payload.ts`: TypeScript types for CMS data
+-   `frontend/src/app/globals.css`: Tailwind CSS and design tokens
+-   `frontend/tailwind.config.js`: Tailwind configuration
+
+### Data Flow
+
+1. **Content Creation**: Editors create/edit content via CMS admin (`/admin`)
+2. **API Access**: Frontend fetches data via REST API (`/api/trips`, etc.)
+3. **Rendering**: Frontend renders trips, countries, and media
+4. **Deployment**: CMS deployed to Vercel, Frontend deployed separately
+
+### Environment Setup
+
+- **CMS**: Connects to production PostgreSQL database (cloud)
+- **Frontend**: Connects to CMS API endpoints for data
+- **Local Development**: Both services run locally, CMS uses production DB
 
 ---
 
@@ -86,43 +119,50 @@ While the data model is still evolving, prefer fast, disposable workflows over i
 
 5. Locked documents rels constraint error (`payload_locked_documents_rels_*_fk does not exist`): indicates partially applied push. Preferred fix early: reset volume. Advanced fix: recreate missing FK then retry.
 
-### Reset Database (Dev Only)
+**IMPORTANT**: Local Docker connects to **production database**. Be extremely careful with schema changes.
+
+### Migration Strategy
+
+**For Schema Changes:**
+1. **Test locally first** - Make schema changes in code
+2. **Generate migration** - `docker exec cms-payload-1 npx payload migrate:create`
+3. **Review migration files** - Check SQL in `src/migrations/`
+4. **Run migration carefully** - `docker exec cms-payload-1 npx payload migrate`
+5. **Deploy to Vercel** - Push code changes
+
+### Database Reset (Emergency Only)
+Only if you need to reset local development state:
 ```powershell
 docker compose down
-docker volume rm cms_postgres_data
+docker volume rm cms_postgres_data  # Only affects local Docker volume
 docker compose up
 ```
+**WARNING**: This does NOT affect production database.
 
-### Generate Durable Migrations Once Stable
+### Migration Commands
 ```powershell
-docker exec -it cms-payload-1 npx payload generate:migration
-docker exec -it cms-payload-1 npx payload migrate
+# Check migration status
+docker exec cms-payload-1 npx payload migrate:status
+
+# Create new migration
+docker exec cms-payload-1 npx payload migrate:create
+
+# Run pending migrations
+docker exec cms-payload-1 npx payload migrate
+
+# Generate import map for rich text
+docker exec cms-payload-1 npx payload generate:importmap
 ```
-Commit the generated `src/migrations/*` files.
 
-### Import Map (Rich Text / Lexical)
-If you see `PayloadComponent not found`:
-```powershell
-docker exec -it cms-payload-1 npx payload generate:importmap
-```
-`docker-compose.yml` auto-runs this now, but keep for reference.
+### Common Issues & Fixes
 
-### Interactive Prompts Tips
-- `stdin_open: true` and `tty: true` are enabled for the `payload` service.
-- If interaction fails: `docker attach cms-payload-1` or run a foreground dev container:
-  ```powershell
-  docker compose run --service-ports payload sh -c "npm install && npm run dev"
-  ```
-
-### Minimal Cheat Sheet
-| Situation | Action |
-|-----------|--------|
-| Heavy schema churn | Reset DB |
-| Enum same values, new name | Rename enum |
-| Field array→multi-select | Rename enum + columns |
-| text→richText | Reset or manual cast |
-| FK constraint missing | Reset or recreate FK |
-| RichText component missing | generate:importmap |
+| Issue | Solution |
+|-------|----------|
+| Schema auto-applied in dev | Run migration or accept auto-changes |
+| RichText component missing | `generate:importmap` |
+| Migration conflicts | Review and modify migration SQL |
+| Access control issues | Check user authentication |
+| API 400/403 errors | Verify access rules and auth state |
 
 Keep answers concise for routine queries; expand only when user asks for deeper migration strategies.
 

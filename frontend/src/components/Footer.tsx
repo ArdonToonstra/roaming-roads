@@ -19,11 +19,11 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-              Authentic travel stories, honestly written. No ads. No affiliate links. Ever.
+              Authentic travel stories, honestly written. No ads. No affiliate links.
             </p>
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Heart className="w-3 h-3 text-primary" />
-              <span>Made with passion for authentic travel</span>
+              <span>Made with passion for travel</span>
             </div>
           </div>
 
@@ -96,19 +96,13 @@ export default function Footer() {
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-primary" />
                 <a 
-                  href="mailto:hello@roamingroads.com"
+                  href="mailto:hello@roamingroads.nl"
                   className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
-                  hello@roamingroads.com
+                  hello@roamingroads.nl
                 </a>
               </div>
               
-              <div className="pt-2">
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  <strong className="text-foreground">Our Promise:</strong><br />
-                  100% independent travel content. We don't accept sponsored content, affiliate commissions, or advertising revenue.
-                </p>
-              </div>
             </div>
           </div>
         </div>

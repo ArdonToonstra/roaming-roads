@@ -7,7 +7,13 @@ const Accommodations: CollectionConfig = {
     defaultColumns: ['name', 'type', 'starRating', 'priceRange', 'country'],
   },
   access: {
+    // Allow public read access for the frontend API to fetch accommodations
     read: () => true,
+    
+    // Only authenticated users can create, update, and delete
+    create: ({ req: { user } }) => !!user,
+    update: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => !!user,
   },
   fields: [
     {

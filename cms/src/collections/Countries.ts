@@ -7,7 +7,13 @@ const Countries: CollectionConfig = {
     defaultColumns: ['name', 'countryCode', 'capital', 'currency'],
   },
   access: {
+    // Allow public read access for the frontend API to fetch countries
     read: () => true,
+    
+    // Only authenticated users can create, update, and delete
+    create: ({ req: { user } }) => !!user,
+    update: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => !!user,
   },
   fields: [
     {

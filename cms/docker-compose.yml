@@ -9,9 +9,9 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=development
-    # Allocate TTY + keep STDIN open so we can answer Payload's migration prompts
+    # Keep STDIN open for Payload's migration prompts (TTY disabled to prevent log duplication)
     stdin_open: true
-    tty: true
+    tty: false
     # Run install (first time), ensure import map is generated for richText, then start dev server
     command: sh -c "npm install && npx payload generate:importmap && npm run dev"
     restart: unless-stopped

@@ -6,17 +6,20 @@ import { notFound } from 'next/navigation';
 import { getImageUrl } from '@/lib/images';
 
 interface TripPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-async function getTrip(slug: string): Promise<Trip | null> {
+async function getTrip(slugOrId: string): Promise<Trip | null> {
   try {
-    const response = await payload.getTrip(slug);
+    console.log('Fetching trip with slug/ID:', slugOrId);
+    const response = await payload.getTrip(slugOrId);
+    console.log('Trip response:', response);
     return response;
   } catch (error) {
     console.error('Failed to fetch trip:', error);
+    console.error('Slug/ID was:', slugOrId);
     return null;
   }
 }
@@ -169,7 +172,8 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
 }
 
 export default async function TripDetailPage({ params }: TripPageProps) {
-  const trip = await getTrip(params.slug);
+  const { slug } = await params;
+  const trip = await getTrip(slug);
   
   if (!trip) {
     notFound();
