@@ -1,5 +1,16 @@
+// Rich text content type (Lexical editor format)
+export interface RichTextContent {
+  [k: string]: unknown
+}
+
+// Point/Location data type
+export interface PointLocation {
+  type: 'Point'
+  coordinates: [number, number] // [longitude, latitude]
+}
+
 // Base types from Payload CMS
-export interface PayloadCollection<T = any> {
+export interface PayloadCollection<T = unknown> {
   docs: T[]
   totalDocs: number
   limit: number
@@ -10,6 +21,37 @@ export interface PayloadCollection<T = any> {
   hasNextPage: boolean
   prevPage?: number
   nextPage?: number
+}
+
+// Accommodation type
+export interface Accommodation {
+  id: string
+  name: string
+  type: 'hotel' | 'hostel' | 'camping' | 'guesthouse' | 'resort' | 'apartment' | 'yurt' | 'wild_camping' | 'homestay' | 'ecolodge' | 'other'
+  description?: RichTextContent
+  location?: PointLocation
+  address?: {
+    street?: string
+    city?: string
+    region?: string
+    postalCode?: string
+    country?: string | Country
+  }
+  contact?: {
+    website?: string
+    phone?: string
+    email?: string
+  }
+  priceRange?: 'budget' | 'midrange' | 'luxury' | 'premium'
+  starRating?: number
+  amenities?: string[]
+  photos?: Media[]
+  bookingLinks?: Array<{
+    platform: string
+    url: string
+  }>
+  createdAt: string
+  updatedAt: string
 }
 
 // Media type
@@ -45,7 +87,7 @@ export interface Country {
   name: string
   slug: string
   flagEmoji?: string
-  description?: any // Rich text content
+  description?: RichTextContent
   capital?: string
   currency?: string
   language?: string
@@ -53,8 +95,8 @@ export interface Country {
   bestTimeToVisit?: string[]
   mainReligion?: string
   safetyLevel?: 'very_safe' | 'safe' | 'moderate' | 'caution' | 'high_risk'
-  visaRequirements?: any // Rich text content
-  culturalTips?: any // Rich text content
+  visaRequirements?: RichTextContent
+  culturalTips?: RichTextContent
   headerImage?: Media
   gallery?: Media[]
   createdAt: string
@@ -86,9 +128,9 @@ export interface Trip {
     currency: string
     perPerson: boolean
   }
-  activities?: any // Rich text content
+  activities?: RichTextContent
   featuredAccommodations?: Array<{
-    accommodation: string | any // Accommodation relationship
+    accommodation: string | Accommodation // Accommodation relationship
   }>
   itinerary?: Array<CmsFullDayBlock | CmsWaypointBlock>
   createdAt: string
@@ -107,8 +149,8 @@ export interface CmsFullDayBlock {
   }
   regionProvince?: string
   description?: string
-  activities?: any // Rich text content
-  accommodation?: string | any // Accommodation relationship
+  activities?: RichTextContent // Rich text content
+  accommodation?: string | Accommodation // Accommodation relationship
   transportation?: {
     arrivalMethod?: 'walking' | 'rental_car' | 'public_bus' | 'taxi' | 'train' | 'flight' | 'boat' | 'bicycle' | 'hitchhiking' | 'tour_bus' | 'other'
     departureMethod?: string
@@ -129,7 +171,7 @@ export interface CmsWaypointBlock {
   id: string
   locationName: string
   description?: string
-  activities?: any // Rich text content
+  activities?: RichTextContent // Rich text content
   location?: {
     type: 'Point'
     coordinates: [number, number] // [longitude, latitude]
@@ -162,16 +204,16 @@ interface FullDayBlock {
   }
   accommodation?: {
     name: string
-    location?: any // Point field
+    location?: PointLocation // Point field
     checkIn?: string
     checkOut?: string
     notes?: string
   }
   transportation?: Transportation[]
   wayPoints?: WayPoint[]
-  summary?: any // Rich text content
+  summary?: RichTextContent // Rich text content
   photos?: Media[]
-  personalNotes?: any // Rich text content
+  personalNotes?: RichTextContent // Rich text content
 }
 
 interface Transportation {
@@ -196,20 +238,20 @@ interface Transportation {
 export interface WayPoint {
   id: string
   name: string
-  location?: any // Point field
+  location?: PointLocation // Point field
   type: 'attraction' | 'restaurant' | 'viewpoint' | 'accommodation' | 'transport_hub' | 'shop' | 'other'
   visitTime?: {
     arrival: string
     departure?: string
   }
-  description?: any // Rich text content
+  description?: RichTextContent // Rich text content
   photos?: Media[]
   rating?: number
   cost?: {
     amount: number
     currency: string
   }
-  tips?: any // Rich text content
+  tips?: RichTextContent // Rich text content
   coordinates?: {
     lat: number
     lng: number

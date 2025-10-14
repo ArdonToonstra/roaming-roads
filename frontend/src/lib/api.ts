@@ -1,4 +1,5 @@
 import { env, API_ENDPOINTS } from './config'
+import type { Trip } from '../types/payload'
 
 // Base API client for Payload CMS
 class PayloadAPI {
@@ -38,7 +39,7 @@ const api = new PayloadAPI()
 // API functions for each collection
 export const payload = {
   // Get all trips
-  getTrips: async (params?: { limit?: number; where?: any }) => {
+  getTrips: async (params?: { limit?: number; where?: Record<string, unknown> }) => {
     const searchParams = new URLSearchParams()
     if (params?.limit) searchParams.set('limit', params.limit.toString())
     if (params?.where) searchParams.set('where', JSON.stringify(params.where))
@@ -76,7 +77,7 @@ export const payload = {
     
     const endpoint = `${API_ENDPOINTS.TRIPS}?${searchParams.toString()}`
     console.log('Making API request to:', endpoint)
-    const response = await api.get<{ docs: any[] }>(endpoint)
+    const response = await api.get<{ docs: Trip[] }>(endpoint)
     return response.docs[0] || null
   },
 
@@ -88,7 +89,7 @@ export const payload = {
   // Get country by slug
   getCountry: async (slug: string) => {
     const endpoint = `${API_ENDPOINTS.COUNTRIES}?where[slug][equals]=${slug}&limit=1`
-    const response = await api.get<{ docs: any[] }>(endpoint)
+    const response = await api.get<{ docs: Record<string, unknown>[] }>(endpoint)
     return response.docs[0] || null
   },
 

@@ -24,13 +24,13 @@ async function getTrip(slugOrId: string): Promise<Trip | null> {
   }
 }
 
-function renderRichText(content: any): string {
+function renderRichText(content: unknown): string {
   if (!content) return '';
   
   // Simple rich text renderer - you might want to use a proper rich text renderer
   if (typeof content === 'string') return content;
-  if (content.children) {
-    return content.children.map((child: any) => {
+  if (typeof content === 'object' && content !== null && 'children' in content && Array.isArray((content as {children: unknown[]}).children)) {
+    return (content as {children: {text?: string}[]}).children.map((child) => {
       if (child.text) return child.text;
       return '';
     }).join('');
