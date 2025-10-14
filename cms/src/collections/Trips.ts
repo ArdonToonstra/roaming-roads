@@ -26,7 +26,7 @@ const Trips: CollectionConfig = {
       name: 'slug',
       label: 'URL Slug',
       type: 'text',
-      required: false, // Make it optional initially for migration
+      required: true, // Required after migration populates existing data
       unique: true,
       admin: {
         position: 'sidebar',

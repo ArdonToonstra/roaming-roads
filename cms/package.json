@@ -13,7 +13,7 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate || echo 'No migrations to apply'",
+    "migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate --force || echo 'No migrations to apply'",
     "vercel-build": "npm run migrate && npm run build",
     "seed:users": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed-users.ts",
     "test": "pnpm run test:int && pnpm run test:e2e",
