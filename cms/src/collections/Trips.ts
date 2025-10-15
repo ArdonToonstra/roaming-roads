@@ -34,17 +34,21 @@ const Trips: CollectionConfig = {
       },
       hooks: {
         beforeValidate: [
-          (args: any) => {
-            const { data, operation } = args;
+          ({ data, operation, originalDoc }) => {
             if (operation === 'create' || operation === 'update') {
-              if (data?.title && !data?.slug) {
-                // Auto-generate slug from title if not provided
-                data.slug = data.title
+              // Only auto-generate slug if it's empty AND we have a title
+              if (data?.title && (!data?.slug || data.slug === '')) {
+                const newSlug = data.title
                   .toLowerCase()
                   .replace(/[^\w\s-]/g, '') // Remove special characters
                   .replace(/\s+/g, '-') // Replace spaces with hyphens
                   .replace(/-+/g, '-') // Replace multiple hyphens with single
                   .trim();
+                
+                // Only set the slug if it's different to prevent infinite loops
+                if (newSlug !== data.slug && newSlug !== originalDoc?.slug) {
+                  data.slug = newSlug;
+                }
               }
             }
             return data;
