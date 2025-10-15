@@ -34,7 +34,8 @@ const Trips: CollectionConfig = {
       },
       hooks: {
         beforeValidate: [
-          ({ data, operation }: { data: any; operation: string }) => {
+          (args: any) => {
+            const { data, operation } = args;
             if (operation === 'create' || operation === 'update') {
               if (data?.title && !data?.slug) {
                 // Auto-generate slug from title if not provided
