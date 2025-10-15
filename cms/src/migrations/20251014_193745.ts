@@ -7,17 +7,23 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   `)
   
   // Step 2: Generate slugs for existing trips that don't have them
+  // Use trip ID to ensure uniqueness if title-based slug would conflict
   await db.execute(sql`
     UPDATE "trips" 
-    SET "slug" = LOWER(
-      TRIM(
-        REGEXP_REPLACE(
-          REGEXP_REPLACE("title", '[^a-zA-Z0-9\s\-]', '', 'g'),
-          '\s+', '-', 'g'
-        )
-      )
-    )
-    WHERE ("slug" IS NULL OR "slug" = '') AND "title" IS NOT NULL;
+    SET "slug" = CASE 
+      WHEN LENGTH(TRIM("title")) > 0 THEN
+        LOWER(
+          TRIM(
+            REGEXP_REPLACE(
+              REGEXP_REPLACE("title", '[^a-zA-Z0-9\s\-]', '', 'g'),
+              '\s+', '-', 'g'
+            )
+          )
+        ) || '-' || "id"::text
+      ELSE 
+        'trip-' || "id"::text
+      END
+    WHERE ("slug" IS NULL OR "slug" = '') AND "id" IS NOT NULL;
   `)
   
   // Step 3: Create unique index on slug if it doesn't exist
