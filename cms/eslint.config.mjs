@@ -1,17 +1,22 @@
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-import { FlatCompat } from '@eslint/eslintrc/dist/eslintrc.cjs'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-})
-
+// Simple flat config without FlatCompat - works better on Vercel
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
+    ignores: [
+      'node_modules/**',
+      '.next/**',
+      'out/**',
+      'build/**',
+      'dist/**',
+      '.cache/**',
+      'public/**',
+    ],
+  },
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    languageOptions: {
+      ecmaVersion: 2024,
+      sourceType: 'module',
+    },
     rules: {
       '@typescript-eslint/ban-ts-comment': 'warn',
       '@typescript-eslint/no-empty-object-type': 'warn',
@@ -29,9 +34,6 @@ const eslintConfig = [
         },
       ],
     },
-  },
-  {
-    ignores: ['.next/'],
   },
 ]
 
