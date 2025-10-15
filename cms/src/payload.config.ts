@@ -7,7 +7,6 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-import React from 'react'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -43,7 +42,7 @@ export default buildConfig({
     const csrfList = (process.env.CSRF_ORIGINS?.split(',') || []).map(o=>o.trim()).filter(Boolean)
     if (resolvedServer && !corsList.length) corsList.push(resolvedServer)
     if (resolvedServer && !csrfList.length) csrfList.push(resolvedServer)
-    const conf:any = {}
+    const conf: { cors?: string[]; csrf?: string[] } = {}
     if (corsList.length) conf.cors = corsList
     if (csrfList.length) conf.csrf = csrfList
     return conf

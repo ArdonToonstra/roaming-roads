@@ -10,6 +10,7 @@ export const Logo: React.FC = () => {
       fontWeight: 600, 
       fontSize: '1rem' 
     }}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img 
         src="/roaming-roads-logo-transparent.png" 
         alt="Roaming Roads" 
@@ -22,6 +23,7 @@ export const Logo: React.FC = () => {
 
 export const Icon: React.FC = () => {
   return (
+    /* eslint-disable-next-line @next/next/no-img-element */
     <img 
       src="/roaming-roads-logo-transparent.png" 
       alt="RR" 

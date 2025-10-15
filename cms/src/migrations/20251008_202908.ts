@@ -1,6 +1,6 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
-export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload: _payload, req: _req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    CREATE EXTENSION IF NOT EXISTS postgis;
    DO $$ BEGIN
@@ -396,119 +396,247 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
-  ALTER TABLE "users_sessions" ADD CONSTRAINT "users_sessions_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "media_seo_keywords" ADD CONSTRAINT "media_seo_keywords_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "media_tags" ADD CONSTRAINT "media_tags_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "media" ADD CONSTRAINT "media_location_country_id_countries_id_fk" FOREIGN KEY ("location_country_id") REFERENCES "public"."countries"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "media" ADD CONSTRAINT "media_related_trip_id_trips_id_fk" FOREIGN KEY ("related_trip_id") REFERENCES "public"."trips"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "trips_highlights_media" ADD CONSTRAINT "trips_highlights_media_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "trips_highlights_media" ADD CONSTRAINT "trips_highlights_media_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "trips_regions_visited" ADD CONSTRAINT "trips_regions_visited_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "trips_featured_accommodations" ADD CONSTRAINT "trips_featured_accommodations_accommodation_id_accommodations_id_fk" FOREIGN KEY ("accommodation_id") REFERENCES "public"."accommodations"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "trips_featured_accommodations" ADD CONSTRAINT "trips_featured_accommodations_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "trips_blocks_full_day_gallery" ADD CONSTRAINT "trips_blocks_full_day_gallery_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "trips_blocks_full_day_gallery" ADD CONSTRAINT "trips_blocks_full_day_gallery_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips_blocks_full_day"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "trips_blocks_full_day" ADD CONSTRAINT "trips_blocks_full_day_accommodation_id_accommodations_id_fk" FOREIGN KEY ("accommodation_id") REFERENCES "public"."accommodations"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "trips_blocks_full_day" ADD CONSTRAINT "trips_blocks_full_day_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "trips_blocks_waypoint_gallery" ADD CONSTRAINT "trips_blocks_waypoint_gallery_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "trips_blocks_waypoint_gallery" ADD CONSTRAINT "trips_blocks_waypoint_gallery_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips_blocks_waypoint"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "trips_blocks_waypoint" ADD CONSTRAINT "trips_blocks_waypoint_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "trips" ADD CONSTRAINT "trips_cover_image_id_media_id_fk" FOREIGN KEY ("cover_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "trips" ADD CONSTRAINT "trips_country_id_countries_id_fk" FOREIGN KEY ("country_id") REFERENCES "public"."countries"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "countries_official_languages" ADD CONSTRAINT "countries_official_languages_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."countries"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "countries_best_time_to_visit" ADD CONSTRAINT "countries_best_time_to_visit_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."countries"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "accommodations_amenities" ADD CONSTRAINT "accommodations_amenities_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."accommodations"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "accommodations_suitable_for" ADD CONSTRAINT "accommodations_suitable_for_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."accommodations"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "accommodations" ADD CONSTRAINT "accommodations_address_country_id_countries_id_fk" FOREIGN KEY ("address_country_id") REFERENCES "public"."countries"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_locked_documents"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_trips_fk" FOREIGN KEY ("trips_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_countries_fk" FOREIGN KEY ("countries_id") REFERENCES "public"."countries"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_accommodations_fk" FOREIGN KEY ("accommodations_id") REFERENCES "public"."accommodations"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_preferences"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
-  CREATE INDEX "users_sessions_order_idx" ON "users_sessions" USING btree ("_order");
-  CREATE INDEX "users_sessions_parent_id_idx" ON "users_sessions" USING btree ("_parent_id");
-  CREATE INDEX "users_updated_at_idx" ON "users" USING btree ("updated_at");
-  CREATE INDEX "users_created_at_idx" ON "users" USING btree ("created_at");
-  CREATE UNIQUE INDEX "users_email_idx" ON "users" USING btree ("email");
-  CREATE INDEX "media_seo_keywords_order_idx" ON "media_seo_keywords" USING btree ("_order");
-  CREATE INDEX "media_seo_keywords_parent_id_idx" ON "media_seo_keywords" USING btree ("_parent_id");
-  CREATE INDEX "media_tags_order_idx" ON "media_tags" USING btree ("_order");
-  CREATE INDEX "media_tags_parent_id_idx" ON "media_tags" USING btree ("_parent_id");
-  CREATE INDEX "media_location_location_country_idx" ON "media" USING btree ("location_country_id");
-  CREATE INDEX "media_related_trip_idx" ON "media" USING btree ("related_trip_id");
-  CREATE INDEX "media_updated_at_idx" ON "media" USING btree ("updated_at");
-  CREATE INDEX "media_created_at_idx" ON "media" USING btree ("created_at");
-  CREATE UNIQUE INDEX "media_filename_idx" ON "media" USING btree ("filename");
-  CREATE INDEX "media_sizes_thumbnail_sizes_thumbnail_filename_idx" ON "media" USING btree ("sizes_thumbnail_filename");
-  CREATE INDEX "media_sizes_card_sizes_card_filename_idx" ON "media" USING btree ("sizes_card_filename");
-  CREATE INDEX "media_sizes_tablet_sizes_tablet_filename_idx" ON "media" USING btree ("sizes_tablet_filename");
-  CREATE INDEX "media_sizes_hero_sizes_hero_filename_idx" ON "media" USING btree ("sizes_hero_filename");
-  CREATE INDEX "trips_highlights_media_order_idx" ON "trips_highlights_media" USING btree ("_order");
-  CREATE INDEX "trips_highlights_media_parent_id_idx" ON "trips_highlights_media" USING btree ("_parent_id");
-  CREATE INDEX "trips_highlights_media_media_idx" ON "trips_highlights_media" USING btree ("media_id");
-  CREATE INDEX "trips_regions_visited_order_idx" ON "trips_regions_visited" USING btree ("_order");
-  CREATE INDEX "trips_regions_visited_parent_id_idx" ON "trips_regions_visited" USING btree ("_parent_id");
-  CREATE INDEX "trips_featured_accommodations_order_idx" ON "trips_featured_accommodations" USING btree ("_order");
-  CREATE INDEX "trips_featured_accommodations_parent_id_idx" ON "trips_featured_accommodations" USING btree ("_parent_id");
-  CREATE INDEX "trips_featured_accommodations_accommodation_idx" ON "trips_featured_accommodations" USING btree ("accommodation_id");
-  CREATE INDEX "trips_blocks_full_day_gallery_order_idx" ON "trips_blocks_full_day_gallery" USING btree ("_order");
-  CREATE INDEX "trips_blocks_full_day_gallery_parent_id_idx" ON "trips_blocks_full_day_gallery" USING btree ("_parent_id");
-  CREATE INDEX "trips_blocks_full_day_gallery_media_idx" ON "trips_blocks_full_day_gallery" USING btree ("media_id");
-  CREATE INDEX "trips_blocks_full_day_order_idx" ON "trips_blocks_full_day" USING btree ("_order");
-  CREATE INDEX "trips_blocks_full_day_parent_id_idx" ON "trips_blocks_full_day" USING btree ("_parent_id");
-  CREATE INDEX "trips_blocks_full_day_path_idx" ON "trips_blocks_full_day" USING btree ("_path");
-  CREATE INDEX "trips_blocks_full_day_accommodation_idx" ON "trips_blocks_full_day" USING btree ("accommodation_id");
-  CREATE INDEX "trips_blocks_waypoint_gallery_order_idx" ON "trips_blocks_waypoint_gallery" USING btree ("_order");
-  CREATE INDEX "trips_blocks_waypoint_gallery_parent_id_idx" ON "trips_blocks_waypoint_gallery" USING btree ("_parent_id");
-  CREATE INDEX "trips_blocks_waypoint_gallery_media_idx" ON "trips_blocks_waypoint_gallery" USING btree ("media_id");
-  CREATE INDEX "trips_blocks_waypoint_order_idx" ON "trips_blocks_waypoint" USING btree ("_order");
-  CREATE INDEX "trips_blocks_waypoint_parent_id_idx" ON "trips_blocks_waypoint" USING btree ("_parent_id");
-  CREATE INDEX "trips_blocks_waypoint_path_idx" ON "trips_blocks_waypoint" USING btree ("_path");
-  CREATE INDEX "trips_cover_image_idx" ON "trips" USING btree ("cover_image_id");
-  CREATE INDEX "trips_country_idx" ON "trips" USING btree ("country_id");
-  CREATE INDEX "trips_updated_at_idx" ON "trips" USING btree ("updated_at");
-  CREATE INDEX "trips_created_at_idx" ON "trips" USING btree ("created_at");
-  CREATE INDEX "countries_official_languages_order_idx" ON "countries_official_languages" USING btree ("_order");
-  CREATE INDEX "countries_official_languages_parent_id_idx" ON "countries_official_languages" USING btree ("_parent_id");
-  CREATE INDEX "countries_best_time_to_visit_order_idx" ON "countries_best_time_to_visit" USING btree ("order");
-  CREATE INDEX "countries_best_time_to_visit_parent_idx" ON "countries_best_time_to_visit" USING btree ("parent_id");
-  CREATE UNIQUE INDEX "countries_name_idx" ON "countries" USING btree ("name");
-  CREATE UNIQUE INDEX "countries_country_code_idx" ON "countries" USING btree ("country_code");
-  CREATE INDEX "countries_updated_at_idx" ON "countries" USING btree ("updated_at");
-  CREATE INDEX "countries_created_at_idx" ON "countries" USING btree ("created_at");
-  CREATE INDEX "accommodations_amenities_order_idx" ON "accommodations_amenities" USING btree ("_order");
-  CREATE INDEX "accommodations_amenities_parent_id_idx" ON "accommodations_amenities" USING btree ("_parent_id");
-  CREATE INDEX "accommodations_suitable_for_order_idx" ON "accommodations_suitable_for" USING btree ("_order");
-  CREATE INDEX "accommodations_suitable_for_parent_id_idx" ON "accommodations_suitable_for" USING btree ("_parent_id");
-  CREATE INDEX "accommodations_address_address_country_idx" ON "accommodations" USING btree ("address_country_id");
-  CREATE INDEX "accommodations_updated_at_idx" ON "accommodations" USING btree ("updated_at");
-  CREATE INDEX "accommodations_created_at_idx" ON "accommodations" USING btree ("created_at");
-  CREATE INDEX "payload_locked_documents_global_slug_idx" ON "payload_locked_documents" USING btree ("global_slug");
-  CREATE INDEX "payload_locked_documents_updated_at_idx" ON "payload_locked_documents" USING btree ("updated_at");
-  CREATE INDEX "payload_locked_documents_created_at_idx" ON "payload_locked_documents" USING btree ("created_at");
-  CREATE INDEX "payload_locked_documents_rels_order_idx" ON "payload_locked_documents_rels" USING btree ("order");
-  CREATE INDEX "payload_locked_documents_rels_parent_idx" ON "payload_locked_documents_rels" USING btree ("parent_id");
-  CREATE INDEX "payload_locked_documents_rels_path_idx" ON "payload_locked_documents_rels" USING btree ("path");
-  CREATE INDEX "payload_locked_documents_rels_users_id_idx" ON "payload_locked_documents_rels" USING btree ("users_id");
-  CREATE INDEX "payload_locked_documents_rels_media_id_idx" ON "payload_locked_documents_rels" USING btree ("media_id");
-  CREATE INDEX "payload_locked_documents_rels_trips_id_idx" ON "payload_locked_documents_rels" USING btree ("trips_id");
-  CREATE INDEX "payload_locked_documents_rels_countries_id_idx" ON "payload_locked_documents_rels" USING btree ("countries_id");
-  CREATE INDEX "payload_locked_documents_rels_accommodations_id_idx" ON "payload_locked_documents_rels" USING btree ("accommodations_id");
-  CREATE INDEX "payload_preferences_key_idx" ON "payload_preferences" USING btree ("key");
-  CREATE INDEX "payload_preferences_updated_at_idx" ON "payload_preferences" USING btree ("updated_at");
-  CREATE INDEX "payload_preferences_created_at_idx" ON "payload_preferences" USING btree ("created_at");
-  CREATE INDEX "payload_preferences_rels_order_idx" ON "payload_preferences_rels" USING btree ("order");
-  CREATE INDEX "payload_preferences_rels_parent_idx" ON "payload_preferences_rels" USING btree ("parent_id");
-  CREATE INDEX "payload_preferences_rels_path_idx" ON "payload_preferences_rels" USING btree ("path");
-  CREATE INDEX "payload_preferences_rels_users_id_idx" ON "payload_preferences_rels" USING btree ("users_id");
-  CREATE INDEX "payload_migrations_updated_at_idx" ON "payload_migrations" USING btree ("updated_at");
-  CREATE INDEX "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");`)
+  DO $$ BEGIN
+    ALTER TABLE "users_sessions" ADD CONSTRAINT "users_sessions_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "media_seo_keywords" ADD CONSTRAINT "media_seo_keywords_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "media_tags" ADD CONSTRAINT "media_tags_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "media" ADD CONSTRAINT "media_location_country_id_countries_id_fk" FOREIGN KEY ("location_country_id") REFERENCES "public"."countries"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "media" ADD CONSTRAINT "media_related_trip_id_trips_id_fk" FOREIGN KEY ("related_trip_id") REFERENCES "public"."trips"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips_highlights_media" ADD CONSTRAINT "trips_highlights_media_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips_highlights_media" ADD CONSTRAINT "trips_highlights_media_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips_regions_visited" ADD CONSTRAINT "trips_regions_visited_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips_featured_accommodations" ADD CONSTRAINT "trips_featured_accommodations_accommodation_id_accommodations_id_fk" FOREIGN KEY ("accommodation_id") REFERENCES "public"."accommodations"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips_featured_accommodations" ADD CONSTRAINT "trips_featured_accommodations_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips_blocks_full_day_gallery" ADD CONSTRAINT "trips_blocks_full_day_gallery_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips_blocks_full_day_gallery" ADD CONSTRAINT "trips_blocks_full_day_gallery_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips_blocks_full_day"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips_blocks_full_day" ADD CONSTRAINT "trips_blocks_full_day_accommodation_id_accommodations_id_fk" FOREIGN KEY ("accommodation_id") REFERENCES "public"."accommodations"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips_blocks_full_day" ADD CONSTRAINT "trips_blocks_full_day_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips_blocks_waypoint_gallery" ADD CONSTRAINT "trips_blocks_waypoint_gallery_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips_blocks_waypoint_gallery" ADD CONSTRAINT "trips_blocks_waypoint_gallery_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips_blocks_waypoint"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips_blocks_waypoint" ADD CONSTRAINT "trips_blocks_waypoint_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips" ADD CONSTRAINT "trips_cover_image_id_media_id_fk" FOREIGN KEY ("cover_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "trips" ADD CONSTRAINT "trips_country_id_countries_id_fk" FOREIGN KEY ("country_id") REFERENCES "public"."countries"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "countries_official_languages" ADD CONSTRAINT "countries_official_languages_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."countries"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "countries_best_time_to_visit" ADD CONSTRAINT "countries_best_time_to_visit_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."countries"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "accommodations_amenities" ADD CONSTRAINT "accommodations_amenities_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."accommodations"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "accommodations_suitable_for" ADD CONSTRAINT "accommodations_suitable_for_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."accommodations"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "accommodations" ADD CONSTRAINT "accommodations_address_country_id_countries_id_fk" FOREIGN KEY ("address_country_id") REFERENCES "public"."countries"("id") ON DELETE set null ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_locked_documents"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_trips_fk" FOREIGN KEY ("trips_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_countries_fk" FOREIGN KEY ("countries_id") REFERENCES "public"."countries"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_accommodations_fk" FOREIGN KEY ("accommodations_id") REFERENCES "public"."accommodations"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_preferences"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  DO $$ BEGIN
+    ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION
+    WHEN duplicate_object THEN null;
+  END $$;
+  CREATE INDEX IF NOT EXISTS "users_sessions_order_idx" ON "users_sessions" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "users_sessions_parent_id_idx" ON "users_sessions" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "users_updated_at_idx" ON "users" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "users_created_at_idx" ON "users" USING btree ("created_at");
+  CREATE UNIQUE INDEX IF NOT EXISTS "users_email_idx" ON "users" USING btree ("email");
+  CREATE INDEX IF NOT EXISTS "media_seo_keywords_order_idx" ON "media_seo_keywords" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "media_seo_keywords_parent_id_idx" ON "media_seo_keywords" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "media_tags_order_idx" ON "media_tags" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "media_tags_parent_id_idx" ON "media_tags" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "media_location_location_country_idx" ON "media" USING btree ("location_country_id");
+  CREATE INDEX IF NOT EXISTS "media_related_trip_idx" ON "media" USING btree ("related_trip_id");
+  CREATE INDEX IF NOT EXISTS "media_updated_at_idx" ON "media" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "media_created_at_idx" ON "media" USING btree ("created_at");
+  CREATE UNIQUE INDEX IF NOT EXISTS "media_filename_idx" ON "media" USING btree ("filename");
+  CREATE INDEX IF NOT EXISTS "media_sizes_thumbnail_sizes_thumbnail_filename_idx" ON "media" USING btree ("sizes_thumbnail_filename");
+  CREATE INDEX IF NOT EXISTS "media_sizes_card_sizes_card_filename_idx" ON "media" USING btree ("sizes_card_filename");
+  CREATE INDEX IF NOT EXISTS "media_sizes_tablet_sizes_tablet_filename_idx" ON "media" USING btree ("sizes_tablet_filename");
+  CREATE INDEX IF NOT EXISTS "media_sizes_hero_sizes_hero_filename_idx" ON "media" USING btree ("sizes_hero_filename");
+  CREATE INDEX IF NOT EXISTS "trips_highlights_media_order_idx" ON "trips_highlights_media" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "trips_highlights_media_parent_id_idx" ON "trips_highlights_media" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "trips_highlights_media_media_idx" ON "trips_highlights_media" USING btree ("media_id");
+  CREATE INDEX IF NOT EXISTS "trips_regions_visited_order_idx" ON "trips_regions_visited" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "trips_regions_visited_parent_id_idx" ON "trips_regions_visited" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "trips_featured_accommodations_order_idx" ON "trips_featured_accommodations" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "trips_featured_accommodations_parent_id_idx" ON "trips_featured_accommodations" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "trips_featured_accommodations_accommodation_idx" ON "trips_featured_accommodations" USING btree ("accommodation_id");
+  CREATE INDEX IF NOT EXISTS "trips_blocks_full_day_gallery_order_idx" ON "trips_blocks_full_day_gallery" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "trips_blocks_full_day_gallery_parent_id_idx" ON "trips_blocks_full_day_gallery" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "trips_blocks_full_day_gallery_media_idx" ON "trips_blocks_full_day_gallery" USING btree ("media_id");
+  CREATE INDEX IF NOT EXISTS "trips_blocks_full_day_order_idx" ON "trips_blocks_full_day" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "trips_blocks_full_day_parent_id_idx" ON "trips_blocks_full_day" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "trips_blocks_full_day_path_idx" ON "trips_blocks_full_day" USING btree ("_path");
+  CREATE INDEX IF NOT EXISTS "trips_blocks_full_day_accommodation_idx" ON "trips_blocks_full_day" USING btree ("accommodation_id");
+  CREATE INDEX IF NOT EXISTS "trips_blocks_waypoint_gallery_order_idx" ON "trips_blocks_waypoint_gallery" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "trips_blocks_waypoint_gallery_parent_id_idx" ON "trips_blocks_waypoint_gallery" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "trips_blocks_waypoint_gallery_media_idx" ON "trips_blocks_waypoint_gallery" USING btree ("media_id");
+  CREATE INDEX IF NOT EXISTS "trips_blocks_waypoint_order_idx" ON "trips_blocks_waypoint" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "trips_blocks_waypoint_parent_id_idx" ON "trips_blocks_waypoint" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "trips_blocks_waypoint_path_idx" ON "trips_blocks_waypoint" USING btree ("_path");
+  CREATE INDEX IF NOT EXISTS "trips_cover_image_idx" ON "trips" USING btree ("cover_image_id");
+  CREATE INDEX IF NOT EXISTS "trips_country_idx" ON "trips" USING btree ("country_id");
+  CREATE INDEX IF NOT EXISTS "trips_updated_at_idx" ON "trips" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "trips_created_at_idx" ON "trips" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "countries_official_languages_order_idx" ON "countries_official_languages" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "countries_official_languages_parent_id_idx" ON "countries_official_languages" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "countries_best_time_to_visit_order_idx" ON "countries_best_time_to_visit" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "countries_best_time_to_visit_parent_idx" ON "countries_best_time_to_visit" USING btree ("parent_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "countries_name_idx" ON "countries" USING btree ("name");
+  CREATE UNIQUE INDEX IF NOT EXISTS "countries_country_code_idx" ON "countries" USING btree ("country_code");
+  CREATE INDEX IF NOT EXISTS "countries_updated_at_idx" ON "countries" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "countries_created_at_idx" ON "countries" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "accommodations_amenities_order_idx" ON "accommodations_amenities" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "accommodations_amenities_parent_id_idx" ON "accommodations_amenities" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "accommodations_suitable_for_order_idx" ON "accommodations_suitable_for" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "accommodations_suitable_for_parent_id_idx" ON "accommodations_suitable_for" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "accommodations_address_address_country_idx" ON "accommodations" USING btree ("address_country_id");
+  CREATE INDEX IF NOT EXISTS "accommodations_updated_at_idx" ON "accommodations" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "accommodations_created_at_idx" ON "accommodations" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_global_slug_idx" ON "payload_locked_documents" USING btree ("global_slug");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_updated_at_idx" ON "payload_locked_documents" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_created_at_idx" ON "payload_locked_documents" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_order_idx" ON "payload_locked_documents_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_parent_idx" ON "payload_locked_documents_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_path_idx" ON "payload_locked_documents_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_users_id_idx" ON "payload_locked_documents_rels" USING btree ("users_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_media_id_idx" ON "payload_locked_documents_rels" USING btree ("media_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_trips_id_idx" ON "payload_locked_documents_rels" USING btree ("trips_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_countries_id_idx" ON "payload_locked_documents_rels" USING btree ("countries_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_accommodations_id_idx" ON "payload_locked_documents_rels" USING btree ("accommodations_id");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_key_idx" ON "payload_preferences" USING btree ("key");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_updated_at_idx" ON "payload_preferences" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_created_at_idx" ON "payload_preferences" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_rels_order_idx" ON "payload_preferences_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_rels_parent_idx" ON "payload_preferences_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_rels_path_idx" ON "payload_preferences_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_rels_users_id_idx" ON "payload_preferences_rels" USING btree ("users_id");
+  CREATE INDEX IF NOT EXISTS "payload_migrations_updated_at_idx" ON "payload_migrations" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");`)
 }
 
-export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+export async function down({ db, payload: _payload, req: _req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
    DROP TABLE "users_sessions" CASCADE;
   DROP TABLE "users" CASCADE;
@@ -553,3 +681,5 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_accommodations_quality_cleanliness";
   DROP TYPE "public"."enum_accommodations_quality_service";`)
 }
+
+
