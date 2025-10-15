@@ -1,4 +1,8 @@
-// Simple flat config without FlatCompat - works better on Vercel
+// ESLint flat config with TypeScript and Next.js support
+import typescriptEslint from '@typescript-eslint/eslint-plugin'
+import typescriptParser from '@typescript-eslint/parser'
+import nextPlugin from '@next/eslint-plugin-next'
+
 const eslintConfig = [
   {
     ignores: [
@@ -16,6 +20,16 @@ const eslintConfig = [
     languageOptions: {
       ecmaVersion: 2024,
       sourceType: 'module',
+      parser: typescriptParser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
+    plugins: {
+      '@typescript-eslint': typescriptEslint,
+      '@next/next': nextPlugin,
     },
     rules: {
       '@typescript-eslint/ban-ts-comment': 'warn',

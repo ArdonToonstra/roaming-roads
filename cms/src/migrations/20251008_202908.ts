@@ -3,25 +3,97 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    CREATE EXTENSION IF NOT EXISTS postgis;
-   CREATE TYPE "public"."enum_media_media_type" AS ENUM('photo', 'video', 'audio', 'document');
-  CREATE TYPE "public"."enum_media_usage_license_type" AS ENUM('own', 'cc', 'stock', 'permission', 'fair-use');
-  CREATE TYPE "public"."enum_trips_regions_visited_region_type" AS ENUM('province', 'region', 'oblast', 'state', 'territory', 'county', 'district', 'other');
-  CREATE TYPE "public"."enum_trips_blocks_full_day_transportation_arrival_method" AS ENUM('walking', 'rental_car', 'public_bus', 'taxi', 'train', 'flight', 'boat', 'bicycle', 'hitchhiking', 'tour_bus', 'other');
-  CREATE TYPE "public"."enum_trips_blocks_full_day_transportation_departure_method" AS ENUM('walking', 'rental_car', 'public_bus', 'taxi', 'train', 'flight', 'boat', 'bicycle', 'hitchhiking', 'tour_bus', 'other');
-  CREATE TYPE "public"."enum_trips_blocks_full_day_transportation_travel_time_unit" AS ENUM('minutes', 'hours', 'days');
-  CREATE TYPE "public"."enum_trips_blocks_full_day_transportation_distance_unit" AS ENUM('km', 'mi');
-  CREATE TYPE "public"."enum_trips_status" AS ENUM('draft', 'published');
-  CREATE TYPE "public"."enum_countries_best_time_to_visit" AS ENUM('january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december');
-  CREATE TYPE "public"."enum_countries_main_religion" AS ENUM('christianity', 'islam', 'judaism', 'hinduism', 'buddhism', 'sikhism', 'secular', 'mixed', 'other');
-  CREATE TYPE "public"."enum_countries_safety_level" AS ENUM('very_safe', 'safe', 'moderate', 'caution', 'high_risk');
-  CREATE TYPE "public"."enum_accommodations_amenities_amenity" AS ENUM('wifi', 'parking', 'restaurant', 'bar', 'pool', 'spa', 'gym', 'laundry', 'kitchen', 'ac', 'heating', 'hot_water', 'breakfast', 'pet_friendly', 'family_friendly', 'accessible', 'luggage_storage', 'tour_desk', 'other');
-  CREATE TYPE "public"."enum_accommodations_suitable_for_traveler_type" AS ENUM('solo', 'couples', 'families', 'groups', 'backpackers', 'business', 'adventure', 'digital_nomads');
-  CREATE TYPE "public"."enum_accommodations_type" AS ENUM('hotel', 'hostel', 'camping', 'guesthouse', 'resort', 'apartment', 'yurt', 'wild_camping', 'homestay', 'ecolodge', 'other');
-  CREATE TYPE "public"."enum_accommodations_price_range" AS ENUM('budget', 'midrange', 'luxury', 'ultra_luxury');
-  CREATE TYPE "public"."enum_accommodations_quality_star_rating" AS ENUM('1', '2', '3', '4', '5', 'unrated');
-  CREATE TYPE "public"."enum_accommodations_quality_cleanliness" AS ENUM('excellent', 'very_good', 'good', 'fair', 'poor');
-  CREATE TYPE "public"."enum_accommodations_quality_service" AS ENUM('excellent', 'very_good', 'good', 'fair', 'poor');
-  CREATE TABLE "users_sessions" (
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_media_media_type" AS ENUM('photo', 'video', 'audio', 'document');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_media_usage_license_type" AS ENUM('own', 'cc', 'stock', 'permission', 'fair-use');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_trips_regions_visited_region_type" AS ENUM('province', 'region', 'oblast', 'state', 'territory', 'county', 'district', 'other');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_trips_blocks_full_day_transportation_arrival_method" AS ENUM('walking', 'rental_car', 'public_bus', 'taxi', 'train', 'flight', 'boat', 'bicycle', 'hitchhiking', 'tour_bus', 'other');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_trips_blocks_full_day_transportation_departure_method" AS ENUM('walking', 'rental_car', 'public_bus', 'taxi', 'train', 'flight', 'boat', 'bicycle', 'hitchhiking', 'tour_bus', 'other');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_trips_blocks_full_day_transportation_travel_time_unit" AS ENUM('minutes', 'hours', 'days');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_trips_blocks_full_day_transportation_distance_unit" AS ENUM('km', 'mi');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_trips_status" AS ENUM('draft', 'published');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_countries_best_time_to_visit" AS ENUM('january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_countries_main_religion" AS ENUM('christianity', 'islam', 'judaism', 'hinduism', 'buddhism', 'sikhism', 'secular', 'mixed', 'other');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_countries_safety_level" AS ENUM('very_safe', 'safe', 'moderate', 'caution', 'high_risk');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_accommodations_amenities_amenity" AS ENUM('wifi', 'parking', 'restaurant', 'bar', 'pool', 'spa', 'gym', 'laundry', 'kitchen', 'ac', 'heating', 'hot_water', 'breakfast', 'pet_friendly', 'family_friendly', 'accessible', 'luggage_storage', 'tour_desk', 'other');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_accommodations_suitable_for_traveler_type" AS ENUM('solo', 'couples', 'families', 'groups', 'backpackers', 'business', 'adventure', 'digital_nomads');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_accommodations_type" AS ENUM('hotel', 'hostel', 'camping', 'guesthouse', 'resort', 'apartment', 'yurt', 'wild_camping', 'homestay', 'ecolodge', 'other');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_accommodations_price_range" AS ENUM('budget', 'midrange', 'luxury', 'ultra_luxury');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_accommodations_quality_star_rating" AS ENUM('1', '2', '3', '4', '5', 'unrated');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_accommodations_quality_cleanliness" AS ENUM('excellent', 'very_good', 'good', 'fair', 'poor');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   DO $$ BEGIN
+     CREATE TYPE "public"."enum_accommodations_quality_service" AS ENUM('excellent', 'very_good', 'good', 'fair', 'poor');
+   EXCEPTION
+     WHEN duplicate_object THEN null;
+   END $$;
+   CREATE TABLE IF NOT EXISTS "users_sessions" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
@@ -29,7 +101,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"expires_at" timestamp(3) with time zone NOT NULL
   );
   
-  CREATE TABLE "users" (
+  CREATE TABLE IF NOT EXISTS "users" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -42,21 +114,21 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"lock_until" timestamp(3) with time zone
   );
   
-  CREATE TABLE "media_seo_keywords" (
+  CREATE TABLE IF NOT EXISTS "media_seo_keywords" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"keyword" varchar
   );
   
-  CREATE TABLE "media_tags" (
+  CREATE TABLE IF NOT EXISTS "media_tags" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"tag" varchar
   );
   
-  CREATE TABLE "media" (
+  CREATE TABLE IF NOT EXISTS "media" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"alt" varchar NOT NULL,
   	"caption" varchar,
@@ -113,7 +185,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"sizes_hero_filename" varchar
   );
   
-  CREATE TABLE "trips_highlights_media" (
+  CREATE TABLE IF NOT EXISTS "trips_highlights_media" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
@@ -122,7 +194,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"order" numeric DEFAULT 1
   );
   
-  CREATE TABLE "trips_regions_visited" (
+  CREATE TABLE IF NOT EXISTS "trips_regions_visited" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
@@ -131,14 +203,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"highlights" varchar
   );
   
-  CREATE TABLE "trips_featured_accommodations" (
+  CREATE TABLE IF NOT EXISTS "trips_featured_accommodations" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"accommodation_id" integer NOT NULL
   );
   
-  CREATE TABLE "trips_blocks_full_day_gallery" (
+  CREATE TABLE IF NOT EXISTS "trips_blocks_full_day_gallery" (
   	"_order" integer NOT NULL,
   	"_parent_id" varchar NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
@@ -147,7 +219,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"is_highlight" boolean DEFAULT false
   );
   
-  CREATE TABLE "trips_blocks_full_day" (
+  CREATE TABLE IF NOT EXISTS "trips_blocks_full_day" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"_path" text NOT NULL,
@@ -169,7 +241,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
-  CREATE TABLE "trips_blocks_waypoint_gallery" (
+  CREATE TABLE IF NOT EXISTS "trips_blocks_waypoint_gallery" (
   	"_order" integer NOT NULL,
   	"_parent_id" varchar NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
@@ -177,7 +249,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"caption" varchar
   );
   
-  CREATE TABLE "trips_blocks_waypoint" (
+  CREATE TABLE IF NOT EXISTS "trips_blocks_waypoint" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"_path" text NOT NULL,
@@ -190,7 +262,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
-  CREATE TABLE "trips" (
+  CREATE TABLE IF NOT EXISTS "trips" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"title" varchar NOT NULL,
   	"status" "enum_trips_status" DEFAULT 'draft',
@@ -206,21 +278,21 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
-  CREATE TABLE "countries_official_languages" (
+  CREATE TABLE IF NOT EXISTS "countries_official_languages" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"language" varchar NOT NULL
   );
   
-  CREATE TABLE "countries_best_time_to_visit" (
+  CREATE TABLE IF NOT EXISTS "countries_best_time_to_visit" (
   	"order" integer NOT NULL,
   	"parent_id" integer NOT NULL,
   	"value" "enum_countries_best_time_to_visit",
   	"id" serial PRIMARY KEY NOT NULL
   );
   
-  CREATE TABLE "countries" (
+  CREATE TABLE IF NOT EXISTS "countries" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
   	"country_code" varchar NOT NULL,
@@ -239,7 +311,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
-  CREATE TABLE "accommodations_amenities" (
+  CREATE TABLE IF NOT EXISTS "accommodations_amenities" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
@@ -247,14 +319,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"notes" varchar
   );
   
-  CREATE TABLE "accommodations_suitable_for" (
+  CREATE TABLE IF NOT EXISTS "accommodations_suitable_for" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"traveler_type" "enum_accommodations_suitable_for_traveler_type" NOT NULL
   );
   
-  CREATE TABLE "accommodations" (
+  CREATE TABLE IF NOT EXISTS "accommodations" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
   	"type" "enum_accommodations_type" NOT NULL,
@@ -281,14 +353,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
-  CREATE TABLE "payload_locked_documents" (
+  CREATE TABLE IF NOT EXISTS "payload_locked_documents" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"global_slug" varchar,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
-  CREATE TABLE "payload_locked_documents_rels" (
+  CREATE TABLE IF NOT EXISTS "payload_locked_documents_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
   	"parent_id" integer NOT NULL,
@@ -300,7 +372,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"accommodations_id" integer
   );
   
-  CREATE TABLE "payload_preferences" (
+  CREATE TABLE IF NOT EXISTS "payload_preferences" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"key" varchar,
   	"value" jsonb,
@@ -308,7 +380,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
-  CREATE TABLE "payload_preferences_rels" (
+  CREATE TABLE IF NOT EXISTS "payload_preferences_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
   	"parent_id" integer NOT NULL,
@@ -316,7 +388,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"users_id" integer
   );
   
-  CREATE TABLE "payload_migrations" (
+  CREATE TABLE IF NOT EXISTS "payload_migrations" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"name" varchar,
   	"batch" numeric,
