@@ -1,14 +1,7 @@
 import type { CollectionConfig } from 'payload';
 import { FullDay } from '../blocks/FullDay';
 import { Waypoint } from '../blocks/WayPoint';
-
-// Type for data with processing flag
-type TripData = {
-  title?: string;
-  slug?: string;
-  _slugProcessed?: boolean;
-  [key: string]: unknown;
-};
+import formatSlug from '../utils/formatSlug';
 
 const Trips: CollectionConfig = {
   slug: 'trips',
@@ -21,7 +14,7 @@ const Trips: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'country', 'status'],
+    defaultColumns: ['title', 'slug', 'country', 'status'],
   },
   fields: [
     {
@@ -41,39 +34,7 @@ const Trips: CollectionConfig = {
         description: 'URL-friendly version of the title (e.g., "kyrgyzstan-adventure")',
       },
       hooks: {
-        beforeChange: [
-          ({ data, operation, originalDoc }) => {
-            if (!data) return data;
-            
-            const tripData = data as TripData;
-            
-            // Prevent recursion with a simple flag check
-            if ((operation === 'create' || operation === 'update') && !tripData._slugProcessed) {
-              // Only auto-generate slug if it's empty AND we have a title
-              if (tripData.title && (!tripData.slug || tripData.slug === '')) {
-                const newSlug = tripData.title
-                  .toLowerCase()
-                  .replace(/[^\w\s-]/g, '') // Remove special characters
-                  .replace(/\s+/g, '-') // Replace spaces with hyphens
-                  .replace(/-+/g, '-') // Replace multiple hyphens with single
-                  .trim();
-                
-                // Only set the slug if it's different and valid
-                if (newSlug && newSlug !== tripData.slug && newSlug !== originalDoc?.slug) {
-                  tripData.slug = newSlug;
-                  tripData._slugProcessed = true; // Mark as processed to prevent re-processing
-                }
-              }
-            }
-            
-            // Clean up the processing flag before saving
-            if (tripData._slugProcessed) {
-              delete tripData._slugProcessed;
-            }
-            
-            return data;
-          },
-        ],
+        beforeValidate: [formatSlug('title')],
       },
     },
     {
