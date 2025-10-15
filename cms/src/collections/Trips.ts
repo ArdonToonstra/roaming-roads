@@ -2,6 +2,14 @@ import type { CollectionConfig } from 'payload';
 import { FullDay } from '../blocks/FullDay';
 import { Waypoint } from '../blocks/WayPoint';
 
+// Type for data with processing flag
+type TripData = {
+  title?: string;
+  slug?: string;
+  _slugProcessed?: boolean;
+  [key: string]: unknown;
+};
+
 const Trips: CollectionConfig = {
   slug: 'trips',
   access: {
@@ -33,24 +41,36 @@ const Trips: CollectionConfig = {
         description: 'URL-friendly version of the title (e.g., "kyrgyzstan-adventure")',
       },
       hooks: {
-        beforeValidate: [
+        beforeChange: [
           ({ data, operation, originalDoc }) => {
-            if (operation === 'create' || operation === 'update') {
+            if (!data) return data;
+            
+            const tripData = data as TripData;
+            
+            // Prevent recursion with a simple flag check
+            if ((operation === 'create' || operation === 'update') && !tripData._slugProcessed) {
               // Only auto-generate slug if it's empty AND we have a title
-              if (data?.title && (!data?.slug || data.slug === '')) {
-                const newSlug = data.title
+              if (tripData.title && (!tripData.slug || tripData.slug === '')) {
+                const newSlug = tripData.title
                   .toLowerCase()
                   .replace(/[^\w\s-]/g, '') // Remove special characters
                   .replace(/\s+/g, '-') // Replace spaces with hyphens
                   .replace(/-+/g, '-') // Replace multiple hyphens with single
                   .trim();
                 
-                // Only set the slug if it's different to prevent infinite loops
-                if (newSlug !== data.slug && newSlug !== originalDoc?.slug) {
-                  data.slug = newSlug;
+                // Only set the slug if it's different and valid
+                if (newSlug && newSlug !== tripData.slug && newSlug !== originalDoc?.slug) {
+                  tripData.slug = newSlug;
+                  tripData._slugProcessed = true; // Mark as processed to prevent re-processing
                 }
               }
             }
+            
+            // Clean up the processing flag before saving
+            if (tripData._slugProcessed) {
+              delete tripData._slugProcessed;
+            }
+            
             return data;
           },
         ],
