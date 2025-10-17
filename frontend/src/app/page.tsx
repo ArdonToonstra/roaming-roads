@@ -101,9 +101,9 @@ export default async function HomePage() {
         
         <div className="relative text-center z-10 max-w-4xl mx-auto px-4">
           
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6 uppercase">
+          <h1 className="text-3xl md:text-5xl font-heading font-bold mb-6 uppercase">
             Find Your Next Road
-          </h2>
+          </h1>
 
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
             Authentic travel guides, honestly written. No ads. No affiliate links. Ever.

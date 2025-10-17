@@ -53,23 +53,27 @@
     color: hsl(255 35% 35%) !important;
   }
 
-  /* White headings for homepage hero and other hero sections */
+  /* White headings for homepage hero (only the main heading) and other hero sections */
   .homepage h1,
-  .homepage h2,
-  .homepage h3,
-  .homepage h4,
-  .homepage h5,
-  .homepage h6,
-  .text-white h1,
-  .text-white h2,
-  .text-white h3,
-  .text-white h4,
-  .text-white h5,
-  .text-white h6 {
+  .text-white h1 {
     color: hsl(0 0% 100%) !important;
   }
 
   h1 { font-size: 2.25rem; line-height: 2.5rem; }
   h2 { font-size: 1.875rem; line-height: 2.25rem; }
   h3 { font-size: 1.5rem; line-height: 2rem; }
+}
+
+/* Navigation link hover specificity fix: ensure links with .nav-link turn primary (orange) on hover */
+@layer utilities {
+  .nav-link:hover {
+    color: hsl(16 90% 64%) !important; /* primary orange */
+  }
+}
+
+/* Ensure muted-foreground color shows correctly inside homepage sections */
+@layer utilities {
+  .homepage .text-muted-foreground {
+    color: hsl(255 35% 35%) !important;
+  }
 }
