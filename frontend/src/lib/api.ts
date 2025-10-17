@@ -52,7 +52,8 @@ export const payload = {
     const query = searchParams.toString()
     const endpoint = `${API_ENDPOINTS.TRIPS}${query ? `?${query}` : ''}`
     
-    return api.get(endpoint, { next: { revalidate: 360 } })
+    const fetchOptions = env.NODE_ENV === 'development' ? undefined : { next: { revalidate: 360 } }
+    return api.get(endpoint, fetchOptions)
   },
 
   // Get single trip by slug or ID
@@ -78,7 +79,8 @@ export const payload = {
     const endpoint = `${API_ENDPOINTS.TRIPS}?${searchParams.toString()}`
     console.log('Making API request to:', endpoint)
     // Trip detail pages change less frequently; cache longer by default
-    const response = await api.get<{ docs: Trip[] }>(endpoint, { next: { revalidate: 3600 } })
+    const fetchOptions = env.NODE_ENV === 'development' ? undefined : { next: { revalidate: 3600 } }
+    const response = await api.get<{ docs: Trip[] }>(endpoint, fetchOptions)
     return response.docs[0] || null
   },
 

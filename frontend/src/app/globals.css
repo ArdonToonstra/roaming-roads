@@ -76,4 +76,25 @@
   .homepage .text-muted-foreground {
     color: hsl(255 35% 35%) !important;
   }
+
+  /* Leaflet custom numbered markers */
+  .rr-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: hsl(16 90% 64%);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    border: 2px solid #fff;
+    line-height: 1;
+    user-select: none;
+  }
+  .rr-marker-highlight {
+    background: hsl(173 58% 39%);
+  }
 }

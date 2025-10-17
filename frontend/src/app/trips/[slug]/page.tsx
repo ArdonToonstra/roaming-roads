@@ -4,6 +4,9 @@ import { MapPin, Calendar, Clock, Camera, DollarSign, ArrowLeft, Navigation } fr
 import { Trip, Media, Country, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
 import { notFound } from 'next/navigation';
 import { getImageUrl } from '@/lib/images';
+import TripDetailMap from '@/components/TripDetailMap';
+import ClientItinerary from '@/components/ClientItinerary';
+import MountSmallOverview from '@/components/mountSmallOverview';
 
 interface TripPageProps {
   params: Promise<{
@@ -46,7 +49,7 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
   const coordsText = hasCoords ? `${rawCoords[1].toFixed(4)}, ${rawCoords[0].toFixed(4)}` : null;
   
   return (
-    <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300">
+  <div id={`day-${index + 1}`} data-day-index={index} className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300">
       <div className="flex items-start gap-4 mb-6">
         <div 
           className="w-10 h-10 rounded-full flex items-center justify-center font-heading font-bold text-white flex-shrink-0"
@@ -188,9 +191,16 @@ export default async function TripDetailPage({ params }: TripPageProps) {
   }
   
   const coverImage = trip.coverImage;
-  const imageUrl = typeof coverImage === 'object' && coverImage.url 
-    ? coverImage.url 
-    : '/placeholder-trip.jpg';
+  // Prefer hero size if available
+  let imageUrl = '/placeholder-trip.jpg';
+  if (typeof coverImage === 'object' && coverImage) {
+    const sizes: any = (coverImage as any).sizes;
+    const heroSizeUrl = sizes?.hero?.url;
+    const baseUrl = coverImage.url;
+    imageUrl = getImageUrl(heroSizeUrl || baseUrl || '/placeholder-trip.jpg');
+  } else if (typeof coverImage === 'string') {
+    imageUrl = getImageUrl(coverImage);
+  }
   
   const country = typeof trip.country === 'object' ? trip.country.name : 'Unknown';
 
@@ -242,67 +252,78 @@ export default async function TripDetailPage({ params }: TripPageProps) {
 
       {/* Trip Overview */}
       <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Regions Visited */}
-            {trip.regionsVisited && trip.regionsVisited.length > 0 && (
-              <div>
-                <h2 className="text-2xl font-heading font-bold mb-4" style={{ color: '#4C3A7A' }}>
-                  Regions Explored
-                </h2>
-                <div className="space-y-4">
-                  {trip.regionsVisited.map((region, index) => (
-                    <div key={index} className="p-4 rounded-lg" style={{ backgroundColor: '#F4F1ED' }}>
-                      <h3 className="font-heading font-bold" style={{ color: '#263238' }}>
-                        {region.regionName}
-                      </h3>
-                      <p className="text-sm mb-2" style={{ color: '#2A9D8F' }}>
-                        {region.regionType}
-                      </p>
-                      {region.highlights && (
-                        <p className="text-sm" style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
-                          {region.highlights}
-                        </p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            {/* Trip Info */}
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-start lg:gap-8 mb-12">
+            <div className="flex-1">
+              <h2 className="text-3xl font-heading font-bold mb-6" style={{ color: '#4C3A7A' }}>
+                Trip Overview
+              </h2>
+            </div>
+            <div className="mt-6 lg:mt-0 flex-shrink-0">
+              <MountSmallOverview trip={trip} />
+            </div>
+          </div>
+          
+          <div className="space-y-12">
+          {/* Regions Explored */}
+          {trip.regionsVisited && trip.regionsVisited.length > 0 && (
             <div>
               <h2 className="text-2xl font-heading font-bold mb-4" style={{ color: '#4C3A7A' }}>
-                Trip Details
+                Regions Explored
               </h2>
-              
-              <div className="space-y-4">
-                {trip.budget && (
-                  <div className="p-4 rounded-lg" style={{ backgroundColor: '#F4F1ED' }}>
-                    <h3 className="font-heading font-bold mb-2" style={{ color: '#263238' }}>
-                      Budget
-                    </h3>
-                    <p style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
-                      {trip.budget.amount} {trip.budget.currency}
-                      {trip.budget.perPerson ? ' per person' : ''}
-                    </p>
-                  </div>
-                )}
-                
-                {trip.activities && (
-                  <div className="p-4 rounded-lg" style={{ backgroundColor: '#F4F1ED' }}>
-                    <h3 className="font-heading font-bold mb-2" style={{ color: '#263238' }}>
-                      Main Activities
-                    </h3>
-                    <div style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
-                      {renderRichText(trip.activities)}
+              <ul className="space-y-2">
+                {trip.regionsVisited.map((region, index) => (
+                  <li key={index} className="flex items-start gap-2">
+                    <span className="text-sm font-medium" style={{ color: '#2A9D8F' }}>
+                      {region.regionType}:
+                    </span>
+                    <div>
+                      <span className="font-heading font-bold" style={{ color: '#263238' }}>
+                        {region.regionName}
+                      </span>
+                      {region.highlights && (
+                        <span className="text-sm ml-2" style={{ fontFamily: 'Lato, sans-serif', color: '#666' }}>
+                          — {region.highlights}
+                        </span>
+                      )}
                     </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Trip Details */}
+          <div>
+            <h2 className="text-2xl font-heading font-bold mb-4" style={{ color: '#4C3A7A' }}>
+              Trip Details
+            </h2>
+            <div className="space-y-4">
+              {trip.budget && (
+                <div className="p-4 rounded-lg" style={{ backgroundColor: '#F4F1ED' }}>
+                  <h3 className="font-heading font-bold mb-2" style={{ color: '#263238' }}>
+                    Budget
+                  </h3>
+                  <p style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
+                    {trip.budget.amount} {trip.budget.currency}
+                    {trip.budget.perPerson ? ' per person' : ''}
+                  </p>
+                </div>
+              )}
+              {trip.activities && (
+                <div className="p-4 rounded-lg" style={{ backgroundColor: '#F4F1ED' }}>
+                  <h3 className="font-heading font-bold mb-2" style={{ color: '#263238' }}>
+                    Main Activities
+                  </h3>
+                  <div style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
+                    {renderRichText(trip.activities)}
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
+      </div>
       </section>
 
       {/* Highlights Gallery */}
@@ -342,22 +363,12 @@ export default async function TripDetailPage({ params }: TripPageProps) {
         </section>
       )}
 
-      {/* Itinerary */}
-      {trip.itinerary && trip.itinerary.length > 0 && (
-        <section className="py-16 bg-white">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-heading font-bold text-center mb-12" style={{ color: '#4C3A7A' }}>
-              Day-by-Day Itinerary
-            </h2>
-            
-            <div className="space-y-8">
-              {trip.itinerary.map((block, index) => (
-                <ItineraryBlock key={block.id || index} block={block} index={index} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+            {/* Map + Scrolling Itinerary Split */}
+            {trip.itinerary && trip.itinerary.length > 0 && (
+              <section className="bg-white">
+                <ClientItinerary trip={trip} />
+              </section>
+            )}
 
       {/* Back to trips */}
       <section className="py-16" style={{ backgroundColor: '#F4F1ED' }}>
@@ -375,3 +386,5 @@ export default async function TripDetailPage({ params }: TripPageProps) {
     </div>
   );
 }
+
+// ClientItinerary has been moved to a dedicated client component file.

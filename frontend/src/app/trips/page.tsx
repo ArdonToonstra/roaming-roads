@@ -1,6 +1,7 @@
 import { payload } from '@/lib/api';
 import Link from 'next/link';
 import { MapPin } from 'lucide-react';
+import TripsInteractive from '@/components/TripsInteractive';
 import { Trip, Media, Country } from '@/types/payload';
 import { env } from '@/lib/config';
 import { getImageUrl } from '@/lib/images';
@@ -87,41 +88,10 @@ export default async function TripsPage() {
         </div>
       </section>
 
-      {/* Trips Grid */}
+      {/* Trips + Map Layout */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {trips.length > 0 ? (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {trips.map((trip) => (
-                  <TripCard key={trip.id} trip={trip} />
-                ))}
-              </div>
-              
-              <div className="text-center mt-16">
-                <p className="text-lg font-sans text-foreground">
-                  More adventures coming soon. Follow our journey as we explore the world authentically.
-                </p>
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-16">
-              <div className="bg-card rounded-xl p-12 max-w-md mx-auto">
-                <h3 className="text-2xl font-heading font-bold mb-4 text-muted-foreground">
-                  Adventures Loading...
-                </h3>
-                <p className="mb-6 font-sans text-foreground">
-                  We're currently adding our travel stories. Check back soon for authentic adventures!
-                </p>
-                <Link 
-                  href="/"
-                  className="inline-block px-6 py-3 bg-primary text-primary-foreground font-heading font-bold rounded-full transition-opacity duration-300 hover:opacity-90"
-                >
-                  Back to Home
-                </Link>
-              </div>
-            </div>
-          )}
+          <TripsInteractive trips={trips} />
         </div>
       </section>
     </div>
