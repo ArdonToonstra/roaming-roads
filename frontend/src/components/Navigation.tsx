@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
+// Use a plain <img> to avoid server/client markup mismatches
 import { Menu, X } from 'lucide-react';
 
 export default function Navigation() {
@@ -18,21 +18,19 @@ export default function Navigation() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo: show on all pages except the homepage (homepage has its own large logo) */}
-          {pathname !== '/' && (
-            <Link href="/" className="flex items-center gap-3 group" onClick={closeMenu}>
-              <div className="w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                <Image 
-                  src="/roaming-roads-logo-no-text.svg" 
-                  alt="Roaming Roads"
-                  width={48}
-                  height={48}
-                  className="w-full h-full object-contain"
-                  priority
-                />
-              </div>
-            </Link>
-          )}
+          {/* Logo with text in the header (always visible). Slightly larger for better presence. */}
+          <Link href="/" className="flex items-center gap-3 group" onClick={closeMenu}>
+            <div className="w-14 h-14 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+              <img
+                src="/roaming-roads-logo-no-text.svg"
+                alt="Roaming Roads"
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <span className="hidden sm:inline-block font-heading font-bold text-lg text-foreground">
+              Roaming Roads
+            </span>
+          </Link>
           
           {/* Desktop Navigation Links (centered) */}
           <div className="hidden md:flex flex-1 items-center justify-center gap-8">

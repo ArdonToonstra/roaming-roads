@@ -3,6 +3,7 @@ import { payload } from '@/lib/api';
 import { Trip } from '@/types/payload';
 import { env } from '@/lib/config';
 import { getImageUrl } from '@/lib/images';
+import HeroRotator from '@/components/HeroRotator';
 
 async function getFeaturedTrips(): Promise<Trip[]> {
   try {
@@ -24,6 +25,17 @@ async function getFeaturedTrips(): Promise<Trip[]> {
     return response.docs;
   } catch (error) {
     console.error('Failed to fetch featured trips:', error);
+    return [];
+  }
+}
+
+// Get a pool of trips to choose a hero image from (featured or most recent)
+async function getHeroCandidates(): Promise<Trip[]> {
+  try {
+    const response = await payload.getTrips({ limit: 8 }) as { docs: Trip[] };
+    return response.docs;
+  } catch (error) {
+    console.error('Failed to fetch hero candidates:', error);
     return [];
   }
 }
@@ -69,35 +81,34 @@ function FeaturedTripCard({ trip }: { trip: Trip }) {
 
 export default async function HomePage() {
   const featuredTrips = await getFeaturedTrips();
+  const heroCandidates = await getHeroCandidates();
+
+  // Prepare images for client-side rotator (resolve URLs)
+  const heroImages = heroCandidates.length > 0 ? heroCandidates.map(t => ({
+    url: getImageUrl(t.coverImage),
+    title: t.title,
+    description: t.description,
+    href: `/trips/${t.slug || t.id}`,
+  })) : [{ url: '/roaming-roads-logo-no-text.svg', title: 'Roaming Roads' }];
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#F4F1ED' }}>
-  {/* Hero Section */}
+    <div className="min-h-screen homepage" style={{ backgroundColor: '#F4F1ED' }}>
+  {/* Hero Section (rotating trip cover) */}
   <section className="relative h-screen flex items-center justify-center text-white overflow-hidden pt-24 -mt-16">
-        {/* Background Gradient inspired by brand colors */}
-        <div 
-          className="absolute inset-0" 
-          style={{ 
-            background: 'linear-gradient(135deg, #4C3A7A 0%, #F57D50 50%, #2A9D8F 100%)' 
-          }} 
-        />
-        <div className="absolute inset-0 bg-black/30" />
+        {/* Client-side rotator */}
+        <HeroRotator images={heroImages} intervalMs={60_000} />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-black/40" />
         
         <div className="relative text-center z-10 max-w-4xl mx-auto px-4">
-          <div className="mb-8">
-            {/* Large logo on the homepage instead of text */}
-            <div className="flex items-center justify-center">
-              <img src="/roaming-roads-logo.svg" alt="Roaming Roads" className="w-64 md:w-96 h-auto" />
-            </div>
-          </div>
           
           <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6 uppercase">
             Find Your Next Road
           </h2>
-          
+
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
             Authentic travel guides, honestly written. No ads. No affiliate links. Ever.
           </p>
-          
+
           <Link 
             href="/trips" 
             className="inline-block px-12 py-4 text-white font-heading font-bold text-lg uppercase tracking-wide rounded-full transition-colors duration-300 hover:opacity-90"
