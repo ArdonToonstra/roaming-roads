@@ -25,10 +25,10 @@ Status legend: (P0 = critical, P1 = high, P2 = normal, P3 = nice-to-have)
 - [x] Convert trips pages to use semantic colors
 - [x] Set up local CMS development environment with live database
 - [x] Configure public access for Trips, Countries, and Media collections
-- [ ] Test with live CMS connection and verify data flow (API 403 → public access fix applied)
+- [x] Test with live CMS connection and verify data flow (API 403 → public access fix applied)
 - [ ] Remove hardcoded content, use only dynamic data from CMS
-- [ ] Graceful loading + error states  
-- [ ] Basic caching strategy (ISR or fetch cache options)
+- [x] Graceful loading + error states  
+- [x] Basic caching strategy (ISR or fetch cache options)
 
 ## P1 – Mapping & Geo
 - [ ] Decide on map library (Leaflet vs MapLibre GL)

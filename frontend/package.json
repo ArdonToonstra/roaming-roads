@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack --port 3001",
     "build": "next build --turbopack",
     "start": "next start --port 3001", 
-    "lint": "eslint"
+    "lint": "eslint",
+    "generate:favicons": "node ../scripts/generate-favicons.js ./public/roaming-roads-logo-no-text.svg ./public"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",
@@ -29,5 +30,7 @@
     "eslint-config-next": "15.5.4",
     "tailwindcss": "^4.1.14",
     "typescript": "^5"
+    ,"sharp": "^0.32.0",
+    "png-to-ico": "^0.5.0"
   }
 }

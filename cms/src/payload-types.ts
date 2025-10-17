@@ -391,7 +391,7 @@ export interface Trip {
   /**
    * URL-friendly version of the title (e.g., "kyrgyzstan-adventure")
    */
-  slug?: string | null;
+  slug: string;
   status?: ('draft' | 'published') | null;
   coverImage: number | Media;
   /**

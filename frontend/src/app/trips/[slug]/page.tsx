@@ -40,6 +40,10 @@ function renderRichText(content: unknown): string {
 
 function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypointBlock; index: number }) {
   const isFullDay = block.blockType === 'fullDay';
+  // Safely read coordinates: payload data may omit location or coordinates
+  const rawCoords = (block as any).location?.coordinates;
+  const hasCoords = Array.isArray(rawCoords) && rawCoords.length >= 2 && typeof rawCoords[0] === 'number' && typeof rawCoords[1] === 'number';
+  const coordsText = hasCoords ? `${rawCoords[1].toFixed(4)}, ${rawCoords[0].toFixed(4)}` : null;
   
   return (
     <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300">
@@ -70,12 +74,16 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
               </div>
             )}
             
-            {block.location && (
+            {coordsText ? (
               <div className="flex items-center gap-1">
                 <Navigation size={16} />
-                <span>
-                  {block.location.coordinates[1].toFixed(4)}, {block.location.coordinates[0].toFixed(4)}
-                </span>
+                <span>{coordsText}</span>
+              </div>
+            ) : (
+              // gracefully show nothing or a placeholder if coordinates are missing
+              <div className="flex items-center gap-1 opacity-70 text-sm">
+                <Navigation size={16} />
+                <span>Location unknown</span>
               </div>
             )}
           </div>

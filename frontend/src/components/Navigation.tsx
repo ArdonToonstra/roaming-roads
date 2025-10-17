@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
@@ -11,27 +12,30 @@ export default function Navigation() {
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
+  const pathname = usePathname();
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group" onClick={closeMenu}>
-            <div className="w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-              <Image 
-                src="/roaming-roads-logo-transparent_temp.svg" 
-                alt="Roaming Roads Logo"
-                width={98}
-                height={98}
-                className="w-full h-full object-contain"
-                priority
-              />
-            </div>
-           
-          </Link>
+          {/* Logo: show on all pages except the homepage (homepage has its own large logo) */}
+          {pathname !== '/' && (
+            <Link href="/" className="flex items-center gap-3 group" onClick={closeMenu}>
+              <div className="w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                <Image 
+                  src="/roaming-roads-logo-no-text.svg" 
+                  alt="Roaming Roads"
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-contain"
+                  priority
+                />
+              </div>
+            </Link>
+          )}
           
-          {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Navigation Links (centered) */}
+          <div className="hidden md:flex flex-1 items-center justify-center gap-8">
             <Link 
               href="/" 
               className="font-medium text-foreground hover:text-primary transition-colors"

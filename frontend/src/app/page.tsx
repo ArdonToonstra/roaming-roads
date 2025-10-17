@@ -71,8 +71,8 @@ export default async function HomePage() {
   const featuredTrips = await getFeaturedTrips();
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F4F1ED' }}>
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center text-white overflow-hidden -mt-16">
+  {/* Hero Section */}
+  <section className="relative h-screen flex items-center justify-center text-white overflow-hidden pt-24 -mt-16">
         {/* Background Gradient inspired by brand colors */}
         <div 
           className="absolute inset-0" 
@@ -84,9 +84,10 @@ export default async function HomePage() {
         
         <div className="relative text-center z-10 max-w-4xl mx-auto px-4">
           <div className="mb-8">
-            <h1 className="text-6xl md:text-8xl font-heading font-bold tracking-wider">
-              ROAMING ROADS
-            </h1>
+            {/* Large logo on the homepage instead of text */}
+            <div className="flex items-center justify-center">
+              <img src="/roaming-roads-logo.svg" alt="Roaming Roads" className="w-64 md:w-96 h-auto" />
+            </div>
           </div>
           
           <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6 uppercase">

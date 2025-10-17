@@ -52,7 +52,7 @@ export const payload = {
     const query = searchParams.toString()
     const endpoint = `${API_ENDPOINTS.TRIPS}${query ? `?${query}` : ''}`
     
-    return api.get(endpoint)
+    return api.get(endpoint, { next: { revalidate: 360 } })
   },
 
   // Get single trip by slug or ID
@@ -77,7 +77,8 @@ export const payload = {
     
     const endpoint = `${API_ENDPOINTS.TRIPS}?${searchParams.toString()}`
     console.log('Making API request to:', endpoint)
-    const response = await api.get<{ docs: Trip[] }>(endpoint)
+    // Trip detail pages change less frequently; cache longer by default
+    const response = await api.get<{ docs: Trip[] }>(endpoint, { next: { revalidate: 3600 } })
     return response.docs[0] || null
   },
 

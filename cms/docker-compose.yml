@@ -25,6 +25,8 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=development
+      # Ensure Payload connects to the local postgres service by service name
+      - DATABASE_URI=postgresql://rruser:z8ZWOUcPaXKgiAn0sATYNb7N61Lth0JyLbH@postgres:5432/roamingroads
     # Keep STDIN open for Payload's migration prompts (TTY disabled to prevent log duplication)
     stdin_open: true
     tty: false
