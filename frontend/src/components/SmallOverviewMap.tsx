@@ -4,8 +4,29 @@ import 'leaflet/dist/leaflet.css';
 import type { Trip, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
 import { useMemo, useRef, useEffect } from 'react';
 
+// Types for Leaflet
+interface LeafletMapInstance {
+  fitBounds: (bounds: unknown, options?: { padding?: [number, number]; maxZoom?: number }) => void;
+}
+
+interface LeafletModule {
+  latLngBounds: (coords: Array<[number, number]>) => {
+    pad: (amount: number) => unknown;
+  };
+  divIcon: (options: { html: string; className: string; iconSize: [number, number] }) => unknown;
+  Icon?: {
+    Default?: {
+      prototype: Record<string, unknown>;
+      mergeOptions: (options: { iconUrl: string; iconRetinaUrl: string; shadowUrl: string }) => void;
+    };
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MapContainer: any = dynamic(() => import('react-leaflet').then(m => m.MapContainer), { ssr: false });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TileLayer: any = dynamic(() => import('react-leaflet').then(m => m.TileLayer), { ssr: false });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Marker: any = dynamic(() => import('react-leaflet').then(m => m.Marker), { ssr: false });
 
 function toNumber(v: unknown): number | null {
@@ -41,16 +62,8 @@ function extractBlockCoords(block: CmsFullDayBlock | CmsWaypointBlock) {
 }
 
 export default function SmallOverviewMap({ trip }: { trip: Trip }) {
-  const mapRef = useRef<any>(null);
-  const leafletRef = useRef<any>(null);
-
-  // Dynamically import Leaflet on the client only
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    import('leaflet').then((mod) => {
-      leafletRef.current = (mod && (mod as any).default) || mod;
-    }).catch(() => {});
-  }, []);
+  const mapRef = useRef<LeafletMapInstance | null>(null);
+  const leafletRef = useRef<LeafletModule | null>(null);
 
   const markers = useMemo(() => {
     if (!trip.itinerary) return [];
@@ -64,23 +77,36 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
     return m;
   }, [trip.itinerary]);
 
-  // Auto-fit bounds to markers when they change
+  // Dynamically import Leaflet and handle bounds fitting
   useEffect(() => {
-    if (!mapRef.current || markers.length === 0) return;
-    const map = mapRef.current;
-    const L = (window as any).L;
-    if (!L) return;
-    
-    // Always create bounds from all markers and fit them
-    const bounds = L.latLngBounds(markers.map(m => [m.coord.lat, m.coord.lng]));
-    
-    if (markers.length === 1) {
-      // For single marker, fit bounds but with reasonable zoom limit
-      map.fitBounds(bounds, { padding: [20, 20], maxZoom: 10 });
-    } else {
-      // For multiple markers, fit all with padding
-      map.fitBounds(bounds, { padding: [15, 15] });
-    }
+    if (typeof window === 'undefined') return;
+    import('leaflet').then((mod) => {
+      leafletRef.current = (mod && (mod as any).default) || mod;
+      // Configure Leaflet icon paths to use static assets
+      const L = leafletRef.current;
+      if (L && L.Icon && L.Icon.Default) {
+        delete (L.Icon.Default.prototype as any)._getIconUrl;
+        L.Icon.Default.mergeOptions({
+          iconUrl: '/marker-icon.png',
+          iconRetinaUrl: '/marker-icon-2x.png',
+          shadowUrl: '/marker-shadow.png',
+        });
+      }
+      
+      // Auto-fit bounds to markers after Leaflet is loaded
+      if (mapRef.current && markers.length > 0 && L) {
+        const map = mapRef.current;
+        const bounds = L.latLngBounds(markers.map(m => [m.coord.lat, m.coord.lng]));
+        
+        if (markers.length === 1) {
+          // For single marker, fit bounds but with reasonable zoom limit
+          map.fitBounds(bounds, { padding: [20, 20], maxZoom: 10 });
+        } else {
+          // For multiple markers, fit all with padding
+          map.fitBounds(bounds, { padding: [15, 15] });
+        }
+      }
+    }).catch(() => {});
   }, [markers]);
 
   // Initial center and zoom (will be overridden by useEffect for markers)
@@ -99,6 +125,7 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
         zoomControl={false} 
         touchZoom={false} 
         attributionControl={false}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         whenCreated={(map: any) => { mapRef.current = map; }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

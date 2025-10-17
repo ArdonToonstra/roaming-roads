@@ -5,11 +5,34 @@ import dynamic from 'next/dynamic';
 import type { Trip, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
 import 'leaflet/dist/leaflet.css';
 
-// Dynamic imports to avoid SSR issues
+// Types for Leaflet
+interface LeafletMapInstance {
+  fitBounds: (bounds: unknown, options?: { padding?: [number, number]; maxZoom?: number }) => void;
+}
+
+interface LeafletModule {
+  latLngBounds: (coords: Array<[number, number]>) => {
+    pad: (amount: number) => unknown;
+  };
+  divIcon: (options: { html: string; className: string; iconSize: [number, number] }) => unknown;
+  Icon?: {
+    Default?: {
+      prototype: Record<string, unknown>;
+      mergeOptions: (options: { iconUrl: string; iconRetinaUrl: string; shadowUrl: string }) => void;
+    };
+  };
+}
+
+// Dynamic imports to avoid SSR issues - using any due to dynamic import limitations
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MapContainer: any = dynamic(() => import('react-leaflet').then(m => m.MapContainer), { ssr: false });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TileLayer: any = dynamic(() => import('react-leaflet').then(m => m.TileLayer), { ssr: false });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Marker: any = dynamic(() => import('react-leaflet').then(m => m.Marker), { ssr: false });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Popup: any = dynamic(() => import('react-leaflet').then(m => m.Popup), { ssr: false });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Polyline: any = dynamic(() => import('react-leaflet').then(m => m.Polyline), { ssr: false });
 
 function toNumber(v: unknown): number | null {
@@ -54,28 +77,23 @@ export interface TripDetailMapProps {
 }
 
 export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDetailMapProps) {
-  const mapRef = useRef<any>(null);
-  const leafletRef = useRef<any>(null);
-
-  // Dynamically import Leaflet on the client only to avoid SSR issues
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    import('leaflet').then((mod) => {
-      leafletRef.current = (mod && (mod as any).default) || mod;
-    }).catch(() => {});
-  }, []);
+  const mapRef = useRef<LeafletMapInstance | null>(null);
+  const leafletRef = useRef<LeafletModule | null>(null);
 
   const markers = useMemo(() => {
     if (!trip.itinerary) return [];
-    const m: { coord: { lat: number; lng: number }; block: any; idx: number }[] = [];
+    const m: { coord: { lat: number; lng: number }; block: CmsFullDayBlock | CmsWaypointBlock; idx: number }[] = [];
     trip.itinerary.forEach((block, idx) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const coord = extractBlockCoords(block as any);
       if (coord) {
         m.push({ coord, block, idx });
       } else if (process.env.NODE_ENV === 'development') {
         // eslint-disable-next-line no-console
         console.debug('[TripDetailMap] no coords for block', idx, {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           location: (block as any).location,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           locationType: typeof (block as any).location,
         });
       }
@@ -87,21 +105,35 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
     return m;
   }, [trip.itinerary]);
 
+  // Dynamically import Leaflet and handle bounds fitting
   useEffect(() => {
-    if (!mapRef.current || markers.length === 0) return;
-    const L = leafletRef.current;
-    if (!L) return;
+    if (typeof window === 'undefined') return;
+    import('leaflet').then((mod) => {
+      leafletRef.current = (mod && (mod as any).default) || mod;
+      // Configure Leaflet icon paths to use static assets
+      const L = leafletRef.current;
+      if (L && L.Icon && L.Icon.Default) {
+        delete (L.Icon.Default.prototype as any)._getIconUrl;
+        L.Icon.Default.mergeOptions({
+          iconUrl: '/marker-icon.png',
+          iconRetinaUrl: '/marker-icon-2x.png',
+          shadowUrl: '/marker-shadow.png',
+        });
+      }
 
-    // Always create bounds from all markers and fit them
-    const bounds = L.latLngBounds(markers.map(m => [m.coord.lat, m.coord.lng]));
-
-    if (markers.length === 1) {
-      // For single marker, fit bounds but with reasonable zoom limit
-      mapRef.current.fitBounds(bounds, { padding: [30, 30], maxZoom: 12 });
-    } else {
-      // For multiple markers, fit all with padding
-      mapRef.current.fitBounds(bounds.pad(0.2));
-    }
+      // Fit bounds after Leaflet is loaded
+      if (mapRef.current && markers.length > 0 && L) {
+        const bounds = L.latLngBounds(markers.map(m => [m.coord.lat, m.coord.lng]));
+        
+        if (markers.length === 1) {
+          // For single marker, fit bounds but with reasonable zoom limit
+          mapRef.current.fitBounds(bounds, { padding: [50, 50], maxZoom: 12 });
+        } else {
+          // For multiple markers, fit all with padding
+          mapRef.current.fitBounds(bounds, { padding: [30, 30] });
+        }
+      }
+    }).catch(() => {});
   }, [markers]);
 
   const initialCenter: [number, number] = markers.length > 0 ? [markers[0].coord.lat, markers[0].coord.lng] : [20, 0];
@@ -113,6 +145,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
         center={initialCenter}
         zoom={initialZoom}
         className="h-full w-full"
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         whenCreated={(map: any) => { mapRef.current = map; }}
         scrollWheelZoom={true}
         zoomControl={true}

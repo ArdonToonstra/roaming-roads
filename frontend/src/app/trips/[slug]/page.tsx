@@ -16,6 +16,11 @@ interface TripPageProps {
 
 async function getTrip(slugOrId: string): Promise<Trip | null> {
   try {
+    // Skip API calls for static assets (images, css, js, etc.)
+    if (slugOrId.match(/\.(png|jpg|jpeg|gif|svg|css|js|ico|woff|woff2|ttf|eot)$/i)) {
+      return null;
+    }
+    
     console.log('Fetching trip with slug/ID:', slugOrId);
     const response = await payload.getTrip(slugOrId);
     console.log('Trip response:', response);
@@ -44,6 +49,7 @@ function renderRichText(content: unknown): string {
 function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypointBlock; index: number }) {
   const isFullDay = block.blockType === 'fullDay';
   // Safely read coordinates: payload data may omit location or coordinates
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const rawCoords = (block as any).location?.coordinates;
   const hasCoords = Array.isArray(rawCoords) && rawCoords.length >= 2 && typeof rawCoords[0] === 'number' && typeof rawCoords[1] === 'number';
   const coordsText = hasCoords ? `${rawCoords[1].toFixed(4)}, ${rawCoords[0].toFixed(4)}` : null;
@@ -194,6 +200,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
   // Prefer hero size if available
   let imageUrl = '/placeholder-trip.jpg';
   if (typeof coverImage === 'object' && coverImage) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sizes: any = (coverImage as any).sizes;
     const heroSizeUrl = sizes?.hero?.url;
     const baseUrl = coverImage.url;

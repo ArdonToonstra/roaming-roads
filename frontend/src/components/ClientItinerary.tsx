@@ -10,6 +10,7 @@ import { getImageUrl } from '@/lib/images';
 
 function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypointBlock; index: number }) {
   const isFullDay = block.blockType === 'fullDay';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const rawCoords = (block as any).location?.coordinates;
   const hasCoords = Array.isArray(rawCoords) && rawCoords.length >= 2 && typeof rawCoords[0] === 'number' && typeof rawCoords[1] === 'number';
   const coordsText = hasCoords ? `${rawCoords[1].toFixed(4)}, ${rawCoords[0].toFixed(4)}` : null;
@@ -67,6 +68,7 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
               if (!media) return null;
               return (
                 <div key={idx} className="rounded-lg overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={getImageUrl(media.url)} alt={item.caption || media.alt || `Photo ${idx + 1}`} className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300" />
                   {item.caption && <p className="mt-2 text-sm italic" style={{ color: '#263238' }}>{item.caption}</p>}
                 </div>

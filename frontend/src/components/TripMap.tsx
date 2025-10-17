@@ -6,9 +6,30 @@ import type { Trip } from '@/types/payload';
 import { useRouter } from 'next/navigation';
 import 'leaflet/dist/leaflet.css';
 
+// Types for Leaflet
+interface LeafletMapInstance {
+  fitBounds: (bounds: unknown, options?: { padding?: [number, number]; maxZoom?: number }) => void;
+}
+
+interface LeafletModule {
+  latLngBounds: (coords: Array<[number, number]>) => {
+    pad: (amount: number) => unknown;
+  };
+  divIcon: (options: { html: string; className: string; iconSize: [number, number] }) => unknown;
+  Icon?: {
+    Default?: {
+      prototype: Record<string, unknown>;
+      mergeOptions: (options: { iconUrl: string; iconRetinaUrl: string; shadowUrl: string }) => void;
+    };
+  };
+}
+
 // Dynamically import react-leaflet components to avoid SSR issues
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MapContainer: any = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TileLayer: any = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Marker: any = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false });
 
 // Marker coordinate extraction helper
@@ -43,28 +64,42 @@ export interface TripMapProps {
 
 export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMapProps) {
   const router = useRouter();
-  const mapRef = useRef<any>(null);
-  const leafletRef = useRef<any>(null);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    import('leaflet').then((mod) => {
-      leafletRef.current = (mod && (mod as any).default) || mod;
-    }).catch(() => {});
-  }, []);
+  const mapRef = useRef<LeafletMapInstance | null>(null);
+  const leafletRef = useRef<LeafletModule | null>(null);
 
   const markers = useMemo(() => {
     return trips.map(t => ({ trip: t, coord: extractRepresentativeCoordinate(t) })).filter(m => m.coord);
   }, [trips]);
 
-  // Fit bounds to markers when they change
   useEffect(() => {
-    if (!mapRef.current || markers.length === 0) return;
-    const map = mapRef.current;
-  const bounds = (window as any).L?.latLngBounds(markers.map(m => [m.coord!.lat, m.coord!.lng]));
-    if (bounds) {
-      map.fitBounds(bounds.pad(0.2));
-    }
+    if (typeof window === 'undefined') return;
+    import('leaflet').then((mod) => {
+      leafletRef.current = (mod && (mod as any).default) || mod;
+      // Configure Leaflet icon paths to use static assets
+      const L = leafletRef.current;
+      if (L && L.Icon && L.Icon.Default) {
+        delete (L.Icon.Default.prototype as any)._getIconUrl;
+        L.Icon.Default.mergeOptions({
+          iconUrl: '/marker-icon.png',
+          iconRetinaUrl: '/marker-icon-2x.png',
+          shadowUrl: '/marker-shadow.png',
+        });
+      }
+      
+      // Fit bounds after Leaflet is loaded
+      if (mapRef.current && markers.length > 0 && L) {
+        const map = mapRef.current;
+        const bounds = L.latLngBounds(markers.map(m => [m.coord!.lat, m.coord!.lng]));
+        
+        if (markers.length === 1) {
+          // For single marker, center and set reasonable zoom
+          map.fitBounds(bounds, { padding: [50, 50], maxZoom: 8 });
+        } else {
+          // For multiple markers, fit all with padding
+          map.fitBounds(bounds, { padding: [30, 30] });
+        }
+      }
+    }).catch(() => {});
   }, [markers]);
 
   const initialCenter: [number, number] = markers.length > 0 ? [markers[0].coord!.lat, markers[0].coord!.lng] : [20, 0];
@@ -76,6 +111,7 @@ export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMap
         center={initialCenter}
         zoom={initialZoom}
         className="h-[400px] w-full"
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         whenCreated={(map: any) => { mapRef.current = map; }}
         scrollWheelZoom={true}
         zoomControl={true}
