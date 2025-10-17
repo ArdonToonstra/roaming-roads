@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Calendar, Clock, MapPin, ArrowRight } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { payload } from '@/lib/api';
 import { Trip } from '@/types/payload';
 import { env } from '@/lib/config';
@@ -19,7 +19,6 @@ function TripCard({ trip }: { trip: Trip }) {
   const imageUrl = getImageUrl(trip.coverImage);
   
   const country = typeof trip.country === 'object' ? trip.country.name : 'Adventure';
-  const regions = trip.regionsVisited?.slice(0, 2) || [];
   return (
     <Link href={`/trips/${trip.slug || trip.id}`} className="group">
       <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
@@ -34,17 +33,7 @@ function TripCard({ trip }: { trip: Trip }) {
         
         {/* Content */}
         <div className="p-6">
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 mb-3">
-            {regions.map((region, index) => (
-              <span 
-                key={index}
-                className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md"
-              >
-                {region.regionName}
-              </span>
-            ))}
-          </div>
+          {/* (regions removed for simplified card) */}
           
           {/* Title */}
           <h3 className="font-heading font-bold text-xl text-card-foreground mb-2 group-hover:text-primary transition-colors">
@@ -56,32 +45,13 @@ function TripCard({ trip }: { trip: Trip }) {
             {trip.description}
           </p>
           
-          {/* Meta Information */}
-          <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1">
-                <MapPin className="w-4 h-4" />
-                <span>{country}</span>
-              </div>
-              {trip.period && (
-                <div className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  <span>{trip.period}</span>
-                </div>
-              )}
+          {/* Footer meta: country and travel period */}
+          <div className="mt-2 text-sm text-muted-foreground flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4" />
+              <span>{country}</span>
             </div>
-            {trip.createdAt && (
-              <div className="flex items-center gap-1">
-                <Calendar className="w-4 h-4" />
-                <span>{new Date(trip.createdAt).toLocaleDateString()}</span>
-              </div>
-            )}
-          </div>
-          
-          {/* Read More Link */}
-          <div className="flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all duration-200">
-            <span>Read the adventure</span>
-            <ArrowRight className="w-4 h-4" />
+            {trip.period && <div>{trip.period}</div>}
           </div>
         </div>
       </article>

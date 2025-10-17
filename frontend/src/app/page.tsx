@@ -43,8 +43,6 @@ async function getHeroCandidates(): Promise<Trip[]> {
 function FeaturedTripCard({ trip }: { trip: Trip }) {
   const imageUrl = getImageUrl(trip.coverImage);
   
-  const country = typeof trip.country === 'object' ? trip.country.name : 'Adventure';
-  
   return (
     <Link href={`/trips/${trip.slug || trip.id}`} className="group">
       <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
@@ -56,23 +54,12 @@ function FeaturedTripCard({ trip }: { trip: Trip }) {
           />
         </div>
         <div className="p-6">
-          <div className="flex flex-wrap gap-2 mb-3">
-            {trip.regionsVisited?.slice(0, 2).map((region, index) => (
-              <span key={index} className="px-2 py-1 bg-muted text-muted-foreground text-xs font-medium rounded-md">
-                {region.regionName}
-              </span>
-            ))}
-          </div>
           <h3 className="font-heading font-bold text-xl text-card-foreground mb-2 group-hover:text-primary transition-colors">
             {trip.title}
           </h3>
           <p className="text-muted-foreground mb-4 line-clamp-3">
             {trip.description}
           </p>
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <span>{country}</span>
-            <span>{trip.period || 'Adventure'}</span>
-          </div>
         </div>
       </article>
     </Link>

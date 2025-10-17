@@ -1,6 +1,6 @@
 import { payload } from '@/lib/api';
 import Link from 'next/link';
-import { MapPin, Calendar, Clock, Camera } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { Trip, Media, Country } from '@/types/payload';
 import { env } from '@/lib/config';
 import { getImageUrl } from '@/lib/images';
@@ -19,8 +19,6 @@ function TripCard({ trip }: { trip: Trip }) {
   const imageUrl = getImageUrl(trip.coverImage);
   
   const country = typeof trip.country === 'object' ? trip.country.name : 'Unknown';
-  const highlightsCount = trip.highlightsMedia?.length || 0;
-  
   return (
     <Link href={`/trips/${trip.slug || trip.id}`} className="group block">
       <article className="bg-card rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden">
@@ -32,13 +30,7 @@ function TripCard({ trip }: { trip: Trip }) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
           
-          {/* Highlights badge */}
-          {highlightsCount > 0 && (
-            <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
-              <Camera size={14} />
-              {highlightsCount}
-            </div>
-          )}
+          {/* (highlights badge removed - simplified card) */}
         </div>
         
         <div className="p-6">
@@ -61,47 +53,13 @@ function TripCard({ trip }: { trip: Trip }) {
             {trip.description}
           </p>
           
-          {/* Regions visited */}
-          {trip.regionsVisited && trip.regionsVisited.length > 0 && (
-            <div className="mb-4">
-              <p className="text-sm font-medium mb-2 text-muted-foreground">
-                Regions explored:
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {trip.regionsVisited.slice(0, 3).map((region, index) => (
-                  <span 
-                    key={index}
-                    className="px-3 py-1 text-xs rounded-full bg-muted text-foreground"
-                  >
-                    {region.regionName}
-                  </span>
-                ))}
-                {trip.regionsVisited.length > 3 && (
-                  <span className="text-xs text-secondary">
-                    +{trip.regionsVisited.length - 3} more
-                  </span>
-                )}
-              </div>
+          {/* Footer meta: country and travel period (kept) */}
+          <div className="mt-2 text-sm text-muted-foreground flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4" />
+              <span>{country}</span>
             </div>
-          )}
-          
-          {/* Budget info */}
-          {trip.budget && (
-            <div className="flex items-center justify-between text-sm mb-4">
-              <div className="flex items-center gap-1 text-foreground">
-                <span>Budget:</span>
-                <span className="font-medium">
-                  {trip.budget.amount} {trip.budget.currency}
-                  {trip.budget.perPerson ? '/person' : ''}
-                </span>
-              </div>
-            </div>
-          )}
-          
-          <div className="pt-4 border-t border-gray-100">
-            <span className="inline-flex items-center text-sm font-medium group-hover:text-primary transition-colors text-secondary">
-              Read full story →
-            </span>
+            {trip.period && <div>{trip.period}</div>}
           </div>
         </div>
       </article>
