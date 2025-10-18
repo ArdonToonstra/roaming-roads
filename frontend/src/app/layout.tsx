@@ -3,6 +3,7 @@ import { Lato, Poppins } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ClientLayoutShell from "@/components/ClientLayoutShell";
 
 const lato = Lato({
   variable: "--loaded-font-sans",
@@ -30,15 +31,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
-        {/* Manifest and icons for various platforms */}
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -48,13 +45,14 @@ export default function RootLayout({
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="theme-color" content="#344BA0" />
       </head>
-
       <body className={`${lato.variable} ${poppins.variable} antialiased`}>
         <Navigation />
         <main className="pt-16 min-h-screen">
           {children}
         </main>
+        {/* Footer now handled by client wrapper below */}
         <Footer />
+        <ClientLayoutShell />
       </body>
     </html>
   );

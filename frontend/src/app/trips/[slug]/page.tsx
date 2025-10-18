@@ -4,8 +4,7 @@ import { MapPin, Calendar, Clock, Camera, DollarSign, ArrowLeft, Navigation } fr
 import { Trip, Media, Country, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
 import { notFound } from 'next/navigation';
 import { getImageUrl } from '@/lib/images';
-import TripDetailMap from '@/components/TripDetailMap';
-import ClientItinerary from '@/components/ClientItinerary';
+// Removed embedded map + itinerary; now lives under /journey subpage
 import MountSmallOverview from '@/components/mountSmallOverview';
 
 interface TripPageProps {
@@ -370,26 +369,22 @@ export default async function TripDetailPage({ params }: TripPageProps) {
         </section>
       )}
 
-            {/* Map + Scrolling Itinerary Split */}
+            {/* Steps link instead of inline map/itinerary */}
             {trip.itinerary && trip.itinerary.length > 0 && (
-              <section className="bg-white">
-                <ClientItinerary trip={trip} />
+              <section className="bg-white py-12">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                  <h2 className="text-3xl font-heading font-bold mb-4" style={{ color: '#4C3A7A' }}>Steps Map & Itinerary</h2>
+                  <p className="mb-8 text-lg" style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
+                    Explore the full day-by-day route and interactive map.
+                  </p>
+                  <Link href={`/trips/${trip.slug || trip.id}/steps`} className="inline-flex items-center gap-2 px-8 py-4 text-white font-heading font-bold rounded-full transition-colors duration-300 hover:opacity-90" style={{ backgroundColor: '#2A9D8F' }}>
+                    View Steps Details
+                  </Link>
+                </div>
               </section>
             )}
 
-      {/* Back to trips */}
-      <section className="py-16" style={{ backgroundColor: '#F4F1ED' }}>
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <Link 
-            href="/trips"
-            className="inline-flex items-center gap-2 px-8 py-4 text-white font-heading font-bold rounded-full transition-colors duration-300 hover:opacity-90"
-            style={{ backgroundColor: '#2A9D8F' }}
-          >
-            <ArrowLeft size={20} />
-            Explore More Adventures
-          </Link>
-        </div>
-      </section>
+   
     </div>
   );
 }

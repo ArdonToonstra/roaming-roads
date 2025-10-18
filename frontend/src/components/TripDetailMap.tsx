@@ -81,6 +81,7 @@ export interface TripDetailMapProps {
 export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDetailMapProps) {
   const mapRef = useRef<LeafletMapInstance | null>(null);
   const leafletRef = useRef<LeafletModule | null>(null);
+  const lastPanRef = useRef<number | null>(null);
 
   const markers = useMemo(() => {
     if (!trip.itinerary) return [];
@@ -137,6 +138,48 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
       }
     }).catch(() => {});
   }, [markers]);
+
+  // Pan map when activeIndex changes (scroll-driven focus) with simple throttle
+  useEffect(() => {
+    if (activeIndex === null || activeIndex === undefined) return;
+    if (!mapRef.current) return;
+    const target = markers.find(m => m.idx === activeIndex);
+    if (!target) return;
+    const now = Date.now();
+    // Throttle to avoid excessive panning during fast scroll (200ms)
+    if (lastPanRef.current && (now - lastPanRef.current) < 200) return;
+    lastPanRef.current = now;
+    try {
+      // Slightly higher zoom for focus without being too tight
+      // Leaflet flyTo if available, fallback to setView
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const mapAny: any = mapRef.current;
+      if (!mapAny) return;
+      // prefer to avoid panning if target already visible
+      try {
+        if (mapAny.getBounds && typeof mapAny.getBounds === 'function') {
+          const bounds = mapAny.getBounds();
+          // Leaflet LatLng bounds contains expects [lat, lng]
+          if (bounds && typeof bounds.contains === 'function' && bounds.contains([target.coord.lat, target.coord.lng])) {
+            return;
+          }
+        }
+      } catch (e) {
+        // ignore errors from bounds check
+      }
+
+      const currentZoom = (mapAny.getZoom && typeof mapAny.getZoom === 'function') ? mapAny.getZoom() : initialZoom;
+      const safeZoom = Number.isFinite(currentZoom) ? Math.max(currentZoom, 7) : Math.max(initialZoom, 7);
+      if (mapAny.flyTo && typeof mapAny.flyTo === 'function') {
+        mapAny.flyTo([target.coord.lat, target.coord.lng], safeZoom, { duration: 0.6 });
+      } else if (mapAny.setView && typeof mapAny.setView === 'function') {
+        mapAny.setView([target.coord.lat, target.coord.lng], safeZoom);
+      }
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.warn('[TripDetailMap] pan failed', e);
+    }
+  }, [activeIndex, markers]);
 
   const initialCenter: [number, number] = markers.length > 0 ? [markers[0].coord.lat, markers[0].coord.lng] : [20, 0];
   const initialZoom = markers.length > 0 ? 9 : 2; // slightly more zoomed-in default
