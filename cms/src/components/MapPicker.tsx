@@ -84,10 +84,17 @@ const MapPicker: React.FC<any> = ({ value, onChange }) => {
       function setMarker(latlng: [number, number], silent = false) {
         const Lany = (L as any);
         if (!markerRef.current) {
-          markerRef.current = Lany.marker(latlng, { draggable: true }).addTo(mapRef.current);
+          // Use a simple divIcon so we don't depend on external PNG assets being served
+          const icon = Lany.divIcon({
+            html: '<div style="background:#F57D50;border-radius:50%;width:20px;height:20px;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.25)"></div>',
+            className: '',
+            iconSize: [26, 26],
+          });
+          markerRef.current = Lany.marker(latlng, { draggable: true, icon }).addTo(mapRef.current);
           markerRef.current.on('dragend', function (ev: any) {
             const pos = ev.target.getLatLng();
             updateValue(pos.lat, pos.lng);
+            setLocal({ lat: pos.lat, lng: pos.lng });
           });
         } else {
           markerRef.current.setLatLng(latlng);
@@ -105,7 +112,14 @@ const MapPicker: React.FC<any> = ({ value, onChange }) => {
       }
     })
 
-    return () => { mounted = false }
+    return () => {
+      mounted = false
+      try {
+        if (mapRef.current && typeof mapRef.current.remove === 'function') mapRef.current.remove()
+      } catch (e) {
+        // swallow
+      }
+    }
   }, [])
 
   // Manual inputs

@@ -27,6 +27,8 @@ services:
       - NODE_ENV=development
       # Ensure Payload connects to the local postgres service by service name
       - DATABASE_URI=postgresql://rruser:z8ZWOUcPaXKgiAn0sATYNb7N61Lth0JyLbH@postgres:5432/roamingroads
+    env_file:
+      - .env.local
     # Use a minimal entrypoint script so the dev server is PID 1 (reduces duplicate logs)
     entrypoint: ["/bin/sh", "-c", "./scripts/docker-entrypoint.sh"]
     depends_on:
