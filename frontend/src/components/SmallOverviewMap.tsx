@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import dynamic from 'next/dynamic';
 import 'leaflet/dist/leaflet.css';
+import { env } from '@/lib/config';
 import type { Trip, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
 import { useMemo, useRef, useEffect } from 'react';
 
@@ -130,7 +131,10 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         whenCreated={(map: any) => { mapRef.current = map; }}
       >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer
+          attribution={env.MAPTILER_KEY ? '&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors' : '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'}
+          url={env.MAPTILER_KEY ? `https://api.maptiler.com/maps/satellite-v2/{z}/{x}/{y}.jpg?key=${env.MAPTILER_KEY}` : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'}
+        />
         {markers.map(m => {
           const L = leafletRef.current;
           const icon = L ? L.divIcon({ html: `<div class=\"rr-marker\">${m.idx + 1}</div>`, className: '', iconSize: [24, 24] }) : undefined;
@@ -138,6 +142,14 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
             <Marker key={m.idx} position={[m.coord.lat, m.coord.lng]} {...(icon ? { icon } : {})} />
           );
         })}
+        {env.MAPTILER_KEY && (
+          <TileLayer
+            attribution='&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors'
+            url={`https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.png?key=${env.MAPTILER_KEY}`}
+            zIndex={650}
+            opacity={1}
+          />
+        )}
       </MapContainer>
       <div className="p-3 text-xs text-muted-foreground border-t border-border">
         {markers.length > 0 ? `${markers.length} itinerary point${markers.length === 1 ? '' : 's'}` : 'No coordinates yet'}

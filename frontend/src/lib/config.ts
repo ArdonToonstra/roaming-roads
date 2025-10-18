@@ -21,7 +21,7 @@ export const SITE_CONFIG = {
   url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001',
   author: {
     name: 'Roaming Roads',
-    email: 'hello@roamingroads.com',
+    email: 'https://github.com/ardontoonstra',
   },
   social: {
     twitter: '@roamingroads',

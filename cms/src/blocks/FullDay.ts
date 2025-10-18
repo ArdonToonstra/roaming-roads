@@ -9,7 +9,7 @@ export const FullDay: Block = {
   fields: [
     { name: 'time', type: 'text', label: 'Time Span (e.g., 1 day - 1 night)' },
     { name: 'locationName', type: 'text', label: 'Location Name', required: true },
-    { name: 'location', type: 'point', label: 'GPS Coordinates' },
+  { name: 'location', type: 'point', label: 'GPS Coordinates', admin: { components: { Field: './components/MapPicker' } } },
     {
       name: 'regionProvince',
       type: 'text',

@@ -10,7 +10,7 @@ export const Waypoint: Block = {
     { name: 'locationName', type: 'text', label: 'Waypoint Name', required: true },
     { name: 'description', type: 'textarea', label: 'Description' },
     { name: 'activities', type: 'richText', label: 'Activities and details' },
-    { name: 'location', type: 'point', label: 'GPS Coordinates' },
+  { name: 'location', type: 'point', label: 'GPS Coordinates', admin: { components: { Field: './components/MapPicker' } } },
     {
       name: 'regionProvince',
       type: 'text',

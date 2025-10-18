@@ -157,16 +157,24 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
       >
         <TileLayer
           attribution={env.MAPTILER_KEY ? '&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors' : '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'}
-          // Note: The MapTiler OMT format is a vector tile (.pbf) and requires a MapLibre/GL renderer
-          // to apply the vector styling. To keep the existing Leaflet setup simple we use MapTiler's
-          // raster tiles when a key is present. If you want full OMT vector support, we can add
-          // MapLibre GL integration and a react wrapper.
+          // Use MapTiler raster tiles (satellite imagery) when a key is provided; fall back to OSM raster tiles
           url={
             env.MAPTILER_KEY
-              ? `https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${env.MAPTILER_KEY}`
+              ? `https://api.maptiler.com/maps/satellite-v2/{z}/{x}/{y}.jpg?key=${env.MAPTILER_KEY}`
               : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           }
         />
+        {env.MAPTILER_KEY && (
+          // Add a label/hybrid overlay on top of the satellite imagery so city names, borders and POI labels are visible.
+          // MapTiler provides hybrid/label tiles you can overlay; this keeps satellite imagery as the base layer.
+          <TileLayer
+            attribution='&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors'
+            url={`https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.png?key=${env.MAPTILER_KEY}`}
+            // Ensure overlay sits above base tiles
+            zIndex={650}
+            opacity={1}
+          />
+        )}
         {markers.map(m => {
           const L = leafletRef.current;
           const isActive = activeIndex === m.idx;

@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import type { Trip } from '@/types/payload';
 import { useRouter } from 'next/navigation';
 import 'leaflet/dist/leaflet.css';
+import { env } from '@/lib/config';
 
 // Types for Leaflet
 interface LeafletMapInstance {
@@ -121,9 +122,17 @@ export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMap
         touchZoom={true}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution={env.MAPTILER_KEY ? '&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors' : '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'}
+          url={env.MAPTILER_KEY ? `https://api.maptiler.com/maps/satellite-v2/{z}/{x}/{y}.jpg?key=${env.MAPTILER_KEY}` : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'}
         />
+        {env.MAPTILER_KEY && (
+          <TileLayer
+            attribution='&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors'
+            url={`https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.png?key=${env.MAPTILER_KEY}`}
+            zIndex={650}
+            opacity={1}
+          />
+        )}
         {markers.map(({ trip, coord }, idx) => {
           if (!coord) return null;
           const numericId = typeof trip.id === 'number' ? trip.id : Number(trip.id);
