@@ -22,12 +22,11 @@ export const metadata: Metadata = {
   title: "Roaming Roads | Authentic Travel Stories",
   description: "Authentic travel guides, honestly written. No ads. No affiliate links. Ever. Discover incredible journeys and adventures around the world.",
   icons: {
-    // Use the logo SVG from the public folder as the favicon.
-    // Modern browsers support SVG favicons; Next.js will output appropriate <link> tags.
-    icon: '/roaming-roads-logo-no-text.svg',
-    shortcut: '/roaming-roads-logo-no-text.svg',
-    // Some platforms prefer a separate apple touch icon; browsers may ignore SVG here but providing it is harmless.
-    apple: '/roaming-roads-logo-no-text.svg',
+    // Prefer a raster favicon for broad browser support (Chrome prefers ICO/PNG).
+    icon: '/favicon-32x32.png',
+    shortcut: '/favicon-32x32.png',
+    // Keep SVG logo available as mask-icon or for platforms that accept SVG
+    apple: '/favicon-180x180.png',
   },
 };
 

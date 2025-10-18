@@ -3,6 +3,7 @@ export const env = {
   CMS_URL: process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3000',
   CMS_SECRET: process.env.CMS_SECRET || '',
   NODE_ENV: process.env.NODE_ENV || 'development',
+  MAPTILER_KEY: process.env.NEXT_PUBLIC_MAPTILER_KEY || '',
 } as const
 
 // API endpoints

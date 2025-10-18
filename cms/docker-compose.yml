@@ -27,11 +27,8 @@ services:
       - NODE_ENV=development
       # Ensure Payload connects to the local postgres service by service name
       - DATABASE_URI=postgresql://rruser:z8ZWOUcPaXKgiAn0sATYNb7N61Lth0JyLbH@postgres:5432/roamingroads
-    # Keep STDIN open for Payload's migration prompts (TTY disabled to prevent log duplication)
-    stdin_open: true
-    tty: false
-    # Run install (first time), ensure import map is generated for richText, then start dev server
-    command: sh -c "npm install && npx payload generate:importmap && npm run dev"
+    # Use a minimal entrypoint script so the dev server is PID 1 (reduces duplicate logs)
+    entrypoint: ["/bin/sh", "-c", "./scripts/docker-entrypoint.sh"]
     depends_on:
       postgres:
         condition: service_healthy

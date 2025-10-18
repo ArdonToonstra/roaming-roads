@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import type { Trip, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
 import 'leaflet/dist/leaflet.css';
+import { env } from '@/lib/config';
 
 // Types for Leaflet
 interface LeafletMapInstance {
@@ -155,8 +156,16 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
         touchZoom={true}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution={env.MAPTILER_KEY ? '&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors' : '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'}
+          // Note: The MapTiler OMT format is a vector tile (.pbf) and requires a MapLibre/GL renderer
+          // to apply the vector styling. To keep the existing Leaflet setup simple we use MapTiler's
+          // raster tiles when a key is present. If you want full OMT vector support, we can add
+          // MapLibre GL integration and a react wrapper.
+          url={
+            env.MAPTILER_KEY
+              ? `https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${env.MAPTILER_KEY}`
+              : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          }
         />
         {markers.map(m => {
           const L = leafletRef.current;
