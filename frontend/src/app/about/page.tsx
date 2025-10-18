@@ -11,7 +11,7 @@ export default function AboutPage() {
             About Roaming Roads
           </h1>
           <p className="text-xl leading-relaxed font-sans text-foreground">
-            We're passionate travelers who believe that every journey has a story worth sharing.
+            We&#39;re passionate travelers who believe that every journey has a story worth sharing.
           </p>
         </div>
       </section>
@@ -34,7 +34,7 @@ export default function AboutPage() {
               </p>
               <p className="font-sans text-card-foreground">
                 We provide detailed itineraries, stunning photography, and honest insights to help you 
-                plan your own adventures and discover the world's most incredible destinations.
+                plan your own adventures and discover the world&#39;s most incredible destinations.
               </p>
             </div>
           </div>
@@ -97,8 +97,8 @@ export default function AboutPage() {
                   Real Experiences
                 </h3>
                 <p className="font-sans text-card-foreground">
-                  Every trip we share is one we've personally taken. We don't recommend places we haven't been 
-                  or experiences we haven't had ourselves.
+                  Every trip we share is one we&#39;ve personally taken. We don&#39;t recommend places we haven&#39;t been 
+                  or experiences we haven&#39;t had ourselves.
                 </p>
               </div>
             </div>
@@ -112,8 +112,8 @@ export default function AboutPage() {
                   Authentic Photography
               </h3>
                 <p className="font-sans text-card-foreground">
-                  All photos are taken by us during our travels. No stock images, no staged shots - 
-                  just real moments from real adventures.
+                All photos are taken by us during our travels. No stock images, no staged shots - 
+                just real moments from real adventures.
                 </p>
               </div>
             </div>

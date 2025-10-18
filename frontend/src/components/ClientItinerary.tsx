@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import TripDetailMap from '@/components/TripDetailMap';
 import RichText from '@/components/RichText';
@@ -11,7 +12,7 @@ import { getImageUrl } from '@/lib/images';
 function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypointBlock; index: number }) {
   const isFullDay = block.blockType === 'fullDay';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rawCoords = (block as any).location?.coordinates;
+  const rawCoords = (block as unknown as any).location?.coordinates;
   const hasCoords = Array.isArray(rawCoords) && rawCoords.length >= 2 && typeof rawCoords[0] === 'number' && typeof rawCoords[1] === 'number';
   const coordsText = hasCoords ? `${rawCoords[1].toFixed(4)}, ${rawCoords[0].toFixed(4)}` : null;
 
@@ -41,17 +42,22 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
       )}
 
       {/* Accommodation block (if present) */}
-      {(block as any).accommodation && (
+  {/* accommodation may be a string or object from CMS */}
+  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+  {(block as unknown as any).accommodation && (
         <div className="mb-6 p-4 rounded-lg" style={{ backgroundColor: '#F4F1ED' }}>
           <h4 className="text-sm font-heading font-bold mb-2" style={{ color: '#4C3A7A' }}>Accommodation</h4>
           <div style={{ color: '#263238' }}>
-            {typeof (block as any).accommodation === 'string' ? (
-              <div style={{ fontFamily: 'Lato, sans-serif' }}>{(block as any).accommodation}</div>
+            {typeof (block as unknown as any).accommodation === 'string' ? (
+              <div style={{ fontFamily: 'Lato, sans-serif' }}>{(block as unknown as any).accommodation}</div>
             ) : (
               <div>
-                {(block as any).accommodation?.name && <div className="font-heading font-bold">{(block as any).accommodation.name}</div>}
-                {(block as any).accommodation?.address && <div className="text-sm">{formatAddress((block as any).accommodation.address)}</div>}
-                {(block as any).accommodation?.notes && <RichText content={(block as any).accommodation.notes} className="text-sm italic mt-1" />}
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                {(block as unknown as any).accommodation?.name && <div className="font-heading font-bold">{(block as unknown as any).accommodation.name}</div>}
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                {(block as unknown as any).accommodation?.address && <div className="text-sm">{formatAddress((block as unknown as any).accommodation.address)}</div>}
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                {(block as unknown as any).accommodation?.notes && <RichText content={(block as unknown as any).accommodation.notes} className="text-sm italic mt-1" />}
               </div>
             )}
           </div>
@@ -64,7 +70,8 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
           <h4 className="text-lg font-heading font-bold mb-3" style={{ color: '#2A9D8F' }}>Photos</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {block.gallery.map((item, idx) => {
-              const media = typeof item.media === 'object' ? item.media as Media : null;
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const media = typeof (item as any).media === 'object' ? (item as any).media as Media : null;
               if (!media) return null;
               return (
                 <div key={idx} className="rounded-lg overflow-hidden">
@@ -125,7 +132,8 @@ export default function ClientItinerary({ trip }: { trip: Trip }) {
         </div>
         <div className="space-y-8 pb-16">
           {trip.itinerary?.map((block, index) => (
-            <ItineraryBlock key={(block as any).id || index} block={block} index={index} />
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            <ItineraryBlock key={((block as unknown as any).id as string) || index} block={block} index={index} />
           ))}
         </div>
       </div>

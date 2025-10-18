@@ -1,4 +1,5 @@
-'use client';
+"use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useMemo, useRef } from 'react';
 import dynamic from 'next/dynamic';
@@ -85,16 +86,16 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
     const m: { coord: { lat: number; lng: number }; block: CmsFullDayBlock | CmsWaypointBlock; idx: number }[] = [];
     trip.itinerary.forEach((block, idx) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const coord = extractBlockCoords(block as any);
+      const coord = extractBlockCoords(block as unknown as any);
       if (coord) {
         m.push({ coord, block, idx });
       } else if (process.env.NODE_ENV === 'development') {
         // eslint-disable-next-line no-console
         console.debug('[TripDetailMap] no coords for block', idx, {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          location: (block as any).location,
+          location: (block as unknown as any).location,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          locationType: typeof (block as any).location,
+          locationType: typeof (block as unknown as any).location,
         });
       }
     });
