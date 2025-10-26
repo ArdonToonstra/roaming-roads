@@ -158,29 +158,49 @@ async function importFiles() {
     // Always set a cover image relation so validation passes (you can change in UI later)
     data.coverImage = { id: 9 };
 
-    // Resolve country name -> numeric id when possible (create country if missing). Fallback to id 5 (Jordan) if resolution fails.
+    // Resolve country name -> numeric id for countries array (updated schema - now multiple countries)
     if (data.country && typeof data.country === 'string') {
       const cid = await findOrCreateCountry(data.country);
       if (cid) {
-        data.country = { id: cid };
+        // Convert single country to countries array
+        data.countries = [cid];
       } else {
-        data.country = { id: 5 };
+        // Fallback to Jordan (id: 5) if resolution fails
+        data.countries = [5];
       }
+      // Remove old singular country field
+      delete data.country;
     }
 
-    // Ensure itinerary blocks include required fields (e.g., locationName)
+    // Ensure itinerary blocks include required fields and match new schema
     if (Array.isArray(data.itinerary)) {
       for (const block of data.itinerary) {
         if (block && block.blockType === 'fullDay') {
           if (!block.locationName) block.locationName = 'Unknown location';
+          
           // Normalize location into GeoJSON Point expected by Payload/PostGIS
           // Payload expects an object with a `type` (e.g. 'Point') and `coordinates` [lng, lat]
           if (block.location && Array.isArray(block.location.coordinates) && block.location.coordinates.length === 2) {
             const coords = block.location.coordinates;
             block.location = { type: 'Point', coordinates: coords };
           }
+          
+          // Map old field names to new schema if needed
+          if (block.day && !block.time) {
+            block.time = `Day ${block.day}`;
+          }
+          
+          // Add empty gallery array if not present (simplified schema)
+          if (!block.gallery) {
+            block.gallery = [];
+          }
         }
       }
+    }
+
+    // Set default values for new required fields
+    if (!data.status) {
+      data.status = 'draft'; // Set to draft by default
     }
 
     const url = new URL('/api/trips', CMS_URL).toString();

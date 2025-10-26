@@ -5,57 +5,55 @@ import { feature } from 'topojson-client'
 import worldData from 'world-atlas/countries-110m.json'
 import { geoCentroid } from 'd3-geo'
 import type { Trip } from '@/types/payload'
+import type { Feature, FeatureCollection, Geometry } from 'geojson'
 
-// Proper GeoJSON types
-interface GeoJSONFeature {
-  id: string | number;
-  properties: {
-    iso_a3?: string;
-    ISO_A3?: string;
-    [key: string]: unknown;
-  };
-  geometry: {
-    type: string;
-    coordinates: number[][][] | number[][][][];
-  };
+// Country properties type for feature matching
+interface CountryProperties {
+  iso_a3?: string;
+  ISO_A3?: string;
+  iso_a2?: string;
+  ISO_A2?: string;
+  ADM0_A3?: string;
+  centroid?: [number, number];
+  [key: string]: unknown;
 }
 
-interface GeoJSONFeatureCollection { 
-  features: GeoJSONFeature[] 
-}
+// Use proper GeoJSON Feature type
+type GeoJSONFeature = Feature<Geometry, CountryProperties>
+type GeoJSONFeatureCollection = FeatureCollection<Geometry, CountryProperties>
 
 interface GeographiesArgs {
   geographies: Array<{
     rsmKey: string;
-    geometry: GeoJSONFeature['geometry'];
-    properties: GeoJSONFeature['properties'];
+    geometry: Geometry;
+    properties: CountryProperties;
   }>;
 }
 
-const geoJson = feature(worldData as any, (worldData as any).objects.countries) as GeoJSONFeatureCollection
+// topojson.feature returns a FeatureCollection for GeometryCollection objects
+const geoJson = feature(worldData, worldData.objects.countries) as unknown as GeoJSONFeatureCollection
 
 export default function WorldMapClient({ trips }: { trips: Trip[] }) {
   // build a map from ISO_A3 -> centroid
   const markers = useMemo(() => {
     const map: { id: string; name?: string; coordinates: [number, number]; trip?: Trip }[] = []
-    const unmatched: { tripId: string; code: string | null }[] = []
     // For each trip try to read country iso3 code from trip.country.countryCode or trip.countryCode
     trips.forEach(t => {
-      const cc = typeof t.country === 'object' ? (t.country as any).countryCode : (t as any).countryCode || null
+      const cc = typeof t.country === 'object' && t.country && 'countryCode' in t.country ? t.country.countryCode : null
       if (!cc) return
       // find geo feature by ISO_A3 or ISO_A2 or by numeric id used in world-atlas TopoJSON
       let f = geoJson.features.find((ft: GeoJSONFeature) => {
-        const props = (ft as any).properties as Record<string, any>
+        const props = ft.properties as CountryProperties
         // sometimes topojson features use different casing or fields; check common ones
         return props && (
-          props.iso_a3 === cc || props.iso_a2 === cc || props.ADM0_A3 === cc || props.ISO_A3 === cc || props.ISO_A2 === cc || String((ft as any).id) === cc
+          props.iso_a3 === cc || props.iso_a2 === cc || props.ADM0_A3 === cc || props.ISO_A3 === cc || props.ISO_A2 === cc || String(ft.id) === cc
         )
       })
       // If not found, try mapping ISO3 -> numeric (world-atlas uses numeric ids like "040")
       if (!f) {
         try {
-          // require dynamically to avoid type issues during SSR build time; this runs client-side
-          // @ts-ignore
+          // Dynamic import to avoid type issues during SSR build time; this runs client-side
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
           const iso = require('i18n-iso-countries')
           // alpha3ToNumeric returns a zero-padded string like '040' for Austria (AUT)
           const numeric = iso.alpha3ToNumeric(cc)
@@ -63,7 +61,7 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
             // try exact match and also parseInt variant without leading zeros
             f = geoJson.features.find((ft: GeoJSONFeature) => String(ft.id) === String(numeric) || String(ft.id) === String(parseInt(numeric, 10)))
           }
-        } catch (e) {
+        } catch {
           // ignore if package not available or mapping fails
         }
       }
@@ -71,10 +69,10 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
       // compute centroid using d3's geoCentroid (best effort for MultiPolygons)
       let centroid: [number, number]
       try {
-        const c = geoCentroid(f as any)
+        const c = geoCentroid(f)
         centroid = [c[0], c[1]]
-      } catch (e) {
-        const coords = (f as any).properties && (f as any).properties.centroid ? (f as any).properties.centroid : null
+      } catch {
+        const coords = f.properties && f.properties.centroid ? f.properties.centroid : null
         if (coords && Array.isArray(coords) && coords.length >= 2) centroid = [coords[0], coords[1]]
         else centroid = getFeatureCentroid(f)
       }
@@ -85,20 +83,6 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
       if (!acc.find(a => a.id === cur.id)) acc.push(cur)
       return acc
     }, [] as typeof map)
-    // attach debug info on the array object (client-only) for rendering
-    ;(dedup as any).__debug = {
-      matched: dedup.map(d => ({ id: d.id, code: typeof d.trip?.country === 'object' ? (d.trip.country as any).countryCode : (d.trip as any).countryCode })),
-      // unmatched list: trips with country code but no feature
-      // build by checking which trips had codes but weren't in dedup
-      unmatched: trips.filter(t => {
-        const cc = typeof t.country === 'object' && 'countryCode' in t.country ? t.country.countryCode : null
-        if (!cc) return false
-        return !dedup.find(d => {
-          const tripCc = typeof d.trip?.country === 'object' && 'countryCode' in d.trip.country ? d.trip.country.countryCode : null
-          return tripCc === cc
-        })
-      }).map(t => ({ tripId: String(t.id), code: typeof t.country === 'object' && 'countryCode' in t.country ? t.country.countryCode : null })),
-    }
     return dedup
   }, [trips])
 
@@ -139,12 +123,8 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
           </ul>
         </div>
         <div className="mt-2">
-          <div className="font-semibold">Unmatched country codes (first 20)</div>
-          <ul className="text-xs list-disc pl-5">
-            {[].slice(0,20).map((u: { tripId: string; code: string }) => (
-              <li key={u.tripId}>{u.code} (trip {u.tripId})</li>
-            ))}
-          </ul>
+          <div className="font-semibold">Trip count</div>
+          <div className="text-xs">Total trips: {trips.length}, Mapped trips: {markers.length}</div>
         </div>
         <div className="mt-2 text-xs">
           <div className="font-semibold">Tip</div>
@@ -158,15 +138,48 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
 function getFeatureCentroid(feature: GeoJSONFeature): [number, number] {
   // fallback centroid: average of coordinates of the first polygon ring
   try {
-    const coords = feature.geometry.coordinates
-    if (!coords || !coords.length) return [0, 0]
-    // drill down to first coordinate pair set
-    let ring = coords[0]
-    if (Array.isArray(ring[0]) && Array.isArray(ring[0][0])) ring = ring[0]
-    const pts = ring.slice(0, 10) // limit for perf
-    const avg = pts.reduce((acc: [number, number], p: [number, number]) => [acc[0] + p[0], acc[1] + p[1]], [0, 0])
-    return [avg[0] / pts.length, avg[1] / pts.length]
-  } catch (e) {
+    // Type guard to check if geometry has coordinates
+    const geometry = feature.geometry
+    if (!geometry || geometry.type === 'GeometryCollection') return [0, 0]
+    
+    // Type assertion for geometries that have coordinates
+    const coords = (geometry as { coordinates: unknown[] }).coordinates
+    if (!coords || !Array.isArray(coords) || coords.length === 0) return [0, 0]
+    
+    // Navigate through nested coordinate arrays to find actual coordinate pairs
+    let ring: unknown = coords[0]
+    
+    // For MultiPolygon geometries, drill down to the first polygon's first ring
+    while (Array.isArray(ring) && Array.isArray(ring[0]) && !isCoordinatePair(ring[0])) {
+      ring = ring[0]
+    }
+    
+    // Ensure we have an array of coordinate pairs
+    if (!Array.isArray(ring)) return [0, 0]
+    
+    // Filter to only valid coordinate pairs and limit for performance
+    const coordinatePairs = (ring as unknown[])
+      .filter(isCoordinatePair)
+      .slice(0, 10) as [number, number][]
+    
+    if (coordinatePairs.length === 0) return [0, 0]
+    
+    // Calculate average coordinates
+    const sum = coordinatePairs.reduce(
+      (acc, coord) => [acc[0] + coord[0], acc[1] + coord[1]] as [number, number],
+      [0, 0] as [number, number]
+    )
+    
+    return [sum[0] / coordinatePairs.length, sum[1] / coordinatePairs.length]
+  } catch {
     return [0, 0]
   }
+}
+
+// Type guard to check if a value is a coordinate pair [longitude, latitude]
+function isCoordinatePair(value: unknown): value is [number, number] {
+  return Array.isArray(value) && 
+         value.length === 2 && 
+         typeof value[0] === 'number' && 
+         typeof value[1] === 'number'
 }
