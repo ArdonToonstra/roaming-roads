@@ -183,11 +183,6 @@ export interface CmsWaypointBlock {
   }>
 }
 
-interface RegionVisited {
-  region: string
-  regionType: string
-}
-
 // Trip blocks (daily itinerary)
 export type TripBlock = FullDayBlock
 

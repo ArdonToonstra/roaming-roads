@@ -23,7 +23,7 @@ export function resolveImageUrl(url: string | null | undefined): string {
 /**
  * Helper function to extract and resolve image URL from Payload Media object
  */
-export function getImageUrl(media: {url?: string} | string | null | undefined): string {
+export function getImageUrl(media: { url: string } | string | null | undefined): string {
   if (!media) {
     return '/placeholder-trip.jpg';
   }

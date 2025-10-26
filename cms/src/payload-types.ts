@@ -387,7 +387,7 @@ export interface Trip {
   /**
    * Key preparations or considerations for this trip (e.g., visas, vaccinations, gear)
    */
-  importantPreperations?: {
+  importantPreparations?: {
     root: {
       type: string;
       children: {
@@ -908,7 +908,7 @@ export interface TripsSelect<T extends boolean = true> {
         accommodation?: T;
         id?: T;
       };
-  importantPreperations?: T;
+  importantPreparations?: T;
   itinerary?:
     | T
     | {

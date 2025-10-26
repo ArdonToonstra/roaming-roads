@@ -5,8 +5,8 @@ import { getImageUrl } from '@/lib/images';
 import type { Trip } from '@/types/payload';
 
 export default function TripCard({ trip }: { trip: Trip }) {
-  const imageUrl = getImageUrl((trip as any).coverImage as any);
-  const country = typeof trip.country === 'object' ? (trip.country as any).name : 'Adventure';
+  const imageUrl = getImageUrl(trip.coverImage);
+  const country = typeof trip.country === 'object' ? trip.country.name : 'Adventure';
   return (
     <Link href={`/trips/${trip.slug || trip.id}`} className="group">
       <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
