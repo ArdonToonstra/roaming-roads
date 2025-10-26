@@ -106,6 +106,7 @@ const Countries: CollectionConfig = {
       type: 'select',
       options: [
         { label: 'Christianity', value: 'christianity' },
+        { label: 'Catholicism', value: 'catholicism' },
         { label: 'Islam', value: 'islam' },
         { label: 'Judaism', value: 'judaism' },
         { label: 'Hinduism', value: 'hinduism' },
@@ -176,34 +177,13 @@ const Countries: CollectionConfig = {
         description: 'Select the recommended months to visit this country',
       },
     },
-    {
-      name: 'emergencyNumbers',
-      label: 'Emergency Numbers',
-      type: 'group',
-      fields: [
-        {
-          name: 'police',
-          label: 'Police',
-          type: 'text',
-        },
-        {
-          name: 'medical',
-          label: 'Medical/Ambulance',
-          type: 'text',
-        },
-        {
-          name: 'fire',
-          label: 'Fire Department',
-          type: 'text',
-        },
-        {
-          name: 'tourist',
-          label: 'Tourist Helpline',
-          type: 'text',
-        },
-      ],
+    { 
+      name: 'travelTimeFromBrussels',
+      label: 'Travel Time from Brussels (hours)',
+      type: 'number',
+      min: 0,
       admin: {
-        description: 'Important emergency contact numbers',
+        description: 'Approximate flight time from Brussels to the country in hours',
       },
     },
   ],

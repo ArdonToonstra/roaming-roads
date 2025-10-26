@@ -1,19 +1,39 @@
 #!/usr/bin/env sh
 set -e
-# Minimal entrypoint for the CMS container used by docker-compose.
-# Runs install once, generates the rich text import map, then execs the dev server
-# so PID 1 is the Node process (reduces duplicate log output from shells).
+# Optimized entrypoint for CMS hot reloading development
 
-echo "[cms] running entrypoint: install -> generate importmap -> dev"
-# Use npm ci when lockfile is present to keep installs deterministic and quieter
-if [ -f "./package-lock.json" ] || [ -f "./pnpm-lock.yaml" ]; then
-  npm ci --silent || npm install --silent
+echo "[cms] 🚀 Starting Payload CMS with hot reloading..."
+
+# Fast dependency check and install
+if [ ! -d "node_modules" ] || [ ! -f "node_modules/.pnpm/lock.yaml" ]; then
+  echo "[cms] 📦 Installing dependencies (first time or after changes)..."
+  
+  if [ -f "./pnpm-lock.yaml" ]; then
+    # Try frozen lockfile first, fall back to regular install if lockfile is outdated
+    echo "[cms] 🔒 Attempting frozen lockfile install..."
+    if ! pnpm install --frozen-lockfile --prefer-offline 2>/dev/null; then
+      echo "[cms] 🔄 Lockfile outdated, updating dependencies..."
+      pnpm install
+    fi
+  elif [ -f "./package-lock.json" ]; then
+    npm ci || npm install
+  else
+    npm install
+  fi
+  
+  echo "[cms] ✅ Dependencies installed!"
 else
-  npm install --silent
+  echo "[cms] ✅ Dependencies up-to-date, skipping install"
 fi
 
-# Generate import map required by Payload rich text once
-npx payload generate:importmap --silent || true
+# Generate import map (quick operation)
+echo "[cms] 🔧 Generating import map..."
+npx payload generate:importmap || echo "[cms] ⚠️  Import map generation skipped"
 
-# Replace the shell with the dev server process to avoid shell double-logging
+# Start dev server
+echo "[cms] 🔥 Starting dev server with hot reloading on port 3000..."
+echo "[cms] 💡 Edit files and see changes automatically reload!"
+echo "[cms] 📖 Admin: http://localhost:3000/admin"
+
+# Execute the dev server (replaces shell process for clean shutdown)
 exec npm run dev

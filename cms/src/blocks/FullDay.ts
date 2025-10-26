@@ -9,7 +9,17 @@ export const FullDay: Block = {
   fields: [
     { name: 'time', type: 'text', label: 'Time Span (e.g., 1 day - 1 night)' },
     { name: 'locationName', type: 'text', label: 'Location Name', required: true },
-  { name: 'location', type: 'point', label: 'GPS Coordinates', admin: { components: { Field: './components/MapPicker' } } },
+    { 
+      name: 'location', 
+      type: 'point', 
+      label: 'GPS Coordinates',
+      admin: {
+        description: 'The exact coordinates for this waypoint. You can use the map picker below to set these coordinates.',
+        components: {
+          Field: '/components/MapPicker#default',
+        }
+      }
+    },
     {
       name: 'regionProvince',
       type: 'text',
@@ -117,7 +127,6 @@ export const FullDay: Block = {
       ],
     },
 
-    // --- NEW GALLERY FIELD ADDED BELOW ---
     {
       name: 'gallery',
       label: 'Media Gallery',
@@ -127,20 +136,8 @@ export const FullDay: Block = {
         {
           name: 'media',
           type: 'upload',
-          relationTo: 'media', // Make sure you have a 'media' collection
+          relationTo: 'media',
           required: true,
-        },
-        {
-          name: 'caption',
-          type: 'text',
-          label: 'Caption',
-          localized: true, // Captions can be translated
-        },
-        {
-          name: 'isHighlight',
-          type: 'checkbox',
-          label: 'Day highlight',
-          defaultValue: false,
         },
       ]
     }

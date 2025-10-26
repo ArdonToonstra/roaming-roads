@@ -1,5 +1,5 @@
 import { env, API_ENDPOINTS } from './config'
-import type { Trip } from '../types/payload'
+import type { Trip, PayloadCollection } from '../types/payload'
 
 // Base API client for Payload CMS
 class PayloadAPI {
@@ -39,10 +39,12 @@ const api = new PayloadAPI()
 // API functions for each collection
 export const payload = {
   // Get all trips
-  getTrips: async (params?: { limit?: number; where?: Record<string, unknown> }) => {
+  getTrips: async (params?: { limit?: number; page?: number; where?: Record<string, unknown>; depth?: number }) : Promise<PayloadCollection<Trip>> => {
     const searchParams = new URLSearchParams()
     if (params?.limit) searchParams.set('limit', params.limit.toString())
+    if (params?.page) searchParams.set('page', params.page.toString())
     if (params?.where) searchParams.set('where', JSON.stringify(params.where))
+    if (typeof params?.depth === 'number') searchParams.set('depth', String(params.depth))
     
     // In development mode, always include draft content
     if (env.NODE_ENV === 'development') {
@@ -50,10 +52,10 @@ export const payload = {
     }
     
     const query = searchParams.toString()
-    const endpoint = `${API_ENDPOINTS.TRIPS}${query ? `?${query}` : ''}`
+  const endpoint = `${API_ENDPOINTS.TRIPS}${query ? `?${query}` : ''}`
     
     const fetchOptions = env.NODE_ENV === 'development' ? undefined : { next: { revalidate: 360 } }
-    return api.get(endpoint, fetchOptions)
+    return api.get<PayloadCollection<Trip>>(endpoint, fetchOptions)
   },
 
   // Get single trip by slug or ID

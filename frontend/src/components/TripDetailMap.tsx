@@ -154,26 +154,10 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
       // Leaflet flyTo if available, fallback to setView
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mapAny: any = mapRef.current;
-      if (!mapAny) return;
-      // prefer to avoid panning if target already visible
-      try {
-        if (mapAny.getBounds && typeof mapAny.getBounds === 'function') {
-          const bounds = mapAny.getBounds();
-          // Leaflet LatLng bounds contains expects [lat, lng]
-          if (bounds && typeof bounds.contains === 'function' && bounds.contains([target.coord.lat, target.coord.lng])) {
-            return;
-          }
-        }
-      } catch (e) {
-        // ignore errors from bounds check
-      }
-
-      const currentZoom = (mapAny.getZoom && typeof mapAny.getZoom === 'function') ? mapAny.getZoom() : initialZoom;
-      const safeZoom = Number.isFinite(currentZoom) ? Math.max(currentZoom, 7) : Math.max(initialZoom, 7);
-      if (mapAny.flyTo && typeof mapAny.flyTo === 'function') {
-        mapAny.flyTo([target.coord.lat, target.coord.lng], safeZoom, { duration: 0.6 });
-      } else if (mapAny.setView && typeof mapAny.setView === 'function') {
-        mapAny.setView([target.coord.lat, target.coord.lng], safeZoom);
+      if (mapAny.flyTo) {
+        mapAny.flyTo([target.coord.lat, target.coord.lng], Math.max(mapAny.getZoom(), 7), { duration: 0.6 });
+      } else if (mapAny.setView) {
+        mapAny.setView([target.coord.lat, target.coord.lng], Math.max(mapAny.getZoom(), 7));
       }
     } catch (e) {
       // eslint-disable-next-line no-console

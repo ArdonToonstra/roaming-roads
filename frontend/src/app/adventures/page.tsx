@@ -4,14 +4,15 @@ import { payload } from '@/lib/api';
 import { Trip } from '@/types/payload';
 import { env } from '@/lib/config';
 import { getImageUrl } from '@/lib/images';
+import TripsPaginator from '@/components/TripsPaginator'
 
-async function getTrips(): Promise<Trip[]> {
+async function getTrips(limit = 9, page = 1): Promise<{ docs: Trip[] } | null> {
   try {
-    const response = await payload.getTrips() as { docs: Trip[] };
-    return response.docs;
+    const response = await payload.getTrips({ limit, page }) as { docs: Trip[] };
+    return response;
   } catch (error) {
     console.error('Failed to fetch trips:', error);
-    return [];
+    return null;
   }
 }
 
@@ -60,7 +61,8 @@ function TripCard({ trip }: { trip: Trip }) {
 }
 
 export default async function AdventuresPage() {
-  const trips = await getTrips();
+  const tripsResp = await getTrips(9, 1);
+  const trips = tripsResp?.docs || [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -81,12 +83,8 @@ export default async function AdventuresPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {trips.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {trips.map((trip) => (
-                  <TripCard key={trip.id} trip={trip} />
-                ))}
-              </div>
-              
+              <TripsPaginator initial={trips} initialPage={1} pageSize={9} />
+
               <div className="text-center mt-16">
                 <p className="text-lg font-sans text-foreground">
                   More adventures coming soon. Follow our journey as we explore the world authentically.

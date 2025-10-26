@@ -1,164 +1,207 @@
-"use client";
-import React, { useEffect, useRef, useState } from 'react';
-import 'leaflet/dist/leaflet.css';
+/**
+ * MapPicker - GPS coordinate selection component for Payload CMS
+ * 
+ * A Payload CMS field component that provides an interactive map interface for 
+ * selecting GPS coordinates. Users can click on the map to preview coordinates
+ * and then copy them to the associated GPS field. Handles coordinate conversion
+ * between Leaflet's [lat, lng] format and Payload's [lng, lat] storage format.
+ * 
+ * Features:
+ * - Interactive map with click-to-select coordinates
+ * - Preview of selected position before confirming
+ * - Automatic coordinate format conversion for Payload storage
+ * - Dynamic map loading to avoid SSR issues
+ * - Displays existing coordinates as markers when editing
+ */
+'use client';
 
+import React, { useState, useEffect } from 'react';
+import { useField, useFormFields } from '@payloadcms/ui';
+import { getCountryBounds, getCountryBoundsByName } from '../utils/countryBounds';
 
-// Minimal Payload admin field for picking a point on a Leaflet map.
-// - Click on the map to set coordinates
-// - Drag the marker to change coordinates
-// - Provides small lat/lng inputs for manual editing
-// This avoids external APIs and works out-of-the-box in the admin UI.
+type Props = {
+  path: string;
+}
 
-const MapPicker: React.FC<any> = ({ value, onChange }) => {
-  const containerRef = useRef<HTMLDivElement | null>(null)
-  const mapRef = useRef<any>(null)
-  const markerRef = useRef<any>(null)
-
-  // helper to normalize Payload 'point' value
-  const getCoordsFromValue = (val: any): number[] | null => {
-    // Normalize various shapes into [lng, lat]
-    if (!val) return null
-    if (Array.isArray(val) && val.length >= 2) return [Number(val[0]), Number(val[1])]
-    if (val.coordinates && Array.isArray(val.coordinates) && val.coordinates.length >= 2) return [Number(val.coordinates[0]), Number(val.coordinates[1])]
-    if (val.type === 'Point' && Array.isArray(val.coordinates) && val.coordinates.length >= 2) return [Number(val.coordinates[0]), Number(val.coordinates[1])]
-    return null
-  }
-
-  // Local UI state so inputs reflect changes immediately
-  const [local, setLocal] = useState<{ lat?: number | ''; lng?: number | '' }>(() => {
-    const coords = getCoordsFromValue(value)
-    if (coords) return { lng: coords[0], lat: coords[1] }
-    return { lat: '', lng: '' }
-  })
+const MapPicker: React.FC<Props> = ({ path }) => {
+  const { value, setValue } = useField<[number, number]>({ path });
+  const formFields = useFormFields(([fields]) => fields);
+  const [isClient, setIsClient] = useState(false);
+  const [MapComponent, setMapComponent] = useState<React.ComponentType<any> | null>(null);
+  const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(null);
+  const [previewPosition, setPreviewPosition] = useState<[number, number] | null>(null);
+  const [mapTilerKey, setMapTilerKey] = useState<string>('');
+  const [countryBounds, setCountryBounds] = useState<[[number, number], [number, number]] | null>(null);
 
   useEffect(() => {
-    let mounted = true
-    if (!containerRef.current) return
+    if (value && Array.isArray(value) && value.length === 2) {
+      // Payload stores as [lon, lat], Leaflet uses [lat, lon]
+      setMarkerPosition([value[1], value[0]]);
+      setPreviewPosition([value[1], value[0]]);
+    }
+  }, [value]);
 
-    // Dynamically load leaflet to avoid SSR issues
-    import('leaflet').then((L) => {
-      // Fix marker icon loading (same as frontend)
-      if (L && L.Icon && L.Icon.Default) {
-        delete (L.Icon.Default.prototype as any)._getIconUrl;
-        L.Icon.Default.mergeOptions({
-          iconUrl: '/marker-icon.png',
-          iconRetinaUrl: '/marker-icon-2x.png',
-          shadowUrl: '/marker-shadow.png',
-        });
-      }
-      if (!mounted) return
-      // Create map if not present
-      if (!mapRef.current) {
+  useEffect(() => {
+    // Only run on client side to avoid hydration issues
+    if (typeof window === 'undefined') return;
+    
+    setIsClient(true);
+    
+    // Get MapTiler key from environment (client-side only)
+    setMapTilerKey(process.env.NEXT_PUBLIC_MAPTILER_KEY || '');
+    
+    // Dynamically import the map component to avoid SSR issues
+    import('./DynamicMapComponent')
+      .then(module => {
+        setMapComponent(() => module.default);
+      })
+      .catch(err => console.error('Failed to load map component:', err));
+  }, []);
 
-        mapRef.current = L.map(containerRef.current as HTMLElement, {
-          center: [20, 0],
-          zoom: 2,
-        });
-
-        // Use MapTiler tiles with English if key is present, else fallback to OSM
-        const maptilerKey = process.env.NEXT_PUBLIC_MAPTILER_KEY || '';
-        const tileUrl = maptilerKey
-          ? `https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${maptilerKey}&language=en`
-          : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        const attribution = maptilerKey
-          ? '&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors'
-          : '&copy; OpenStreetMap contributors';
-        L.tileLayer(tileUrl, { attribution }).addTo(mapRef.current);
-
-        mapRef.current.on('click', (e: any) => {
-          const { lat, lng } = e.latlng
-          setMarker([lat, lng])
-        })
-      }
-
-      // If we have existing value, set marker
-      const coords = getCoordsFromValue(value)
-      if (coords && coords.length >= 2) {
-        const [lng, lat] = coords
-        setMarker([lat, lng], true)
-        mapRef.current.setView([lat, lng], 10)
-        // ensure local state matches incoming value
-        setLocal({ lat, lng })
-      }
-
-      function setMarker(latlng: [number, number], silent = false) {
-        const Lany = (L as any);
-        if (!markerRef.current) {
-          // Use a simple divIcon so we don't depend on external PNG assets being served
-          const icon = Lany.divIcon({
-            html: '<div style="background:#F57D50;border-radius:50%;width:20px;height:20px;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.25)"></div>',
-            className: '',
-            iconSize: [26, 26],
-          });
-          markerRef.current = Lany.marker(latlng, { draggable: true, icon }).addTo(mapRef.current);
-          markerRef.current.on('dragend', function (ev: any) {
-            const pos = ev.target.getLatLng();
-            updateValue(pos.lat, pos.lng);
-            setLocal({ lat: pos.lat, lng: pos.lng });
-          });
-        } else {
-          markerRef.current.setLatLng(latlng);
+  // Separate effect for country bounds to avoid dependency issues
+  useEffect(() => {
+    if (!isClient) return;
+    
+    try {
+      // Look for country in form data (for trips)
+      if (formFields?.country?.value) {
+        const countryData = formFields.country.value;
+        let bounds = null;
+        
+        // Try by country code first
+        if (typeof countryData === 'object' && countryData && 'countryCode' in countryData) {
+          bounds = getCountryBounds(countryData.countryCode as string);
         }
-        // Always update lat/lng fields immediately
-        updateValue(latlng[0], latlng[1]);
-        // Update local state immediately so inputs reflect change without waiting for parent
-        setLocal({ lat: latlng[0], lng: latlng[1] })
+        // Try by country name
+        else if (typeof countryData === 'object' && countryData && 'name' in countryData) {
+          bounds = getCountryBoundsByName(countryData.name as string);
+        }
+        // If it's just a string, try it as a name
+        else if (typeof countryData === 'string') {
+          bounds = getCountryBoundsByName(countryData);
+        }
+        
+        if (bounds) {
+          setCountryBounds(bounds);
+        }
       }
-
-      function updateValue(lat: number, lng: number) {
-        // Payload expects [lng, lat] coordinates in many places
-        const point = { type: 'Point', coordinates: [lng, lat] }
-        if (typeof onChange === 'function') onChange(point)
-      }
-    })
-
-    return () => {
-      mounted = false
-      try {
-        if (mapRef.current && typeof mapRef.current.remove === 'function') mapRef.current.remove()
-      } catch (e) {
-        // swallow
-      }
+    } catch (error) {
+      console.log('Could not detect country for map bounds:', error);
     }
-  }, [])
+  }, [formFields, isClient]);
 
-  // Manual inputs
-  // Prefer local state for inputs so UI updates instantly
-  const lat = local.lat ?? ''
-  const lng = local.lng ?? ''
-
-  const onManualChange = (field: 'lat' | 'lng', v: string) => {
-    const parsed = Number(v)
-    if (Number.isNaN(parsed)) {
-      // allow clearing the field
-      setLocal(prev => ({ ...prev, [field]: '' }))
-      return
+  const copyToField = () => {
+    if (previewPosition) {
+      // Convert back to [lon, lat] for Payload
+      setValue([previewPosition[1], previewPosition[0]]);
+      setMarkerPosition(previewPosition);
     }
-    const newLat = field === 'lat' ? parsed : (local.lat as number) || 0
-    const newLng = field === 'lng' ? parsed : (local.lng as number) || 0
-    const point = { type: 'Point', coordinates: [newLng, newLat] }
-    if (typeof onChange === 'function') onChange(point)
-    // Update marker if present
-    if (markerRef.current) markerRef.current.setLatLng([newLat, newLng])
-    if (mapRef.current) mapRef.current.setView([newLat, newLng], 10)
-    setLocal({ lat: newLat, lng: newLng })
+  };
+
+  const handleMapClick = (lat: number, lng: number) => {
+    setPreviewPosition([lat, lng]);
+  };
+
+  const handleSearchLocation = (lat: number, lng: number) => {
+    setPreviewPosition([lat, lng]);
+    // Auto-copy search results to make it faster
+    setValue([lng, lat]);
+    setMarkerPosition([lat, lng]);
+  };
+
+  // Prevent hydration mismatches by not rendering anything until client-side
+  if (!isClient) {
+    return <div style={{ 
+      height: '400px', 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center',
+      backgroundColor: '#f5f5f5',
+      border: '1px solid #ddd',
+      borderRadius: '4px'
+    }}>
+      Loading map interface...
+    </div>;
   }
+
+  const currentCenter: [number, number] = markerPosition || [51.505, -0.09];
+  const initialZoom = markerPosition ? 13 : 2;
 
   return (
     <div>
-      <div ref={containerRef} style={{ height: 300, borderRadius: 8, overflow: 'hidden' }} />
-      <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
-        <label style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-          <span style={{ minWidth: 36 }}>Lat</span>
-          <input type="number" step="any" value={lat as any} onChange={(e) => onManualChange('lat', e.target.value)} />
-        </label>
-        <label style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-          <span style={{ minWidth: 36 }}>Lng</span>
-          <input type="number" step="any" value={lng as any} onChange={(e) => onManualChange('lng', e.target.value)} />
-        </label>
+      <div style={{ marginBottom: '1rem' }}>
+        <p>
+          Click on the map to select coordinates, then copy them to the field.
+          {mapTilerKey && <span> Use the search box in the top-right to find places quickly.</span>}
+        </p>
+        {!mapTilerKey && (
+          <div style={{ 
+            padding: '0.5rem', 
+            backgroundColor: '#fff3cd', 
+            border: '1px solid #ffeaa7', 
+            borderRadius: '4px', 
+            margin: '0.5rem 0',
+            fontSize: '0.8rem',
+            color: '#856404'
+          }}>
+            💡 <strong>Tip:</strong> Add NEXT_PUBLIC_MAPTILER_KEY to .env.local for better maps and place search
+          </div>
+        )}
+        
+        {/* Current field value */}
+        {value && Array.isArray(value) && value.length === 2 && (
+          <div style={{ 
+            padding: '0.75rem', 
+            backgroundColor: '#f8f9fa', 
+            border: '1px solid #e9ecef', 
+            borderRadius: '4px', 
+            margin: '0.5rem 0',
+            fontSize: '0.9rem'
+          }}>
+            <strong>Current GPS coordinates:</strong> {value[1].toFixed(6)}, {value[0].toFixed(6)}
+            <br />
+            <small style={{ color: '#6c757d' }}>Longitude: {value[0].toFixed(6)}, Latitude: {value[1].toFixed(6)}</small>
+          </div>
+        )}
+        
+        {/* Preview selection */}
+        {previewPosition && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', margin: '0.5rem 0' }}>
+            <span>
+              Selected: <strong>{previewPosition[0].toFixed(6)}, {previewPosition[1].toFixed(6)}</strong>
+            </span>
+            <button type="button" className="btn btn--style-primary" onClick={copyToField}>
+              Copy to GPS field
+            </button>
+          </div>
+        )}
+      </div>
+      <div style={{ height: '400px', width: '100%' }}>
+        {isClient && MapComponent ? (
+          <MapComponent 
+            center={currentCenter} 
+            zoom={initialZoom}
+            onMapClick={handleMapClick}
+            markerPosition={previewPosition}
+            mapTilerKey={mapTilerKey}
+            countryBounds={countryBounds}
+            onSearch={mapTilerKey ? handleSearchLocation : undefined}
+          />
+        ) : (
+          <div style={{ 
+            height: '100%', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            backgroundColor: '#f5f5f5',
+            border: '1px solid #ddd'
+          }}>
+            Loading map...
+          </div>
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MapPicker
+export default MapPicker;

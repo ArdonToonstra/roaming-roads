@@ -152,91 +152,19 @@ export interface Media {
   /**
    * Alternative text for accessibility and SEO (describe what's in the image)
    */
-  alt: string;
+  alt?: string | null;
   /**
    * Optional caption to display with the media
    */
   caption?: string | null;
-  location?: {
-    /**
-     * Country where this media was captured
-     */
-    country?: (number | null) | Country;
-    /**
-     * Name of the place (e.g., "Issyk-Kul Lake, Kyrgyzstan")
-     */
-    locationName?: string | null;
-    /**
-     * Where this photo/video was taken
-     *
-     * @minItems 2
-     * @maxItems 2
-     */
-    gps?: [number, number] | null;
-  };
+  /**
+   * Country where this media was captured
+   */
+  country?: (number | null) | Country;
   /**
    * Trip this media is associated with
    */
   relatedTrip?: (number | null) | Trip;
-  /**
-   * Type of media content
-   */
-  mediaType?: ('photo' | 'video' | 'audio' | 'document') | null;
-  photographyInfo?: {
-    /**
-     * Camera model used
-     */
-    camera?: string | null;
-    /**
-     * Lens used for the photo
-     */
-    lens?: string | null;
-    settings?: {
-      aperture?: string | null;
-      shutterSpeed?: string | null;
-      iso?: number | null;
-      focalLength?: number | null;
-    };
-  };
-  usage?: {
-    /**
-     * Name of the photographer (if not you)
-     */
-    photographer?: string | null;
-    licenseType?: ('own' | 'cc' | 'stock' | 'permission' | 'fair-use') | null;
-    /**
-     * Attribution text if required
-     */
-    attribution?: string | null;
-  };
-  seo?: {
-    /**
-     * Title for search engines (if different from alt text)
-     */
-    title?: string | null;
-    /**
-     * Keywords for better searchability
-     */
-    keywords?:
-      | {
-          keyword?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  /**
-   * Mark as featured media for homepage or special collections
-   */
-  featured?: boolean | null;
-  /**
-   * Tags for organization and filtering (e.g., "sunset", "mountain", "street-food")
-   */
-  tags?:
-    | {
-        tag?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -322,7 +250,18 @@ export interface Country {
    * Primary or most practiced religion in the country
    */
   mainReligion?:
-    | ('christianity' | 'islam' | 'judaism' | 'hinduism' | 'buddhism' | 'sikhism' | 'secular' | 'mixed' | 'other')
+    | (
+        | 'christianity'
+        | 'catholicism'
+        | 'islam'
+        | 'judaism'
+        | 'hinduism'
+        | 'buddhism'
+        | 'sikhism'
+        | 'secular'
+        | 'mixed'
+        | 'other'
+      )
     | null;
   /**
    * Percentage of population practicing the main religion
@@ -370,14 +309,9 @@ export interface Country {
       )[]
     | null;
   /**
-   * Important emergency contact numbers
+   * Approximate flight time from Brussels to the country in hours
    */
-  emergencyNumbers?: {
-    police?: string | null;
-    medical?: string | null;
-    fire?: string | null;
-    tourist?: string | null;
-  };
+  travelTimeFromBrussels?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -395,23 +329,21 @@ export interface Trip {
   status?: ('draft' | 'published') | null;
   coverImage: number | Media;
   /**
-   * Select 3-10 key images that represent the best moments of this trip
+   * Select up to 10 key images that represent the best moments of this trip
    */
   highlightsMedia?:
     | {
         media: number | Media;
-        /**
-         * Brief description of why this is a trip highlight
-         */
-        caption?: string | null;
-        order?: number | null;
         id?: string | null;
       }[]
     | null;
   description?: string | null;
-  country: number | Country;
   /**
-   * Track which regions/provinces you visited within the country for better geographic organization
+   * Select all countries visited during this trip (for multi-country adventures)
+   */
+  countries: (number | Country)[];
+  /**
+   * Track which regions/provinces you visited within the country
    */
   regionsVisited?:
     | {
@@ -419,13 +351,6 @@ export interface Trip {
          * e.g., "Issyk-Kul Region", "Naryn Province", "Chuy Oblast"
          */
         regionName: string;
-        regionType?:
-          | ('province' | 'region' | 'oblast' | 'state' | 'territory' | 'county' | 'district' | 'other')
-          | null;
-        /**
-         * Key attractions, activities, or experiences in this region
-         */
-        highlights?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -459,12 +384,32 @@ export interface Trip {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Key preparations or considerations for this trip (e.g., visas, vaccinations, gear)
+   */
+  importantPreperations?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   itinerary?:
     | (
         | {
             time?: string | null;
             locationName: string;
             /**
+             * The exact coordinates for this waypoint. You can use the map picker below to set these coordinates.
+             *
              * @minItems 2
              * @maxItems 2
              */
@@ -537,8 +482,6 @@ export interface Trip {
             gallery?:
               | {
                   media: number | Media;
-                  caption?: string | null;
-                  isHighlight?: boolean | null;
                   id?: string | null;
                 }[]
               | null;
@@ -565,6 +508,8 @@ export interface Trip {
               [k: string]: unknown;
             } | null;
             /**
+             * The exact coordinates for this waypoint. You can use the map picker below to set these coordinates.
+             *
              * @minItems 2
              * @maxItems 2
              */
@@ -867,54 +812,8 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
-  location?:
-    | T
-    | {
-        country?: T;
-        locationName?: T;
-        gps?: T;
-      };
+  country?: T;
   relatedTrip?: T;
-  mediaType?: T;
-  photographyInfo?:
-    | T
-    | {
-        camera?: T;
-        lens?: T;
-        settings?:
-          | T
-          | {
-              aperture?: T;
-              shutterSpeed?: T;
-              iso?: T;
-              focalLength?: T;
-            };
-      };
-  usage?:
-    | T
-    | {
-        photographer?: T;
-        licenseType?: T;
-        attribution?: T;
-      };
-  seo?:
-    | T
-    | {
-        title?: T;
-        keywords?:
-          | T
-          | {
-              keyword?: T;
-              id?: T;
-            };
-      };
-  featured?: T;
-  tags?:
-    | T
-    | {
-        tag?: T;
-        id?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -984,18 +883,14 @@ export interface TripsSelect<T extends boolean = true> {
     | T
     | {
         media?: T;
-        caption?: T;
-        order?: T;
         id?: T;
       };
   description?: T;
-  country?: T;
+  countries?: T;
   regionsVisited?:
     | T
     | {
         regionName?: T;
-        regionType?: T;
-        highlights?: T;
         id?: T;
       };
   period?: T;
@@ -1013,6 +908,7 @@ export interface TripsSelect<T extends boolean = true> {
         accommodation?: T;
         id?: T;
       };
+  importantPreperations?: T;
   itinerary?:
     | T
     | {
@@ -1049,8 +945,6 @@ export interface TripsSelect<T extends boolean = true> {
                 | T
                 | {
                     media?: T;
-                    caption?: T;
-                    isHighlight?: T;
                     id?: T;
                   };
               id?: T;
@@ -1099,14 +993,7 @@ export interface CountriesSelect<T extends boolean = true> {
   visaRequirements?: T;
   safetyLevel?: T;
   bestTimeToVisit?: T;
-  emergencyNumbers?:
-    | T
-    | {
-        police?: T;
-        medical?: T;
-        fire?: T;
-        tourist?: T;
-      };
+  travelTimeFromBrussels?: T;
   updatedAt?: T;
   createdAt?: T;
 }

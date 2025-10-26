@@ -16,25 +16,38 @@ services:
       retries: 5
 
   payload:
-    image: node:20-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     working_dir: /home/node/app
     volumes:
+      # Bind mount your source code for hot reloading
       - .:/home/node/app
-      - /home/node/app/node_modules  # anonymous volume to prevent overwriting
+      # Prevent local node_modules from overwriting container's node_modules
+      - /home/node/app/node_modules
+      # Exclude .next directory to prevent conflicts
+      - /home/node/app/.next
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=development
+      # Enable hot reloading optimizations
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
       # Ensure Payload connects to the local postgres service by service name
       - DATABASE_URI=postgresql://rruser:z8ZWOUcPaXKgiAn0sATYNb7N61Lth0JyLbH@postgres:5432/roamingroads
     env_file:
       - .env.local
-    # Use a minimal entrypoint script so the dev server is PID 1 (reduces duplicate logs)
+    # Use the entrypoint script for proper dev server setup
     entrypoint: ["/bin/sh", "-c", "./scripts/docker-entrypoint.sh"]
     depends_on:
       postgres:
         condition: service_healthy
-    restart: unless-stopped
+    # Don't restart automatically during development to see crash logs
+    restart: "no"
+    # Improve development experience
+    stdin_open: true
+    tty: true
 
 volumes:
   postgres_data:

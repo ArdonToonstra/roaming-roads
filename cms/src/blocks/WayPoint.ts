@@ -10,7 +10,19 @@ export const Waypoint: Block = {
     { name: 'locationName', type: 'text', label: 'Waypoint Name', required: true },
     { name: 'description', type: 'textarea', label: 'Description' },
     { name: 'activities', type: 'richText', label: 'Activities and details' },
-  { name: 'location', type: 'point', label: 'GPS Coordinates', admin: { components: { Field: './components/MapPicker' } } },
+    
+    { 
+      name: 'location', 
+      type: 'point', 
+      label: 'GPS Coordinates',
+      admin: {
+        description: 'The exact coordinates for this waypoint. You can use the map picker below to set these coordinates.',
+        components: {
+          Field: '/components/MapPicker#default',
+        }
+      }
+    },
+    
     {
       name: 'regionProvince',
       type: 'text',

@@ -6,15 +6,15 @@ import formatSlug from '../utils/formatSlug';
 const Trips: CollectionConfig = {
   slug: 'trips',
   access: {
-    // Temporarily allow all access for debugging
+    // Public read access; restrict write operations to authenticated users
     read: () => true,
-    create: () => true,
-    update: () => true,
-    delete: () => true,
+    create: ({ req: { user } }) => !!user,
+    update: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => !!user,
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'country', 'status'],
+    defaultColumns: ['title', 'slug', 'countries', 'status'],
   },
   fields: [
     {
@@ -73,24 +73,10 @@ const Trips: CollectionConfig = {
           relationTo: 'media',
           required: true,
         },
-        {
-          name: 'caption',
-          type: 'text',
-          label: 'Highlight Caption',
-          admin: {
-            description: 'Brief description of why this is a trip highlight',
-          },
-        },
-        {
-          name: 'order',
-          type: 'number',
-          label: 'Display Order',
-          defaultValue: 1,
-        },
       ],
       admin: {
         position: 'sidebar',
-        description: 'Select 3-10 key images that represent the best moments of this trip',
+        description: 'Select up to 10 key images that represent the best moments of this trip',
       },
     },
     {
@@ -105,11 +91,16 @@ const Trips: CollectionConfig = {
               label: 'Short Description',
             },
             {
-              name: 'country',
-              label: 'Country',
+              name: 'countries',
+              label: 'Countries Visited',
               type: 'relationship',
               relationTo: 'countries', // Relationship to the Countries collection
+              hasMany: true,
               required: true,
+              minRows: 1,
+              admin: {
+                description: 'Select all countries visited during this trip (for multi-country adventures)',
+              },
             },
             {
               name: 'regionsVisited',
@@ -125,33 +116,9 @@ const Trips: CollectionConfig = {
                     description: 'e.g., "Issyk-Kul Region", "Naryn Province", "Chuy Oblast"',
                   },
                 },
-                {
-                  name: 'regionType',
-                  type: 'select',
-                  label: 'Region Type',
-                  options: [
-                    { label: 'Province', value: 'province' },
-                    { label: 'Region', value: 'region' },
-                    { label: 'Oblast', value: 'oblast' },
-                    { label: 'State', value: 'state' },
-                    { label: 'Territory', value: 'territory' },
-                    { label: 'County', value: 'county' },
-                    { label: 'District', value: 'district' },
-                    { label: 'Other', value: 'other' },
-                  ],
-                  defaultValue: 'region',
-                },
-                {
-                  name: 'highlights',
-                  type: 'textarea',
-                  label: 'Regional Highlights',
-                  admin: {
-                    description: 'Key attractions, activities, or experiences in this region',
-                  },
-                },
               ],
               admin: {
-                description: 'Track which regions/provinces you visited within the country for better geographic organization',
+                description: 'Track which regions/provinces you visited within the country',
               },
             },
             {
@@ -188,6 +155,14 @@ const Trips: CollectionConfig = {
                 description: 'Highlight up to 5 key accommodations used during this trip',
               },
             },
+            {
+              name: 'importantPreperations',
+              label: 'Important Preparations',
+              type: 'richText',
+              admin: {
+                description: 'Key preparations or considerations for this trip (e.g., visas, vaccinations, gear)',
+              },
+            }
           ]
         }
       ],
