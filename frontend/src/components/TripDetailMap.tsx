@@ -27,6 +27,7 @@ interface LeafletModule {
 
 // Dynamic imports to avoid SSR issues - using any due to dynamic import limitations
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MapContainer: any = dynamic(() => import('react-leaflet').then(m => m.MapContainer), { ssr: false });
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TileLayer: any = dynamic(() => import('react-leaflet').then(m => m.TileLayer), { ssr: false });
@@ -47,8 +48,10 @@ function toNumber(v: unknown): number | null {
 }
 
 function extractBlockCoords(block: CmsFullDayBlock | CmsWaypointBlock) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const b: any = block;
   // Candidate fields in descending priority
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const candidates: any[] = [];
   if (b.location?.coordinates) candidates.push(b.location.coordinates);
   // If location itself is an array (direct [lng, lat])
@@ -152,6 +155,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
     try {
       // Slightly higher zoom for focus without being too tight
       // Leaflet flyTo if available, fallback to setView
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mapAny: any = mapRef.current;
       if (mapAny.flyTo) {

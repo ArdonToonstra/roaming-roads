@@ -38,7 +38,9 @@ const Marker: any = dynamic(() => import('react-leaflet').then(mod => mod.Marker
 function extractRepresentativeCoordinate(trip: Trip): { lat: number; lng: number } | null {
   if (!trip.itinerary || trip.itinerary.length === 0) return null;
   for (const block of trip.itinerary) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const b: any = block;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const candidates: any[] = [];
     if (b.location?.coordinates) candidates.push(b.location.coordinates);
     if (Array.isArray(b.location) && b.location.length >= 2) candidates.push(b.location);
@@ -113,6 +115,7 @@ export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMap
         center={initialCenter}
         zoom={initialZoom}
         className="h-[400px] w-full"
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         whenCreated={(map: any) => { mapRef.current = map; }}
         scrollWheelZoom={true}

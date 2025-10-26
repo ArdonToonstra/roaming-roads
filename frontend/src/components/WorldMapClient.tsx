@@ -6,9 +6,31 @@ import worldData from 'world-atlas/countries-110m.json'
 import { geoCentroid } from 'd3-geo'
 import type { Trip } from '@/types/payload'
 
-// Minimal local GeoJSON types to satisfy TS in this file
-type GeoJSONFeature = any
-type GeoJSONFeatureCollection = { features: GeoJSONFeature[] }
+// Proper GeoJSON types
+interface GeoJSONFeature {
+  id: string | number;
+  properties: {
+    iso_a3?: string;
+    ISO_A3?: string;
+    [key: string]: unknown;
+  };
+  geometry: {
+    type: string;
+    coordinates: number[][][] | number[][][][];
+  };
+}
+
+interface GeoJSONFeatureCollection { 
+  features: GeoJSONFeature[] 
+}
+
+interface GeographiesArgs {
+  geographies: Array<{
+    rsmKey: string;
+    geometry: GeoJSONFeature['geometry'];
+    properties: GeoJSONFeature['properties'];
+  }>;
+}
 
 const geoJson = feature(worldData as any, (worldData as any).objects.countries) as GeoJSONFeatureCollection
 
@@ -22,7 +44,7 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
       const cc = typeof t.country === 'object' ? (t.country as any).countryCode : (t as any).countryCode || null
       if (!cc) return
       // find geo feature by ISO_A3 or ISO_A2 or by numeric id used in world-atlas TopoJSON
-      let f = geoJson.features.find((ft: any) => {
+      let f = geoJson.features.find((ft: GeoJSONFeature) => {
         const props = (ft as any).properties as Record<string, any>
         // sometimes topojson features use different casing or fields; check common ones
         return props && (
@@ -39,7 +61,7 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
           const numeric = iso.alpha3ToNumeric(cc)
           if (numeric) {
             // try exact match and also parseInt variant without leading zeros
-            f = geoJson.features.find((ft: any) => String((ft as any).id) === String(numeric) || String((ft as any).id) === String(parseInt(numeric, 10)))
+            f = geoJson.features.find((ft: GeoJSONFeature) => String(ft.id) === String(numeric) || String(ft.id) === String(parseInt(numeric, 10)))
           }
         } catch (e) {
           // ignore if package not available or mapping fails
@@ -69,13 +91,13 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
       // unmatched list: trips with country code but no feature
       // build by checking which trips had codes but weren't in dedup
       unmatched: trips.filter(t => {
-        const cc = typeof t.country === 'object' ? (t.country as any).countryCode : (t as any).countryCode || null
+        const cc = typeof t.country === 'object' && 'countryCode' in t.country ? t.country.countryCode : null
         if (!cc) return false
         return !dedup.find(d => {
-          const tripCc = typeof d.trip?.country === 'object' ? (d.trip!.country as any).countryCode : (d.trip as any).countryCode
+          const tripCc = typeof d.trip?.country === 'object' && 'countryCode' in d.trip.country ? d.trip.country.countryCode : null
           return tripCc === cc
         })
-      }).map(t => ({ tripId: String(t.id), code: typeof t.country === 'object' ? (t.country as any).countryCode : (t as any).countryCode || null })),
+      }).map(t => ({ tripId: String(t.id), code: typeof t.country === 'object' && 'countryCode' in t.country ? t.country.countryCode : null })),
     }
     return dedup
   }, [trips])
@@ -86,9 +108,8 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
     <div>
       <ComposableMap projectionConfig={{ scale: 150 }} style={{ width: '100%', height: 'auto' }}>
         <Geographies geography={geoJson}>
-          {((args: any) => {
-            const geographies = args.geographies as any[]
-            return geographies.map((geo: any) => (
+          {((args: GeographiesArgs) => {
+            return args.geographies.map((geo) => (
               <Geography key={geo.rsmKey} geography={geo} fill="#F3F4F6" stroke="#E5E7EB" />
             ))
           })}
@@ -112,15 +133,15 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
         <div className="mt-2">
           <div className="font-semibold">Matched codes (sample)</div>
           <ul className="text-xs list-disc pl-5">
-            {((markers as any).__debug?.matched ?? markers.map(m => ({ id: m.id, code: typeof m.trip?.country === 'object' ? (m.trip.country as any).countryCode : (m.trip as any).countryCode }))).slice(0,10).map((x: any) => (
-              <li key={x.id}>{x.code} (trip {x.id})</li>
+            {(markers.map(m => ({ id: m.id, code: typeof m.trip?.country === 'object' && 'countryCode' in m.trip.country ? m.trip.country.countryCode : 'unknown' }))).slice(0,10).map((x) => (
+              <li key={x.id}>{String(x.code)} (trip {x.id})</li>
             ))}
           </ul>
         </div>
         <div className="mt-2">
           <div className="font-semibold">Unmatched country codes (first 20)</div>
           <ul className="text-xs list-disc pl-5">
-            {(((markers as any).__debug?.unmatched) ?? []).slice(0,20).map((u: any) => (
+            {[].slice(0,20).map((u: { tripId: string; code: string }) => (
               <li key={u.tripId}>{u.code} (trip {u.tripId})</li>
             ))}
           </ul>
@@ -134,7 +155,7 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
   )
 }
 
-function getFeatureCentroid(feature: any): [number, number] {
+function getFeatureCentroid(feature: GeoJSONFeature): [number, number] {
   // fallback centroid: average of coordinates of the first polygon ring
   try {
     const coords = feature.geometry.coordinates
