@@ -156,7 +156,7 @@ const Trips: CollectionConfig = {
               },
             },
             {
-              name: 'importantPreperations',
+              name: 'importantPreparations',
               label: 'Important Preparations',
               type: 'richText',
               admin: {
