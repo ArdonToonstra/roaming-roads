@@ -1,0 +1,33 @@
+{
+  "title": "Krakau",
+  "slug": "krakau",
+  "description": "A trip to Poland titled 'Krakau', from 2019-10-17 to 2019-10-21.",
+  "startDate": "2019-10-17T00:00:00.000Z",
+  "endDate": "2019-10-21T00:00:00.000Z",
+  "period": "October 2019",
+  "country": "Poland",
+  "budget": {
+    "amount": 0,
+    "currency": "EUR"
+  },
+  "itinerary": [
+    {
+      "blockType": "fullDay",
+      "id": "import-1",
+      "day": 1,
+      "date": "17/10",
+      "locationName": "Krakow",
+      "location": {
+        "coordinates": [
+          19.93685640000001,
+          50.06194740000002
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    }
+  ],
+  "sourceFile": "krakau.yaml",
+  "importedAt": "2025-10-21T21:00:50.251Z"
+}

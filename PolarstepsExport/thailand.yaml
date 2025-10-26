@@ -1,0 +1,67 @@
+title: Thailand
+url_key: thailand
+description: 'Een campingtrip naar Slovenië wordt wegens slecht weer vervangen door
+  Thailand! '
+start_date: '2023-05-14'
+end_date: '2023-06-02'
+country: Thailand
+budget:
+  total: 0
+  currency: EUR
+travel_itinerary:
+- day: 1
+  date: 15/05
+  location_name: Nai Yang beach
+  location_gps_lat: 8.093158021684932
+  location_gps_lon: 98.29857181555553
+  activities: []
+  accommodation: ''
+- day: 2
+  date: 16/05
+  location_name: Phang Nga Bay
+  location_gps_lat: 8.376840815961353
+  location_gps_lon: 98.59311449456771
+  activities: []
+  accommodation: ''
+- day: 3
+  date: 18/05
+  location_name: Ko Tao
+  location_gps_lat: 10.094943075068812
+  location_gps_lon: 99.82780350920662
+  activities: []
+  accommodation: ''
+- day: 4
+  date: 27/05
+  location_name: Ko Pha Ngan
+  location_gps_lat: 9.696925263734366
+  location_gps_lon: 100.02879218197825
+  activities: []
+  accommodation: ''
+- day: 5
+  date: 27/05
+  location_name: Surat Thani Province
+  location_gps_lat: 8.910669624712991
+  location_gps_lon: 98.52388925611751
+  activities: []
+  accommodation: ''
+- day: 6
+  date: 28/05
+  location_name: Khao Sok national park
+  location_gps_lat: 9.065140125621163
+  location_gps_lon: 98.61734277476747
+  activities: []
+  accommodation: ''
+- day: 7
+  date: 29/05
+  location_name: Nai Yang Beach
+  location_gps_lat: 8.093174957567548
+  location_gps_lon: 98.29859554890777
+  activities: []
+  accommodation: ''
+- day: 8
+  date: 02/06
+  location_name: Airport
+  location_gps_lat: 8.105616453934806
+  location_gps_lon: 98.30589938250046
+  activities: []
+  accommodation: ''

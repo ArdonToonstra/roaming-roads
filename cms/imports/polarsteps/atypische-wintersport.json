@@ -1,0 +1,129 @@
+{
+  "title": "Atypische wintersport ❄️❄️",
+  "slug": "atypische-wintersport",
+  "description": "Vakantie vol sneeuw en sport! ",
+  "startDate": "2025-02-01T00:00:00.000Z",
+  "endDate": "2025-02-08T00:00:00.000Z",
+  "period": "February 2025",
+  "country": "France",
+  "budget": {
+    "amount": 0,
+    "currency": "EUR"
+  },
+  "itinerary": [
+    {
+      "blockType": "fullDay",
+      "id": "import-1",
+      "day": 1,
+      "date": "01/02",
+      "locationName": "Aankomst @ Ayros-Arbouix",
+      "location": {
+        "coordinates": [
+          -0.06560269999999946,
+          43.004272500000006
+        ]
+      },
+      "description": null,
+      "activities": "Vrijdagavond samen frietjes eten bij Bar Leon! Daarna vroeg slapen en vroeg op.\n\nNa 12u rijden komen we aan in ons cute huisje in de Pyreneeen. Kacheltje aan en chillen 🔥",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-2",
+      "day": 2,
+      "date": "02/02",
+      "locationName": "Wandelen @ Hautacam",
+      "location": {
+        "coordinates": [
+          -0.007548399999961929,
+          42.97198949999999
+        ]
+      },
+      "description": null,
+      "activities": "We rijden naar Hautacam voor een hike naar een mooi meertje. De Franse lachen met ons omdat we geen snowshoes hebben. We zakken helemaal weg in de diepe sneeuw en keren al snel terug naar het restaurantje op de piste en maken daarna een makkelijkere wandeling met super mooie views 🥾❄️⛰️",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-3",
+      "day": 3,
+      "date": "03/02",
+      "locationName": "Skiën @ Cauterets",
+      "location": {
+        "coordinates": [
+          -0.11454599999999004,
+          42.88934510000001
+        ]
+      },
+      "description": null,
+      "activities": "Dagje skiën in Cauterets ⛷️🎿🚠\n\nDaarna spieren ontspannen in de Thermen in het dorp. Buikje nog vullen in een lekker restaurant en daarna richting ons huisje.",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-4",
+      "day": 4,
+      "date": "04/02",
+      "locationName": "Biathlon @ Val d’Azun",
+      "location": {
+        "coordinates": [
+          -0.1937853999999959,
+          42.97367989999997
+        ]
+      },
+      "description": null,
+      "activities": "We starten de dag met een echt Frans marktje en slaan baguettes, fromages,.. in 🧀\n\nDaarna initiatie Biathlon! En ook eerste keer langlaufen voor ons allemaal. 🎿 Fabien legt ons de basics uit en moeten daarna al snel schieten met lasers en bucks. We eindigen met een spannende wedstrijd: een parcours met schieten onderweg!\n\nIn de middag maken we nog een grote langlauf tour en gaan uitgeput terug naar ons huisje 💪",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-5",
+      "day": 5,
+      "date": "05/02",
+      "locationName": "Skiën @ Gavarnie",
+      "location": {
+        "coordinates": [
+          -0.009352400000011585,
+          42.732203600000034
+        ]
+      },
+      "description": null,
+      "activities": "Skiën in het geheim skigebied van Gavernie. Zo mooi en rustig! Daarna kacheltje thuis aansteken en gezellig gezelgschapspelletjes spelen 🃏",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-6",
+      "day": 6,
+      "date": "06/02",
+      "locationName": "Raquette & raclette @ Barèges",
+      "location": {
+        "coordinates": [
+          0.062236799999993764,
+          42.89588159999999
+        ]
+      },
+      "description": null,
+      "activities": "In Bareges huren we raquettes 🏸 en klimmen de berg op in de sneeuw. Boven wacht er een prachtig terrasje op ons! Na de terugkeer verwennen we onszelf nog eens in Thermes met een warme hammam en sauna. De dag eindigen we met een heerlijke raclette 🧀",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-7",
+      "day": 7,
+      "date": "07/02",
+      "locationName": "Skiën @ Grand Tourmalet ",
+      "location": {
+        "coordinates": [
+          0.17767509999998765,
+          42.91191839999997
+        ]
+      },
+      "description": null,
+      "activities": "De laatste dag is al weer aangebroken! We gaan deze keer naar het grootste skigebied van de omgeving: Grand Tourmalet! ⛷️\n\nAan het einde van de dag begint het te sneeuwen om komen we in een winter wonderland terecht. Een laatste keer warm voor de kachel, inpakken en ‘s ochtends vroeg vertrekken richting Antwerpen en Rotterdam 🥲\n\nTot snel mooie bergen! 🏔️",
+      "accommodation": null
+    }
+  ],
+  "sourceFile": "atypische-wintersport.yaml",
+  "importedAt": "2025-10-21T21:00:50.233Z"
+}

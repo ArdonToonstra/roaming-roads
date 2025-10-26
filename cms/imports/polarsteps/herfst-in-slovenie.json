@@ -1,0 +1,209 @@
+{
+  "title": "Herfst in Slovenië",
+  "slug": "herfst-in-slovenie",
+  "description": "Herfstige reis door Slovenië",
+  "startDate": "2024-11-07T00:00:00.000Z",
+  "endDate": "2024-11-16T00:00:00.000Z",
+  "period": "November 2024",
+  "country": "Slovenia",
+  "budget": {
+    "amount": 0,
+    "currency": "EUR"
+  },
+  "itinerary": [
+    {
+      "blockType": "fullDay",
+      "id": "import-1",
+      "day": 1,
+      "date": "07/11",
+      "locationName": "Bohinjska Bela",
+      "location": {
+        "coordinates": [
+          14.060905600000012,
+          46.347459500000014
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-2",
+      "day": 2,
+      "date": "08/11",
+      "locationName": "Debela Pec ",
+      "location": {
+        "coordinates": [
+          13.935699253882603,
+          46.38733858238681
+        ]
+      },
+      "description": null,
+      "activities": "Super mooie wandeling!!\n\nParking: https://maps.app.goo.gl/WCJhfSsCtEkVcW786?g_st=com.google.maps.preview.copy\n\nWandeling: https://nl.wikiloc.com/routes-wandelen/blejska-koca-en-debela-pec-vanaf-krnica-191036175?utm_medium=app&utm_campaign=share&utm_source=14331771 (Blejska Koca en Debela peč vanaf Krnica)",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-3",
+      "day": 3,
+      "date": "09/11",
+      "locationName": "Mostnica Gorge",
+      "location": {
+        "coordinates": [
+          13.87549248740035,
+          46.33060237517162
+        ]
+      },
+      "description": null,
+      "activities": "Wandeling langs kloof en waterval.\n\n€3 inkom\n\nSuper mooi!\n\nParking: https://maps.app.goo.gl/WPTM88DMbc2d8ujNA?g_st=com.google.maps.preview.copy\n\nWandeling: https://nl.wikiloc.com/routes-wandelen/devils-bridge-en-cascada-mostnica-vanaf-stara-fuzina-191149688?utm_medium=app&utm_campaign=share&utm_source=14331771 (Devil's bridge en Cascada Mostnica vanaf Stara Fužina)",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-4",
+      "day": 4,
+      "date": "10/11",
+      "locationName": "Kranjska Gora",
+      "location": {
+        "coordinates": [
+          13.713710822236095,
+          46.44598073300411
+        ]
+      },
+      "description": null,
+      "activities": "E mountainbikes gehuurd (€25) bij Extreme Vital (https://maps.app.goo.gl/Mu3NFaKR1c7rf7pS6?g_st=com.google.maps.preview.copy).\n\nSuper mooie fietstocht van 50km langs meertjes in Italië, en twee verschillende berghutten.\n\nhttps://nl.wikiloc.com/routes-mountainbike/lago-di-fusine-inferiore-rifugio-zacchi-en-planinarski-dom-tamar-vanaf-log-191326222?utm_medium=app&utm_campaign=share&utm_source=14331771 (Lago Di Fusine Inferiore, Rifugio Zacchi en Planinarski Dom Tamar vanaf Log)",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-5",
+      "day": 5,
+      "date": "11/11",
+      "locationName": "Škocjan",
+      "location": {
+        "coordinates": [
+          13.993602199999998,
+          45.66550560000001
+        ]
+      },
+      "description": null,
+      "activities": "Heel coole grotten!\n\n€17 - je mocht binnen geen foto’s trekken\n\nhttps://www.park-skocjanske-jame.si",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-6",
+      "day": 6,
+      "date": "11/11",
+      "locationName": "Trieste",
+      "location": {
+        "coordinates": [
+          13.77727809999999,
+          45.649648499999984
+        ]
+      },
+      "description": null,
+      "activities": "Drukke stad, niet echt de moeite!",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-7",
+      "day": 7,
+      "date": "12/11",
+      "locationName": "Bled",
+      "location": {
+        "coordinates": [
+          14.110059500000006,
+          46.368420199999974
+        ]
+      },
+      "description": null,
+      "activities": "Wandeling vanaf ons dorp naar uitkijkpunt, kasteel en rond Bled.\n\nWandeling: Bekijk deze @Wikiloc -route! https://nl.wikiloc.com/routes-wandelen/velika-osojnica-bled-castle-en-lago-bled-vanaf-bohinjska-bela-191454844?utm_medium=app&utm_campaign=share&utm_source=14331771 (Velika Osojnica, Bled Castle en Lago Bled vanaf Bohinjska Bela)",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-8",
+      "day": 8,
+      "date": "13/11",
+      "locationName": "Planina Blato - 7 lakes",
+      "location": {
+        "coordinates": [
+          13.849080500000014,
+          46.31401140000002
+        ]
+      },
+      "description": null,
+      "activities": "7 lakes hike, 19 km, 1000 meter stijgen\n\nHeel mooi!\n\nParking: Planina Blato\n\nWandeling: Bekijk deze @Wikiloc -route! https://nl.wikiloc.com/routes-wandelen/planina-blato-refugio-koca-pri-seven-lakes-valley-144981628?utm_medium=app&utm_campaign=share&utm_source=14331771 (Planina Blato - Refugio Koča Pri (seven lakes valley))",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-9",
+      "day": 9,
+      "date": "14/11",
+      "locationName": "Mala planina",
+      "location": {
+        "coordinates": [
+          14.661623099999986,
+          46.285883
+        ]
+      },
+      "description": null,
+      "activities": "Fietstocht van Kamnik naar Planina Velika.\n\nFietsen gehuurd bij tourist info punt (€20). Batterij niet sterk genoeg, fietsen achtergelaten en laatste stukje naar Planina Mala gewandeld. Achteraf bleek dat je ook met de auto kon gaan en laatste uurtje wandelen.\n\nFietstocht: Bekijk deze @Wikiloc -route! https://nl.wikiloc.com/routes-outdoor/gpx-download-velika-planina-velika-planina-rondtocht-vanuit-kamnik-graben-191670226?utm_medium=app&utm_campaign=share&utm_source=14331771 (Velika Planina rondtocht vanuit Kamnik)",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-10",
+      "day": 10,
+      "date": "14/11",
+      "locationName": "Ljubljana",
+      "location": {
+        "coordinates": [
+          14.506928899999991,
+          46.05002680000002
+        ]
+      },
+      "description": null,
+      "activities": "Leuke stad! Veel horeca en leuke winkeltjes.",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-11",
+      "day": 11,
+      "date": "15/11",
+      "locationName": "Radovljica",
+      "location": {
+        "coordinates": [
+          14.172022700000014,
+          46.343509000000026
+        ]
+      },
+      "description": null,
+      "activities": "Oud stadje met leuke wijnwinkel (waar je flessen kan laten vullen).",
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-12",
+      "day": 12,
+      "date": "15/11",
+      "locationName": "Munich",
+      "location": {
+        "coordinates": [
+          11.575382200000005,
+          48.137107900000025
+        ]
+      },
+      "description": null,
+      "activities": "Nog een kleine tussenstop aan een Chiemsee met de ondergaande zon.\n\nDaarna in Munchen lekker uiteten en drinken met Hidde en Alina.",
+      "accommodation": null
+    }
+  ],
+  "sourceFile": "herfst-in-slovenie.yaml",
+  "importedAt": "2025-10-21T21:00:50.248Z"
+}

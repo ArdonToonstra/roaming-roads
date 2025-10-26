@@ -24,6 +24,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   DROP INDEX "trips_country_idx";
   ALTER TABLE "media" ALTER COLUMN "alt" DROP NOT NULL;
   ALTER TABLE "countries" ADD COLUMN "travel_time_from_brussels" numeric;
+  ALTER TABLE "trips" ADD COLUMN "important_preperations" varchar;
   ALTER TABLE "trips_rels" ADD CONSTRAINT "trips_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "trips_rels" ADD CONSTRAINT "trips_rels_countries_fk" FOREIGN KEY ("countries_id") REFERENCES "public"."countries"("id") ON DELETE cascade ON UPDATE no action;
   CREATE INDEX "trips_rels_order_idx" ON "trips_rels" USING btree ("order");
@@ -127,5 +128,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   ALTER TABLE "trips" ADD CONSTRAINT "trips_country_id_countries_id_fk" FOREIGN KEY ("country_id") REFERENCES "public"."countries"("id") ON DELETE set null ON UPDATE no action;
   CREATE INDEX "media_location_location_country_idx" ON "media" USING btree ("location_country_id");
   CREATE INDEX "trips_country_idx" ON "trips" USING btree ("country_id");
-  ALTER TABLE "countries" DROP COLUMN "travel_time_from_brussels";`)
+  ALTER TABLE "countries" DROP COLUMN "travel_time_from_brussels";
+  ALTER TABLE "trips" DROP COLUMN "important_preperations";`)
 }

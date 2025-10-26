@@ -1,0 +1,209 @@
+{
+  "title": "Colombia + San Blas + Panama city",
+  "slug": "colombia-san-blas-panama-city",
+  "description": "A trip to Colombia titled 'Colombia + San Blas + Panama city', from 2020-01-29 to 2020-02-22.",
+  "startDate": "2020-01-29T00:00:00.000Z",
+  "endDate": "2020-02-22T00:00:00.000Z",
+  "period": "January – February 2020",
+  "country": "Colombia",
+  "budget": {
+    "amount": 0,
+    "currency": "EUR"
+  },
+  "itinerary": [
+    {
+      "blockType": "fullDay",
+      "id": "import-1",
+      "day": 1,
+      "date": "29/01",
+      "locationName": "Brussels",
+      "location": {
+        "coordinates": [
+          4.3516970000000015,
+          50.846557300000036
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-2",
+      "day": 2,
+      "date": "29/01",
+      "locationName": "Panama City",
+      "location": {
+        "coordinates": [
+          -79.53467848412812,
+          8.952571746517599
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-3",
+      "day": 3,
+      "date": "03/02",
+      "locationName": "San Blas Islands",
+      "location": {
+        "coordinates": [
+          -78.68869058845956,
+          9.585472717654886
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-4",
+      "day": 4,
+      "date": "07/02",
+      "locationName": "Cartagena",
+      "location": {
+        "coordinates": [
+          -75.54434190000002,
+          10.426674600000029
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-5",
+      "day": 5,
+      "date": "09/02",
+      "locationName": "Santa Marta",
+      "location": {
+        "coordinates": [
+          -74.19509160000001,
+          11.232094400000003
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-6",
+      "day": 6,
+      "date": "10/02",
+      "locationName": "Lost City hike",
+      "location": {
+        "coordinates": [
+          -73.85965089285689,
+          11.178592607172376
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-7",
+      "day": 7,
+      "date": "13/02",
+      "locationName": "Minca",
+      "location": {
+        "coordinates": [
+          -74.11692959999999,
+          11.142762400000004
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-8",
+      "day": 8,
+      "date": "15/02",
+      "locationName": "Salento",
+      "location": {
+        "coordinates": [
+          -75.56979899999999,
+          4.637301200000001
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-9",
+      "day": 9,
+      "date": "18/02",
+      "locationName": "Jardín",
+      "location": {
+        "coordinates": [
+          -75.81918329999999,
+          5.599050300000024
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-10",
+      "day": 10,
+      "date": "20/02",
+      "locationName": "Medellín",
+      "location": {
+        "coordinates": [
+          -75.57355299999999,
+          6.244338200000005
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-11",
+      "day": 11,
+      "date": "20/02",
+      "locationName": "Guatapé",
+      "location": {
+        "coordinates": [
+          -75.1617452,
+          6.234217900000034
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-12",
+      "day": 12,
+      "date": "21/02",
+      "locationName": "Brussels",
+      "location": {
+        "coordinates": [
+          4.3516970000000015,
+          50.846557300000036
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    }
+  ],
+  "sourceFile": "colombia-san-blas-panama-city.yaml",
+  "importedAt": "2025-10-21T21:00:50.242Z"
+}

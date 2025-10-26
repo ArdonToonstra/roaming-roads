@@ -1,0 +1,177 @@
+{
+  "title": "Sri Lanka",
+  "slug": "sri-lanka",
+  "description": "A trip to Sri Lanka titled 'Sri Lanka', from 2021-12-29 to 2022-01-17.",
+  "startDate": "2021-12-29T00:00:00.000Z",
+  "endDate": "2022-01-17T00:00:00.000Z",
+  "period": "December 2021 – January 2022",
+  "country": "Sri Lanka",
+  "budget": {
+    "amount": 0,
+    "currency": "EUR"
+  },
+  "itinerary": [
+    {
+      "blockType": "fullDay",
+      "id": "import-1",
+      "day": 1,
+      "date": "30/12",
+      "locationName": "Kalpitiya",
+      "location": {
+        "coordinates": [
+          79.75209720670034,
+          8.239975144358404
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-2",
+      "day": 2,
+      "date": "03/01",
+      "locationName": "Wilpattu National Park",
+      "location": {
+        "coordinates": [
+          80.01301255000004,
+          8.449650500000013
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-3",
+      "day": 3,
+      "date": "04/01",
+      "locationName": "Anuradhapura",
+      "location": {
+        "coordinates": [
+          80.41060959999999,
+          8.334984999999982
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-4",
+      "day": 4,
+      "date": "05/01",
+      "locationName": "Polwaththa Lodge",
+      "location": {
+        "coordinates": [
+          80.73315902232486,
+          7.326125027378009
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-5",
+      "day": 5,
+      "date": "07/01",
+      "locationName": "Nuwara Eliya",
+      "location": {
+        "coordinates": [
+          80.69310246236455,
+          7.058615777126795
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-6",
+      "day": 6,
+      "date": "09/01",
+      "locationName": "Ella",
+      "location": {
+        "coordinates": [
+          81.04901467828603,
+          6.873194555235844
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-7",
+      "day": 7,
+      "date": "11/01",
+      "locationName": "Hiriketiya Beach",
+      "location": {
+        "coordinates": [
+          80.77710581881485,
+          6.006209875971951
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-8",
+      "day": 8,
+      "date": "13/01",
+      "locationName": "Mirissa",
+      "location": {
+        "coordinates": [
+          80.45581279999999,
+          5.949363400000029
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-9",
+      "day": 9,
+      "date": "15/01",
+      "locationName": "Galle",
+      "location": {
+        "coordinates": [
+          80.21495500000003,
+          6.032813899999991
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-10",
+      "day": 10,
+      "date": "16/01",
+      "locationName": "Katunayake",
+      "location": {
+        "coordinates": [
+          79.8850512349668,
+          7.175937391964907
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    }
+  ],
+  "sourceFile": "sri-lanka.yaml",
+  "importedAt": "2025-10-21T21:00:50.270Z"
+}

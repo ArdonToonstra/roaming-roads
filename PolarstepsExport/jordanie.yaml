@@ -1,0 +1,94 @@
+title: Jordanië
+url_key: jordanie
+description: A trip to Jordan titled 'Jordanië', from 2022-05-21 to 2022-05-31.
+start_date: '2022-05-21'
+end_date: '2022-05-31'
+country: Jordan
+budget:
+  total: 0
+  currency: EUR
+travel_itinerary:
+- day: 1
+  date: 21/05
+  location_name: Madaba
+  location_gps_lat: 31.71817965901883
+  location_gps_lon: 35.7954965054295
+  activities: []
+  accommodation: ''
+- day: 2
+  date: 22/05
+  location_name: Wadi Mujib
+  location_gps_lat: 31.61097241543443
+  location_gps_lon: 35.598751756399025
+  activities: []
+  accommodation: ''
+- day: 3
+  date: 22/05
+  location_name: Dana
+  location_gps_lat: 30.67953418451493
+  location_gps_lon: 35.61280684751273
+  activities: []
+  accommodation: ''
+- day: 4
+  date: 23/05
+  location_name: Wadi Ghuweir trail
+  location_gps_lat: 30.601685041291997
+  location_gps_lon: 35.55344826101046
+  activities: []
+  accommodation: ''
+- day: 5
+  date: 24/05
+  location_name: Little Petra
+  location_gps_lat: 30.3797403
+  location_gps_lon: 35.465749500000015
+  activities: []
+  accommodation: ''
+- day: 6
+  date: 25/05
+  location_name: Petra
+  location_gps_lat: 30.325836300000013
+  location_gps_lon: 35.47456690000001
+  activities: []
+  accommodation: ''
+- day: 7
+  date: 26/05
+  location_name: Wadi Rum
+  location_gps_lat: 29.51201152493959
+  location_gps_lon: 35.403648551473566
+  activities: []
+  accommodation: ''
+- day: 8
+  date: 27/05
+  location_name: 'Aqaba '
+  location_gps_lat: 29.42627706640193
+  location_gps_lon: 34.98086427591596
+  activities: []
+  accommodation: ''
+- day: 9
+  date: 28/05
+  location_name: Dode zee
+  location_gps_lat: 31.758432168456622
+  location_gps_lon: 35.5779511304724
+  activities: []
+  accommodation: ''
+- day: 10
+  date: 29/05
+  location_name: Jerash
+  location_gps_lat: 32.281235
+  location_gps_lon: 35.90100129999999
+  activities: []
+  accommodation: ''
+- day: 11
+  date: 30/05
+  location_name: Amman
+  location_gps_lat: 31.95156940000001
+  location_gps_lon: 35.923962500000016
+  activities: []
+  accommodation: ''
+- day: 12
+  date: 31/05
+  location_name: Airport
+  location_gps_lat: 31.724526699482567
+  location_gps_lon: 35.99189958535737
+  activities: []
+  accommodation: ''

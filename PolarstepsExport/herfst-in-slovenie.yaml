@@ -1,0 +1,131 @@
+title: Herfst in Slovenië
+url_key: herfst-in-slovenie
+description: Herfstige reis door Slovenië
+start_date: '2024-11-07'
+end_date: '2024-11-16'
+country: Slovenia
+budget:
+  total: 0
+  currency: EUR
+travel_itinerary:
+- day: 1
+  date: 07/11
+  location_name: Bohinjska Bela
+  location_gps_lat: 46.347459500000014
+  location_gps_lon: 14.060905600000012
+  activities: []
+  accommodation: ''
+- day: 2
+  date: 08/11
+  location_name: 'Debela Pec '
+  location_gps_lat: 46.38733858238681
+  location_gps_lon: 13.935699253882603
+  activities:
+  - Super mooie wandeling!!
+  - 'Parking: https://maps.app.goo.gl/WCJhfSsCtEkVcW786?g_st=com.google.maps.preview.copy'
+  - 'Wandeling: https://nl.wikiloc.com/routes-wandelen/blejska-koca-en-debela-pec-vanaf-krnica-191036175?utm_medium=app&utm_campaign=share&utm_source=14331771
+    (Blejska Koca en Debela peč vanaf Krnica)'
+  accommodation: ''
+- day: 3
+  date: 09/11
+  location_name: Mostnica Gorge
+  location_gps_lat: 46.33060237517162
+  location_gps_lon: 13.87549248740035
+  activities:
+  - Wandeling langs kloof en waterval.
+  - €3 inkom
+  - Super mooi!
+  - 'Parking: https://maps.app.goo.gl/WPTM88DMbc2d8ujNA?g_st=com.google.maps.preview.copy'
+  - 'Wandeling: https://nl.wikiloc.com/routes-wandelen/devils-bridge-en-cascada-mostnica-vanaf-stara-fuzina-191149688?utm_medium=app&utm_campaign=share&utm_source=14331771
+    (Devil''s bridge en Cascada Mostnica vanaf Stara Fužina)'
+  accommodation: ''
+- day: 4
+  date: 10/11
+  location_name: Kranjska Gora
+  location_gps_lat: 46.44598073300411
+  location_gps_lon: 13.713710822236095
+  activities:
+  - E mountainbikes gehuurd (€25) bij Extreme Vital (https://maps.app.goo.gl/Mu3NFaKR1c7rf7pS6?g_st=com.google.maps.preview.copy).
+  - Super mooie fietstocht van 50km langs meertjes in Italië, en twee verschillende
+    berghutten.
+  - https://nl.wikiloc.com/routes-mountainbike/lago-di-fusine-inferiore-rifugio-zacchi-en-planinarski-dom-tamar-vanaf-log-191326222?utm_medium=app&utm_campaign=share&utm_source=14331771
+    (Lago Di Fusine Inferiore, Rifugio Zacchi en Planinarski Dom Tamar vanaf Log)
+  accommodation: ''
+- day: 5
+  date: 11/11
+  location_name: Škocjan
+  location_gps_lat: 45.66550560000001
+  location_gps_lon: 13.993602199999998
+  activities:
+  - Heel coole grotten!
+  - €17 - je mocht binnen geen foto’s trekken
+  - https://www.park-skocjanske-jame.si
+  accommodation: ''
+- day: 6
+  date: 11/11
+  location_name: Trieste
+  location_gps_lat: 45.649648499999984
+  location_gps_lon: 13.77727809999999
+  activities:
+  - Drukke stad, niet echt de moeite!
+  accommodation: ''
+- day: 7
+  date: 12/11
+  location_name: Bled
+  location_gps_lat: 46.368420199999974
+  location_gps_lon: 14.110059500000006
+  activities:
+  - Wandeling vanaf ons dorp naar uitkijkpunt, kasteel en rond Bled.
+  - 'Wandeling: Bekijk deze @Wikiloc -route! https://nl.wikiloc.com/routes-wandelen/velika-osojnica-bled-castle-en-lago-bled-vanaf-bohinjska-bela-191454844?utm_medium=app&utm_campaign=share&utm_source=14331771
+    (Velika Osojnica, Bled Castle en Lago Bled vanaf Bohinjska Bela)'
+  accommodation: ''
+- day: 8
+  date: 13/11
+  location_name: Planina Blato - 7 lakes
+  location_gps_lat: 46.31401140000002
+  location_gps_lon: 13.849080500000014
+  activities:
+  - 7 lakes hike, 19 km, 1000 meter stijgen
+  - Heel mooi!
+  - 'Parking: Planina Blato'
+  - 'Wandeling: Bekijk deze @Wikiloc -route! https://nl.wikiloc.com/routes-wandelen/planina-blato-refugio-koca-pri-seven-lakes-valley-144981628?utm_medium=app&utm_campaign=share&utm_source=14331771
+    (Planina Blato - Refugio Koča Pri (seven lakes valley))'
+  accommodation: ''
+- day: 9
+  date: 14/11
+  location_name: Mala planina
+  location_gps_lat: 46.285883
+  location_gps_lon: 14.661623099999986
+  activities:
+  - Fietstocht van Kamnik naar Planina Velika.
+  - Fietsen gehuurd bij tourist info punt (€20). Batterij niet sterk genoeg, fietsen
+    achtergelaten en laatste stukje naar Planina Mala gewandeld. Achteraf bleek dat
+    je ook met de auto kon gaan en laatste uurtje wandelen.
+  - 'Fietstocht: Bekijk deze @Wikiloc -route! https://nl.wikiloc.com/routes-outdoor/gpx-download-velika-planina-velika-planina-rondtocht-vanuit-kamnik-graben-191670226?utm_medium=app&utm_campaign=share&utm_source=14331771
+    (Velika Planina rondtocht vanuit Kamnik)'
+  accommodation: ''
+- day: 10
+  date: 14/11
+  location_name: Ljubljana
+  location_gps_lat: 46.05002680000002
+  location_gps_lon: 14.506928899999991
+  activities:
+  - Leuke stad! Veel horeca en leuke winkeltjes.
+  accommodation: ''
+- day: 11
+  date: 15/11
+  location_name: Radovljica
+  location_gps_lat: 46.343509000000026
+  location_gps_lon: 14.172022700000014
+  activities:
+  - Oud stadje met leuke wijnwinkel (waar je flessen kan laten vullen).
+  accommodation: ''
+- day: 12
+  date: 15/11
+  location_name: Munich
+  location_gps_lat: 48.137107900000025
+  location_gps_lon: 11.575382200000005
+  activities:
+  - Nog een kleine tussenstop aan een Chiemsee met de ondergaande zon.
+  - Daarna in Munchen lekker uiteten en drinken met Hidde en Alina.
+  accommodation: ''

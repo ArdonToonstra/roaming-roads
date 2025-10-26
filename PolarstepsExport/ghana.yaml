@@ -1,0 +1,66 @@
+title: Ghana
+url_key: ghana
+description: A trip to Ghana titled 'Ghana', from 2016-03-16 to 2016-03-24.
+start_date: '2016-03-16'
+end_date: '2016-03-24'
+country: Ghana
+budget:
+  total: 0
+  currency: EUR
+travel_itinerary:
+- day: 1
+  date: 16/03
+  location_name: Wli Afegame
+  location_gps_lat: 7.119475200000021
+  location_gps_lon: 0.5881242000000099
+  activities: []
+  accommodation: ''
+- day: 2
+  date: 16/03
+  location_name: Nkwanta
+  location_gps_lat: 8.261937355330419
+  location_gps_lon: 0.5214058331993954
+  activities: []
+  accommodation: ''
+- day: 3
+  date: 16/03
+  location_name: Bimbilla
+  location_gps_lat: 8.859348999999991
+  location_gps_lon: 0.05570430000000214
+  activities: []
+  accommodation: ''
+- day: 4
+  date: 17/03
+  location_name: Tamale
+  location_gps_lat: 9.40519920000002
+  location_gps_lon: -0.8423986000000242
+  activities: []
+  accommodation: ''
+- day: 5
+  date: 17/03
+  location_name: Larabanga
+  location_gps_lat: 9.21937790000001
+  location_gps_lon: -1.858463999999998
+  activities: []
+  accommodation: ''
+- day: 6
+  date: 18/03
+  location_name: Mole National Park
+  location_gps_lat: 9.656904399999986
+  location_gps_lon: -1.8673507700000016
+  activities: []
+  accommodation: ''
+- day: 7
+  date: 20/03
+  location_name: Tamale
+  location_gps_lat: 9.40519920000002
+  location_gps_lon: -0.8423986000000242
+  activities: []
+  accommodation: ''
+- day: 8
+  date: 22/03
+  location_name: Accra
+  location_gps_lat: 5.557109599999991
+  location_gps_lon: -0.20123760000001312
+  activities: []
+  accommodation: ''

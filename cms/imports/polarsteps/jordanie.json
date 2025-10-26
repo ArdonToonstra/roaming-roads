@@ -1,0 +1,209 @@
+{
+  "title": "Jordanië",
+  "slug": "jordanie",
+  "description": "A trip to Jordan titled 'Jordanië', from 2022-05-21 to 2022-05-31.",
+  "startDate": "2022-05-21T00:00:00.000Z",
+  "endDate": "2022-05-31T00:00:00.000Z",
+  "period": "May 2022",
+  "country": "Jordan",
+  "budget": {
+    "amount": 0,
+    "currency": "EUR"
+  },
+  "itinerary": [
+    {
+      "blockType": "fullDay",
+      "id": "import-1",
+      "day": 1,
+      "date": "21/05",
+      "locationName": "Madaba",
+      "location": {
+        "coordinates": [
+          35.7954965054295,
+          31.71817965901883
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-2",
+      "day": 2,
+      "date": "22/05",
+      "locationName": "Wadi Mujib",
+      "location": {
+        "coordinates": [
+          35.598751756399025,
+          31.61097241543443
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-3",
+      "day": 3,
+      "date": "22/05",
+      "locationName": "Dana",
+      "location": {
+        "coordinates": [
+          35.61280684751273,
+          30.67953418451493
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-4",
+      "day": 4,
+      "date": "23/05",
+      "locationName": "Wadi Ghuweir trail",
+      "location": {
+        "coordinates": [
+          35.55344826101046,
+          30.601685041291997
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-5",
+      "day": 5,
+      "date": "24/05",
+      "locationName": "Little Petra",
+      "location": {
+        "coordinates": [
+          35.465749500000015,
+          30.3797403
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-6",
+      "day": 6,
+      "date": "25/05",
+      "locationName": "Petra",
+      "location": {
+        "coordinates": [
+          35.47456690000001,
+          30.325836300000013
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-7",
+      "day": 7,
+      "date": "26/05",
+      "locationName": "Wadi Rum",
+      "location": {
+        "coordinates": [
+          35.403648551473566,
+          29.51201152493959
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-8",
+      "day": 8,
+      "date": "27/05",
+      "locationName": "Aqaba ",
+      "location": {
+        "coordinates": [
+          34.98086427591596,
+          29.42627706640193
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-9",
+      "day": 9,
+      "date": "28/05",
+      "locationName": "Dode zee",
+      "location": {
+        "coordinates": [
+          35.5779511304724,
+          31.758432168456622
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-10",
+      "day": 10,
+      "date": "29/05",
+      "locationName": "Jerash",
+      "location": {
+        "coordinates": [
+          35.90100129999999,
+          32.281235
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-11",
+      "day": 11,
+      "date": "30/05",
+      "locationName": "Amman",
+      "location": {
+        "coordinates": [
+          35.923962500000016,
+          31.95156940000001
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    },
+    {
+      "blockType": "fullDay",
+      "id": "import-12",
+      "day": 12,
+      "date": "31/05",
+      "locationName": "Airport",
+      "location": {
+        "coordinates": [
+          35.99189958535737,
+          31.724526699482567
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    }
+  ],
+  "sourceFile": "jordanie.yaml",
+  "importedAt": "2025-10-21T21:00:50.250Z"
+}

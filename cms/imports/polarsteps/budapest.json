@@ -1,0 +1,33 @@
+{
+  "title": "Budapest",
+  "slug": "budapest",
+  "description": "A trip to Hungary titled 'Budapest', from 2017-09-27 to 2017-09-30.",
+  "startDate": "2017-09-27T00:00:00.000Z",
+  "endDate": "2017-09-30T00:00:00.000Z",
+  "period": "September 2017",
+  "country": "Hungary",
+  "budget": {
+    "amount": 0,
+    "currency": "EUR"
+  },
+  "itinerary": [
+    {
+      "blockType": "fullDay",
+      "id": "import-1",
+      "day": 1,
+      "date": "27/09",
+      "locationName": "Budapest",
+      "location": {
+        "coordinates": [
+          19.04016089999999,
+          47.49789180000001
+        ]
+      },
+      "description": null,
+      "activities": null,
+      "accommodation": null
+    }
+  ],
+  "sourceFile": "budapest.yaml",
+  "importedAt": "2025-10-21T21:00:50.241Z"
+}

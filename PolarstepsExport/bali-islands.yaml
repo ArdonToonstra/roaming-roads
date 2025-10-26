@@ -1,0 +1,66 @@
+title: Bali + islands
+url_key: bali-islands
+description: A trip to Indonesia titled 'Bali + islands', from 2018-10-18 to 2018-11-05.
+start_date: '2018-10-18'
+end_date: '2018-11-05'
+country: Indonesia
+budget:
+  total: 0
+  currency: EUR
+travel_itinerary:
+- day: 1
+  date: 18/10
+  location_name: Brussels
+  location_gps_lat: 50.846557300000036
+  location_gps_lon: 4.3516970000000015
+  activities: []
+  accommodation: ''
+- day: 2
+  date: 20/10
+  location_name: Canggu
+  location_gps_lat: -8.650619300000008
+  location_gps_lon: 115.1365007
+  activities: []
+  accommodation: ''
+- day: 3
+  date: 22/10
+  location_name: Nusa Lembongan Island
+  location_gps_lat: -8.664237194234763
+  location_gps_lon: 115.45760197954651
+  activities: []
+  accommodation: ''
+- day: 4
+  date: 26/10
+  location_name: Nusa Penida Island
+  location_gps_lat: -8.745652450000001
+  location_gps_lon: 115.53474496000001
+  activities: []
+  accommodation: ''
+- day: 5
+  date: 28/10
+  location_name: Ubud
+  location_gps_lat: -8.506897699999985
+  location_gps_lon: 115.26229309999997
+  activities: []
+  accommodation: ''
+- day: 6
+  date: 31/10
+  location_name: Gili Trawangan
+  location_gps_lat: -8.350339649999981
+  location_gps_lon: 116.03626212999995
+  activities: []
+  accommodation: ''
+- day: 7
+  date: 04/11
+  location_name: Seminyak
+  location_gps_lat: -8.690835699999973
+  location_gps_lon: 115.1641975
+  activities: []
+  accommodation: ''
+- day: 8
+  date: 05/11
+  location_name: Brussels
+  location_gps_lat: 50.846557300000036
+  location_gps_lon: 4.3516970000000015
+  activities: []
+  accommodation: ''

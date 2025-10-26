@@ -1,0 +1,17 @@
+title: Budapest
+url_key: budapest
+description: A trip to Hungary titled 'Budapest', from 2017-09-27 to 2017-09-30.
+start_date: '2017-09-27'
+end_date: '2017-09-30'
+country: Hungary
+budget:
+  total: 0
+  currency: EUR
+travel_itinerary:
+- day: 1
+  date: 27/09
+  location_name: Budapest
+  location_gps_lat: 47.49789180000001
+  location_gps_lon: 19.04016089999999
+  activities: []
+  accommodation: ''

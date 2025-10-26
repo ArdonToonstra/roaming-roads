@@ -1,0 +1,17 @@
+title: Oostenrijk
+url_key: oostenrijk
+description: A trip to Austria titled 'Oostenrijk', from 2022-08-01 to 2022-08-07.
+start_date: '2022-08-01'
+end_date: '2022-08-07'
+country: Austria
+budget:
+  total: 0
+  currency: EUR
+travel_itinerary:
+- day: 1
+  date: 01/08
+  location_name: Kössen
+  location_gps_lat: 47.6481546855212
+  location_gps_lon: 12.340249092290662
+  activities: []
+  accommodation: ''
