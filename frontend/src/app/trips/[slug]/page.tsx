@@ -1,11 +1,12 @@
 import { payload } from '@/lib/api';
 import Link from 'next/link';
-import { MapPin, Calendar, Clock, Camera, DollarSign, ArrowLeft, Navigation } from 'lucide-react';
+import { MapPin, Calendar, Clock, Camera, DollarSign, ArrowLeft, Navigation, Globe, Users, AlertTriangle, Bed, Target, Info } from 'lucide-react';
 import { Trip, Media, Country, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
 import { notFound } from 'next/navigation';
 import { getImageUrl } from '@/lib/images';
 // Removed embedded map + itinerary; now lives under /journey subpage
 import MountSmallOverview from '@/components/mountSmallOverview';
+import RichText from '@/components/RichText';
 
 interface TripPageProps {
   params: Promise<{
@@ -31,19 +32,7 @@ async function getTrip(slugOrId: string): Promise<Trip | null> {
   }
 }
 
-function renderRichText(content: unknown): string {
-  if (!content) return '';
-  
-  // Simple rich text renderer - you might want to use a proper rich text renderer
-  if (typeof content === 'string') return content;
-  if (typeof content === 'object' && content !== null && 'children' in content && Array.isArray((content as {children: unknown[]}).children)) {
-    return (content as {children: {text?: string}[]}).children.map((child) => {
-      if (child.text) return child.text;
-      return '';
-    }).join('');
-  }
-  return '';
-}
+
 
 function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypointBlock; index: number }) {
   const isFullDay = block.blockType === 'fullDay';
@@ -109,9 +98,11 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
           <h4 className="text-lg font-heading font-bold mb-3" style={{ color: '#2A9D8F' }}>
             Activities & Details
           </h4>
-          <div className="prose max-w-none" style={{ fontFamily: 'Lato, sans-serif' }}>
-            {renderRichText(block.activities)}
-          </div>
+          <RichText 
+            content={block.activities}
+            className="prose max-w-none"
+            style={{ fontFamily: 'Lato, sans-serif' }}
+          />
         </div>
       )}
       
@@ -256,82 +247,270 @@ export default async function TripDetailPage({ params }: TripPageProps) {
       </section>
 
       {/* Trip Overview */}
-      <section className="py-16 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row lg:items-start lg:gap-8 mb-12">
-            <div className="flex-1">
-              <h2 className="text-3xl font-heading font-bold mb-6" style={{ color: '#4C3A7A' }}>
-                Trip Overview
-              </h2>
-            </div>
-            <div className="mt-6 lg:mt-0 flex-shrink-0">
-              <MountSmallOverview trip={trip} />
-            </div>
-          </div>
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-heading font-bold mb-12 text-center" style={{ color: '#4C3A7A' }}>
+            Trip Overview
+          </h2>
           
-          <div className="space-y-12">
-          {/* Regions Explored */}
-          {trip.regionsVisited && trip.regionsVisited.length > 0 && (
-            <div>
-              <h2 className="text-2xl font-heading font-bold mb-4" style={{ color: '#4C3A7A' }}>
-                Regions Explored
-              </h2>
-              <ul className="space-y-2">
-                {trip.regionsVisited.map((region, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <div>
-                      <span className="font-heading font-bold" style={{ color: '#263238' }}>
-                        {region.regionName}
-                      </span>
+          {/* Two Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Left Column - Detailed Information */}
+            <div className="lg:col-span-2 space-y-12">
+              
+              {/* Quick Stats */}
+              <div className="border-b border-gray-200 pb-8">
+                <h3 className="text-2xl font-heading font-bold mb-6" style={{ color: '#4C3A7A' }}>
+                  Trip Details
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Countries */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-gray-600">
+                      <Globe size={18} />
+                      <span className="font-medium">Countries</span>
                     </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Trip Details */}
-          <div>
-            <h2 className="text-2xl font-heading font-bold mb-4" style={{ color: '#4C3A7A' }}>
-              Trip Details
-            </h2>
-            <div className="space-y-4">
-              {trip.budget && (
-                <div className="p-4 rounded-lg" style={{ backgroundColor: '#F4F1ED' }}>
-                  <h3 className="font-heading font-bold mb-2" style={{ color: '#263238' }}>
-                    Budget
-                  </h3>
-                  <p style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
-                    {trip.budget.amount} {trip.budget.currency}
-                    {trip.budget.perPerson ? ' per person' : ''}
-                  </p>
-                </div>
-              )}
-              {trip.activities && (
-                <div className="p-4 rounded-lg" style={{ backgroundColor: '#F4F1ED' }}>
-                  <h3 className="font-heading font-bold mb-2" style={{ color: '#263238' }}>
-                    Main Activities
-                  </h3>
-                  <div style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
-                    {renderRichText(trip.activities)}
+                    <div className="space-y-1">
+                      {trip.countries && trip.countries.length > 0 ? (
+                        trip.countries.map((country, index) => (
+                          <p key={index} className="font-medium text-gray-800">
+                            {typeof country === 'object' ? (country as Country).name : country}
+                          </p>
+                        ))
+                      ) : (
+                        <p className="text-gray-500 italic">Not specified</p>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* Budget */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-gray-600">
+                      <DollarSign size={18} />
+                      <span className="font-medium">Budget</span>
+                    </div>
+                    {trip.budget ? (
+                      <div>
+                        <p className="text-xl font-bold" style={{ color: '#2A9D8F' }}>
+                          {trip.budget.amount} {trip.budget.currency}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {trip.budget.perPerson ? 'per person' : 'total'}
+                        </p>
+                      </div>
+                    ) : (
+                      <p className="text-gray-500 italic">Not specified</p>
+                    )}
+                  </div>
+                  
+                  {/* Duration */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-gray-600">
+                      <Calendar size={18} />
+                      <span className="font-medium">Duration</span>
+                    </div>
+                    {trip.period ? (
+                      <p className="font-medium text-gray-800">{trip.period}</p>
+                    ) : (
+                      <p className="text-gray-500 italic">Not specified</p>
+                    )}
+                    {trip.itinerary && (
+                      <p className="text-sm text-gray-500">
+                        {trip.itinerary.length} days planned
+                      </p>
+                    )}
                   </div>
                 </div>
-              )}
+              </div>
+
+              {/* Regions Explored */}
+              <div className="border-b border-gray-200 pb-8">
+                <div className="flex items-center gap-2 mb-6">
+                  <MapPin size={20} style={{ color: '#2A9D8F' }} />
+                  <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
+                    Regions Explored
+                  </h3>
+                </div>
+                {trip.regionsVisited && trip.regionsVisited.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {trip.regionsVisited.map((region, index) => (
+                      <div key={index} className="border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors">
+                        <h4 className="font-heading font-bold text-gray-800 mb-1">
+                          {region.regionName}
+                        </h4>
+                        {region.regionType && (
+                          <p className="text-sm text-gray-500 capitalize mb-2">
+                            {region.regionType.replace('_', ' ')}
+                          </p>
+                        )}
+                        {region.highlights && (
+                          <p className="text-sm text-gray-600">{region.highlights}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-500 italic">No specific regions documented for this trip</p>
+                )}
+              </div>
+
+              {/* Main Activities */}
+              <div className="border-b border-gray-200 pb-8">
+                <div className="flex items-center gap-2 mb-6">
+                  <Target size={20} style={{ color: '#2A9D8F' }} />
+                  <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
+                    Main Activities
+                  </h3>
+                </div>
+                {trip.activities ? (
+                  <div className="bg-gray-50 p-6 rounded-lg">
+                    <RichText 
+                      content={trip.activities}
+                      className="prose max-w-none text-gray-700"
+                      style={{ fontFamily: 'Lato, sans-serif' }}
+                    />
+                  </div>
+                ) : (
+                  <p className="text-gray-500 italic">No specific activities documented for this trip</p>
+                )}
+              </div>
+
+              {/* Important Preparations */}
+              <div className="border-b border-gray-200 pb-8">
+                <div className="flex items-center gap-2 mb-6">
+                  <AlertTriangle size={20} style={{ color: '#F57D50' }} />
+                  <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
+                    Important Preparations
+                  </h3>
+                </div>
+                {trip.importantPreparations ? (
+                  <div className="bg-orange-50 border-l-4 border-orange-400 p-6 rounded-r-lg">
+                    <RichText 
+                      content={trip.importantPreparations}
+                      className="prose max-w-none text-gray-700"
+                      style={{ fontFamily: 'Lato, sans-serif' }}
+                    />
+                  </div>
+                ) : (
+                  <div className="bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg">
+                    <p className="text-green-700">No special preparations required for this trip</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Featured Accommodations */}
+              <div>
+                <div className="flex items-center gap-2 mb-6">
+                  <Bed size={20} style={{ color: '#2A9D8F' }} />
+                  <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
+                    Featured Accommodations
+                  </h3>
+                </div>
+                {trip.featuredAccommodations && trip.featuredAccommodations.length > 0 ? (
+                  <div className="space-y-4">
+                    {trip.featuredAccommodations.map((item, index) => {
+                      const accommodation = typeof item.accommodation === 'object' ? item.accommodation : null;
+                      if (!accommodation) return null;
+                      
+                      return (
+                        <div key={index} className="border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors">
+                          <h4 className="font-heading font-bold text-gray-800 mb-1">
+                            {accommodation.name}
+                          </h4>
+                          <p className="text-sm text-gray-500 capitalize mb-1">
+                            {accommodation.type?.replace('_', ' ')}
+                          </p>
+                          {accommodation.priceRange && (
+                            <p className="text-sm text-gray-600">
+                              Price range: <span className="capitalize">{accommodation.priceRange}</span>
+                            </p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <p className="text-gray-500 italic">No featured accommodations for this trip</p>
+                )}
+              </div>
+            </div>
+            
+            {/* Right Column - Map and Journey CTA */}
+            <div className="lg:col-span-1 space-y-8">
+              {/* Map */}
+              <div className="sticky top-8">
+                <MountSmallOverview trip={trip} />
+                
+                {/* Detailed Journey CTA */}
+                {trip.itinerary && trip.itinerary.length > 0 && (
+                  <div className="mt-8 bg-gradient-to-br from-gray-50 to-gray-100 p-8 rounded-2xl border border-gray-200">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="p-3 rounded-xl" style={{ backgroundColor: '#2A9D8F', color: 'white' }}>
+                        <Navigation size={24} />
+                      </div>
+                      <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
+                        Detailed Journey
+                      </h3>
+                    </div>
+                    <p className="text-gray-600 mb-6 leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
+                      Explore our complete day-by-day itinerary with interactive maps and detailed locations.
+                    </p>
+                    
+                    <div className="grid grid-cols-3 gap-4 mb-6 text-center">
+                      <div>
+                        <div className="text-2xl font-bold" style={{ color: '#2A9D8F' }}>
+                          {trip.itinerary.length}
+                        </div>
+                        <div className="text-xs text-gray-500">Days</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold" style={{ color: '#F57D50' }}>
+                          {trip.itinerary.filter(day => day.gallery && day.gallery.length > 0).length}
+                        </div>
+                        <div className="text-xs text-gray-500">Galleries</div>
+                      </div>
+                      <div>
+                        <div className="text-lg font-bold" style={{ color: '#4C3A7A' }}>
+                          Map
+                        </div>
+                        <div className="text-xs text-gray-500">Interactive</div>
+                      </div>
+                    </div>
+                    
+                    <Link 
+                      href={`/trips/${trip.slug || trip.id}/steps`} 
+                      className="block w-full text-center px-6 py-3 text-white font-heading font-bold rounded-xl transition-all duration-300 hover:opacity-90 hover:scale-105" 
+                      style={{ backgroundColor: '#2A9D8F' }}
+                    >
+                      View Day-by-Day
+                    </Link>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </section>
 
       {/* Highlights Gallery */}
       {trip.highlightsMedia && trip.highlightsMedia.length > 0 && (
-        <section className="py-16" style={{ backgroundColor: '#F4F1ED' }}>
+        <section className="py-20" style={{ backgroundColor: '#F4F1ED' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-heading font-bold text-center mb-12" style={{ color: '#4C3A7A' }}>
-              Trip Highlights
-            </h2>
+            <div className="text-center mb-16">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="p-3 rounded-xl" style={{ backgroundColor: '#4C3A7A', color: 'white' }}>
+                  <Camera size={32} />
+                </div>
+                <h2 className="text-4xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
+                  Trip Highlights
+                </h2>
+              </div>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: 'Lato, sans-serif' }}>
+                Discover the most memorable moments and stunning visuals from our journey
+              </p>
+            </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {trip.highlightsMedia
                 .sort((a, b) => a.order - b.order)
                 .map((highlight, index) => {
@@ -339,15 +518,18 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                   if (!media) return null;
                   
                   return (
-                    <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-                      <img 
-                        src={getImageUrl(media.url)}
-                        alt={highlight.caption || media.alt || `Highlight ${index + 1}`}
-                        className="w-full h-64 object-cover"
-                      />
+                    <div key={index} className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                      <div className="relative overflow-hidden">
+                        <img 
+                          src={getImageUrl(media.url)}
+                          alt={highlight.caption || media.alt || `Highlight ${index + 1}`}
+                          className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      </div>
                       {highlight.caption && (
-                        <div className="p-4">
-                          <p style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
+                        <div className="p-6">
+                          <p className="text-gray-700 leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
                             {highlight.caption}
                           </p>
                         </div>
@@ -360,20 +542,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
         </section>
       )}
 
-            {/* Steps link instead of inline map/itinerary */}
-            {trip.itinerary && trip.itinerary.length > 0 && (
-              <section className="bg-white py-12">
-                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                  <h2 className="text-3xl font-heading font-bold mb-4" style={{ color: '#4C3A7A' }}>Steps Map & Itinerary</h2>
-                  <p className="mb-8 text-lg" style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
-                    Explore the full day-by-day route and interactive map.
-                  </p>
-                  <Link href={`/trips/${trip.slug || trip.id}/steps`} className="inline-flex items-center gap-2 px-8 py-4 text-white font-heading font-bold rounded-full transition-colors duration-300 hover:opacity-90" style={{ backgroundColor: '#2A9D8F' }}>
-                    View Steps Details
-                  </Link>
-                </div>
-              </section>
-            )}
+
 
    
     </div>

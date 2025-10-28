@@ -133,6 +133,7 @@ export interface Trip {
   featuredAccommodations?: Array<{
     accommodation: string | Accommodation // Accommodation relationship
   }>
+  importantPreparations?: RichTextContent
   itinerary?: Array<CmsFullDayBlock | CmsWaypointBlock>
   createdAt: string
   updatedAt: string
