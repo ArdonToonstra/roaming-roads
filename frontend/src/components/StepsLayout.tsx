@@ -4,37 +4,60 @@ import React, { useEffect, useState, useCallback } from 'react';
 import TripDetailMap from '@/components/TripDetailMap';
 import RichText from '@/components/RichText';
 import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media } from '@/types/payload';
-import { MapPin, Clock, Navigation, DollarSign, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { MapPin, Clock, Navigation, EuroIcon, ChevronLeft, ChevronRight, X, Bed, Car, Plane, Train, Bus, Ship, MapPinIcon } from 'lucide-react';
 import { getImageUrl } from '@/lib/images';
 
 interface StepsLayoutProps { trip: Trip }
 
-function buildConnectorLabel(prev: CmsFullDayBlock | CmsWaypointBlock | null, current: CmsFullDayBlock | CmsWaypointBlock): string | null {
-  if (!prev) return null;
-  const p: any = prev;
-  if (!p.transportation) return null;
-  const departure = p.transportation.departureMethod || p.transportation.arrivalMethod;
-  const travelTime = p.transportation.travelTime?.value ? `${p.transportation.travelTime.value} ${p.transportation.travelTime.unit || ''}`.trim() : '';
-  const parts = [departure, travelTime].filter(Boolean);
-  if (!parts.length) return null;
-  return parts.join(' • ');
+function getTransportationIcon(method: string) {
+  const iconMap: { [key: string]: any } = {
+    'rental_car': Car,
+    'taxi': Car,
+    'private_car': Car,
+    'car': Car,
+    'flight': Plane,
+    'plane': Plane,
+    'airplane': Plane,
+    'train': Train,
+    'bus': Bus,
+    'boat': Ship,
+    'ship': Ship,
+    'ferry': Ship,
+    'walking': MapPinIcon,
+    'walk': MapPinIcon,
+  };
+  
+  const normalizedMethod = method.toLowerCase().replace(/[_\s-]/g, '_');
+  return iconMap[normalizedMethod] || Car; // Default to car icon
 }
 
-function formatAddress(addr: unknown) {
-  if (!addr) return null;
-  if (typeof addr === 'string') return addr;
-  if (typeof addr === 'object') {
-    const a: any = addr;
-    const parts: string[] = [];
-    if (a.street) parts.push(a.street);
-    if (a.city) parts.push(a.city);
-    if (a.region) parts.push(a.region);
-    if (a.postalCode) parts.push(a.postalCode);
-    if (a.country) parts.push(a.country);
-    return parts.join(', ');
-  }
-  return String(addr);
+function buildConnectorLabel(prev: CmsFullDayBlock | CmsWaypointBlock | null, current: CmsFullDayBlock | CmsWaypointBlock): { method: string; time: string; icon: any } | null {
+  if (!prev) return null;
+  
+  // Check both the previous block and current block for transportation info
+  const prevTransport: any = (prev as any).transportation;
+  const currentTransport: any = (current as any).transportation;
+  
+  // Try to get transportation method (prefer departure from current, then arrival to current)
+  let method = currentTransport?.arrivalMethod || prevTransport?.departureMethod || currentTransport?.departureMethod;
+  
+  if (!method) return null;
+  
+  // Get travel time from either block
+  const timeInfo = currentTransport?.travelTime || prevTransport?.travelTime;
+  const travelTime = timeInfo?.value ? `${timeInfo.value} ${timeInfo.unit || ''}`.trim() : '';
+  
+  // Clean up method name for display
+  const displayMethod = method.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase());
+  
+  return {
+    method: displayMethod,
+    time: travelTime,
+    icon: getTransportationIcon(method)
+  };
 }
+
+
 
 function GalleryCarousel({ items }: { items: any[] }) {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -103,7 +126,7 @@ function GalleryCarousel({ items }: { items: any[] }) {
   );
 }
 
-function ItineraryBlock({ block, index, active }: { block: CmsFullDayBlock | CmsWaypointBlock; index: number; active: boolean }) {
+function ItineraryBlock({ block, index, active, onClick }: { block: CmsFullDayBlock | CmsWaypointBlock; index: number; active: boolean; onClick?: () => void }) {
   const isFullDay = block.blockType === 'fullDay';
   const rawCoords: any = (block as any).location?.coordinates;
   const hasCoords = Array.isArray(rawCoords) && rawCoords.length >= 2 && typeof rawCoords[0] === 'number' && typeof rawCoords[1] === 'number';
@@ -113,7 +136,8 @@ function ItineraryBlock({ block, index, active }: { block: CmsFullDayBlock | Cms
     <div
       id={`day-${index + 1}`}
       data-day-index={index}
-      className={`rounded-xl p-6 transition-shadow duration-300 ${active ? 'bg-card shadow-md border-2' : 'bg-card hover:shadow-md border border-border'}`}
+      onClick={onClick}
+      className={`rounded-xl p-6 transition-all duration-300 cursor-pointer ${active ? 'bg-card shadow-md border-2' : 'bg-card hover:shadow-md border border-border hover:border-gray-300'}`}
       style={active ? { borderColor: '#F57D50' } : undefined}
     >
       <div className="flex items-start gap-4 mb-4">
@@ -123,7 +147,6 @@ function ItineraryBlock({ block, index, active }: { block: CmsFullDayBlock | Cms
           <div className="flex flex-wrap items-center gap-3 text-xs" style={{ color: '#2A9D8F' }}>
             {block.regionProvince && <div className="flex items-center gap-1"><MapPin size={14} /><span>{block.regionProvince}</span></div>}
             {isFullDay && (block as CmsFullDayBlock).time && <div className="flex items-center gap-1"><Clock size={14} /><span>{(block as CmsFullDayBlock).time}</span></div>}
-            {coordsText ? <div className="flex items-center gap-1"><Navigation size={14} /><span>{coordsText}</span></div> : <div className="flex items-center gap-1 opacity-60"><Navigation size={14} /><span>Unknown</span></div>}
           </div>
         </div>
       </div>
@@ -136,25 +159,26 @@ function ItineraryBlock({ block, index, active }: { block: CmsFullDayBlock | Cms
         </div>
       )}
       {(block as any).accommodation && (
-        <div className="mb-4 p-3 rounded-md" style={{ backgroundColor: '#F4F1ED' }}>
-          <h4 className="text-xs font-heading font-bold mb-1" style={{ color: '#4C3A7A' }}>Accommodation</h4>
-          <div className="text-xs" style={{ color: '#263238' }}>
-            {typeof (block as any).accommodation === 'string' ? (
-              <div>{(block as any).accommodation}</div>
-            ) : (
-              <div>
-                {(block as any).accommodation?.name && <div className="font-heading font-semibold">{(block as any).accommodation.name}</div>}
-                {(block as any).accommodation?.address && <div className="opacity-80">{formatAddress((block as any).accommodation.address)}</div>}
-                {(block as any).accommodation?.notes && <RichText content={(block as any).accommodation.notes} className="text-[11px] italic mt-1" />}
-              </div>
-            )}
+        <div className="mb-4 p-3 rounded-md bg-gray-50 border border-gray-200">
+          <div className="flex items-start gap-2">
+            <Bed size={16} className="flex-shrink-0 mt-0.5" style={{ color: '#4C3A7A' }} />
+            <div className="text-xs flex-1" style={{ color: '#263238' }}>
+              {typeof (block as any).accommodation === 'string' ? (
+                <div>{(block as any).accommodation}</div>
+              ) : (
+                <div>
+                  {(block as any).accommodation?.name && <div className="font-heading font-semibold">{(block as any).accommodation.name}</div>}
+                  {(block as any).accommodation?.notes && <RichText content={(block as any).accommodation.notes} className="text-[11px] italic mt-1" />}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
       {isFullDay && (block as CmsFullDayBlock).budget && (
         <div className="mb-3 p-3 rounded-md" style={{ backgroundColor: '#F4F1ED' }}>
           <h4 className="text-xs font-heading font-bold mb-1" style={{ color: '#4C3A7A' }}>Cost</h4>
-          <div className="flex items-center gap-1 text-xs" style={{ color: '#263238' }}><DollarSign size={12} /><span>{(block as CmsFullDayBlock).budget?.amount} {(block as CmsFullDayBlock).budget?.currency}</span></div>
+          <div className="flex items-center gap-1 text-xs" style={{ color: '#263238' }}><EuroIcon size={12} /><span>{(block as CmsFullDayBlock).budget?.amount} {(block as CmsFullDayBlock).budget?.currency}</span></div>
         </div>
       )}
       {isFullDay && (block as CmsFullDayBlock).tips && (
@@ -169,6 +193,15 @@ function ItineraryBlock({ block, index, active }: { block: CmsFullDayBlock | Cms
 
 export default function StepsLayout({ trip }: StepsLayoutProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  
+  const handleStepClick = (index: number) => {
+    setActiveIndex(index);
+    // Scroll the clicked step into view
+    const element = document.querySelector(`[data-day-index="${index}"]`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
 
   const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
     // Determine the element whose vertical center is closest to the viewport vertical center
@@ -207,7 +240,12 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
           <h2 className="text-2xl font-heading font-bold mb-6 text-[#4C3A7A]">Steps Itinerary</h2>
           {trip.itinerary?.map((block, index) => (
             <React.Fragment key={(block as any).id || index}>
-              <ItineraryBlock block={block} index={index} active={activeIndex === index} />
+              <ItineraryBlock 
+                block={block} 
+                index={index} 
+                active={activeIndex === index} 
+                onClick={() => handleStepClick(index)}
+              />
               {index < (trip.itinerary!.length - 1) && (
                 <Connector prevBlock={block} nextBlock={trip.itinerary![index + 1]} />
               )}
@@ -220,17 +258,28 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
 }
 
 function Connector({ prevBlock, nextBlock }: { prevBlock: CmsFullDayBlock | CmsWaypointBlock; nextBlock: CmsFullDayBlock | CmsWaypointBlock }) {
-  const label = buildConnectorLabel(prevBlock, nextBlock);
+  const transportInfo = buildConnectorLabel(prevBlock, nextBlock);
   return (
-    <div className="flex flex-col items-center my-2">
+    <div className="flex flex-col items-center my-6">
+      
       <div className="relative w-full flex items-center">
-        <div className="mx-auto h-10 w-[2px] bg-border" />
-        {label && (
-          <div className="absolute left-1/2 -translate-x-1/2 top-1 text-[11px] px-2 py-0.5 rounded bg-muted/40 text-muted-foreground max-w-[160px] text-center shadow-sm">
-            {label}
+        <div className="mx-auto h-6 w-[2px] bg-border" />
+        {transportInfo && (
+          <div className="absolute left-1/2 -translate-x-1/2 top-0 text-[11px] px-3 py-1 rounded-full bg-white border border-gray-200 text-gray-600 shadow-sm">
+            <div className="flex items-center justify-center gap-1.5">
+              <transportInfo.icon size={12} />
+              <span>{transportInfo.method}</span>
+              {transportInfo.time && (
+                <>
+                  <span className="text-gray-400">•</span>
+                  <span>{transportInfo.time}</span>
+                </>
+              )}
+            </div>
           </div>
         )}
       </div>
+      
     </div>
   );
 }

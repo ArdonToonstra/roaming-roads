@@ -149,19 +149,19 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
     const target = markers.find(m => m.idx === activeIndex);
     if (!target) return;
     const now = Date.now();
-    // Throttle to avoid excessive panning during fast scroll (200ms)
-    if (lastPanRef.current && (now - lastPanRef.current) < 200) return;
+    // Throttle to avoid excessive panning during fast scroll (100ms)
+    if (lastPanRef.current && (now - lastPanRef.current) < 100) return;
     lastPanRef.current = now;
     try {
-      // Slightly higher zoom for focus without being too tight
-      // Leaflet flyTo if available, fallback to setView
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // Focus on the active marker with a reasonable zoom level
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mapAny: any = mapRef.current;
+      const focusZoom = 12; // Fixed zoom level for focusing on individual markers
+      
       if (mapAny.flyTo) {
-        mapAny.flyTo([target.coord.lat, target.coord.lng], Math.max(mapAny.getZoom(), 7), { duration: 0.6 });
+        mapAny.flyTo([target.coord.lat, target.coord.lng], focusZoom, { duration: 0.8 });
       } else if (mapAny.setView) {
-        mapAny.setView([target.coord.lat, target.coord.lng], Math.max(mapAny.getZoom(), 7));
+        mapAny.setView([target.coord.lat, target.coord.lng], focusZoom);
       }
     } catch (e) {
       // eslint-disable-next-line no-console

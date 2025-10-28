@@ -5,6 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
 import type { Trip, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
 import { useMemo, useRef, useEffect } from 'react';
+import { getCombinedCountryBounds, getCountryBounds } from '@/lib/countryBounds';
 
 // Types for Leaflet
 interface LeafletMapInstance {
@@ -80,6 +81,27 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
     return m;
   }, [trip.itinerary]);
 
+  // Calculate country bounds
+  const countryBounds = useMemo(() => {
+    if (!trip.countries || trip.countries.length === 0) return null;
+    
+    const countryCodes = trip.countries
+      .map(country => {
+        if (typeof country === 'string') return null;
+        return country?.countryCode;
+      })
+      .filter((code): code is string => !!code);
+    
+    if (countryCodes.length === 0) return null;
+    
+    // Get combined bounds for all countries
+    if (countryCodes.length === 1) {
+      return getCountryBounds(countryCodes[0]);
+    } else {
+      return getCombinedCountryBounds(countryCodes);
+    }
+  }, [trip.countries]);
+
   // Dynamically import Leaflet and handle bounds fitting
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -96,25 +118,54 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
         });
       }
       
-      // Auto-fit bounds to markers after Leaflet is loaded
-      if (mapRef.current && markers.length > 0 && L) {
+      // Auto-fit bounds to countries or fallback to markers
+      if (mapRef.current && L) {
         const map = mapRef.current;
-        const bounds = L.latLngBounds(markers.map(m => [m.coord.lat, m.coord.lng]));
         
-        if (markers.length === 1) {
-          // For single marker, fit bounds but with reasonable zoom limit
-          map.fitBounds(bounds, { padding: [20, 20], maxZoom: 10 });
-        } else {
-          // For multiple markers, fit all with padding
-          map.fitBounds(bounds, { padding: [15, 15] });
+        if (countryBounds) {
+          // Use country bounds if available, expanded to show more context
+          const expandFactor = 0.3; // Expand bounds by 30% in each direction
+          const latDiff = countryBounds[1][0] - countryBounds[0][0];
+          const lngDiff = countryBounds[1][1] - countryBounds[0][1];
+          
+          const expandedBounds: [[number, number], [number, number]] = [
+            [countryBounds[0][0] - (latDiff * expandFactor), countryBounds[0][1] - (lngDiff * expandFactor)], // SW
+            [countryBounds[1][0] + (latDiff * expandFactor), countryBounds[1][1] + (lngDiff * expandFactor)]  // NE
+          ];
+          
+          const bounds = L.latLngBounds([expandedBounds[0], expandedBounds[1]]);
+          map.fitBounds(bounds, { maxZoom: 6 });
+        } else if (markers.length > 0) {
+          // Fallback to marker bounds
+          const bounds = L.latLngBounds(markers.map(m => [m.coord.lat, m.coord.lng]));
+          
+          if (markers.length === 1) {
+            // For single marker, fit bounds but with reasonable zoom limit
+            map.fitBounds(bounds, { padding: [20, 20], maxZoom: 10 });
+          } else {
+            // For multiple markers, fit all with padding
+            map.fitBounds(bounds, { padding: [15, 15] });
+          }
         }
       }
     }).catch(() => {});
-  }, [markers]);
+  }, [countryBounds, markers]);
 
-  // Initial center and zoom (will be overridden by useEffect for markers)
-  const center: [number, number] = markers.length > 0 ? [markers[0].coord.lat, markers[0].coord.lng] : [20, 0];
-  const zoom = markers.length > 0 ? 7 : 3;
+  // Initial center and zoom (will be overridden by useEffect)
+  const center: [number, number] = useMemo(() => {
+    if (countryBounds) {
+      // Center of country bounds
+      const centerLat = (countryBounds[0][0] + countryBounds[1][0]) / 2;
+      const centerLng = (countryBounds[0][1] + countryBounds[1][1]) / 2;
+      return [centerLat, centerLng];
+    } else if (markers.length > 0) {
+      return [markers[0].coord.lat, markers[0].coord.lng];
+    } else {
+      return [20, 0];
+    }
+  }, [countryBounds, markers]);
+
+  const zoom = countryBounds ? 6 : (markers.length > 0 ? 7 : 3);
 
   return (
     <div className="rounded-lg overflow-hidden border border-border bg-card shadow-sm w-full md:w-96">
@@ -133,7 +184,7 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
       >
         <TileLayer
           attribution={env.MAPTILER_KEY ? '&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors' : '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'}
-          url={env.MAPTILER_KEY ? `https://api.maptiler.com/maps/satellite-v2/{z}/{x}/{y}.jpg?key=${env.MAPTILER_KEY}` : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'}
+          url={env.MAPTILER_KEY ? `https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${env.MAPTILER_KEY}` : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'}
         />
         {markers.map(m => {
           const L = leafletRef.current;
@@ -142,18 +193,7 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
             <Marker key={m.idx} position={[m.coord.lat, m.coord.lng]} {...(icon ? { icon } : {})} />
           );
         })}
-        {env.MAPTILER_KEY && (
-          <TileLayer
-            attribution='&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors'
-            url={`https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.png?key=${env.MAPTILER_KEY}`}
-            zIndex={650}
-            opacity={1}
-          />
-        )}
       </MapContainer>
-      <div className="p-3 text-xs text-muted-foreground border-t border-border">
-        {markers.length > 0 ? `${markers.length} itinerary point${markers.length === 1 ? '' : 's'}` : 'No coordinates yet'}
-      </div>
     </div>
   );
 }

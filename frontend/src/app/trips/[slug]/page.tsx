@@ -1,6 +1,6 @@
 import { payload } from '@/lib/api';
 import Link from 'next/link';
-import { MapPin, Calendar, Clock, Camera, DollarSign, ArrowLeft, Navigation, Globe, Users, AlertTriangle, Bed, Target, Info } from 'lucide-react';
+import { MapPin, Calendar, Clock, Camera, EuroIcon, ArrowLeft, Navigation, Globe, Users, AlertTriangle, Bed, Target, Info } from 'lucide-react';
 import { Trip, Media, Country, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
 import { notFound } from 'next/navigation';
 import { getImageUrl } from '@/lib/images';
@@ -127,7 +127,7 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
             Cost
           </h4>
           <div className="flex items-center gap-1 text-sm" style={{ color: '#263238' }}>
-            <DollarSign size={16} />
+            <EuroIcon size={16} />
             <span>
               {(block as CmsFullDayBlock).budget?.amount} {(block as CmsFullDayBlock).budget?.currency}
             </span>
@@ -249,9 +249,6 @@ export default async function TripDetailPage({ params }: TripPageProps) {
       {/* Trip Overview */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-heading font-bold mb-12 text-center" style={{ color: '#4C3A7A' }}>
-            Trip Overview
-          </h2>
           
           {/* Two Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -286,7 +283,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                   {/* Budget */}
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-gray-600">
-                      <DollarSign size={18} />
+                      <EuroIcon size={18} />
                       <span className="font-medium">Budget</span>
                     </div>
                     {trip.budget ? (
@@ -307,7 +304,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-gray-600">
                       <Calendar size={18} />
-                      <span className="font-medium">Duration</span>
+                      <span className="font-medium">Our Travel Period</span>
                     </div>
                     {trip.period ? (
                       <p className="font-medium text-gray-800">{trip.period}</p>
@@ -316,7 +313,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                     )}
                     {trip.itinerary && (
                       <p className="text-sm text-gray-500">
-                        {trip.itinerary.length} days planned
+                        {trip.itinerary.length} steps planned
                       </p>
                     )}
                   </div>
@@ -332,20 +329,12 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                   </h3>
                 </div>
                 {trip.regionsVisited && trip.regionsVisited.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-wrap gap-3">
                     {trip.regionsVisited.map((region, index) => (
-                      <div key={index} className="border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors">
-                        <h4 className="font-heading font-bold text-gray-800 mb-1">
+                      <div key={index} className="bg-gray-100 px-4 py-2 rounded-full border border-gray-200 hover:border-gray-300 transition-colors">
+                        <span className="font-medium text-gray-800">
                           {region.regionName}
-                        </h4>
-                        {region.regionType && (
-                          <p className="text-sm text-gray-500 capitalize mb-2">
-                            {region.regionType.replace('_', ' ')}
-                          </p>
-                        )}
-                        {region.highlights && (
-                          <p className="text-sm text-gray-600">{region.highlights}</p>
-                        )}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -453,7 +442,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                       </h3>
                     </div>
                     <p className="text-gray-600 mb-6 leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
-                      Explore our complete day-by-day itinerary with interactive maps and detailed locations.
+                      Complete step-by-step itinerary with interactive maps and detailed locations.
                     </p>
                     
                     <div className="grid grid-cols-3 gap-4 mb-6 text-center">
@@ -461,7 +450,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                         <div className="text-2xl font-bold" style={{ color: '#2A9D8F' }}>
                           {trip.itinerary.length}
                         </div>
-                        <div className="text-xs text-gray-500">Days</div>
+                        <div className="text-xs text-gray-500">Steps</div>
                       </div>
                       <div>
                         <div className="text-2xl font-bold" style={{ color: '#F57D50' }}>
@@ -482,7 +471,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                       className="block w-full text-center px-6 py-3 text-white font-heading font-bold rounded-xl transition-all duration-300 hover:opacity-90 hover:scale-105" 
                       style={{ backgroundColor: '#2A9D8F' }}
                     >
-                      View Day-by-Day
+                      View Step-by-Step
                     </Link>
                   </div>
                 )}
@@ -505,9 +494,6 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                   Trip Highlights
                 </h2>
               </div>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: 'Lato, sans-serif' }}>
-                Discover the most memorable moments and stunning visuals from our journey
-              </p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
