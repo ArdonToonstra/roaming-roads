@@ -208,7 +208,9 @@ export default async function TripDetailPage({ params }: TripPageProps) {
     imageUrl = getImageUrl(coverImage);
   }
   
-  const country = typeof trip.country === 'object' ? trip.country.name : 'Unknown';
+  const country = (trip.countries && Array.isArray(trip.countries) && trip.countries.length > 0 && typeof trip.countries[0] === 'object') 
+    ? (trip.countries[0] as Country).name 
+    : 'Unknown Country';
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F4F1ED' }}>
@@ -224,10 +226,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
           <Link 
             href="/trips"
-            className="inline-flex items-center gap-2 text-white hover:text-[#F57D50] transition-colors duration-200 mb-8"
-          >
-            <ArrowLeft size={20} />
-            <span style={{ fontFamily: 'Lato, sans-serif' }}>Back to Trips</span>
+            className="inline-flex items-center gap-2 text-white hover:text-[#F57D50] transition-colors duration-200 mb-8">
           </Link>
           
           <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
@@ -280,18 +279,10 @@ export default async function TripDetailPage({ params }: TripPageProps) {
               <ul className="space-y-2">
                 {trip.regionsVisited.map((region, index) => (
                   <li key={index} className="flex items-start gap-2">
-                    <span className="text-sm font-medium" style={{ color: '#2A9D8F' }}>
-                      {region.regionType}:
-                    </span>
                     <div>
                       <span className="font-heading font-bold" style={{ color: '#263238' }}>
                         {region.regionName}
                       </span>
-                      {region.highlights && (
-                        <span className="text-sm ml-2" style={{ fontFamily: 'Lato, sans-serif', color: '#666' }}>
-                          — {region.highlights}
-                        </span>
-                      )}
                     </div>
                   </li>
                 ))}

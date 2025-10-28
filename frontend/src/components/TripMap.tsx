@@ -1,4 +1,4 @@
-"use client";
+'use client';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useMemo, useRef } from 'react';
@@ -7,6 +7,8 @@ import type { Trip } from '@/types/payload';
 import { useRouter } from 'next/navigation';
 import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
+import Link from 'next/link';
+import { getImageUrl } from '@/lib/images';
 
 // Types for Leaflet
 interface LeafletMapInstance {
@@ -27,20 +29,32 @@ interface LeafletModule {
 }
 
 // Dynamically import react-leaflet components to avoid SSR issues
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MapContainer: any = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TileLayer: any = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Marker: any = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false });
+const Popup: any = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false });
+
+// A simple card component for the popup
+function PopupCard({ trip }: { trip: Trip }) {
+  const imageUrl = getImageUrl(trip.coverImage);
+  return (
+    <div className="w-64">
+      <img src={imageUrl} alt={trip.title} className="w-full h-32 object-cover rounded-t-lg" />
+      <div className="p-3">
+        <h3 className="font-heading font-bold text-lg mb-2">{trip.title}</h3>
+        <Link href={`/trips/${trip.slug || trip.id}`} className="text-primary font-bold hover:underline text-sm">
+          View Trip &rarr;
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 // Marker coordinate extraction helper
 function extractRepresentativeCoordinate(trip: Trip): { lat: number; lng: number } | null {
   if (!trip.itinerary || trip.itinerary.length === 0) return null;
   for (const block of trip.itinerary) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const b: any = block;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const candidates: any[] = [];
     if (b.location?.coordinates) candidates.push(b.location.coordinates);
     if (Array.isArray(b.location) && b.location.length >= 2) candidates.push(b.location);
@@ -79,7 +93,6 @@ export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMap
     if (typeof window === 'undefined') return;
     import('leaflet').then((mod) => {
       leafletRef.current = (mod && (mod as any).default) || mod;
-      // Configure Leaflet icon paths to use static assets
       const L = leafletRef.current;
       if (L && L.Icon && L.Icon.Default) {
         delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -90,16 +103,13 @@ export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMap
         });
       }
       
-      // Fit bounds after Leaflet is loaded
       if (mapRef.current && markers.length > 0 && L) {
         const map = mapRef.current;
         const bounds = L.latLngBounds(markers.map(m => [m.coord!.lat, m.coord!.lng]));
         
         if (markers.length === 1) {
-          // For single marker, center and set reasonable zoom
-          map.fitBounds(bounds, { padding: [50, 50], maxZoom: 8 });
+          map.fitBounds(bounds, { padding: [50, 50] });
         } else {
-          // For multiple markers, fit all with padding
           map.fitBounds(bounds, { padding: [30, 30] });
         }
       }
@@ -110,19 +120,18 @@ export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMap
   const initialZoom = markers.length > 0 ? 5 : 2;
 
   return (
-    <div className="rounded-xl overflow-hidden border border-border bg-card shadow-sm">
+    <div className="h-full w-full">
       <MapContainer
         center={initialCenter}
         zoom={initialZoom}
-        className="h-[400px] w-full"
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        className="h-full w-full"
         whenCreated={(map: any) => { mapRef.current = map; }}
         scrollWheelZoom={true}
         zoomControl={true}
         doubleClickZoom={true}
         dragging={true}
         touchZoom={true}
+        maxBounds={[[-90, -180], [90, 180]]}
       >
         <TileLayer
           attribution={env.MAPTILER_KEY ? '&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors' : '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'}
@@ -141,24 +150,24 @@ export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMap
           const numericId = typeof trip.id === 'number' ? trip.id : Number(trip.id);
           const highlighted = hoveredTripId === numericId;
           const L = leafletRef.current;
-          const icon = L ? L.divIcon({ html: `<div class=\"rr-marker ${highlighted ? 'rr-marker-highlight' : ''}\">${idx + 1}</div>`, className: '', iconSize: [28, 28] }) : undefined;
+          const icon = L ? L.divIcon({ html: `<div class="rr-marker ${highlighted ? 'rr-marker-highlight' : ''}">${idx + 1}</div>`, className: '', iconSize: [28, 28] }) : undefined;
           return (
             <Marker
               key={trip.id}
               position={[coord.lat, coord.lng]}
               {...(icon ? { icon } : {})}
               eventHandlers={{
-                click: () => router.push(`/trips/${trip.slug || trip.id}`),
                 mouseover: () => numericId && onMarkerHover?.(numericId),
                 mouseout: () => onMarkerHover?.(null),
               }}
-            />
+            >
+              <Popup>
+                <PopupCard trip={trip} />
+              </Popup>
+            </Marker>
           );
         })}
       </MapContainer>
-      <div className="p-4 text-xs text-muted-foreground border-t border-border">
-        {markers.length > 0 ? `${markers.length} trip${markers.length === 1 ? '' : 's'} mapped` : 'No itinerary coordinates yet'}
-      </div>
     </div>
   );
 }

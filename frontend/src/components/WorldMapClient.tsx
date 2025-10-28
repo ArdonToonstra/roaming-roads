@@ -4,7 +4,7 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
 import { feature } from 'topojson-client'
 import worldData from 'world-atlas/countries-110m.json'
 import { geoCentroid } from 'd3-geo'
-import type { Trip } from '@/types/payload'
+import type { Trip, Country } from '@/types/payload'
 import type { Feature, FeatureCollection, Geometry } from 'geojson'
 
 // Country properties type for feature matching
@@ -37,9 +37,10 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
   // build a map from ISO_A3 -> centroid
   const markers = useMemo(() => {
     const map: { id: string; name?: string; coordinates: [number, number]; trip?: Trip }[] = []
-    // For each trip try to read country iso3 code from trip.country.countryCode or trip.countryCode
+    // For each trip try to read country iso3 code from trip.countries[0].countryCode
     trips.forEach(t => {
-      const cc = typeof t.country === 'object' && t.country && 'countryCode' in t.country ? t.country.countryCode : null
+      const firstCountry = t.countries && Array.isArray(t.countries) && t.countries.length > 0 && typeof t.countries[0] === 'object' ? t.countries[0] as Country : null
+      const cc = firstCountry?.countryCode || null
       if (!cc) return
       // find geo feature by ISO_A3 or ISO_A2 or by numeric id used in world-atlas TopoJSON
       let f = geoJson.features.find((ft: GeoJSONFeature) => {
@@ -117,7 +118,10 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
         <div className="mt-2">
           <div className="font-semibold">Matched codes (sample)</div>
           <ul className="text-xs list-disc pl-5">
-            {(markers.map(m => ({ id: m.id, code: typeof m.trip?.country === 'object' && 'countryCode' in m.trip.country ? m.trip.country.countryCode : 'unknown' }))).slice(0,10).map((x) => (
+            {(markers.map(m => {
+              const firstCountry = m.trip?.countries && Array.isArray(m.trip.countries) && m.trip.countries.length > 0 && typeof m.trip.countries[0] === 'object' ? m.trip.countries[0] as Country : null
+              return { id: m.id, code: firstCountry?.countryCode || 'unknown' }
+            })).slice(0,10).map((x) => (
               <li key={x.id}>{String(x.code)} (trip {x.id})</li>
             ))}
           </ul>

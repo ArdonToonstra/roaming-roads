@@ -1,6 +1,6 @@
 "use client";
 import Link from 'next/link';
-import { MapPin } from 'lucide-react';
+import { MapPin, Calendar, } from 'lucide-react';
 import { getImageUrl } from '@/lib/images';
 import type { Trip } from '@/types/payload';
 
@@ -31,6 +31,7 @@ export default function TripCard({ trip }: { trip: Trip }) {
               <MapPin className="w-4 h-4" />
               <span>{country}</span>
             </div>
+             
             {trip.period && <div>{trip.period}</div>}
           </div>
         </div>

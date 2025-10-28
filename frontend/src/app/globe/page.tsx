@@ -1,14 +1,22 @@
-import { payload } from '@/lib/api'
-import WorldMapClient from '@/components/WorldMapClient'
-import type { Trip } from '@/types/payload'
+import { payload } from '@/lib/api';
+import TripMap from '@/components/TripMap';
+import type { Trip } from '@/types/payload';
 
-// Server component: fetch trips and pass to client map
+async function getTrips(): Promise<Trip[]> {
+  try {
+    const response = await payload.getTrips({ limit: 1000 }) as { docs: Trip[] };
+    return response.docs;
+  } catch (error) {
+    console.error('Failed to fetch trips:', error);
+    return [];
+  }
+}
+
 export default async function GlobePage() {
-  const resp = await payload.getTrips({ limit: 1000 })
-  const trips = resp.docs
+  const trips = await getTrips();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="h-screen bg-background grid grid-rows-[auto_1fr]">
       {/* Header */}
       <section className="bg-gradient-to-r from-secondary via-primary to-secondary py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -21,29 +29,10 @@ export default async function GlobePage() {
         </div>
       </section>
 
-      <main className="py-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-card rounded-lg border border-border p-6 shadow-sm">
-            <div className="relative w-full aspect-[2/1] rounded-lg overflow-hidden">
-              {/* Client-only interactive map */}
-              <WorldMapClient trips={trips} />
-            </div>
-            {/* Debug: show fetched trips and their country fields */}
-            <div className="mt-4 text-sm text-muted-foreground">
-              <h4 className="font-medium mb-2">Debug: fetched trips (first 20)</h4>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                {trips.slice(0, 20).map((t) => (
-                  <li key={t.id} className="p-2 bg-muted/50 rounded">
-                    <div className="font-semibold">{t.title}</div>
-                    <div className="text-xs">country: {JSON.stringify(t.country)}</div>
-                    <div className="text-xs">period: {String(t.period)}</div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
+      {/* Main content */}
+      <main className="overflow-hidden">
+        <TripMap trips={trips} />
       </main>
     </div>
-  )
+  );
 }

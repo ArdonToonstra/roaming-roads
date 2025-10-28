@@ -86,6 +86,7 @@ export interface Country {
   id: string
   name: string
   slug: string
+  countryCode?: string
   flagEmoji?: string
   description?: RichTextContent
   capital?: string
@@ -116,7 +117,7 @@ export interface Trip {
     order: number
   }>
   description?: string
-  country: string | Country
+  countries?: Array<string | Country>
   regionsVisited?: Array<{
     regionName: string
     regionType: 'province' | 'region' | 'oblast' | 'state' | 'territory' | 'county' | 'district' | 'other'

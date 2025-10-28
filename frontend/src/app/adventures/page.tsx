@@ -18,8 +18,10 @@ async function getTrips(limit = 9, page = 1): Promise<{ docs: Trip[] } | null> {
 
 function TripCard({ trip }: { trip: Trip }) {
   const imageUrl = getImageUrl(trip.coverImage);
-  
-  const country = typeof trip.country === 'object' ? trip.country.name : 'Adventure';
+
+  const country = (trip.countries && Array.isArray(trip.countries) && trip.countries.length > 0 && typeof trip.countries[0] === 'object') 
+    ? (trip.countries[0] as { name: string }).name 
+    : 'Unknown Country';
   return (
     <Link href={`/trips/${trip.slug || trip.id}`} className="group">
       <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
