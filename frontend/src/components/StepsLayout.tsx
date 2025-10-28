@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import TripDetailMap from '@/components/TripDetailMap';
 import RichText from '@/components/RichText';
 import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media } from '@/types/payload';
-import { MapPin, Clock, Navigation, EuroIcon, ChevronLeft, ChevronRight, X, Bed, Car, Plane, Train, Bus, Ship, MapPinIcon } from 'lucide-react';
+import { MapPin, Clock, EuroIcon, ChevronLeft, ChevronRight, X, Bed, Car, Plane, Train, Bus, Ship, MapPinIcon } from 'lucide-react';
 import { getImageUrl } from '@/lib/images';
 
 interface StepsLayoutProps { trip: Trip }
@@ -39,7 +39,7 @@ function buildConnectorLabel(prev: CmsFullDayBlock | CmsWaypointBlock | null, cu
   const currentTransport: any = (current as any).transportation;
   
   // Try to get transportation method (prefer departure from current, then arrival to current)
-  let method = currentTransport?.arrivalMethod || prevTransport?.departureMethod || currentTransport?.departureMethod;
+  const method = currentTransport?.arrivalMethod || prevTransport?.departureMethod || currentTransport?.departureMethod;
   
   if (!method) return null;
   
@@ -128,9 +128,6 @@ function GalleryCarousel({ items }: { items: any[] }) {
 
 function ItineraryBlock({ block, index, active, onClick }: { block: CmsFullDayBlock | CmsWaypointBlock; index: number; active: boolean; onClick?: () => void }) {
   const isFullDay = block.blockType === 'fullDay';
-  const rawCoords: any = (block as any).location?.coordinates;
-  const hasCoords = Array.isArray(rawCoords) && rawCoords.length >= 2 && typeof rawCoords[0] === 'number' && typeof rawCoords[1] === 'number';
-  const coordsText = hasCoords ? `${rawCoords[1].toFixed(4)}, ${rawCoords[0].toFixed(4)}` : null;
 
   return (
     <div
