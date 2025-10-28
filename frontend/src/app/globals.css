@@ -55,7 +55,8 @@
 
   /* White headings for homepage hero (only the main heading) and other hero sections */
   .homepage h1,
-  .text-white h1 {
+  .text-white h1,
+  h3.text-white {
     color: hsl(0 0% 100%) !important;
   }
 
@@ -66,6 +67,7 @@
 
 /* Navigation link hover specificity fix: ensure links with .nav-link turn primary (orange) on hover */
 @layer utilities {
+  .bg-medium-gray { background-color: #ccc; }
   .nav-link:hover {
     color: hsl(16 90% 64%) !important; /* primary orange */
   }

@@ -4,25 +4,26 @@ import { Trip } from '@/types/payload';
 import { env } from '@/lib/config';
 import { getImageUrl } from '@/lib/images';
 import HeroRotator from '@/components/HeroRotator';
+import FeaturedCarousel from '@/components/FeaturedCarousel';
 
 async function getFeaturedTrips(): Promise<Trip[]> {
   try {
+    // Fetch all trips
     const response = await payload.getTrips({
-      where: { 
-        featured: { equals: true }
-      },
-      limit: 3
+      limit: 0, // 0 limit fetches all documents
     }) as { docs: Trip[] };
-    
-    // If no featured trips, get the 3 most recent trips
-    if (response.docs.length === 0) {
-      const fallbackResponse = await payload.getTrips({
-        limit: 3
-      }) as { docs: Trip[] };
-      return fallbackResponse.docs;
+
+    const allTrips = response.docs;
+
+    // Shuffle the array (Fisher-Yates shuffle)
+    for (let i = allTrips.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [allTrips[i], allTrips[j]] = [allTrips[j], allTrips[i]];
     }
+
+    // Return the first 8
+    return allTrips.slice(0, 8);
     
-    return response.docs;
   } catch (error) {
     console.error('Failed to fetch featured trips:', error);
     return [];
@@ -38,32 +39,6 @@ async function getHeroCandidates(): Promise<Trip[]> {
     console.error('Failed to fetch hero candidates:', error);
     return [];
   }
-}
-
-function FeaturedTripCard({ trip }: { trip: Trip }) {
-  const imageUrl = getImageUrl(trip.coverImage);
-  
-  return (
-    <Link href={`/trips/${trip.slug || trip.id}`} className="group">
-      <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-        <div className="aspect-[4/3] bg-muted overflow-hidden">
-          <img 
-            src={imageUrl}
-            alt={trip.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-        </div>
-        <div className="p-6">
-          <h3 className="font-heading font-bold text-xl text-card-foreground mb-2 group-hover:text-primary transition-colors">
-            {trip.title}
-          </h3>
-          <p className="text-muted-foreground mb-4 line-clamp-3">
-            {trip.description}
-          </p>
-        </div>
-      </article>
-    </Link>
-  );
 }
 
 export default async function HomePage() {
@@ -114,27 +89,15 @@ export default async function HomePage() {
               Featured Adventures
             </h2>
             <p className="text-xl text-foreground max-w-2xl mx-auto">
-              Discover some of our most authentic and inspiring travel experiences from around the world.
+              Discover some of our travel experiences from around the world.
             </p>
           </div>
 
           {featuredTrips.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {featuredTrips.map((trip) => (
-                  <FeaturedTripCard key={trip.id} trip={trip} />
-                ))}
-              </div>
-
-              {/* Call to Action */}
-              <div className="text-center mt-12">
-                <Link 
-                  href="/trips"
-                  className="inline-block px-8 py-3 bg-primary text-primary-foreground font-heading font-bold rounded-full hover:opacity-90 transition-opacity duration-300"
-                >
-                  View All Adventures
-                </Link>
-              </div>
+              <FeaturedCarousel
+                items={featuredTrips}
+              />
             </>
           ) : (
             <div className="text-center py-12">
