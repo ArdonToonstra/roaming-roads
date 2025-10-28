@@ -11,7 +11,7 @@ export default function TripCard({ trip }: { trip: Trip }) {
     : 'Adventure';
   return (
     <Link href={`/trips/${trip.slug || trip.id}`} className="group">
-      <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+      <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col">
         <div className="aspect-[4/3] bg-muted overflow-hidden">
           <img 
             src={imageUrl}
@@ -19,14 +19,14 @@ export default function TripCard({ trip }: { trip: Trip }) {
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         </div>
-        <div className="p-6">
+        <div className="p-6 flex flex-col flex-grow">
           <h3 className="font-heading font-bold text-xl text-card-foreground mb-2 group-hover:text-primary transition-colors">
             {trip.title}
           </h3>
           <p className="text-muted-foreground mb-4 line-clamp-2">
             {trip.description}
           </p>
-          <div className="mt-2 text-sm text-muted-foreground flex items-center gap-3">
+          <div className="mt-auto pt-4 text-sm text-muted-foreground flex items-center justify-between">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4" />
               <span>{country}</span>

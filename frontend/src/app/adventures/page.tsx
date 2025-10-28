@@ -85,11 +85,6 @@ export default async function AdventuresPage() {
             <>
               <TripsPaginator initial={trips} initialPage={1} pageSize={9} />
 
-              <div className="text-center mt-16">
-                <p className="text-lg font-sans text-foreground">
-                  More adventures coming soon. Follow our journey as we explore the world authentically.
-                </p>
-              </div>
             </>
           ) : (
             <div className="text-center py-16">
