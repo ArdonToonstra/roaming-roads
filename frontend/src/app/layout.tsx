@@ -23,11 +23,16 @@ export const metadata: Metadata = {
   title: "Roaming Roads | Authentic Travel Stories",
   description: "Authentic travel guides, honestly written. No ads. No affiliate links. Ever. Discover incredible journeys and adventures around the world.",
   icons: {
-    // Prefer a raster favicon for broad browser support (Chrome prefers ICO/PNG).
-    icon: '/favicon-32x32.png',
-    shortcut: '/favicon-32x32.png',
-    // Keep SVG logo available as mask-icon or for platforms that accept SVG
-    apple: '/favicon-180x180.png',
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon-512x512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: [
+      { url: '/favicon-180x180.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
 };
 
@@ -36,14 +41,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="mask-icon" href="/mask-icon.svg" color="#344BA0" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="mask-icon" href="/mask-icon.svg" color="#F57D50" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
-        <meta name="theme-color" content="#344BA0" />
+        <meta name="theme-color" content="#F57D50" />
       </head>
       <body className={`${lato.variable} ${poppins.variable} antialiased`}>
         <Navigation />
