@@ -33,7 +33,7 @@ export default function AboutPage() {
                 100% ad-free. 100% authentic. 100% real travel experiences.
               </p>
               <p className="font-sans text-card-foreground">
-                We provide detailed itineraries, stunning photography, and honest insights to help you 
+                We provide detailed itineraries and honest insights to help you 
                 plan your own adventures and discover the world&#39;s most incredible destinations.
               </p>
             </div>
