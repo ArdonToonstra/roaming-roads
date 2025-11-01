@@ -77,6 +77,7 @@ export interface TripDetailMapProps {
 }
 
 export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDetailMapProps) {
+  // mapRef is used for initial bounds fitting when the map loads
   const mapRef = useRef<LeafletMapInstance | null>(null);
   const leafletRef = useRef<LeafletModule | null>(null);
 
@@ -105,7 +106,8 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
     return m;
   }, [trip.itinerary]);
 
-  // Dynamically import Leaflet and handle bounds fitting
+  // Dynamically import Leaflet and handle initial bounds fitting
+  // Note: MapController handles dynamic focus changes, while this handles initial view
   useEffect(() => {
     if (typeof window === 'undefined') return;
     import('leaflet').then((mod) => {
@@ -121,7 +123,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
         });
       }
 
-      // Fit bounds after Leaflet is loaded
+      // Fit bounds after Leaflet is loaded to show all markers initially
       if (mapRef.current && markers.length > 0 && L) {
         const bounds = L.latLngBounds(markers.map(m => [m.coord.lat, m.coord.lng]));
         
@@ -145,7 +147,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
         center={initialCenter}
         zoom={initialZoom}
         className="h-full w-full"
-        ref={mapRef}
+        ref={(map) => { mapRef.current = map; }}
         scrollWheelZoom={true}
         zoomControl={true}
         doubleClickZoom={true}
