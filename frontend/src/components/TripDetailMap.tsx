@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import type { Trip, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
 import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
+import MapController from './MapController';
 
 // Types for Leaflet
 interface LeafletMapInstance {
@@ -26,16 +27,10 @@ interface LeafletModule {
 }
 
 // Dynamic imports to avoid SSR issues - using any due to dynamic import limitations
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MapContainer: any = dynamic(() => import('react-leaflet').then(m => m.MapContainer), { ssr: false });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TileLayer: any = dynamic(() => import('react-leaflet').then(m => m.TileLayer), { ssr: false });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Marker: any = dynamic(() => import('react-leaflet').then(m => m.Marker), { ssr: false });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Popup: any = dynamic(() => import('react-leaflet').then(m => m.Popup), { ssr: false });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Polyline: any = dynamic(() => import('react-leaflet').then(m => m.Polyline), { ssr: false });
 
 function toNumber(v: unknown): number | null {
@@ -82,9 +77,9 @@ export interface TripDetailMapProps {
 }
 
 export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDetailMapProps) {
+  // mapRef is used for initial bounds fitting when the map loads
   const mapRef = useRef<LeafletMapInstance | null>(null);
   const leafletRef = useRef<LeafletModule | null>(null);
-  const lastPanRef = useRef<number | null>(null);
 
   const markers = useMemo(() => {
     if (!trip.itinerary) return [];
@@ -111,7 +106,8 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
     return m;
   }, [trip.itinerary]);
 
-  // Dynamically import Leaflet and handle bounds fitting
+  // Dynamically import Leaflet and handle initial bounds fitting
+  // Note: MapController handles dynamic focus changes, while this handles initial view
   useEffect(() => {
     if (typeof window === 'undefined') return;
     import('leaflet').then((mod) => {
@@ -127,7 +123,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
         });
       }
 
-      // Fit bounds after Leaflet is loaded
+      // Fit bounds after Leaflet is loaded to show all markers initially
       if (mapRef.current && markers.length > 0 && L) {
         const bounds = L.latLngBounds(markers.map(m => [m.coord.lat, m.coord.lng]));
         
@@ -142,33 +138,6 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
     }).catch(() => {});
   }, [markers]);
 
-  // Pan map when activeIndex changes (scroll-driven focus) with simple throttle
-  useEffect(() => {
-    if (activeIndex === null || activeIndex === undefined) return;
-    if (!mapRef.current) return;
-    const target = markers.find(m => m.idx === activeIndex);
-    if (!target) return;
-    const now = Date.now();
-    // Throttle to avoid excessive panning during fast scroll (100ms)
-    if (lastPanRef.current && (now - lastPanRef.current) < 100) return;
-    lastPanRef.current = now;
-    try {
-      // Focus on the active marker with a reasonable zoom level
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const mapAny: any = mapRef.current;
-      const focusZoom = 12; // Fixed zoom level for focusing on individual markers
-      
-      if (mapAny.flyTo) {
-        mapAny.flyTo([target.coord.lat, target.coord.lng], focusZoom, { duration: 0.8 });
-      } else if (mapAny.setView) {
-        mapAny.setView([target.coord.lat, target.coord.lng], focusZoom);
-      }
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn('[TripDetailMap] pan failed', e);
-    }
-  }, [activeIndex, markers]);
-
   const initialCenter: [number, number] = markers.length > 0 ? [markers[0].coord.lat, markers[0].coord.lng] : [20, 0];
   const initialZoom = markers.length > 0 ? 9 : 2; // slightly more zoomed-in default
 
@@ -178,14 +147,14 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
         center={initialCenter}
         zoom={initialZoom}
         className="h-full w-full"
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        whenCreated={(map: any) => { mapRef.current = map; }}
+        ref={(map: LeafletMapInstance | null) => { mapRef.current = map; }}
         scrollWheelZoom={true}
         zoomControl={true}
         doubleClickZoom={true}
         dragging={true}
         touchZoom={true}
       >
+        <MapController activeIndex={activeIndex} markers={markers} />
         <TileLayer
           attribution={env.MAPTILER_KEY ? '&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors' : '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'}
           // Use MapTiler raster tiles (satellite imagery) when a key is provided; fall back to OSM raster tiles
