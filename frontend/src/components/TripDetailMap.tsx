@@ -70,6 +70,23 @@ function extractBlockCoords(block: CmsFullDayBlock | CmsWaypointBlock) {
   return null;
 }
 
+// Function to get transportation icon based on method
+function getTransportationIcon(method: string): string {
+  switch (method) {
+    case 'walking': return '🚶';
+    case 'rental_car': return '🚗';
+    case 'public_bus': return '🚌';
+    case 'taxi': return '🚕';
+    case 'train': return '🚂';
+    case 'flight': return '✈️';
+    case 'boat': return '🚢';
+    case 'bicycle': return '🚴';
+    case 'hitchhiking': return '👍';
+    case 'tour_bus': return '🚐';
+    default: return '🚶'; // Default to walking
+  }
+}
+
 export interface TripDetailMapProps {
   trip: Trip;
   heightClass?: string; // height applied to outer wrapper now
@@ -105,6 +122,8 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
     }
     return m;
   }, [trip.itinerary]);
+
+
 
   // Dynamically import Leaflet and handle initial bounds fitting
   // Note: MapController handles dynamic focus changes, while this handles initial view
@@ -198,12 +217,67 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
             </Marker>
           );
         })}
-        {markers.length > 1 && (
-          <Polyline
-            positions={markers.map(m => [m.coord.lat, m.coord.lng])}
-            pathOptions={{ color: '#F57D50', weight: 3, opacity: 0.8 }}
-          />
-        )}
+        
+        {/* Segmented polylines with transportation icons */}
+        {markers.length > 1 && markers.slice(0, -1).map((currentMarker, idx) => {
+          const nextMarker = markers[idx + 1];
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const nextBlock = nextMarker.block as any;
+          const arrivalMethod = nextBlock.transportation?.arrivalMethod;
+          
+          // Calculate midpoint between markers for transport icon placement
+          const midLat = (currentMarker.coord.lat + nextMarker.coord.lat) / 2;
+          const midLng = (currentMarker.coord.lng + nextMarker.coord.lng) / 2;
+          
+          return (
+            <div key={`segment-${idx}`}>
+              {/* First half of the line (from current marker to midpoint) */}
+              <Polyline
+                positions={[
+                  [currentMarker.coord.lat, currentMarker.coord.lng],
+                  [midLat, midLng]
+                ]}
+                pathOptions={{ color: '#F57D50', weight: 3, opacity: 0.8 }}
+              />
+              
+              {/* Transportation icon at midpoint */}
+              {arrivalMethod && (() => {
+                const L = leafletRef.current;
+                const transportIcon = getTransportationIcon(arrivalMethod);
+                const icon = L ? L.divIcon({ 
+                  html: `<div class="rr-transport-icon">${transportIcon}</div>`, 
+                  className: '', 
+                  iconSize: [32, 32] 
+                }) : undefined;
+                
+                return (
+                  <Marker position={[midLat, midLng]} {...(icon ? { icon } : {})}>
+                    <Popup>
+                      <div className="text-sm max-w-[200px]">
+                        <strong className="block mb-1">Transportation</strong>
+                        <div className="text-xs">
+                          From Day {idx + 1} to Day {idx + 2}
+                        </div>
+                        <div className="text-xs font-medium mt-1">
+                          Method: {arrivalMethod.replace('_', ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}
+                        </div>
+                      </div>
+                    </Popup>
+                  </Marker>
+                );
+              })()}
+              
+              {/* Second half of the line (from midpoint to next marker) */}
+              <Polyline
+                positions={[
+                  [midLat, midLng],
+                  [nextMarker.coord.lat, nextMarker.coord.lng]
+                ]}
+                pathOptions={{ color: '#F57D50', weight: 3, opacity: 0.8 }}
+              />
+            </div>
+          );
+        })}
       </MapContainer>
       <div className="p-3 text-xs text-muted-foreground border-t border-border">
         {markers.length > 0 ? `${markers.length} itinerary point${markers.length === 1 ? '' : 's'} mapped` : 'No coordinates for this itinerary yet'}

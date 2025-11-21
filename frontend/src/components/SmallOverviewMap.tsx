@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
 import type { Trip, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
-import { useMemo, useRef, useEffect } from 'react';
+import { useMemo, useRef, useEffect, useState } from 'react';
 import { getCombinedCountryBounds, getCountryBounds } from '@/lib/countryBounds';
 
 // Types for Leaflet
@@ -31,6 +31,8 @@ const MapContainer: any = dynamic(() => import('react-leaflet').then(m => m.MapC
 const TileLayer: any = dynamic(() => import('react-leaflet').then(m => m.TileLayer), { ssr: false });
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Marker: any = dynamic(() => import('react-leaflet').then(m => m.Marker), { ssr: false });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Polyline: any = dynamic(() => import('react-leaflet').then(m => m.Polyline), { ssr: false });
 
 function toNumber(v: unknown): number | null {
   if (typeof v === 'number') return v;
@@ -67,6 +69,8 @@ function extractBlockCoords(block: CmsFullDayBlock | CmsWaypointBlock) {
 export default function SmallOverviewMap({ trip }: { trip: Trip }) {
   const mapRef = useRef<LeafletMapInstance | null>(null);
   const leafletRef = useRef<LeafletModule | null>(null);
+  const [isLeafletLoaded, setIsLeafletLoaded] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const markers = useMemo(() => {
     if (!trip.itinerary) return [];
@@ -102,9 +106,14 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
     }
   }, [trip.countries]);
 
+  // Track when component is mounted (client-side only)
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // Dynamically import Leaflet and handle bounds fitting
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !isMounted) return;
     import('leaflet').then((mod) => {
       leafletRef.current = (mod && (mod as any).default) || mod;
       // Configure Leaflet icon paths to use static assets
@@ -118,38 +127,51 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
         });
       }
       
-      // Auto-fit bounds to countries or fallback to markers
-      if (mapRef.current && L) {
-        const map = mapRef.current;
-        
-        if (countryBounds) {
-          // Use country bounds if available, expanded to show more context
-          const expandFactor = 0.3; // Expand bounds by 30% in each direction
-          const latDiff = countryBounds[1][0] - countryBounds[0][0];
-          const lngDiff = countryBounds[1][1] - countryBounds[0][1];
-          
-          const expandedBounds: [[number, number], [number, number]] = [
-            [countryBounds[0][0] - (latDiff * expandFactor), countryBounds[0][1] - (lngDiff * expandFactor)], // SW
-            [countryBounds[1][0] + (latDiff * expandFactor), countryBounds[1][1] + (lngDiff * expandFactor)]  // NE
-          ];
-          
-          const bounds = L.latLngBounds([expandedBounds[0], expandedBounds[1]]);
-          map.fitBounds(bounds, { maxZoom: 6 });
-        } else if (markers.length > 0) {
-          // Fallback to marker bounds
-          const bounds = L.latLngBounds(markers.map(m => [m.coord.lat, m.coord.lng]));
+      // Mark Leaflet as loaded so we can render custom markers
+      setIsLeafletLoaded(true);
+      
+    }).catch(() => {});
+  }, [isMounted]);
+
+  // Separate effect for bounds fitting that runs when map, markers, or countries change
+  useEffect(() => {
+    if (!isMounted || !isLeafletLoaded || !mapRef.current || !leafletRef.current) return;
+    
+    const map = mapRef.current;
+    const L = leafletRef.current;
+    
+    // Longer delay to ensure map and tiles are fully loaded, especially on page refresh
+    const timeoutId = setTimeout(() => {
+      // Double check everything is still available
+      if (!mapRef.current || !leafletRef.current) return;
+      
+      const currentMap = mapRef.current;
+      const currentL = leafletRef.current;
+      
+      try {
+        if (markers.length > 0) {
+          // Always use marker bounds to ensure all markers are visible
+          const markerBounds = currentL.latLngBounds(markers.map(m => [m.coord.lat, m.coord.lng]));
           
           if (markers.length === 1) {
             // For single marker, fit bounds but with reasonable zoom limit
-            map.fitBounds(bounds, { padding: [20, 20], maxZoom: 10 });
+            currentMap.fitBounds(markerBounds, { padding: [30, 30], maxZoom: 8 });
           } else {
-            // For multiple markers, fit all with padding
-            map.fitBounds(bounds, { padding: [15, 15] });
+            // For multiple markers, fit all with generous padding to ensure visibility
+            currentMap.fitBounds(markerBounds, { padding: [50, 50], maxZoom: 8 });
           }
+        } else if (countryBounds) {
+          // Only use country bounds if there are no markers to show
+          const bounds = currentL.latLngBounds([countryBounds[0], countryBounds[1]]);
+          currentMap.fitBounds(bounds, { padding: [20, 20], maxZoom: 8 });
         }
+      } catch (error) {
+        console.warn('[SmallOverviewMap] Error fitting bounds:', error);
       }
-    }).catch(() => {});
-  }, [countryBounds, markers]);
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [isMounted, isLeafletLoaded, markers, countryBounds]);
 
   // Initial center and zoom (will be overridden by useEffect)
   const center: [number, number] = useMemo(() => {
@@ -179,18 +201,32 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
         zoomControl={false} 
         touchZoom={false} 
         attributionControl={false}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        whenCreated={(map: any) => { mapRef.current = map; }}
+        ref={(map: LeafletMapInstance | null) => { mapRef.current = map; }}
       >
         <TileLayer
           attribution={env.MAPTILER_KEY ? '&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors' : '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'}
           url={env.MAPTILER_KEY ? `https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${env.MAPTILER_KEY}` : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'}
         />
-        {markers.map(m => {
+        {/* Connecting line between markers */}
+        {markers.length > 1 && (
+          <Polyline
+            positions={markers.map(m => [m.coord.lat, m.coord.lng])}
+            pathOptions={{ color: '#F57D50', weight: 2, opacity: 0.8 }}
+          />
+        )}
+        {/* Small orange dot markers - only render when Leaflet is loaded */}
+        {isLeafletLoaded && markers.map(m => {
           const L = leafletRef.current;
-          const icon = L ? L.divIcon({ html: `<div class=\"rr-marker\">${m.idx + 1}</div>`, className: '', iconSize: [24, 24] }) : undefined;
+          if (!L) return null;
+          
+          const icon = L.divIcon({ 
+            html: '<div class=\"rr-small-dot\"></div>', 
+            className: '', 
+            iconSize: [8, 8] 
+          });
+          
           return (
-            <Marker key={m.idx} position={[m.coord.lat, m.coord.lng]} {...(icon ? { icon } : {})} />
+            <Marker key={m.idx} position={[m.coord.lat, m.coord.lng]} icon={icon} />
           );
         })}
       </MapContainer>

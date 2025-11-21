@@ -99,4 +99,30 @@
   .rr-marker-highlight {
     background: hsl(16 90% 54%);
   }
+  
+  /* Small orange dots for overview maps */
+  .rr-small-dot {
+    width: 8px;
+    height: 8px;
+    background: hsl(16 90% 64%);
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    border: 1px solid #fff;
+  }
+  
+  /* Transportation icons on maps */
+  .rr-transport-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+    border: 2px solid hsl(16 90% 64%);
+    font-size: 16px;
+    line-height: 1;
+    user-select: none;
+  }
 }
