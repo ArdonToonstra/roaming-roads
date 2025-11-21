@@ -100,6 +100,27 @@
     background: hsl(16 90% 54%);
   }
   
+  /* Different styles for fullDay vs waypoint markers */
+  .rr-marker-fullday {
+    background: hsl(16 90% 64%); /* Orange for overnight stays */
+    border: 2px solid #fff;
+  }
+  
+  .rr-marker-waypoint {
+    background: hsl(210 100% 60%); /* Brand blue for activities */
+    border: 2px solid #fff;
+  }
+  
+  .rr-marker-fullday.rr-marker-active {
+    background: hsl(16 90% 54%);
+    transform: scale(1.1);
+  }
+  
+  .rr-marker-waypoint.rr-marker-active {
+    background: hsl(210 100% 50%);
+    transform: scale(1.1);
+  }
+  
   /* Small orange dots for overview maps */
   .rr-small-dot {
     width: 8px;

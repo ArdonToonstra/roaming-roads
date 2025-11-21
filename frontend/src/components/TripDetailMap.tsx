@@ -197,21 +197,34 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
         {markers.map(m => {
           const L = leafletRef.current;
           const isActive = activeIndex === m.idx;
-          const classes = `rr-marker ${isActive ? 'rr-marker-active' : ''}`;
-          const icon = L ? L.divIcon({ html: `<div class=\"${classes}\">${m.idx + 1}</div>`, className: '', iconSize: [40, 40] }) : undefined;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const blockType = (m.block as any).blockType;
+          const isFullDay = blockType === 'fullDay';
+          const typeClass = isFullDay ? 'rr-marker-fullday' : 'rr-marker-waypoint';
+          const classes = `rr-marker ${typeClass} ${isActive ? 'rr-marker-active' : ''}`;
+          
+          // All markers use simple step numbering
+          const iconContent = `${m.idx + 1}`;
+          
+          const icon = L ? L.divIcon({ html: `<div class=\"${classes}\">${iconContent}</div>`, className: '', iconSize: [40, 40] }) : undefined;
           // If Leaflet hasn't loaded yet, render marker without custom icon
           return (
             <Marker key={m.idx} position={[m.coord.lat, m.coord.lng]} {...(icon ? { icon } : {})}>
               <Popup>
                 <div className="text-sm max-w-[240px]">
-                  <strong className="block mb-1">Day {m.idx + 1}: {m.block.locationName || `Stop ${m.idx + 1}`}</strong>
+                  <div className="flex items-center gap-1 mb-1">
+                    <strong>Step {m.idx + 1}: {m.block.locationName || `Stop ${m.idx + 1}`}</strong>
+                    <span className={`text-xs px-1.5 py-0.5 rounded-full text-white ${isFullDay ? 'bg-orange-500' : 'bg-blue-500'}`}>
+                      {isFullDay ? 'Stay' : 'Visit'}
+                    </span>
+                  </div>
                   {m.block.regionProvince && <div className="text-xs opacity-80 mb-1">{m.block.regionProvince}</div>}
                   {m.block.description && (
                     <div className="text-xs leading-relaxed">
                       {String(m.block.description).slice(0, 120)}{String(m.block.description).length > 120 ? '…' : ''}
                     </div>
                   )}
-                  <a href={`#day-${m.idx + 1}`} className="mt-2 inline-block text-xs font-medium text-primary hover:underline">Jump to day</a>
+                  <a href={`#day-${m.idx + 1}`} className="mt-2 inline-block text-xs font-medium text-primary hover:underline">Jump to step</a>
                 </div>
               </Popup>
             </Marker>
