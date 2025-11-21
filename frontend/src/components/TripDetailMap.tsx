@@ -147,7 +147,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
         center={initialCenter}
         zoom={initialZoom}
         className="h-full w-full"
-        ref={(map) => { mapRef.current = map; }}
+        ref={(map: LeafletMapInstance | null) => { mapRef.current = map; }}
         scrollWheelZoom={true}
         zoomControl={true}
         doubleClickZoom={true}

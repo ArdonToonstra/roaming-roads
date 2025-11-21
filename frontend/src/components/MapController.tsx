@@ -36,7 +36,7 @@ export default function MapController({ activeIndex, markers }: MapControllerPro
     
     try {
       // Focus on the active marker with a reasonable zoom level
-      const focusZoom = 12; // Fixed zoom level for focusing on individual markers
+      const focusZoom = 10; // Fixed zoom level for focusing on individual markers (zoomed out more)
       
       if (map.flyTo) {
         map.flyTo([target.coord.lat, target.coord.lng], focusZoom, { duration: 0.8 });
