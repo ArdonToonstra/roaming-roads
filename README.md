@@ -45,7 +45,7 @@ UPLOADTHING_APP_ID=your_uploadthing_app_id
    ```
    Access at: http://localhost:3000
 
-2. **Future Frontend** (when created):
+2. **Frontend** (when created):
    ```bash
    cd frontend
    npm run dev

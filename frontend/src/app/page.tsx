@@ -72,7 +72,7 @@ export default async function HomePage() {
           </p>
 
           <Link 
-            href="/trips" 
+            href="/adventures" 
             className="inline-block px-12 py-4 text-white font-heading font-bold text-lg uppercase tracking-wide rounded-full transition-colors duration-300 hover:opacity-90"
             style={{ backgroundColor: '#F57D50' }}
           >
