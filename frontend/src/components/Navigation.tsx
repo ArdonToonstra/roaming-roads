@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-// Use a plain <img> to avoid server/client markup mismatches
 import { Menu, X } from 'lucide-react';
 
 export default function Navigation() {
@@ -15,30 +14,38 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 shadow-lg">
-      {/* White navigation background with curved bottom */}
-      <div className="bg-white relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    // drop-shadow-md applies the shadow to the curve shape, not just a box
+    <nav className="fixed top-0 left-0 right-0 z-50 drop-shadow-md">
+      
+      {/* Main White Header Block */}
+      <div className="bg-white relative z-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex items-center h-24">
-            {/* Left Navigation Links - Positioned absolutely */}
+            
+            {/* Left Navigation Links */}
             <div className="hidden md:flex absolute left-0 items-center gap-8">
               <Link 
                 href="/adventures" 
-                className="nav-link font-medium text-gray-700 hover:text-primary transition-colors"
+                className="font-medium text-gray-700 hover:text-indigo-600 transition-colors"
               >
                 Adventures
               </Link>
               <Link 
                 href="/globe" 
-                className="nav-link font-medium text-gray-700 hover:text-primary transition-colors"
+                className="font-medium text-gray-700 hover:text-indigo-600 transition-colors"
               >
                 Globe
               </Link>
             </div>
             
-            {/* Center Logo - Absolutely centered */}
-            <Link href="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center group" onClick={closeMenu}>
+            {/* Center Logo */}
+            <Link 
+              href="/" 
+              className="absolute left-1/2 transform -translate-x-1/2 flex items-center group" 
+              onClick={closeMenu}
+            >
               <div className="w-32 h-16 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+                {/* Ensure your svg exists in public folder, otherwise this alt text shows */}
                 <img
                   src="/roaming-roads-logo.svg"
                   alt="Roaming Roads"
@@ -47,11 +54,11 @@ export default function Navigation() {
               </div>
             </Link>
             
-            {/* Right Navigation Links - Positioned absolutely */}
+            {/* Right Navigation Links */}
             <div className="hidden md:flex absolute right-0 items-center gap-8">
               <Link 
                 href="/about" 
-                className="nav-link font-medium text-gray-700 hover:text-primary transition-colors"
+                className="font-medium text-gray-700 hover:text-indigo-600 transition-colors"
               >
                 About
               </Link>
@@ -59,7 +66,7 @@ export default function Navigation() {
             
             {/* Mobile Menu Button */}
             <button 
-              className="md:hidden ml-auto p-2 text-gray-700 hover:text-primary transition-colors"
+              className="md:hidden ml-auto p-2 text-gray-700 hover:text-indigo-600 transition-colors"
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >
@@ -71,27 +78,27 @@ export default function Navigation() {
             </button>
           </div>
 
-          {/* Mobile Menu */}
+          {/* Mobile Menu Dropdown */}
           {isOpen && (
-            <div className="md:hidden">
-              <div className="px-2 pt-2 pb-6 space-y-1 bg-white border-t border-gray-200">
+            <div className="md:hidden pb-4">
+              <div className="space-y-1 border-t border-gray-200 pt-4">
                 <Link 
                   href="/adventures"
-                  className="block px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
+                  className="block px-3 py-2 text-gray-700 hover:text-indigo-600 hover:bg-gray-50 rounded-md transition-colors text-center"
                   onClick={closeMenu}
                 >
                   Adventures
                 </Link>
                 <Link 
                   href="/globe"
-                  className="block px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
+                  className="block px-3 py-2 text-gray-700 hover:text-indigo-600 hover:bg-gray-50 rounded-md transition-colors text-center"
                   onClick={closeMenu}
                 >
                   Globe
                 </Link>
                 <Link 
                   href="/about"
-                  className="block px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors"
+                  className="block px-3 py-2 text-gray-700 hover:text-indigo-600 hover:bg-gray-50 rounded-md transition-colors text-center"
                   onClick={closeMenu}
                 >
                   About
@@ -100,20 +107,24 @@ export default function Navigation() {
             </div>
           )}
         </div>
-        
-        {/* Curved bottom border */}
-        <div className="absolute bottom-0 left-0 right-0 h-8 overflow-hidden">
-          <svg 
-            className="w-full h-full" 
-            viewBox="0 0 100 8" 
-            preserveAspectRatio="none"
-          >
-            <path 
-              d="M0,0 Q25,8 50,4 T100,0 L100,8 L0,8 Z" 
-              fill="white"
-            />
-          </svg>
-        </div>
+      </div>
+      
+      {/* THE ORGANIC CURVE */}
+      {/* 1. absolute top-full: Pushes it right below the header */}
+      {/* 2. -mt-1: Pulls it up slightly to fix sub-pixel gaps (white lines) */}
+      {/* 3. leading-[0]: Removes line-height spacing issues */}
+      <div className="absolute top-full left-0 w-full overflow-hidden -mt-1 leading-[0] z-10">
+        <svg 
+          className="relative block w-full h-[40px] md:h-[60px]" 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 1200 120" 
+          preserveAspectRatio="none"
+        >
+          <path 
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" 
+            fill="#FFFFFF"
+          ></path>
+        </svg>
       </div>
 
     </nav>

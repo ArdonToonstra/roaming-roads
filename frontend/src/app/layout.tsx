@@ -54,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${lato.variable} ${poppins.variable} antialiased`}>
         <Navigation />
-        <main className="pt-16 min-h-screen">
+        <main className="pt-28 min-h-screen">
           {children}
         </main>
         {/* Footer now handled by client wrapper below */}
