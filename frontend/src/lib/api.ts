@@ -53,28 +53,16 @@ export const payload = {
     depth?: number 
   }) : Promise<PayloadCollection<Trip>> => {
     
+    console.log(`[getTrips] Fetching trips with params:`, params)
+    
+    // WORKAROUND: Fetching all because server-side WHERE filtering is completely broken.
+    // Similar to getTrip, we fetch all and filter client-side to ensure proper filtering.
+    
     const searchParams = new URLSearchParams()
 
-    // 1. Handle Pagination
-    if (params?.limit) searchParams.set('limit', params.limit.toString())
-    if (params?.page) searchParams.set('page', params.page.toString())
+    // Always fetch all trips to filter client-side (WHERE clauses are broken)
+    searchParams.set('limit', '1000')
     if (typeof params?.depth === 'number') searchParams.set('depth', String(params.depth))
-
-    // 2. Handle 'Where' Filters
-    let whereCondition = { ...(params?.where || {}) }
-
-    // PRODUCTION RULE: Only show published trips
-    if (IS_PROD) {
-      whereCondition = {
-        ...whereCondition,
-        status: { equals: 'published' }
-      }
-    }
-
-    // Only attach 'where' param if conditions exist
-    if (Object.keys(whereCondition).length > 0) {
-      searchParams.set('where', JSON.stringify(whereCondition))
-    }
     
     // 3. Handle Draft Mode (Development only)
     if (IS_DEV) {
@@ -87,7 +75,59 @@ export const payload = {
     // In dev, we want instant updates. In prod, cache lists for 6 mins.
     const fetchOptions = IS_DEV ? undefined : { next: { revalidate: 360 } }
 
-    return api.get<PayloadCollection<Trip>>(endpoint, fetchOptions)
+    try {
+      const response = await api.get<PayloadCollection<Trip>>(endpoint, fetchOptions)
+      
+      console.log(`[getTrips] Received ${response.docs?.length || 0} trips from API`)
+      
+      // CLIENT-SIDE FILTERING (since server-side WHERE is broken)
+      let filteredDocs = response.docs || []
+      
+      // Apply production rule: only show published trips
+      if (IS_PROD) {
+        const beforeFilter = filteredDocs.length
+        filteredDocs = filteredDocs.filter(trip => trip.status === 'published')
+        console.log(`[getTrips] Production filter: ${beforeFilter} -> ${filteredDocs.length} trips`)
+      }
+      
+      // Apply custom where conditions if provided
+      if (params?.where) {
+        Object.entries(params.where).forEach(([key, condition]) => {
+          if (typeof condition === 'object' && condition !== null && 'equals' in condition) {
+            filteredDocs = filteredDocs.filter(trip => {
+              const tripValue = (trip as any)[key]
+              return tripValue === (condition as any).equals
+            })
+          }
+        })
+      }
+      
+      // Apply pagination to filtered results
+      const limit = params?.limit || 10
+      const page = params?.page || 1
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
+      const paginatedDocs = filteredDocs.slice(startIndex, endIndex)
+      
+      console.log(`[getTrips] Returning ${paginatedDocs.length} trips (page ${page}, limit ${limit})`)
+      
+      return {
+        ...response,
+        docs: paginatedDocs,
+        totalDocs: filteredDocs.length,
+        limit,
+        page,
+        totalPages: Math.ceil(filteredDocs.length / limit),
+        hasNextPage: page < Math.ceil(filteredDocs.length / limit),
+        hasPrevPage: page > 1,
+        nextPage: page < Math.ceil(filteredDocs.length / limit) ? page + 1 : undefined,
+        prevPage: page > 1 ? page - 1 : undefined,
+        pagingCounter: startIndex + 1
+      }
+    } catch (error) {
+      console.error(`[getTrips] Error:`, error)
+      throw error
+    }
   },
 
   // -------------------------------------------------------------------------

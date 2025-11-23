@@ -276,6 +276,19 @@ function ItineraryBlock({
                 <span>{block.regionProvince}</span>
               </div>
             )}
+            
+            {/* MOVED: Accommodation is now a small tag here in the header */}
+            {block.accommodation && (
+              <div className="flex items-center gap-1" title="Accommodation">
+                <Bed size={14} />
+                <span className="truncate max-w-[150px] sm:max-w-[200px]">
+                  {typeof block.accommodation === 'string' 
+                    ? block.accommodation 
+                    : (block.accommodation?.name || 'Accommodation')}
+                </span>
+              </div>
+            )}
+
             {/* Automatic Type Narrowing via blockType check */}
             {block.blockType === 'fullDay' && block.time && (
               <div className="flex items-center gap-1">
@@ -308,31 +321,9 @@ function ItineraryBlock({
         </div>
       )}
 
-      {block.accommodation && (
-        <div className="mb-4 p-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-border">
-          <div className="flex items-start gap-3">
-            <Bed size={16} className="flex-shrink-0 mt-0.5 text-[#4C3A7A]" />
-            <div className="text-xs flex-1 text-foreground/80">
-              {typeof block.accommodation === 'string' ? (
-                <div>{block.accommodation}</div>
-              ) : (
-                <div>
-                  {block.accommodation?.name && (
-                    <div className="font-heading font-semibold text-[#4C3A7A] mb-0.5">
-                      {block.accommodation.name}
-                    </div>
-                  )}
-                  {block.accommodation?.notes && (
-                    <div className="italic text-muted-foreground">
-                      <RichText content={block.accommodation.notes} />
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* REMOVED: The old accommodation block was here. 
+          If you need to show accommodation 'notes', we can add them back as plain text. 
+      */}
 
       <div className="flex flex-wrap gap-2">
         {block.blockType === 'fullDay' && block.budget && (
