@@ -95,9 +95,10 @@ export const payload = {
         Object.entries(params.where).forEach(([key, condition]) => {
           if (typeof condition === 'object' && condition !== null && 'equals' in condition) {
             filteredDocs = filteredDocs.filter(trip => {
-              // Fix: Cast to Record<string, unknown> instead of any
-              const tripValue = (trip as Record<string, unknown>)[key]
-              // Fix: Cast to Record<string, unknown> to access .equals safely
+              // Fix: Double cast (trip as unknown as Record...) to avoid "insufficient overlap" error
+              const tripValue = (trip as unknown as Record<string, unknown>)[key]
+              
+              // condition is already 'unknown' from Object.entries on params.where, so single cast is fine
               return tripValue === (condition as Record<string, unknown>).equals
             })
           }
