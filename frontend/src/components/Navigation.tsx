@@ -26,13 +26,13 @@ export default function Navigation() {
             <div className="hidden md:flex absolute left-0 items-center gap-8">
               <Link 
                 href="/adventures" 
-                className="font-medium text-gray-700 hover:text-indigo-600 transition-colors"
+                className="font-medium text-gray-700 hover:text-orange-500 transition-colors"
               >
                 Adventures
               </Link>
               <Link 
                 href="/globe" 
-                className="font-medium text-gray-700 hover:text-indigo-600 transition-colors"
+                className="font-medium text-gray-700 hover:text-orange-500 transition-colors"
               >
                 Globe
               </Link>
@@ -44,7 +44,7 @@ export default function Navigation() {
               className="absolute left-1/2 transform -translate-x-1/2 flex items-center group" 
               onClick={closeMenu}
             >
-              <div className="w-32 h-16 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+              <div className="w-40 h-20 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
                 {/* Ensure your svg exists in public folder, otherwise this alt text shows */}
                 <img
                   src="/roaming-roads-logo.svg"
@@ -58,7 +58,7 @@ export default function Navigation() {
             <div className="hidden md:flex absolute right-0 items-center gap-8">
               <Link 
                 href="/about" 
-                className="font-medium text-gray-700 hover:text-indigo-600 transition-colors"
+                className="font-medium text-gray-700 hover:text-orange-500 transition-colors"
               >
                 About
               </Link>
@@ -66,7 +66,7 @@ export default function Navigation() {
             
             {/* Mobile Menu Button */}
             <button 
-              className="md:hidden ml-auto p-2 text-gray-700 hover:text-indigo-600 transition-colors"
+              className="md:hidden ml-auto p-2 text-gray-700 hover:text-orange-500 transition-colors"
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >
@@ -84,21 +84,21 @@ export default function Navigation() {
               <div className="space-y-1 border-t border-gray-200 pt-4">
                 <Link 
                   href="/adventures"
-                  className="block px-3 py-2 text-gray-700 hover:text-indigo-600 hover:bg-gray-50 rounded-md transition-colors text-center"
+                  className="block px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md transition-colors text-center"
                   onClick={closeMenu}
                 >
                   Adventures
                 </Link>
                 <Link 
                   href="/globe"
-                  className="block px-3 py-2 text-gray-700 hover:text-indigo-600 hover:bg-gray-50 rounded-md transition-colors text-center"
+                  className="block px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md transition-colors text-center"
                   onClick={closeMenu}
                 >
                   Globe
                 </Link>
                 <Link 
                   href="/about"
-                  className="block px-3 py-2 text-gray-700 hover:text-indigo-600 hover:bg-gray-50 rounded-md transition-colors text-center"
+                  className="block px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md transition-colors text-center"
                   onClick={closeMenu}
                 >
                   About

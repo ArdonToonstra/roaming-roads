@@ -43,7 +43,19 @@ export const payload = {
     const searchParams = new URLSearchParams()
     if (params?.limit) searchParams.set('limit', params.limit.toString())
     if (params?.page) searchParams.set('page', params.page.toString())
-    if (params?.where) searchParams.set('where', JSON.stringify(params.where))
+    
+    // Merge where conditions - in production, only show published trips
+    let whereCondition = params?.where || {}
+    if (env.NODE_ENV === 'production') {
+      whereCondition = {
+        ...whereCondition,
+        status: { equals: 'published' }
+      }
+    }
+    
+    if (Object.keys(whereCondition).length > 0) {
+      searchParams.set('where', JSON.stringify(whereCondition))
+    }
     if (typeof params?.depth === 'number') searchParams.set('depth', String(params.depth))
     
     // In development mode, always include draft content
@@ -60,17 +72,24 @@ export const payload = {
 
   // Get single trip by slug or ID
   getTrip: async (slugOrId: string) => {
-    const searchParams = new URLSearchParams()
+    const whereCondition: Record<string, unknown> = {}
     
     // Try to determine if it's an ID (numeric) or slug (string)
     if (/^\d+$/.test(slugOrId)) {
       // It's an ID
-      searchParams.set('where[id][equals]', slugOrId)
+      whereCondition.id = { equals: slugOrId }
     } else {
       // It's a slug
-      searchParams.set('where[slug][equals]', slugOrId)
+      whereCondition.slug = { equals: slugOrId }
     }
     
+    // In production, only show published trips
+    if (env.NODE_ENV === 'production') {
+      whereCondition.status = { equals: 'published' }
+    }
+    
+    const searchParams = new URLSearchParams()
+    searchParams.set('where', JSON.stringify(whereCondition))
     searchParams.set('limit', '1')
     
     // In development mode, include draft content
