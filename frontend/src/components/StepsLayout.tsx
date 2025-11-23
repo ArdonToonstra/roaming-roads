@@ -1,89 +1,109 @@
 "use client";
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState, useCallback } from 'react';
+
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import TripDetailMap from '@/components/TripDetailMap';
 import RichText from '@/components/RichText';
 import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media } from '@/types/payload';
-import { MapPin, Clock, EuroIcon, ChevronLeft, ChevronRight, X, Bed, Car, Plane, Train, Bus, Ship, MapPinIcon } from 'lucide-react';
+import { 
+  Clock, MapPin, Euro, ChevronLeft, ChevronRight, X, Bed, 
+  Car, Plane, Train, Bus, Ship, MapPinIcon, Footprints 
+} from 'lucide-react';
 import { getImageUrl } from '@/lib/images';
+
+// --- Types ---
+
+interface TransportationData {
+  departureMethod?: string;
+  arrivalMethod?: string;
+  travelTime?: {
+    value?: number;
+    unit?: string;
+  };
+}
+
+// Override specific fields for better typing in this component
+type StepFieldsOverride = {
+  transportation?: TransportationData;
+  accommodation?: string | { name?: string; notes?: any };
+};
+
+// Define StepBlock as a UNION of the two modified types
+// This allows TS to narrow types based on blockType
+type FullDayStep = Omit<CmsFullDayBlock, 'transportation' | 'accommodation'> & StepFieldsOverride;
+type WaypointStep = Omit<CmsWaypointBlock, 'transportation' | 'accommodation'> & StepFieldsOverride;
+
+export type StepBlock = FullDayStep | WaypointStep;
 
 interface StepsLayoutProps { trip: Trip }
 
+// --- Helpers ---
+
 function getTransportationIcon(method: string) {
-  const iconMap: { [key: string]: any } = {
-    'rental_car': Car,
-    'taxi': Car,
-    'private_car': Car,
-    'car': Car,
-    'flight': Plane,
-    'plane': Plane,
-    'airplane': Plane,
-    'train': Train,
-    'bus': Bus,
-    'boat': Ship,
-    'ship': Ship,
-    'ferry': Ship,
-    'walking': MapPinIcon,
-    'walk': MapPinIcon,
+  const normalizedMethod = method.toLowerCase().replace(/[_\s-]/g, '_');
+  
+  const iconMap: Record<string, React.ElementType> = {
+    'rental_car': Car, 'taxi': Car, 'private_car': Car, 'car': Car,
+    'flight': Plane, 'plane': Plane, 'airplane': Plane,
+    'train': Train, 'rail': Train,
+    'bus': Bus, 'shuttle': Bus,
+    'boat': Ship, 'ship': Ship, 'ferry': Ship,
+    'walking': Footprints, 'walk': Footprints, 'hike': Footprints,
   };
   
-  const normalizedMethod = method.toLowerCase().replace(/[_\s-]/g, '_');
-  return iconMap[normalizedMethod] || Car; // Default to car icon
+  return iconMap[normalizedMethod] || MapPinIcon;
 }
 
-function buildConnectorLabel(prev: CmsFullDayBlock | CmsWaypointBlock | null, current: CmsFullDayBlock | CmsWaypointBlock): { method: string; time: string; icon: any } | null {
+function buildConnectorLabel(prev: StepBlock | null, current: StepBlock) {
   if (!prev) return null;
   
-  // Check both the previous block and current block for transportation info
-  const prevTransport: any = (prev as any).transportation;
-  const currentTransport: any = (current as any).transportation;
+  const prevTransport = prev.transportation;
+  const currentTransport = current.transportation;
   
-  // Try to get transportation method (prefer departure from current, then arrival to current)
-  const method = currentTransport?.arrivalMethod || prevTransport?.departureMethod || currentTransport?.departureMethod;
+  // Logic: Prefer arrival method of current, then departure of prev
+  const method = currentTransport?.arrivalMethod || prevTransport?.departureMethod;
   
   if (!method) return null;
   
-  // Get travel time from either block
   const timeInfo = currentTransport?.travelTime || prevTransport?.travelTime;
   const travelTime = timeInfo?.value ? `${timeInfo.value} ${timeInfo.unit || ''}`.trim() : '';
   
-  // Clean up method name for display
-  const displayMethod = method.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase());
+  const displayMethod = method.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
   
   return {
     method: displayMethod,
     time: travelTime,
-    icon: getTransportationIcon(method)
+    Icon: getTransportationIcon(method)
   };
 }
 
-
+// --- Sub-Components ---
 
 function GalleryCarousel({ items }: { items: any[] }) {
-  const containerRef = React.useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const [lightbox, setLightbox] = useState<{ url: string; alt: string } | null>(null);
 
-  const updateScrollState = () => {
+  const updateScrollState = useCallback(() => {
     const el = containerRef.current;
     if (!el) return;
     setCanScrollLeft(el.scrollLeft > 0);
-    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
-  };
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 2);
+  }, []);
 
   useEffect(() => {
-    updateScrollState();
     const el = containerRef.current;
     if (!el) return;
-    const handler = () => updateScrollState();
-    el.addEventListener('scroll', handler);
-    window.addEventListener('resize', handler);
+    
+    updateScrollState();
+    el.addEventListener('scroll', updateScrollState);
+    window.addEventListener('resize', updateScrollState);
+    
     return () => {
-      el.removeEventListener('scroll', handler);
-      window.removeEventListener('resize', handler);
+      el.removeEventListener('scroll', updateScrollState);
+      window.removeEventListener('resize', updateScrollState);
     };
-  }, []);
+  }, [updateScrollState]);
 
   const scrollBy = (dir: 'left' | 'right') => {
     const el = containerRef.current;
@@ -92,41 +112,126 @@ function GalleryCarousel({ items }: { items: any[] }) {
     el.scrollBy({ left: delta, behavior: 'smooth' });
   };
 
+  if (!items || items.length === 0) return null;
+
   return (
-    <div className="mb-4 relative group">
-      <div ref={containerRef} className="flex gap-2 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2" style={{ scrollbarWidth: 'none' }}>
-        {items.map((item, idx) => {
-          const media: Media | null = typeof (item as any).media === 'object' ? (item as any).media : null;
-          if (!media) return null;
-          const alt = media.alt || `Photo ${idx + 1}`;
-          return (
-            <button key={idx} type="button" onClick={() => setLightbox({ url: getImageUrl(media.url), alt })} className="flex-shrink-0 w-40 h-32 rounded overflow-hidden snap-start relative focus:outline-none focus:ring-2 focus:ring-primary">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={getImageUrl(media.url)} alt={alt} className="w-full h-full object-cover" />
-            </button>
-          );
-        })}
+    <>
+      <div className="mb-4 relative group">
+        <div 
+          ref={containerRef} 
+          className="flex gap-2 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 no-scrollbar"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {items.map((item, idx) => {
+            const media: Media | null = typeof item.media === 'object' ? item.media : null;
+            if (!media) return null;
+            const alt = media.alt || `Photo ${idx + 1}`;
+            
+            return (
+              <button 
+                key={idx} 
+                type="button" 
+                onClick={() => setLightbox({ url: getImageUrl(media.url), alt })} 
+                className="flex-shrink-0 w-40 h-32 rounded-lg overflow-hidden snap-start relative focus:outline-none focus:ring-2 focus:ring-[#F57D50] transition-transform active:scale-95"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={getImageUrl(media.url)} alt={alt} className="w-full h-full object-cover" loading="lazy" />
+              </button>
+            );
+          })}
+        </div>
+        
+        {/* Scroll Controls */}
+        {canScrollLeft && (
+          <button 
+            type="button" 
+            onClick={() => scrollBy('left')} 
+            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft size={18} />
+          </button>
+        )}
+        {canScrollRight && (
+          <button 
+            type="button" 
+            onClick={() => scrollBy('right')} 
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
+            aria-label="Scroll right"
+          >
+            <ChevronRight size={18} />
+          </button>
+        )}
       </div>
-      {canScrollLeft && (
-        <button type="button" onClick={() => scrollBy('left')} aria-label="Scroll photos left" className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 text-white opacity-0 group-hover:opacity-100 transition-opacity"><ChevronLeft size={18} /></button>
-      )}
-      {canScrollRight && (
-        <button type="button" onClick={() => scrollBy('right')} aria-label="Scroll photos right" className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 text-white opacity-0 group-hover:opacity-100 transition-opacity"><ChevronRight size={18} /></button>
-      )}
+
+      {/* Lightbox */}
       {lightbox && (
-        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" onClick={() => setLightbox(null)}>
-          <div className="relative max-w-3xl w-full">
-            <button type="button" aria-label="Close image" className="absolute top-2 right-2 p-2 bg-black/60 rounded-full text-white" onClick={() => setLightbox(null)}><X size={20} /></button>
+        <div 
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200"
+          onClick={() => setLightbox(null)}
+        >
+          <div className="relative max-w-5xl w-full h-full flex items-center justify-center">
+            <button 
+              type="button" 
+              className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+              onClick={() => setLightbox(null)}
+            >
+              <X size={24} />
+            </button>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={lightbox.url} alt={lightbox.alt} className="w-full max-h-[80vh] object-contain rounded" />
+            <img 
+              src={lightbox.url} 
+              alt={lightbox.alt} 
+              className="max-w-full max-h-[85vh] object-contain rounded shadow-2xl" 
+            />
           </div>
         </div>
       )}
+    </>
+  );
+}
+
+function Connector({ prevBlock, nextBlock }: { prevBlock: StepBlock; nextBlock: StepBlock }) {
+  const transportInfo = buildConnectorLabel(prevBlock, nextBlock);
+  
+  return (
+    <div className="flex flex-col items-center my-6 group" aria-hidden="true">
+      <div className="relative w-full flex items-center justify-center">
+        {/* Dotted line background */}
+        <div className="absolute h-full w-[2px] bg-border group-hover:bg-primary/30 transition-colors" />
+        
+        {/* Transport Pill */}
+        {transportInfo ? (
+          <div className="relative z-10 text-[10px] uppercase font-bold tracking-wider px-3 py-1.5 rounded-full bg-background border border-border text-muted-foreground shadow-sm flex items-center gap-2 group-hover:border-primary/50 group-hover:text-primary transition-colors">
+            <transportInfo.Icon size={12} />
+            <span>{transportInfo.method}</span>
+            {transportInfo.time && (
+              <>
+                <span className="text-border">•</span>
+                <span>{transportInfo.time}</span>
+              </>
+            )}
+          </div>
+        ) : (
+          // Simple dot if no transport info
+          <div className="relative z-10 w-2 h-2 rounded-full bg-border group-hover:bg-primary/50 transition-colors" />
+        )}
+      </div>
     </div>
   );
 }
 
-function ItineraryBlock({ block, index, active, onClick }: { block: CmsFullDayBlock | CmsWaypointBlock; index: number; active: boolean; onClick?: () => void }) {
+function ItineraryBlock({ 
+  block, 
+  index, 
+  active, 
+  onClick 
+}: { 
+  block: StepBlock; 
+  index: number; 
+  active: boolean; 
+  onClick: () => void 
+}) {
   const isFullDay = block.blockType === 'fullDay';
 
   return (
@@ -134,149 +239,253 @@ function ItineraryBlock({ block, index, active, onClick }: { block: CmsFullDayBl
       id={`day-${index + 1}`}
       data-day-index={index}
       onClick={onClick}
-      className={`rounded-xl p-6 transition-all duration-300 cursor-pointer ${active ? 'bg-card shadow-md border-2' : 'bg-card hover:shadow-md border border-border hover:border-gray-300'}`}
-      style={active ? { borderColor: '#F57D50' } : undefined}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick();
+        }
+      }}
+      className={`
+        relative rounded-xl p-6 transition-all duration-300 cursor-pointer outline-none
+        ${active 
+          ? 'bg-card shadow-lg ring-2 ring-[#F57D50] scale-[1.01]' 
+          : 'bg-card shadow-sm border border-border hover:shadow-md hover:border-primary/30'
+        }
+      `}
     >
       <div className="flex items-start gap-4 mb-4">
-        <div className="w-9 h-9 rounded-full flex items-center justify-center font-heading text-sm font-bold text-white flex-shrink-0" style={{ backgroundColor: '#F57D50' }}>{index + 1}</div>
-        <div className="flex-1 min-w-0">
-          <h3 className="text-xl font-heading font-bold mb-1 truncate" style={{ color: '#4C3A7A' }}>{block.locationName}</h3>
-          <div className="flex flex-wrap items-center gap-3 text-xs" style={{ color: '#2A9D8F' }}>
-            {block.regionProvince && <div className="flex items-center gap-1"><MapPin size={14} /><span>{block.regionProvince}</span></div>}
-            {isFullDay && (block as CmsFullDayBlock).time && <div className="flex items-center gap-1"><Clock size={14} /><span>{(block as CmsFullDayBlock).time}</span></div>}
+        {/* Number Badge */}
+        <div 
+          className="w-10 h-10 rounded-full flex items-center justify-center font-heading text-sm font-bold text-white flex-shrink-0 shadow-md transition-transform"
+          style={{ backgroundColor: active ? '#F57D50' : '#F57D50cc' }}
+        >
+          {index + 1}
+        </div>
+        
+        <div className="flex-1 min-w-0 pt-1">
+          <h3 className="text-xl font-heading font-bold mb-1 truncate text-[#4C3A7A]">
+            {block.locationName}
+          </h3>
+          
+          <div className="flex flex-wrap items-center gap-3 text-xs text-[#2A9D8F] font-medium">
+            {block.regionProvince && (
+              <div className="flex items-center gap-1">
+                <MapPin size={14} />
+                <span>{block.regionProvince}</span>
+              </div>
+            )}
+            {/* Automatic Type Narrowing via blockType check */}
+            {block.blockType === 'fullDay' && block.time && (
+              <div className="flex items-center gap-1">
+                <Clock size={14} />
+                <span>{block.time}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
-      {block.description && <p className="mb-4 text-sm leading-relaxed" style={{ color: '#263238' }}>{block.description}</p>}
-  {block.gallery && block.gallery.length > 0 && <GalleryCarousel items={block.gallery.slice(0, 20)} />}
+
+      {block.description && (
+        <p className="mb-6 text-sm leading-relaxed text-foreground/80">
+          {block.description}
+        </p>
+      )}
+
+      {block.gallery && block.gallery.length > 0 && (
+        <GalleryCarousel items={block.gallery.slice(0, 20)} />
+      )}
+
       {block.activities && (
-        <div className="mb-4">
-          <h4 className="text-xs font-heading font-bold mb-2" style={{ color: '#2A9D8F' }}>Activities</h4>
-          <RichText content={block.activities} className="text-xs prose max-w-none" />
+        <div className="mb-5">
+          <h4 className="text-xs font-heading font-bold mb-2 uppercase tracking-wide text-[#2A9D8F]">
+            Activities
+          </h4>
+          <div className="text-xs prose prose-sm max-w-none prose-p:my-1 prose-headings:text-foreground/90 text-foreground/70">
+            <RichText content={block.activities} />
+          </div>
         </div>
       )}
-      {(block as any).accommodation && (
-        <div className="mb-4 p-3 rounded-md bg-gray-50 border border-gray-200">
-          <div className="flex items-start gap-2">
-            <Bed size={16} className="flex-shrink-0 mt-0.5" style={{ color: '#4C3A7A' }} />
-            <div className="text-xs flex-1" style={{ color: '#263238' }}>
-              {typeof (block as any).accommodation === 'string' ? (
-                <div>{(block as any).accommodation}</div>
+
+      {block.accommodation && (
+        <div className="mb-4 p-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-border">
+          <div className="flex items-start gap-3">
+            <Bed size={16} className="flex-shrink-0 mt-0.5 text-[#4C3A7A]" />
+            <div className="text-xs flex-1 text-foreground/80">
+              {typeof block.accommodation === 'string' ? (
+                <div>{block.accommodation}</div>
               ) : (
                 <div>
-                  {(block as any).accommodation?.name && <div className="font-heading font-semibold">{(block as any).accommodation.name}</div>}
-                  {(block as any).accommodation?.notes && <RichText content={(block as any).accommodation.notes} className="text-[11px] italic mt-1" />}
+                  {block.accommodation?.name && (
+                    <div className="font-heading font-semibold text-[#4C3A7A] mb-0.5">
+                      {block.accommodation.name}
+                    </div>
+                  )}
+                  {block.accommodation?.notes && (
+                    <div className="italic text-muted-foreground">
+                      <RichText content={block.accommodation.notes} />
+                    </div>
+                  )}
                 </div>
               )}
             </div>
           </div>
         </div>
       )}
-      {isFullDay && (block as CmsFullDayBlock).budget && (
-        <div className="mb-3 p-3 rounded-md" style={{ backgroundColor: '#F4F1ED' }}>
-          <h4 className="text-xs font-heading font-bold mb-1" style={{ color: '#4C3A7A' }}>Cost</h4>
-          <div className="flex items-center gap-1 text-xs" style={{ color: '#263238' }}><EuroIcon size={12} /><span>{(block as CmsFullDayBlock).budget?.amount} {(block as CmsFullDayBlock).budget?.currency}</span></div>
-        </div>
-      )}
-      {isFullDay && (block as CmsFullDayBlock).tips && (
-        <div className="p-3 rounded-md text-[11px]" style={{ backgroundColor: '#2A9D8F', color: 'white' }}>
-          <h4 className="font-heading font-bold mb-1">Pro Tips</h4>
-          <p>{(block as CmsFullDayBlock).tips}</p>
+
+      <div className="flex flex-wrap gap-2">
+        {block.blockType === 'fullDay' && block.budget && (
+          <div className="px-3 py-1.5 rounded-full bg-[#F4F1ED] dark:bg-stone-900 flex items-center gap-1.5 text-xs text-[#4C3A7A] font-medium">
+            <Euro size={12} />
+            <span>
+              {block.budget?.amount} {block.budget?.currency}
+            </span>
+          </div>
+        )}
+        
+        {block.blockType === 'fullDay' && block.tips && (
+          <div className="px-3 py-1.5 rounded-full bg-[#2A9D8F]/10 dark:bg-[#2A9D8F]/20 text-[#2A9D8F] text-xs font-medium">
+             Pro Tip Available
+          </div>
+        )}
+      </div>
+
+      {block.blockType === 'fullDay' && block.tips && active && (
+        <div className="mt-4 p-4 rounded-lg bg-[#2A9D8F] text-white text-sm shadow-md animate-in slide-in-from-top-2 duration-300">
+          <h4 className="font-heading font-bold mb-1 flex items-center gap-2">
+             Inside Scoop
+          </h4>
+          <p className="text-white/90">{block.tips}</p>
         </div>
       )}
     </div>
   );
 }
 
+// --- Main Layout ---
+
 export default function StepsLayout({ trip }: StepsLayoutProps) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const isProgrammaticScroll = useRef(false);
+
   const handleStepClick = (index: number) => {
     setActiveIndex(index);
-    // Scroll the clicked step into view
+    isProgrammaticScroll.current = true;
+    
     const element = document.querySelector(`[data-day-index="${index}"]`);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      
+      // Reset the lock after scrolling is likely finished (approximate)
+      setTimeout(() => {
+        isProgrammaticScroll.current = false;
+      }, 1000);
     }
   };
 
   const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
-    // Determine the element whose vertical center is closest to the viewport vertical center
+    if (isProgrammaticScroll.current) return;
+
     const viewportCenter = window.innerHeight / 2;
-    let closest: { idx: number; distance: number } | null = null;
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      const rect = (e.target as HTMLElement).getBoundingClientRect();
+
+    // Use reduce to find the closest element safely
+    // This avoids "type 'never'" errors by explicitly typing the accumulator in the generic
+    const closest = entries.reduce<{ idx: number; distance: number } | null>((acc, entry) => {
+      if (!entry.isIntersecting) return acc;
+      
+      const rect = entry.target.getBoundingClientRect();
       const elementCenter = rect.top + rect.height / 2;
       const distance = Math.abs(elementCenter - viewportCenter);
-      const idx = Number((e.target as HTMLElement).dataset.dayIndex);
-      if (!Number.isFinite(idx)) return;
-      if (!closest || distance < closest.distance) closest = { idx, distance };
-    });
-    if (closest !== null) setActiveIndex((closest as { idx: number; distance: number }).idx);
+      
+      const idx = Number((entry.target as HTMLElement).dataset.dayIndex);
+      
+      if (!Number.isFinite(idx)) return acc;
+
+      // If no closest found yet, or this one is closer, update accumulator
+      if (!acc || distance < acc.distance) {
+        return { idx, distance };
+      }
+      return acc;
+    }, null);
+
+    if (closest) {
+      setActiveIndex(closest.idx);
+    }
   }, []);
 
   useEffect(() => {
-    const blocks = Array.from(document.querySelectorAll('[data-day-index]')) as HTMLElement[];
+    const blocks = document.querySelectorAll('[data-day-index]');
     if (blocks.length === 0) return;
-    // Adjust thresholds to capture earlier focus change
-    const observer = new IntersectionObserver(observerCallback, { root: null, rootMargin: '-20% 0px -50% 0px', threshold: [0.1, 0.25, 0.5] });
+
+    const observer = new IntersectionObserver(observerCallback, { 
+      root: null, 
+      rootMargin: '-30% 0px -30% 0px', 
+      threshold: [0, 0.5, 1.0] 
+    });
+    
     blocks.forEach(b => observer.observe(b));
     return () => observer.disconnect();
-  }, [observerCallback, trip.itinerary?.length]);
+  }, [observerCallback, trip.itinerary]); 
+
+  if (!trip.itinerary || trip.itinerary.length === 0) {
+    return <div className="p-8 text-center text-muted-foreground">No itinerary steps found.</div>;
+  }
 
   return (
-    <div className="relative min-h-screen bg-background text-foreground">
-      {/* Fixed map on large screens (right side, below nav) */}
-      <div className="hidden lg:block fixed top-16 right-0 h-[calc(100vh-4rem)] w-[45%] border-l border-border bg-card z-10 overflow-y-auto custom-map-scroll">
-        <TripDetailMap trip={trip} heightClass="h-full" activeIndex={activeIndex} />
-      </div>
-      {/* Scrollable itinerary (reserve space for map on right) */}
-      <div className="lg:w-[55%] px-4 sm:px-6 py-10">
-        <div className="max-w-3xl mx-auto space-y-6">
-          <h2 className="text-2xl font-heading font-bold mb-6 text-[#4C3A7A]">Steps Itinerary</h2>
-          {trip.itinerary?.map((block, index) => (
-            <React.Fragment key={(block as any).id || index}>
-              <ItineraryBlock 
-                block={block} 
-                index={index} 
-                active={activeIndex === index} 
-                onClick={() => handleStepClick(index)}
-              />
-              {index < (trip.itinerary!.length - 1) && (
-                <Connector prevBlock={block} nextBlock={trip.itinerary![index + 1]} />
-              )}
-            </React.Fragment>
-          ))}
+    <div className="relative min-h-screen bg-background text-foreground flex flex-col lg:flex-row">
+      
+      {/* Scrollable Itinerary - Left/Top */}
+      <div className="w-full lg:w-[55%] px-4 sm:px-6 py-10 order-2 lg:order-1 min-h-[100vh]">
+        <div className="max-w-2xl mx-auto space-y-2">
+          <h2 className="text-3xl font-heading font-bold mb-8 text-[#4C3A7A]">
+            Detailed Itinerary
+          </h2>
+          
+          {trip.itinerary.map((block, index) => {
+            // Force cast to our enhanced Type Union.
+            // This is safe because we are only reading properties that exist, 
+            // but we need to tell TS that 'transportation' matches our structure.
+            const step = block as unknown as StepBlock;
+            
+            return (
+              <React.Fragment key={block.id || index}>
+                <ItineraryBlock 
+                  block={step} 
+                  index={index} 
+                  active={activeIndex === index} 
+                  onClick={() => handleStepClick(index)}
+                />
+                
+                {index < (trip.itinerary!.length - 1) && (
+                  <Connector 
+                    prevBlock={step} 
+                    nextBlock={trip.itinerary![index + 1] as unknown as StepBlock} 
+                  />
+                )}
+              </React.Fragment>
+            );
+          })}
+          
+          {/* End of trip marker */}
+          <div className="flex flex-col items-center pt-8 text-muted-foreground">
+            <div className="w-3 h-3 bg-primary rounded-full mb-2" />
+            <span className="text-xs uppercase tracking-widest font-semibold">End of Trip</span>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
 
-function Connector({ prevBlock, nextBlock }: { prevBlock: CmsFullDayBlock | CmsWaypointBlock; nextBlock: CmsFullDayBlock | CmsWaypointBlock }) {
-  const transportInfo = buildConnectorLabel(prevBlock, nextBlock);
-  return (
-    <div className="flex flex-col items-center my-6">
-      
-      <div className="relative w-full flex items-center">
-        <div className="mx-auto h-6 w-[2px] bg-border" />
-        {transportInfo && (
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 text-[11px] px-3 py-1 rounded-full bg-white border border-gray-200 text-gray-600 shadow-sm">
-            <div className="flex items-center justify-center gap-1.5">
-              <transportInfo.icon size={12} />
-              <span>{transportInfo.method}</span>
-              {transportInfo.time && (
-                <>
-                  <span className="text-gray-400">•</span>
-                  <span>{transportInfo.time}</span>
-                </>
-              )}
-            </div>
-          </div>
-        )}
+      {/* Fixed Map - Right/Bottom */}
+      <div className="hidden lg:block lg:w-[45%] h-[calc(100vh-4rem)] sticky top-16 border-l border-border bg-card z-10 order-1 lg:order-2 overflow-hidden">
+        <div className="h-full w-full">
+          <TripDetailMap 
+            trip={trip} 
+            heightClass="h-full" 
+            activeIndex={activeIndex} 
+          />
+        </div>
       </div>
-      
+
     </div>
   );
 }

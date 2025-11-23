@@ -108,16 +108,16 @@ export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMap
         const bounds = L.latLngBounds(markers.map(m => [m.coord!.lat, m.coord!.lng]));
         
         if (markers.length === 1) {
-          map.fitBounds(bounds, { padding: [50, 50] });
+          map.fitBounds(bounds, { padding: [100, 100], maxZoom: 4 });
         } else {
-          map.fitBounds(bounds, { padding: [30, 30] });
+          map.fitBounds(bounds, { padding: [80, 80], maxZoom: 3 });
         }
       }
     }).catch(() => {});
   }, [markers]);
 
-  const initialCenter: [number, number] = markers.length > 0 ? [markers[0].coord!.lat, markers[0].coord!.lng] : [20, 0];
-  const initialZoom = markers.length > 0 ? 5 : 2;
+  const initialCenter: [number, number] = markers.length > 0 ? [20, 0] : [20, 0];
+  const initialZoom = markers.length > 0 ? 2 : 1;
 
   return (
     <div className="h-full w-full">
@@ -150,7 +150,7 @@ export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMap
           const numericId = typeof trip.id === 'number' ? trip.id : Number(trip.id);
           const highlighted = hoveredTripId === numericId;
           const L = leafletRef.current;
-          const icon = L ? L.divIcon({ html: `<div class="rr-marker ${highlighted ? 'rr-marker-highlight' : ''}">${idx + 1}</div>`, className: '', iconSize: [28, 28] }) : undefined;
+          const icon = L ? L.divIcon({ html: `<div class="rr-marker rr-marker-globe ${highlighted ? 'rr-marker-highlight' : ''}"></div>`, className: '', iconSize: [16, 16] }) : undefined;
           return (
             <Marker
               key={trip.id}

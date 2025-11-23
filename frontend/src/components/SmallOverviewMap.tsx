@@ -155,15 +155,15 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
           
           if (markers.length === 1) {
             // For single marker, fit bounds but with reasonable zoom limit
-            currentMap.fitBounds(markerBounds, { padding: [30, 30], maxZoom: 8 });
+            currentMap.fitBounds(markerBounds, { padding: [30, 30], maxZoom: 10 });
           } else {
             // For multiple markers, fit all with generous padding to ensure visibility
-            currentMap.fitBounds(markerBounds, { padding: [50, 50], maxZoom: 8 });
+            currentMap.fitBounds(markerBounds, { padding: [50, 50], maxZoom: 10 });
           }
         } else if (countryBounds) {
           // Only use country bounds if there are no markers to show
           const bounds = currentL.latLngBounds([countryBounds[0], countryBounds[1]]);
-          currentMap.fitBounds(bounds, { padding: [20, 20], maxZoom: 8 });
+          currentMap.fitBounds(bounds, { padding: [20, 20], maxZoom: 10 });
         }
       } catch (error) {
         console.warn('[SmallOverviewMap] Error fitting bounds:', error);
@@ -187,7 +187,7 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
     }
   }, [countryBounds, markers]);
 
-  const zoom = countryBounds ? 6 : (markers.length > 0 ? 7 : 3);
+  const zoom = countryBounds ? 8 : (markers.length > 0 ? 7 : 3);
 
   return (
     <div className="rounded-lg overflow-hidden border border-border bg-card shadow-sm w-full md:w-96">
