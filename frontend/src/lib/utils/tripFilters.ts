@@ -169,13 +169,7 @@ export interface TripFilters {
 }
 
 export function filterTrips(trips: Trip[], filters: TripFilters): Trip[] {
-  const activeFilters = Object.entries(filters).filter(([_, value]) => value);
-  
-  if (activeFilters.length > 0) {
-    console.log('Filtering trips with filters:', filters);
-  }
-  
-  const result = trips.filter(trip => {
+  return trips.filter(trip => {
     // Category filter
     if (filters.category && trip.category !== filters.category) {
       return false;
@@ -196,18 +190,10 @@ export function filterTrips(trips: Trip[], filters: TripFilters): Trip[] {
     if (filters.country) {
       const hasCountry = trip.countries?.some(country => {
         if (typeof country === 'object') {
-          const match = country.id === filters.country || country.name === filters.country;
-          if (activeFilters.length > 0) {
-            console.log('Checking country filter for trip:', trip.title, 'country obj:', country, 'filter:', filters.country, 'match:', match);
-          }
-          return match;
+          return country.id === filters.country || country.name === filters.country;
         } else if (typeof country === 'string') {
           // Handle case where country is just an ID string
-          const match = country === filters.country;
-          if (activeFilters.length > 0) {
-            console.log('Checking country filter for trip:', trip.title, 'country str:', country, 'filter:', filters.country, 'match:', match);
-          }
-          return match;
+          return country === filters.country;
         }
         return false;
       });
@@ -225,12 +211,6 @@ export function filterTrips(trips: Trip[], filters: TripFilters): Trip[] {
     
     return true;
   });
-  
-  if (activeFilters.length > 0) {
-    console.log('Filtered from', trips.length, 'to', result.length, 'trips');
-  }
-  
-  return result;
 }
 
 // Sort trips by different criteria

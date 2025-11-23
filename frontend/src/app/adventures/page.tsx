@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { payload } from '@/lib/api';
 import { Trip } from '@/types/payload';
 import AdventureFilters from './components/AdventureFilters';
@@ -14,6 +15,14 @@ async function getTrips(): Promise<Trip[]> {
     console.error('Failed to fetch trips:', error);
     return [];
   }
+}
+
+function AdventureFiltersWrapper({ trips }: { trips: Trip[] }) {
+  return (
+    <Suspense fallback={<div className="flex justify-center py-8">Loading filters...</div>}>
+      <AdventureFilters trips={trips} />
+    </Suspense>
+  );
 }
 
 export default async function AdventuresPage() {
@@ -36,7 +45,7 @@ export default async function AdventuresPage() {
       {/* Adventures with Filters */}
       <main className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AdventureFilters trips={trips} />
+          <AdventureFiltersWrapper trips={trips} />
         </div>
       </main>
     </div>

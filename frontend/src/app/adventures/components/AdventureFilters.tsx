@@ -161,15 +161,6 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
       label: activity
     }));
 
-    // Debug logging
-    console.log('Filter options generated:', {
-      categoriesCount: categories.length,
-      continentsCount: continents.length,
-      countriesCount: countries.length,
-      activitiesCount: activities.length,
-      sampleCountries: countries.slice(0, 3)
-    });
-
     return { categories, continents, countries, activities };
   }, [trips]);
 
@@ -202,9 +193,6 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
       ...filters,
       [key]: value || undefined
     };
-    
-    console.log('Updating filter:', key, 'to:', value);
-    console.log('New filters:', newFilters);
     
     setFilters(newFilters);
     updateURL(newFilters, searchTerm, sortBy);
