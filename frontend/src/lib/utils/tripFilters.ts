@@ -6,14 +6,14 @@ export function extractActivitiesFromRichText(richText: RichTextContent | undefi
   
   const activities: string[] = [];
   
-  function traverseNode(node: any): void {
+  function traverseNode(node: Record<string, unknown>): void {
     if (typeof node !== 'object' || !node) return;
     
     // Handle different node types based on Lexical format
     if (node.type === 'paragraph' || node.type === 'listitem') {
       if (node.children && Array.isArray(node.children)) {
         let textContent = '';
-        node.children.forEach((child: any) => {
+        node.children.forEach((child: Record<string, unknown>) => {
           if (child.type === 'text' && typeof child.text === 'string') {
             textContent += child.text;
           }
@@ -27,12 +27,15 @@ export function extractActivitiesFromRichText(richText: RichTextContent | undefi
     
     // Recursively traverse children
     if (node.children && Array.isArray(node.children)) {
-      node.children.forEach(traverseNode);
+      (node.children as Record<string, unknown>[]).forEach(traverseNode);
     }
     
     // Handle root level nodes
-    if (node.root && node.root.children) {
-      node.root.children.forEach(traverseNode);
+    if (node.root && typeof node.root === 'object' && node.root !== null) {
+      const root = node.root as Record<string, unknown>;
+      if (root.children && Array.isArray(root.children)) {
+        (root.children as Record<string, unknown>[]).forEach(traverseNode);
+      }
     }
   }
   
