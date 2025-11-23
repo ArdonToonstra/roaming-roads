@@ -161,7 +161,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
   const initialZoom = markers.length > 0 ? 9 : 2; // slightly more zoomed-in default
 
   return (
-    <div className={`rounded-xl overflow-hidden border border-border bg-card shadow-sm ${heightClass || 'h-[360px]'} z-0`}>
+    <div className={`overflow-hidden border border-border bg-card shadow-sm ${heightClass || 'h-[360px]'} z-0`}>
       <MapContainer
         center={initialCenter}
         zoom={initialZoom}

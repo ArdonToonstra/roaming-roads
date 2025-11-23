@@ -1,8 +1,17 @@
+"use client";
+
 import Link from 'next/link';
 import { MapPin, Mail, Heart } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+
+  // Hide footer on steps pages
+  if (pathname?.includes('/steps')) {
+    return null;
+  }
 
   return (
     <footer className="bg-card border-t border-border">

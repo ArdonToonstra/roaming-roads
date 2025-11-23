@@ -24,7 +24,8 @@ interface TransportationData {
 // Override specific fields for better typing in this component
 type StepFieldsOverride = {
   transportation?: TransportationData;
-  accommodation?: string | { name?: string; notes?: any };
+  // Fix: Replaced 'any' with a generic object array for RichText nodes
+  accommodation?: string | { name?: string; notes?: Record<string, unknown>[] };
 };
 
 // Define StepBlock as a UNION of the two modified types
@@ -35,6 +36,11 @@ type WaypointStep = Omit<CmsWaypointBlock, 'transportation' | 'accommodation'> &
 export type StepBlock = FullDayStep | WaypointStep;
 
 interface StepsLayoutProps { trip: Trip }
+
+interface GalleryItem {
+  media?: Media | string | null;
+  id?: string | null;
+}
 
 // --- Helpers ---
 
@@ -78,7 +84,8 @@ function buildConnectorLabel(prev: StepBlock | null, current: StepBlock) {
 
 // --- Sub-Components ---
 
-function GalleryCarousel({ items }: { items: any[] }) {
+// Fix: Replaced 'any[]' with proper GalleryItem interface
+function GalleryCarousel({ items }: { items: GalleryItem[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -232,7 +239,8 @@ function ItineraryBlock({
   active: boolean; 
   onClick: () => void 
 }) {
-  const isFullDay = block.blockType === 'fullDay';
+  // Fix: Removed unused 'isFullDay' variable
+  // We now use block.blockType directly in the JSX conditions below
 
   return (
     <div
@@ -320,10 +328,6 @@ function ItineraryBlock({
           </div>
         </div>
       )}
-
-      {/* REMOVED: The old accommodation block was here. 
-          If you need to show accommodation 'notes', we can add them back as plain text. 
-      */}
 
       <div className="flex flex-wrap gap-2">
         {block.blockType === 'fullDay' && block.budget && (
@@ -429,9 +433,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
       {/* Scrollable Itinerary - Left/Top */}
       <div className="w-full lg:w-[55%] px-4 sm:px-6 py-10 order-2 lg:order-1 min-h-[100vh]">
         <div className="max-w-2xl mx-auto space-y-2">
-          <h2 className="text-3xl font-heading font-bold mb-8 text-[#4C3A7A]">
-            Detailed Itinerary
-          </h2>
+
           
           {trip.itinerary.map((block, index) => {
             // Force cast to our enhanced Type Union.
@@ -467,7 +469,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
       </div>
 
       {/* Fixed Map - Right/Bottom */}
-      <div className="hidden lg:block lg:w-[45%] h-[calc(100vh-4rem)] sticky top-16 border-l border-border bg-card z-10 order-1 lg:order-2 overflow-hidden">
+      <div className="hidden lg:block lg:w-[45%] h-[calc(100vh-3.5rem)] sticky top-14 border-l border-border bg-card z-10 order-1 lg:order-2 overflow-hidden">
         <div className="h-full w-full">
           <TripDetailMap 
             trip={trip} 

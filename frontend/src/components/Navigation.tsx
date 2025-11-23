@@ -13,6 +13,11 @@ export default function Navigation() {
 
   const pathname = usePathname();
 
+  // Hide navigation on steps pages
+  if (pathname?.includes('/steps')) {
+    return null;
+  }
+
   return (
     // drop-shadow-md applies the shadow to the curve shape, not just a box
     <nav className="fixed top-0 left-0 right-0 z-50 drop-shadow-md">
