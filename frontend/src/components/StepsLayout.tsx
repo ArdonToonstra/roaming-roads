@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import TripDetailMap from '@/components/TripDetailMap';
 import RichText from '@/components/RichText';
 import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media } from '@/types/payload';
@@ -24,12 +25,10 @@ interface TransportationData {
 // Override specific fields for better typing in this component
 type StepFieldsOverride = {
   transportation?: TransportationData;
-  // Fix: Replaced 'any' with a generic object array for RichText nodes
   accommodation?: string | { name?: string; notes?: Record<string, unknown>[] };
 };
 
 // Define StepBlock as a UNION of the two modified types
-// This allows TS to narrow types based on blockType
 type FullDayStep = Omit<CmsFullDayBlock, 'transportation' | 'accommodation'> & StepFieldsOverride;
 type WaypointStep = Omit<CmsWaypointBlock, 'transportation' | 'accommodation'> & StepFieldsOverride;
 
@@ -65,7 +64,6 @@ function buildConnectorLabel(prev: StepBlock | null, current: StepBlock) {
   const prevTransport = prev.transportation;
   const currentTransport = current.transportation;
   
-  // Logic: Prefer arrival method of current, then departure of prev
   const method = currentTransport?.arrivalMethod || prevTransport?.departureMethod;
   
   if (!method) return null;
@@ -84,12 +82,11 @@ function buildConnectorLabel(prev: StepBlock | null, current: StepBlock) {
 
 // --- Sub-Components ---
 
-// Fix: Replaced 'any[]' with proper GalleryItem interface
 function GalleryCarousel({ items }: { items: GalleryItem[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
-  const [lightbox, setLightbox] = useState<{ url: string; alt: string } | null>(null);
+  const [lightbox, setLightbox] = useState<{ url: string; alt: string; index: number; gallery: Array<{ url: string; alt: string }> } | null>(null);
 
   const updateScrollState = useCallback(() => {
     const el = containerRef.current;
@@ -111,6 +108,28 @@ function GalleryCarousel({ items }: { items: GalleryItem[] }) {
       window.removeEventListener('resize', updateScrollState);
     };
   }, [updateScrollState]);
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    if (!lightbox) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setLightbox(null);
+      } else if (e.key === 'ArrowLeft' && lightbox.index > 0) {
+        const prevIndex = lightbox.index - 1;
+        const prevImage = lightbox.gallery[prevIndex];
+        setLightbox({ ...lightbox, ...prevImage, index: prevIndex });
+      } else if (e.key === 'ArrowRight' && lightbox.index < lightbox.gallery.length - 1) {
+        const nextIndex = lightbox.index + 1;
+        const nextImage = lightbox.gallery[nextIndex];
+        setLightbox({ ...lightbox, ...nextImage, index: nextIndex });
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [lightbox]);
 
   const scrollBy = (dir: 'left' | 'right') => {
     const el = containerRef.current;
@@ -138,7 +157,20 @@ function GalleryCarousel({ items }: { items: GalleryItem[] }) {
               <button 
                 key={idx} 
                 type="button" 
-                onClick={() => setLightbox({ url: getImageUrl(media.url), alt })} 
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent clicking image from activating the step card
+                  const galleryImages = items.map((item, i) => {
+                    const m: Media | null = typeof item.media === 'object' ? item.media : null;
+                    return m ? { url: getImageUrl(m.url), alt: m.alt || `Photo ${i + 1}` } : null;
+                  }).filter(Boolean) as Array<{ url: string; alt: string }>;
+                  
+                  setLightbox({ 
+                    url: getImageUrl(media.url), 
+                    alt, 
+                    index: idx, 
+                    gallery: galleryImages 
+                  });
+                }} 
                 className="flex-shrink-0 w-40 h-32 rounded-lg overflow-hidden snap-start relative focus:outline-none focus:ring-2 focus:ring-[#F57D50] transition-transform active:scale-95"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -152,7 +184,7 @@ function GalleryCarousel({ items }: { items: GalleryItem[] }) {
         {canScrollLeft && (
           <button 
             type="button" 
-            onClick={() => scrollBy('left')} 
+            onClick={(e) => { e.stopPropagation(); scrollBy('left'); }} 
             className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
             aria-label="Scroll left"
           >
@@ -162,7 +194,7 @@ function GalleryCarousel({ items }: { items: GalleryItem[] }) {
         {canScrollRight && (
           <button 
             type="button" 
-            onClick={() => scrollBy('right')} 
+            onClick={(e) => { e.stopPropagation(); scrollBy('right'); }} 
             className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
             aria-label="Scroll right"
           >
@@ -171,28 +203,70 @@ function GalleryCarousel({ items }: { items: GalleryItem[] }) {
         )}
       </div>
 
-      {/* Lightbox */}
-      {lightbox && (
+      {/* Lightbox - Using Portal to escape parent stacking contexts */}
+      {lightbox && typeof document !== 'undefined' && createPortal(
         <div 
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200"
+          className="fixed inset-0 bg-black/95 z-[9999] flex items-center justify-center animate-in fade-in duration-200"
           onClick={() => setLightbox(null)}
         >
-          <div className="relative max-w-5xl w-full h-full flex items-center justify-center">
+          <div className="relative w-full h-full flex items-center justify-center">
+            {/* Close button */}
             <button 
               type="button" 
-              className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+              className="absolute top-4 right-4 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-20"
               onClick={() => setLightbox(null)}
             >
               <X size={24} />
             </button>
+            
+            {/* Previous image button */}
+            {lightbox.index > 0 && (
+              <button 
+                type="button" 
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-4 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-20"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const prevIndex = lightbox.index - 1;
+                  const prevImage = lightbox.gallery[prevIndex];
+                  setLightbox({ ...lightbox, ...prevImage, index: prevIndex });
+                }}
+              >
+                <ChevronLeft size={32} />
+              </button>
+            )}
+            
+            {/* Next image button */}
+            {lightbox.index < lightbox.gallery.length - 1 && (
+              <button 
+                type="button" 
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-4 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-20"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const nextIndex = lightbox.index + 1;
+                  const nextImage = lightbox.gallery[nextIndex];
+                  setLightbox({ ...lightbox, ...nextImage, index: nextIndex });
+                }}
+              >
+                <ChevronRight size={32} />
+              </button>
+            )}
+            
+            {/* Image counter */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-black/50 rounded-full text-white text-sm z-20 backdrop-blur-sm">
+              {lightbox.index + 1} / {lightbox.gallery.length}
+            </div>
+            
+            {/* Main image */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src={lightbox.url} 
               alt={lightbox.alt} 
-              className="max-w-full max-h-[85vh] object-contain rounded shadow-2xl" 
+              className="max-w-[95vw] max-h-[95vh] w-auto h-auto object-contain select-none"
+              onClick={(e) => e.stopPropagation()}
             />
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
@@ -220,7 +294,6 @@ function Connector({ prevBlock, nextBlock }: { prevBlock: StepBlock; nextBlock: 
             )}
           </div>
         ) : (
-          // Simple dot if no transport info
           <div className="relative z-10 w-2 h-2 rounded-full bg-border group-hover:bg-primary/50 transition-colors" />
         )}
       </div>
@@ -239,9 +312,6 @@ function ItineraryBlock({
   active: boolean; 
   onClick: () => void 
 }) {
-  // Fix: Removed unused 'isFullDay' variable
-  // We now use block.blockType directly in the JSX conditions below
-
   return (
     <div
       id={`day-${index + 1}`}
@@ -285,7 +355,6 @@ function ItineraryBlock({
               </div>
             )}
             
-            {/* MOVED: Accommodation is now a small tag here in the header */}
             {block.accommodation && (
               <div className="flex items-center gap-1" title="Accommodation">
                 <Bed size={14} />
@@ -297,7 +366,6 @@ function ItineraryBlock({
               </div>
             )}
 
-            {/* Automatic Type Narrowing via blockType check */}
             {block.blockType === 'fullDay' && block.time && (
               <div className="flex items-center gap-1">
                 <Clock size={14} />
@@ -371,8 +439,6 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
     const element = document.querySelector(`[data-day-index="${index}"]`);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      
-      // Reset the lock after scrolling is likely finished (approximate)
       setTimeout(() => {
         isProgrammaticScroll.current = false;
       }, 1000);
@@ -384,8 +450,6 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
 
     const viewportCenter = window.innerHeight / 2;
 
-    // Use reduce to find the closest element safely
-    // This avoids "type 'never'" errors by explicitly typing the accumulator in the generic
     const closest = entries.reduce<{ idx: number; distance: number } | null>((acc, entry) => {
       if (!entry.isIntersecting) return acc;
       
@@ -397,7 +461,6 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
       
       if (!Number.isFinite(idx)) return acc;
 
-      // If no closest found yet, or this one is closer, update accumulator
       if (!acc || distance < acc.distance) {
         return { idx, distance };
       }
@@ -433,14 +496,12 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
       {/* Scrollable Itinerary - Left/Top */}
       <div className="w-full lg:w-[55%] px-4 sm:px-6 py-10 order-2 lg:order-1 min-h-[100vh]">
         <div className="max-w-2xl mx-auto space-y-2">
-
+          <h2 className="text-3xl font-heading font-bold mb-8 text-[#4C3A7A]">
+            Detailed Itinerary
+          </h2>
           
           {trip.itinerary.map((block, index) => {
-            // Force cast to our enhanced Type Union.
-            // This is safe because we are only reading properties that exist, 
-            // but we need to tell TS that 'transportation' matches our structure.
             const step = block as unknown as StepBlock;
-            
             return (
               <React.Fragment key={block.id || index}>
                 <ItineraryBlock 
@@ -460,7 +521,6 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
             );
           })}
           
-          {/* End of trip marker */}
           <div className="flex flex-col items-center pt-8 text-muted-foreground">
             <div className="w-3 h-3 bg-primary rounded-full mb-2" />
             <span className="text-xs uppercase tracking-widest font-semibold">End of Trip</span>

@@ -26,7 +26,7 @@ export default async function StepsPage({ params }: StepsPageProps) {
   return (
     <div className="steps-page min-h-screen bg-background">
       {/* Subtle header with logo and back button */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50">
+      <div className="sticky top-0 z-50 bg-background border-b border-border">
         <div className="flex items-center justify-between px-4 sm:px-6 py-3">
           <div className="flex items-center gap-4">
             {/* Roaming Roads Logo */}
@@ -53,12 +53,12 @@ export default async function StepsPage({ params }: StepsPageProps) {
             
             {/* Trip title and Detailed Itinerary */}
             <div className="hidden sm:flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">•</span>
+              <span className="text-xs text-muted-foreground"></span>
               <span className="text-sm font-medium text-foreground/80 truncate max-w-xs">
                 {trip.title}
               </span>
-              <span className="text-xs text-muted-foreground">•</span>
-              <span className="text-xs font-medium text-muted-foreground/70 uppercase tracking-wide">
+              <span className="text-xs text-muted-foreground">-</span>
+              <span className="text-xs font-medium text-muted-foreground/70 tracking-wide">
                 Detailed Itinerary
               </span>
             </div>

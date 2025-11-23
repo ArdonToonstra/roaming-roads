@@ -18,7 +18,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Trip Steps | Roaming Roads",
-  description: "Detailed itinerary and map view for your travel adventure.",
+  description: "Detailed itinerary and map view.",
 };
 
 export default function StepsLayout({ children }: { children: React.ReactNode }) {
