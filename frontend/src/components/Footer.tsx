@@ -69,31 +69,31 @@ export default function Footer() {
 
           {/* Categories */}
           <div>
-            <h3 className="font-heading font-bold text-foreground mb-4">Categories</h3>
+            <h3 className="font-heading font-bold text-foreground mb-4">Adventure Types</h3>
             <nav className="space-y-2">
               <Link 
-                href="/adventures?filter=mountains"
+                href="/adventures?category=city_trip"
                 className="block text-muted-foreground hover:text-primary transition-colors text-sm"
               >
-                Mountain Adventures
+                City Trips
               </Link>
               <Link 
-                href="/adventures?filter=culture"
+                href="/adventures?category=road_trip"
                 className="block text-muted-foreground hover:text-primary transition-colors text-sm"
               >
-                Cultural Journeys
+                Road Trips
               </Link>
               <Link 
-                href="/adventures?filter=nature"
+                href="/adventures?category=backpacking"
                 className="block text-muted-foreground hover:text-primary transition-colors text-sm"
               >
-                Nature Expeditions
+                Backpacking
               </Link>
               <Link 
-                href="/adventures?filter=adventure"
+                href="/adventures?category=hiking"
                 className="block text-muted-foreground hover:text-primary transition-colors text-sm"
               >
-                Epic Adventures
+                Hiking Adventures
               </Link>
             </nav>
           </div>

@@ -185,7 +185,15 @@ export const payload = {
   // Get all countries
   // -------------------------------------------------------------------------
   getCountries: async () => {
-    return api.get(API_ENDPOINTS.COUNTRIES)
+    const searchParams = new URLSearchParams()
+    searchParams.set('limit', '1000') // Get all countries
+    if (IS_DEV) {
+      searchParams.set('draft', 'true')
+    }
+    
+    const endpoint = `${API_ENDPOINTS.COUNTRIES}?${searchParams.toString()}`
+    const fetchOptions = IS_DEV ? undefined : { next: { revalidate: 3600 } }
+    return api.get(endpoint, fetchOptions)
   },
 
   // -------------------------------------------------------------------------

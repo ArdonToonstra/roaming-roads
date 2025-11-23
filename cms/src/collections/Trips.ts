@@ -51,6 +51,22 @@ const Trips: CollectionConfig = {
       }
     },
     {
+      name: 'category',
+      label: 'Trip Category',
+      type: 'select',
+      options: [
+        { label: 'City Trip', value: 'city_trip' },
+        { label: 'Road Trip', value: 'road_trip' },
+        { label: 'Backpacking', value: 'backpacking' },
+        { label: 'Hiking', value: 'hiking' },
+      ],
+      required: false,
+      admin: {
+        position: 'sidebar',
+        description: 'Select the type of trip this represents',
+      },
+    },
+    {
       name: 'coverImage',
       label: 'Cover Image',
       type: 'upload',

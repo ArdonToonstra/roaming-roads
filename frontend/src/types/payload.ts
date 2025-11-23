@@ -87,6 +87,7 @@ export interface Country {
   name: string
   slug: string
   countryCode?: string
+  continent?: 'africa' | 'antarctica' | 'asia' | 'europe' | 'north_america' | 'oceania' | 'south_america'
   flagEmoji?: string
   description?: RichTextContent
   capital?: string
@@ -110,6 +111,7 @@ export interface Trip {
   title: string
   slug: string
   status: 'draft' | 'published'
+  category: 'city_trip' | 'road_trip' | 'backpacking' | 'hiking'
   coverImage: string | Media
   highlightsMedia?: Array<{
     media: string | Media

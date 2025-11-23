@@ -226,6 +226,10 @@ export interface Country {
    */
   countryCode: string;
   /**
+   * Select the continent this country belongs to
+   */
+  continent?: ('africa' | 'antarctica' | 'asia' | 'europe' | 'north_america' | 'oceania' | 'south_america') | null;
+  /**
    * Official capital city name
    */
   capital: string;
@@ -327,6 +331,10 @@ export interface Trip {
    */
   slug: string;
   status?: ('draft' | 'published') | null;
+  /**
+   * Select the type of trip this represents
+   */
+  category?: ('city_trip' | 'road_trip' | 'backpacking' | 'hiking') | null;
   coverImage: number | Media;
   /**
    * Select up to 10 key images that represent the best moments of this trip
@@ -878,6 +886,7 @@ export interface TripsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   status?: T;
+  category?: T;
   coverImage?: T;
   highlightsMedia?:
     | T
@@ -979,6 +988,7 @@ export interface TripsSelect<T extends boolean = true> {
 export interface CountriesSelect<T extends boolean = true> {
   name?: T;
   countryCode?: T;
+  continent?: T;
   capital?: T;
   currency?: T;
   currencyName?: T;

@@ -48,6 +48,24 @@ const Countries: CollectionConfig = {
       },
     },
     {
+      name: 'continent',
+      label: 'Continent',
+      type: 'select',
+      options: [
+        { label: 'Africa', value: 'africa' },
+        { label: 'Antarctica', value: 'antarctica' },
+        { label: 'Asia', value: 'asia' },
+        { label: 'Europe', value: 'europe' },
+        { label: 'North America', value: 'north_america' },
+        { label: 'Oceania', value: 'oceania' },
+        { label: 'South America', value: 'south_america' },
+      ],
+      required: false,
+      admin: {
+        description: 'Select the continent this country belongs to',
+      },
+    },
+    {
       name: 'capital',
       label: 'Capital City',
       type: 'text',
