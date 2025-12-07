@@ -25,15 +25,15 @@ interface AdventureFiltersProps {
 function TripCard({ trip }: { trip: Trip }) {
   const imageUrl = getImageUrl(trip.coverImage);
 
-  const country = (trip.countries && Array.isArray(trip.countries) && trip.countries.length > 0 && typeof trip.countries[0] === 'object') 
-    ? (trip.countries[0] as { name: string }).name 
+  const country = (trip.countries && Array.isArray(trip.countries) && trip.countries.length > 0 && typeof trip.countries[0] === 'object')
+    ? (trip.countries[0] as { name: string }).name
     : 'Adventure';
 
   return (
     <Link href={`/trips/${trip.slug || trip.id}`} className="group">
       <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
         <div className="aspect-[4/3] bg-muted overflow-hidden">
-          <img 
+          <img
             src={imageUrl}
             alt={trip.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -46,15 +46,15 @@ function TripCard({ trip }: { trip: Trip }) {
               {formatCategory(trip.category)}
             </span>
           </div>
-          
+
           <h3 className="font-heading font-bold text-xl text-card-foreground mb-2 group-hover:text-primary transition-colors">
             {trip.title}
           </h3>
-          
+
           <p className="text-muted-foreground mb-4 line-clamp-2 flex-grow">
             {trip.description}
           </p>
-          
+
           <div className="mt-auto space-y-2">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <MapPin className="w-4 h-4" />
@@ -73,12 +73,12 @@ function TripCard({ trip }: { trip: Trip }) {
   );
 }
 
-function FilterDropdown({ 
-  label, 
-  options, 
-  value, 
-  onChange, 
-  placeholder = "All" 
+function FilterDropdown({
+  label,
+  options,
+  value,
+  onChange,
+  placeholder = "All"
 }: {
   label: string;
   options: { value: string; label: string }[];
@@ -89,8 +89,8 @@ function FilterDropdown({
   return (
     <div className="flex flex-col gap-1">
       <label className="text-xs font-medium text-muted-foreground">{label}</label>
-      <select 
-        value={value} 
+      <select
+        value={value}
         onChange={(e) => onChange(e.target.value)}
         className="px-2 py-1.5 text-sm bg-background border border-border rounded text-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent"
       >
@@ -109,7 +109,7 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  
+
   const [filters, setFilters] = useState<TripFilters>({});
   const [sortBy, setSortBy] = useState<SortOption>('newest');
   const [searchTerm, setSearchTerm] = useState('');
@@ -118,12 +118,12 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
   // Initialize filters from URL parameters
   useEffect(() => {
     const urlFilters: TripFilters = {};
-    
+
     if (searchParams.get('category')) urlFilters.category = searchParams.get('category')!;
     if (searchParams.get('continent')) urlFilters.continent = searchParams.get('continent')!;
     if (searchParams.get('country')) urlFilters.country = searchParams.get('country')!;
     if (searchParams.get('activity')) urlFilters.activity = searchParams.get('activity')!;
-    
+
     const hasUrlFilters = Object.values(urlFilters).some(v => v);
     if (hasUrlFilters) {
       setFilters(urlFilters);
@@ -170,10 +170,10 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
 
     // Apply text search
     if (searchTerm) {
-      result = result.filter(trip => 
+      result = result.filter(trip =>
         trip.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         trip.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        trip.countries?.some(country => 
+        trip.countries?.some(country =>
           typeof country === 'object' && country.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
       );
@@ -193,21 +193,21 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
       ...filters,
       [key]: value || undefined
     };
-    
+
     setFilters(newFilters);
     updateURL(newFilters, searchTerm, sortBy);
   };
 
   const updateURL = (newFilters: TripFilters, search: string, sort: SortOption) => {
     const params = new URLSearchParams();
-    
+
     if (newFilters.category) params.set('category', newFilters.category);
     if (newFilters.continent) params.set('continent', newFilters.continent);
     if (newFilters.country) params.set('country', newFilters.country);
     if (newFilters.activity) params.set('activity', newFilters.activity);
     if (search) params.set('search', search);
     if (sort !== 'newest') params.set('sort', sort);
-    
+
     const newURL = params.toString() ? `${pathname}?${params.toString()}` : pathname;
     router.replace(newURL, { scroll: false });
   };
@@ -254,11 +254,10 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors ${
-                showFilters || hasActiveFilters
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-background border border-border text-foreground hover:bg-muted'
-              }`}
+              className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors ${showFilters || hasActiveFilters
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-background border border-border text-foreground hover:bg-muted'
+                }`}
             >
               <Filter className="w-4 h-4" />
               Filters
@@ -287,21 +286,21 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
                 value={filters.category || ''}
                 onChange={(value) => updateFilter('category', value)}
               />
-              
+
               <FilterDropdown
                 label="Continent"
                 options={filterOptions.continents}
                 value={filters.continent || ''}
                 onChange={(value) => updateFilter('continent', value)}
               />
-              
+
               <FilterDropdown
                 label="Country"
                 options={filterOptions.countries}
                 value={filters.country || ''}
                 onChange={(value) => updateFilter('country', value)}
               />
-              
+
               <FilterDropdown
                 label="Activity"
                 options={filterOptions.activities}
@@ -310,7 +309,7 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
                 placeholder="All Activities"
               />
             </div>
-            
+
             {hasActiveFilters && (
               <div className="mt-3 flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">
@@ -334,7 +333,7 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
         {/* Results Count */}
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-heading font-bold text-foreground">
-            {filteredAndSortedTrips.length === trips.length 
+            {filteredAndSortedTrips.length === trips.length
               ? `All Adventures (${trips.length})`
               : `${filteredAndSortedTrips.length} of ${trips.length} Adventures`
             }

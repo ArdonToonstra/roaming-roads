@@ -3,12 +3,12 @@ import type { RichTextContent, Trip, Country } from '@/types/payload';
 // Extract activities from rich text content
 export function extractActivitiesFromRichText(richText: RichTextContent | undefined): string[] {
   if (!richText || typeof richText !== 'object') return [];
-  
+
   const activities: string[] = [];
-  
+
   function traverseNode(node: Record<string, unknown>): void {
     if (typeof node !== 'object' || !node) return;
-    
+
     // Handle different node types based on Lexical format
     if (node.type === 'paragraph' || node.type === 'listitem') {
       if (node.children && Array.isArray(node.children)) {
@@ -18,18 +18,18 @@ export function extractActivitiesFromRichText(richText: RichTextContent | undefi
             textContent += child.text;
           }
         });
-        
+
         if (textContent.trim()) {
           activities.push(textContent.trim());
         }
       }
     }
-    
+
     // Recursively traverse children
     if (node.children && Array.isArray(node.children)) {
       (node.children as Record<string, unknown>[]).forEach(traverseNode);
     }
-    
+
     // Handle root level nodes
     if (node.root && typeof node.root === 'object' && node.root !== null) {
       const root = node.root as Record<string, unknown>;
@@ -38,17 +38,17 @@ export function extractActivitiesFromRichText(richText: RichTextContent | undefi
       }
     }
   }
-  
+
   // Start traversal
   traverseNode(richText);
-  
+
   return activities.filter(activity => activity.length > 0);
 }
 
 // Get unique continents from trips (through their countries)
 export function getUniqueContinents(trips: Trip[]): string[] {
   const continents = new Set<string>();
-  
+
   trips.forEach(trip => {
     if (trip.countries && Array.isArray(trip.countries)) {
       trip.countries.forEach(country => {
@@ -58,14 +58,14 @@ export function getUniqueContinents(trips: Trip[]): string[] {
       });
     }
   });
-  
+
   return Array.from(continents).sort();
 }
 
 // Get unique countries from trips
 export function getUniqueCountries(trips: Trip[]): Country[] {
   const countriesMap = new Map<string, Country>();
-  
+
   trips.forEach(trip => {
     if (trip.countries && Array.isArray(trip.countries)) {
       trip.countries.forEach(country => {
@@ -75,35 +75,35 @@ export function getUniqueCountries(trips: Trip[]): Country[] {
       });
     }
   });
-  
+
   return Array.from(countriesMap.values()).sort((a, b) => a.name.localeCompare(b.name));
 }
 
 // Get unique activities from all trips
 export function getUniqueActivities(trips: Trip[]): string[] {
   const activities = new Set<string>();
-  
+
   trips.forEach(trip => {
     const tripActivities = extractActivitiesFromRichText(trip.activities);
     tripActivities.forEach(activity => activities.add(activity));
   });
-  
+
   return Array.from(activities).sort();
 }
 
 // Parse period strings for sorting (e.g., "June 2025", "December 2024")
 export function parsePeriod(period: string | undefined): Date | null {
   if (!period) return null;
-  
+
   try {
     // Handle formats like "June 2025", "December 2024", etc.
     const monthYearRegex = /^(\w+)\s+(\d{4})$/i;
     const match = period.match(monthYearRegex);
-    
+
     if (match) {
       const [, monthStr, yearStr] = match;
       const year = parseInt(yearStr, 10);
-      
+
       // Month names to numbers
       const monthMap: Record<string, number> = {
         'january': 0, 'jan': 0,
@@ -119,13 +119,13 @@ export function parsePeriod(period: string | undefined): Date | null {
         'november': 10, 'nov': 10,
         'december': 11, 'dec': 11
       };
-      
+
       const month = monthMap[monthStr.toLowerCase()];
       if (month !== undefined) {
         return new Date(year, month);
       }
     }
-    
+
     // Fallback: try to parse as regular date string
     return new Date(period);
   } catch {
@@ -141,7 +141,7 @@ export function formatCategory(category: string): string {
     'backpacking': 'Backpacking',
     'hiking': 'Hiking'
   };
-  
+
   return categoryMap[category] || category;
 }
 
@@ -156,7 +156,7 @@ export function formatContinent(continent: string): string {
     'oceania': 'Oceania',
     'south_america': 'South America'
   };
-  
+
   return continentMap[continent] || continent;
 }
 
@@ -174,41 +174,42 @@ export function filterTrips(trips: Trip[], filters: TripFilters): Trip[] {
     if (filters.category && trip.category !== filters.category) {
       return false;
     }
-    
+
     // Continent filter (check through countries)
     if (filters.continent) {
       const hasContinent = trip.countries?.some(country => {
-        if (typeof country === 'object') {
-          return country.continent === filters.continent;
+        if (typeof country === 'object' && country.continent) {
+          return String(country.continent).toLowerCase() === String(filters.continent).toLowerCase();
         }
         return false;
       });
       if (!hasContinent) return false;
     }
-    
+
     // Country filter
     if (filters.country) {
       const hasCountry = trip.countries?.some(country => {
         if (typeof country === 'object') {
-          return country.id === filters.country || country.name === filters.country;
+          // Compare as strings to ensure ID match works regardless of type (number vs string)
+          return String(country.id) === String(filters.country) || country.name === filters.country;
         } else if (typeof country === 'string') {
           // Handle case where country is just an ID string
-          return country === filters.country;
+          return String(country) === String(filters.country);
         }
         return false;
       });
       if (!hasCountry) return false;
     }
-    
+
     // Activity filter
     if (filters.activity) {
       const activities = extractActivitiesFromRichText(trip.activities);
-      const hasActivity = activities.some(activity => 
+      const hasActivity = activities.some(activity =>
         activity.toLowerCase().includes(filters.activity!.toLowerCase())
       );
       if (!hasActivity) return false;
     }
-    
+
     return true;
   });
 }
@@ -227,7 +228,7 @@ export function sortTrips(trips: Trip[], sortBy: SortOption): Trip[] {
         }
         // Fallback to creation date if periods can't be parsed
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-        
+
       case 'oldest':
         const dateC = parsePeriod(a.period);
         const dateD = parsePeriod(b.period);
@@ -236,10 +237,10 @@ export function sortTrips(trips: Trip[], sortBy: SortOption): Trip[] {
         }
         // Fallback to creation date if periods can't be parsed
         return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-        
+
       case 'title':
         return a.title.localeCompare(b.title);
-        
+
       default:
         return 0;
     }
