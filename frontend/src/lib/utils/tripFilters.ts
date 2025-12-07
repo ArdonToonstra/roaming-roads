@@ -139,7 +139,8 @@ export function formatCategory(category: string): string {
     'city_trip': 'City Trip',
     'road_trip': 'Road Trip',
     'backpacking': 'Backpacking',
-    'hiking': 'Hiking'
+    'hiking': 'Hiking',
+    'base_camp': 'Base Camp'
   };
 
   return categoryMap[category] || category;
@@ -171,8 +172,11 @@ export interface TripFilters {
 export function filterTrips(trips: Trip[], filters: TripFilters): Trip[] {
   return trips.filter(trip => {
     // Category filter
-    if (filters.category && trip.category !== filters.category) {
-      return false;
+    if (filters.category) {
+      // Check if the trip has categories and if the selected filter is in its list
+      if (!trip.category || !Array.isArray(trip.category) || !trip.category.includes(filters.category as any)) {
+        return false;
+      }
     }
 
     // Continent filter (check through countries)

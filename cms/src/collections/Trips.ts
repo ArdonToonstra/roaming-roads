@@ -54,11 +54,13 @@ const Trips: CollectionConfig = {
       name: 'category',
       label: 'Trip Category',
       type: 'select',
+      hasMany: true,
       options: [
         { label: 'City Trip', value: 'city_trip' },
         { label: 'Road Trip', value: 'road_trip' },
         { label: 'Backpacking', value: 'backpacking' },
         { label: 'Hiking', value: 'hiking' },
+        { label: 'Base Camp', value: 'base_camp' },
       ],
       required: false,
       admin: {

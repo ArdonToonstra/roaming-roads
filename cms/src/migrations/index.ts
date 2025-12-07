@@ -4,6 +4,7 @@ import * as migration_20251014_210919 from './20251014_210919';
 import * as migration_20251026_171325_itinerary_and_countries_improvements from './20251026_171325_itinerary_and_countries_improvements';
 import * as migration_20251026_181852 from './20251026_181852';
 import * as migration_20251123_214524 from './20251123_214524';
+import * as migration_20251207_170607_update_trips_category from './20251207_170607_update_trips_category';
 
 export const migrations = [
   {
@@ -34,6 +35,11 @@ export const migrations = [
   {
     up: migration_20251123_214524.up,
     down: migration_20251123_214524.down,
-    name: '20251123_214524'
+    name: '20251123_214524',
+  },
+  {
+    up: migration_20251207_170607_update_trips_category.up,
+    down: migration_20251207_170607_update_trips_category.down,
+    name: '20251207_170607_update_trips_category'
   },
 ];

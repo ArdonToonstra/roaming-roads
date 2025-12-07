@@ -334,7 +334,7 @@ export interface Trip {
   /**
    * Select the type of trip this represents
    */
-  category?: ('city_trip' | 'road_trip' | 'backpacking' | 'hiking') | null;
+  category?: ('city_trip' | 'road_trip' | 'backpacking' | 'hiking' | 'base_camp')[] | null;
   coverImage: number | Media;
   /**
    * Select up to 10 key images that represent the best moments of this trip

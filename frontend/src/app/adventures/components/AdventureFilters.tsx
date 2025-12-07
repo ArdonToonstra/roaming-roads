@@ -40,12 +40,7 @@ function TripCard({ trip }: { trip: Trip }) {
           />
         </div>
         <div className="p-6 flex flex-col flex-grow">
-          {/* Category Badge */}
-          <div className="mb-3">
-            <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full">
-              {formatCategory(trip.category)}
-            </span>
-          </div>
+
 
           <h3 className="font-heading font-bold text-xl text-card-foreground mb-2 group-hover:text-primary transition-colors">
             {trip.title}
@@ -141,7 +136,7 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
 
   // Extract filter options from trips data
   const filterOptions = useMemo(() => {
-    const categories = [...new Set(trips.map(trip => trip.category))].filter(Boolean).map(category => ({
+    const categories = [...new Set(trips.flatMap(trip => trip.category || []))].filter(Boolean).map(category => ({
       value: category,
       label: formatCategory(category)
     }));

@@ -111,7 +111,7 @@ export interface Trip {
   title: string
   slug: string
   status: 'draft' | 'published'
-  category: 'city_trip' | 'road_trip' | 'backpacking' | 'hiking'
+  category: ('city_trip' | 'road_trip' | 'backpacking' | 'hiking' | 'base_camp')[]
   coverImage: string | Media
   highlightsMedia?: Array<{
     media: string | Media
