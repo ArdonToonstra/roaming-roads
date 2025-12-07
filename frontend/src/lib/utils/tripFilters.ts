@@ -174,7 +174,7 @@ export function filterTrips(trips: Trip[], filters: TripFilters): Trip[] {
     // Category filter
     if (filters.category) {
       // Check if the trip has categories and if the selected filter is in its list
-      if (!trip.category || !Array.isArray(trip.category) || !trip.category.includes(filters.category as any)) {
+      if (!trip.category || !Array.isArray(trip.category) || !trip.category.includes(filters.category as Trip['category'][number])) {
         return false;
       }
     }
