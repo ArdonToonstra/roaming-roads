@@ -55,7 +55,7 @@ _ReSharper.*/
 # Package Manager files
 packages/
 *.orig
-cms/.pnpm-store/
+web/.pnpm-store/
 
 
 # Visual Studio Code
