@@ -33,7 +33,7 @@
 *.scss
 *.less
 # Allow SCSS in CMS admin customization
-!cms/src/app/(payload)/custom.scss
+!web/src/app/(payload)/custom.scss
 
 # Visual Studio files
 .vs/
