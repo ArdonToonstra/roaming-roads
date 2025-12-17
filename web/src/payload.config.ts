@@ -34,19 +34,21 @@ export default buildConfig({
     },
   },
   // Public base URL of the deployed CMS (used for generating absolute asset URLs)
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined),
-  // Build allowed origin arrays only if we actually have values; otherwise let Payload defaults apply
-  ...(function(){
-    const resolvedServer = process.env.NEXT_PUBLIC_SERVER_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined)
-    const corsList = (process.env.ALLOWED_ORIGINS?.split(',') || []).map(o=>o.trim()).filter(Boolean)
-    const csrfList = (process.env.CSRF_ORIGINS?.split(',') || []).map(o=>o.trim()).filter(Boolean)
-    if (resolvedServer && !corsList.length) corsList.push(resolvedServer)
-    if (resolvedServer && !csrfList.length) csrfList.push(resolvedServer)
-    const conf: { cors?: string[]; csrf?: string[] } = {}
-    if (corsList.length) conf.cors = corsList
-    if (csrfList.length) conf.csrf = csrfList
-    return conf
-  })(),
+  // Critical: This MUST match the domain you are visiting the Admin panel on.
+  // If you are on roamingroads.nl/admin, this needs to be https://roamingroads.nl
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'https://www.roamingroads.nl',
+
+  // Explicitly allowing both the main domain and Vercel Deployment URLs
+  cors: [
+    'https://roamingroads.nl',
+    'https://www.roamingroads.nl',
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '',
+  ].filter(Boolean),
+  csrf: [
+    'https://roamingroads.nl',
+    'https://www.roamingroads.nl',
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '',
+  ].filter(Boolean),
   collections: [Users, Media, Trips, Countries, Accommodations],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
