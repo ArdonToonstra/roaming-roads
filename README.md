@@ -4,19 +4,21 @@ A travel content management platform built with Payload CMS and Next.js.
 
 ## Architecture
 
-This is a monorepo with two main applications:
+This project is now a single Next.js application containing both the frontend and the CMS:
 
-- **`/cms`** - Payload CMS (headless backend + admin panel)
-- **`/frontend`** - Next.js frontend application *(coming soon)*
+- **`/web`** - Main application (Next.js 15 + Payload 3.0)
+  - **`src/app/(frontend)`** - Public facing travel website
+  - **`src/app/(payload)`** - Admin panel and CMS API
 
 ## Deployment
 
 ### Vercel Setup
 
-The Payload CMS (`/cms`) is deployed as a full-stack Next.js application on Vercel with:
+The application (`/web`) is deployed as a full-stack Next.js application on Vercel with:
 - **Backend**: Payload CMS with PostgreSQL database
-- **Frontend**: Admin panel for content management
-- **API**: GraphQL/REST endpoints for content consumption
+- **Frontend**: Next.js App Router
+- **Admin**: Accessible at `/admin`
+- **API**: GraphQL/REST endpoints at `/api`
 
 ### Environment Variables
 
@@ -29,7 +31,7 @@ POSTGRES_URL=your_vercel_postgres_url
 
 # Payload
 PAYLOAD_SECRET=your-32-char-secret-key
-NEXT_PUBLIC_SERVER_URL=https://your-cms-domain.vercel.app
+NEXT_PUBLIC_SERVER_URL=https://your-domain.vercel.app
 
 # Optional - for file uploads
 UPLOADTHING_SECRET=your_uploadthing_secret
@@ -38,25 +40,25 @@ UPLOADTHING_APP_ID=your_uploadthing_app_id
 
 ### Local Development
 
-1. **Start the CMS**:
+1. **Start the Database**:
    ```bash
-   cd cms
-   docker compose up
+   cd web
+   docker compose up -d postgres
    ```
-   Access at: http://localhost:3000
 
-2. **Frontend** (when created):
+2. **Run the Application**:
    ```bash
-   cd frontend
-   npm run dev
+   pnpm dev
    ```
+   - Website: http://localhost:3000
+   - Admin Panel: http://localhost:3000/admin
 
 ## Content API
 
 Once deployed, the Payload CMS provides:
-- **GraphQL**: `https://your-cms.vercel.app/api/graphql`
-- **REST**: `https://your-cms.vercel.app/api/[collection]`
-- **Admin Panel**: `https://your-cms.vercel.app/admin`
+- **GraphQL**: `https://your-domain.vercel.app/api/graphql`
+- **REST**: `https://your-domain.vercel.app/api/[collection]`
+- **Admin Panel**: `https://your-domain.vercel.app/admin`
 
 ## Collections
 
