@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useMemo, useRef } from 'react';
-import dynamic from 'next/dynamic';
 import type { Trip } from '@/types/payload';
 import { useRouter } from 'next/navigation';
 import 'leaflet/dist/leaflet.css';
@@ -11,7 +10,8 @@ import Link from 'next/link';
 import { getImageUrl } from '@/lib/images';
 import type * as L from 'leaflet';
 
-// Types for Leaflet
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+
 // Types for Leaflet
 interface LeafletMapInstance extends L.Map {
   fitBounds(bounds: unknown, options?: { padding?: [number, number]; maxZoom?: number }): this;
@@ -19,10 +19,8 @@ interface LeafletMapInstance extends L.Map {
 }
 
 interface LeafletModule {
-  latLngBounds: (coords: Array<[number, number]>) => {
-    pad: (amount: number) => unknown;
-  };
-  divIcon: (options: { html: string; className: string; iconSize: [number, number] }) => unknown;
+  latLngBounds: (coords: Array<[number, number]>) => any;
+  divIcon: (options: { html: string; className: string; iconSize: [number, number] }) => any;
   Icon?: {
     Default?: {
       prototype: Record<string, unknown>;
@@ -30,12 +28,6 @@ interface LeafletModule {
     };
   };
 }
-
-// Dynamically import react-leaflet components to avoid SSR issues
-const MapContainer: any = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
-const TileLayer: any = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
-const Marker: any = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false });
-const Popup: any = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false });
 
 // A simple card component for the popup
 function PopupCard({ trip }: { trip: Trip }) {
@@ -118,13 +110,10 @@ export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMap
       }
     }).catch(() => { });
 
-    // Cleanup: remove map instance if strict mode re-mounts
+    // No manual cleanup needed for react-leaflet v5 compatible with React 19 Strict Mode?
+    // Actually, good practice to keep the ref cleanup if we stored it, but react-leaflet handles the container.
     return () => {
-      const map = mapRef.current;
-      if (map) {
-        map.remove();
-        mapRef.current = null;
-      }
+      mapRef.current = null;
     };
   }, [markers]);
 
@@ -138,7 +127,7 @@ export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMap
         center={initialCenter}
         zoom={initialZoom}
         className="h-full w-full"
-        whenCreated={(map: any) => { mapRef.current = map; }}
+        ref={(map: any) => { if (map) mapRef.current = map; }}
         scrollWheelZoom={true}
         zoomControl={true}
         doubleClickZoom={true}

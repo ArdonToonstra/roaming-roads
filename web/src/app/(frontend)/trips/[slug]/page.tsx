@@ -1,4 +1,4 @@
-import { payload } from '@/lib/api';
+import { data } from '@/lib/data';
 import Link from 'next/link';
 import { MapPin, Calendar, Clock, Camera, EuroIcon, ArrowLeft, Navigation, Globe, Users, AlertTriangle, Bed, Target, Info } from 'lucide-react';
 import { Trip, Media, Country, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
@@ -20,10 +20,10 @@ async function getTrip(slugOrId: string): Promise<Trip | null> {
     if (slugOrId.match(/\.(png|jpg|jpeg|gif|svg|css|js|ico|woff|woff2|ttf|eot)$/i)) {
       return null;
     }
-    
+
     console.log('Fetching trip with slug/ID:', slugOrId);
-    const response = await payload.getTrip(slugOrId);
-    console.log('Trip response:', response);
+    const response = await data.getTrip(slugOrId);
+    console.log('Trip response:', response ? 'Found' : 'Not Found');
     return response;
   } catch (error) {
     console.error('Failed to fetch trip:', error);
@@ -41,11 +41,11 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
   const rawCoords = (block as any).location?.coordinates;
   const hasCoords = Array.isArray(rawCoords) && rawCoords.length >= 2 && typeof rawCoords[0] === 'number' && typeof rawCoords[1] === 'number';
   const coordsText = hasCoords ? `${rawCoords[1].toFixed(4)}, ${rawCoords[0].toFixed(4)}` : null;
-  
+
   return (
-  <div id={`day-${index + 1}`} data-day-index={index} className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300">
+    <div id={`day-${index + 1}`} data-day-index={index} className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300">
       <div className="flex items-start gap-4 mb-6">
-        <div 
+        <div
           className="w-10 h-10 rounded-full flex items-center justify-center font-heading font-bold text-white flex-shrink-0"
           style={{ backgroundColor: '#F57D50' }}
         >
@@ -55,7 +55,7 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
           <h3 className="text-2xl font-heading font-bold mb-2" style={{ color: '#4C3A7A' }}>
             {block.locationName}
           </h3>
-          
+
           <div className="flex items-center gap-4 mb-4 text-sm" style={{ color: '#2A9D8F' }}>
             {block.regionProvince && (
               <div className="flex items-center gap-1">
@@ -63,14 +63,14 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
                 <span>{block.regionProvince}</span>
               </div>
             )}
-            
+
             {isFullDay && (block as CmsFullDayBlock).time && (
               <div className="flex items-center gap-1">
                 <Clock size={16} />
                 <span>{(block as CmsFullDayBlock).time}</span>
               </div>
             )}
-            
+
             {coordsText ? (
               <div className="flex items-center gap-1">
                 <Navigation size={16} />
@@ -86,26 +86,26 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
           </div>
         </div>
       </div>
-      
+
       {block.description && (
         <p className="mb-6 text-lg leading-relaxed" style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
           {block.description}
         </p>
       )}
-      
+
       {block.activities && (
         <div className="mb-6">
           <h4 className="text-lg font-heading font-bold mb-3" style={{ color: '#2A9D8F' }}>
             Activities & Details
           </h4>
-          <RichText 
+          <RichText
             content={block.activities}
             className="prose max-w-none"
             style={{ fontFamily: 'Lato, sans-serif' }}
           />
         </div>
       )}
-      
+
       {/* Transportation info for full days */}
       {isFullDay && (block as CmsFullDayBlock).transportation && (
         <div className="mb-6 p-4 rounded-lg" style={{ backgroundColor: '#F4F1ED' }}>
@@ -119,7 +119,7 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
           </div>
         </div>
       )}
-      
+
       {/* Budget info for full days */}
       {isFullDay && (block as CmsFullDayBlock).budget && (
         <div className="mb-6 p-4 rounded-lg" style={{ backgroundColor: '#F4F1ED' }}>
@@ -134,7 +134,7 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
           </div>
         </div>
       )}
-      
+
       {/* Gallery */}
       {block.gallery && block.gallery.length > 0 && (
         <div className="mb-6">
@@ -145,10 +145,10 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
             {block.gallery.map((item, idx) => {
               const media = typeof item.media === 'object' ? item.media as Media : null;
               if (!media) return null;
-              
+
               return (
                 <div key={idx} className="rounded-lg overflow-hidden">
-                  <img 
+                  <img
                     src={getImageUrl(media.url)}
                     alt={item.caption || media.alt || `Photo ${idx + 1}`}
                     className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
@@ -164,7 +164,7 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
           </div>
         </div>
       )}
-      
+
       {/* Tips for full days */}
       {isFullDay && (block as CmsFullDayBlock).tips && (
         <div className="p-4 rounded-lg" style={{ backgroundColor: '#2A9D8F', color: 'white' }}>
@@ -181,11 +181,11 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
 export default async function TripDetailPage({ params }: TripPageProps) {
   const { slug } = await params;
   const trip = await getTrip(slug);
-  
+
   if (!trip) {
     notFound();
   }
-  
+
   const coverImage = trip.coverImage;
   // Prefer hero size if available
   let imageUrl = '/placeholder-trip.jpg';
@@ -198,38 +198,38 @@ export default async function TripDetailPage({ params }: TripPageProps) {
   } else if (typeof coverImage === 'string') {
     imageUrl = getImageUrl(coverImage);
   }
-  
-  const country = (trip.countries && Array.isArray(trip.countries) && trip.countries.length > 0 && typeof trip.countries[0] === 'object') 
-    ? (trip.countries[0] as Country).name 
+
+  const country = (trip.countries && Array.isArray(trip.countries) && trip.countries.length > 0 && typeof trip.countries[0] === 'object')
+    ? (trip.countries[0] as Country).name
     : 'Unknown Country';
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F4F1ED' }}>
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center text-white -mt-16">
-        <img 
+        <img
           src={imageUrl}
           alt={trip.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/40" />
-        
+
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <Link 
+          <Link
             href="/trips"
             className="inline-flex items-center gap-2 text-white hover:text-[#F57D50] transition-colors duration-200 mb-8">
           </Link>
-          
+
           <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
             {trip.title}
           </h1>
-          
+
           <div className="flex items-center justify-center gap-6 text-lg mb-8">
             <div className="flex items-center gap-2">
               <MapPin size={20} />
               <span style={{ fontFamily: 'Lato, sans-serif' }}>{country}</span>
             </div>
-            
+
             {trip.period && (
               <div className="flex items-center gap-2">
                 <Calendar size={20} />
@@ -237,7 +237,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
               </div>
             )}
           </div>
-          
+
           {trip.description && (
             <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
               {trip.description}
@@ -249,12 +249,12 @@ export default async function TripDetailPage({ params }: TripPageProps) {
       {/* Trip Overview */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Two Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Left Column - Detailed Information */}
             <div className="lg:col-span-2 space-y-12">
-              
+
               {/* Quick Stats */}
               <div className="border-b border-gray-200 pb-8">
                 <h3 className="text-2xl font-heading font-bold mb-6" style={{ color: '#4C3A7A' }}>
@@ -279,7 +279,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                       )}
                     </div>
                   </div>
-                  
+
                   {/* Budget */}
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-gray-600">
@@ -299,7 +299,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                       <p className="text-gray-500 italic">Not specified</p>
                     )}
                   </div>
-                  
+
                   {/* Duration */}
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-gray-600">
@@ -353,7 +353,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                 </div>
                 {trip.activities ? (
                   <div className="bg-gray-50 p-6 rounded-lg">
-                    <RichText 
+                    <RichText
                       content={trip.activities}
                       className="prose max-w-none text-gray-700"
                       style={{ fontFamily: 'Lato, sans-serif' }}
@@ -374,7 +374,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                 </div>
                 {trip.importantPreparations ? (
                   <div className="bg-orange-50 border-l-4 border-orange-400 p-6 rounded-r-lg">
-                    <RichText 
+                    <RichText
                       content={trip.importantPreparations}
                       className="prose max-w-none text-gray-700"
                       style={{ fontFamily: 'Lato, sans-serif' }}
@@ -400,7 +400,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                     {trip.featuredAccommodations.map((item, index) => {
                       const accommodation = typeof item.accommodation === 'object' ? item.accommodation : null;
                       if (!accommodation) return null;
-                      
+
                       return (
                         <div key={index} className="border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors">
                           <h4 className="font-heading font-bold text-gray-800 mb-1">
@@ -423,13 +423,13 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                 )}
               </div>
             </div>
-            
+
             {/* Right Column - Map and Journey CTA */}
             <div className="lg:col-span-1 space-y-8">
               {/* Map */}
               <div className="sticky top-8">
                 <MountSmallOverview trip={trip} />
-                
+
                 {/* Detailed Journey CTA */}
                 {trip.itinerary && trip.itinerary.length > 0 && (
                   <div className="mt-8 bg-gradient-to-br from-gray-50 to-gray-100 p-8 rounded-2xl border border-gray-200">
@@ -444,7 +444,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                     <p className="text-gray-600 mb-6 leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
                       Complete step-by-step itinerary with interactive maps and detailed locations.
                     </p>
-                    
+
                     <div className="grid grid-cols-3 gap-4 mb-6 text-center">
                       <div>
                         <div className="text-2xl font-bold" style={{ color: '#2A9D8F' }}>
@@ -465,10 +465,10 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                         <div className="text-xs text-gray-500">Interactive</div>
                       </div>
                     </div>
-                    
-                    <Link 
-                      href={`/trips/${trip.slug || trip.id}/steps`} 
-                      className="block w-full text-center px-6 py-3 text-white font-heading font-bold rounded-xl transition-all duration-300 hover:opacity-90 hover:scale-105" 
+
+                    <Link
+                      href={`/trips/${trip.slug || trip.id}/steps`}
+                      className="block w-full text-center px-6 py-3 text-white font-heading font-bold rounded-xl transition-all duration-300 hover:opacity-90 hover:scale-105"
                       style={{ backgroundColor: '#2A9D8F' }}
                     >
                       View Step-by-Step
@@ -495,18 +495,18 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                 </h2>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {trip.highlightsMedia
                 .sort((a, b) => a.order - b.order)
                 .map((highlight, index) => {
                   const media = typeof highlight.media === 'object' ? highlight.media as Media : null;
                   if (!media) return null;
-                  
+
                   return (
                     <div key={index} className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
                       <div className="relative overflow-hidden">
-                        <img 
+                        <img
                           src={getImageUrl(media.url)}
                           alt={highlight.caption || media.alt || `Highlight ${index + 1}`}
                           className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700"
@@ -530,7 +530,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
 
 
 
-   
+
     </div>
   );
 }

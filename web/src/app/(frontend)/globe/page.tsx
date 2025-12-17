@@ -1,10 +1,10 @@
-import { payload } from '@/lib/api';
-import TripMap from '@/components/TripMap';
+import { data } from '@/lib/data';
+import MountTripMap from '@/components/mountTripMap';
 import type { Trip } from '@/types/payload';
 
 async function getTrips(): Promise<Trip[]> {
   try {
-    const response = await payload.getTrips({ limit: 1000 }) as { docs: Trip[] };
+    const response = await data.getTrips({ limit: 1000 });
     return response.docs;
   } catch (error) {
     console.error('Failed to fetch trips:', error);
@@ -31,7 +31,7 @@ export default async function GlobePage() {
 
       {/* Main content */}
       <main className="overflow-hidden">
-        <TripMap trips={trips} />
+        <MountTripMap trips={trips} />
       </main>
     </div>
   );

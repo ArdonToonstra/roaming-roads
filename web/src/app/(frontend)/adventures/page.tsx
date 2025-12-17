@@ -1,12 +1,12 @@
 import { Suspense } from 'react';
-import { payload } from '@/lib/api';
+import { data } from '@/lib/data';
 import { Trip } from '@/types/payload';
 import AdventureFilters from './components/AdventureFilters';
 
 async function getTrips(): Promise<Trip[]> {
   try {
     // Fetch all trips for filtering (set high limit to get all)
-    const response = await payload.getTrips({ 
+    const response = await data.getTrips({
       limit: 1000,
       depth: 2 // Include full country and media data
     });

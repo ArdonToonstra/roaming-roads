@@ -1,12 +1,13 @@
-"use client";
+'use client';
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import dynamic from 'next/dynamic';
+
+import { useMemo, useRef, useEffect, useState } from 'react';
+import type { Trip, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
 import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
-import type { Trip, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
-import { useMemo, useRef, useEffect, useState } from 'react';
 import { getCombinedCountryBounds, getCountryBounds } from '@/lib/countryBounds';
 import type * as L from 'leaflet';
+import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 
 // Types for Leaflet
 interface LeafletMapInstance extends L.Map {
@@ -15,10 +16,8 @@ interface LeafletMapInstance extends L.Map {
 }
 
 interface LeafletModule {
-  latLngBounds: (coords: Array<[number, number]>) => {
-    pad: (amount: number) => unknown;
-  };
-  divIcon: (options: { html: string; className: string; iconSize: [number, number] }) => unknown;
+  latLngBounds: (coords: Array<[number, number]>) => any;
+  divIcon: (options: { html: string; className: string; iconSize: [number, number] }) => any;
   Icon?: {
     Default?: {
       prototype: Record<string, unknown>;
@@ -26,15 +25,6 @@ interface LeafletModule {
     };
   };
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const MapContainer: any = dynamic(() => import('react-leaflet').then(m => m.MapContainer), { ssr: false });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const TileLayer: any = dynamic(() => import('react-leaflet').then(m => m.TileLayer), { ssr: false });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Marker: any = dynamic(() => import('react-leaflet').then(m => m.Marker), { ssr: false });
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Polyline: any = dynamic(() => import('react-leaflet').then(m => m.Polyline), { ssr: false });
 
 function toNumber(v: unknown): number | null {
   if (typeof v === 'number') return v;
@@ -72,7 +62,6 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
   const mapRef = useRef<LeafletMapInstance | null>(null);
   const leafletRef = useRef<LeafletModule | null>(null);
   const [isLeafletLoaded, setIsLeafletLoaded] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
 
   const markers = useMemo(() => {
     if (!trip.itinerary) return [];
@@ -108,14 +97,9 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
     }
   }, [trip.countries]);
 
-  // Track when component is mounted (client-side only)
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
   // Dynamically import Leaflet and handle bounds fitting
   useEffect(() => {
-    if (typeof window === 'undefined' || !isMounted) return;
+    if (typeof window === 'undefined') return;
     import('leaflet').then((mod) => {
       leafletRef.current = (mod && (mod as any).default) || mod;
       // Configure Leaflet icon paths to use static assets
@@ -134,22 +118,14 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
 
     }).catch(() => { });
 
-    // Cleanup: remove map instance if strict mode re-mounts
     return () => {
-      const map = mapRef.current;
-      if (map) {
-        map.remove();
-        mapRef.current = null;
-      }
+      mapRef.current = null;
     };
-  }, [isMounted]);
+  }, []);
 
   // Separate effect for bounds fitting that runs when map, markers, or countries change
   useEffect(() => {
-    if (!isMounted || !isLeafletLoaded || !mapRef.current || !leafletRef.current) return;
-
-    const map = mapRef.current;
-    const L = leafletRef.current;
+    if (!isLeafletLoaded || !mapRef.current || !leafletRef.current) return;
 
     // Longer delay to ensure map and tiles are fully loaded, especially on page refresh
     const timeoutId = setTimeout(() => {
@@ -182,7 +158,7 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
     }, 300);
 
     return () => clearTimeout(timeoutId);
-  }, [isMounted, isLeafletLoaded, markers, countryBounds]);
+  }, [isLeafletLoaded, markers, countryBounds]);
 
   // Initial center and zoom (will be overridden by useEffect)
   const center: [number, number] = useMemo(() => {
@@ -213,7 +189,7 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
         zoomControl={false}
         touchZoom={false}
         attributionControl={false}
-        ref={(map: LeafletMapInstance | null) => { mapRef.current = map; }}
+        ref={(map: any) => { if (map) mapRef.current = map; }}
       >
         <TileLayer
           attribution={env.MAPTILER_KEY ? '&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors' : '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'}
@@ -229,16 +205,14 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
         {/* Small orange dot markers - only render when Leaflet is loaded */}
         {isLeafletLoaded && markers.map(m => {
           const L = leafletRef.current;
-          if (!L) return null;
-
-          const icon = L.divIcon({
+          const icon = L ? L.divIcon({
             html: '<div class=\"rr-small-dot\"></div>',
             className: '',
             iconSize: [8, 8]
-          });
+          }) : undefined;
 
           return (
-            <Marker key={m.idx} position={[m.coord.lat, m.coord.lng]} icon={icon} />
+            <Marker key={m.idx} position={[m.coord.lat, m.coord.lng]} {...(icon ? { icon } : {})} />
           );
         })}
       </MapContainer>

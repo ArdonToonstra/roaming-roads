@@ -1,13 +1,13 @@
-"use client";
+'use client';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useMemo, useRef } from 'react';
-import dynamic from 'next/dynamic';
 import type { Trip, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
 import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
 import MapController from './MapController';
 import type * as L from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 
 // Types for Leaflet
 interface LeafletMapInstance extends L.Map {
@@ -16,10 +16,8 @@ interface LeafletMapInstance extends L.Map {
 }
 
 interface LeafletModule {
-  latLngBounds: (coords: Array<[number, number]>) => {
-    pad: (amount: number) => unknown;
-  };
-  divIcon: (options: { html: string; className: string; iconSize: [number, number] }) => unknown;
+  latLngBounds: (coords: Array<[number, number]>) => any;
+  divIcon: (options: { html: string; className: string; iconSize: [number, number] }) => any;
   Icon?: {
     Default?: {
       prototype: Record<string, unknown>;
@@ -27,13 +25,6 @@ interface LeafletModule {
     };
   };
 }
-
-// Dynamic imports to avoid SSR issues - using any due to dynamic import limitations
-const MapContainer: any = dynamic(() => import('react-leaflet').then(m => m.MapContainer), { ssr: false });
-const TileLayer: any = dynamic(() => import('react-leaflet').then(m => m.TileLayer), { ssr: false });
-const Marker: any = dynamic(() => import('react-leaflet').then(m => m.Marker), { ssr: false });
-const Popup: any = dynamic(() => import('react-leaflet').then(m => m.Popup), { ssr: false });
-const Polyline: any = dynamic(() => import('react-leaflet').then(m => m.Polyline), { ssr: false });
 
 function toNumber(v: unknown): number | null {
   if (typeof v === 'number') return v;
@@ -125,8 +116,6 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
     return m;
   }, [trip.itinerary]);
 
-
-
   // Dynamically import Leaflet and handle initial bounds fitting
   // Note: MapController handles dynamic focus changes, while this handles initial view
   useEffect(() => {
@@ -158,13 +147,8 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
       }
     }).catch(() => { });
 
-    // Cleanup: remove map instance if strict mode re-mounts
     return () => {
-      const map = mapRef.current;
-      if (map) {
-        map.remove();
-        mapRef.current = null;
-      }
+      mapRef.current = null;
     };
   }, [markers]);
 
@@ -174,10 +158,11 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
   return (
     <div className={`overflow-hidden border border-border bg-card shadow-sm ${heightClass || 'h-[360px]'} z-0`}>
       <MapContainer
+        key={`${trip.id}-${initialCenter[0]}`}
         center={initialCenter}
         zoom={initialZoom}
         className="h-full w-full"
-        ref={(map: LeafletMapInstance | null) => { mapRef.current = map; }}
+        ref={(map: any) => { if (map) mapRef.current = map; }}
         scrollWheelZoom={true}
         zoomControl={true}
         doubleClickZoom={true}
@@ -303,9 +288,6 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
           );
         })}
       </MapContainer>
-      <div className="p-3 text-xs text-muted-foreground border-t border-border">
-        {markers.length > 0 ? `${markers.length} itinerary point${markers.length === 1 ? '' : 's'} mapped` : 'No coordinates for this itinerary yet'}
-      </div>
     </div>
   );
 }
