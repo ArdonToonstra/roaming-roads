@@ -3,10 +3,10 @@
 
 import { useEffect, useMemo, useRef } from 'react';
 import type { Trip } from '@/types/payload';
-import { useRouter } from 'next/navigation';
 import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getImageUrl } from '@/lib/images';
 import type * as L from 'leaflet';
 
@@ -34,7 +34,15 @@ function PopupCard({ trip }: { trip: Trip }) {
   const imageUrl = getImageUrl(trip.coverImage);
   return (
     <div className="w-64">
-      <img src={imageUrl} alt={trip.title} className="w-full h-32 object-cover rounded-t-lg" />
+      <div className="relative w-full h-32">
+        <Image
+          src={imageUrl}
+          alt={trip.title}
+          fill
+          className="object-cover rounded-t-lg"
+          unoptimized
+        />
+      </div>
       <div className="p-3">
         <h3 className="font-heading font-bold text-lg mb-2">{trip.title}</h3>
         <Link href={`/trips/${trip.slug || trip.id}`} className="text-primary font-bold hover:underline text-sm">
@@ -76,7 +84,6 @@ export interface TripMapProps {
 }
 
 export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMapProps) {
-  const router = useRouter();
   const mapRef = useRef<LeafletMapInstance | null>(null);
   const leafletRef = useRef<LeafletModule | null>(null);
 
@@ -147,7 +154,7 @@ export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMap
             opacity={1}
           />
         )}
-        {markers.map(({ trip, coord }, idx) => {
+        {markers.map(({ trip, coord }) => {
           if (!coord) return null;
           const numericId = typeof trip.id === 'number' ? trip.id : Number(trip.id);
           const highlighted = hoveredTripId === numericId;

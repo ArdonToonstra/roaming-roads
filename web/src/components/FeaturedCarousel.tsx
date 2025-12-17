@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Trip } from '@/types/payload';
 import { getImageUrl } from '@/lib/images';
 
@@ -13,10 +14,12 @@ function FeaturedTripCard({ trip }: { trip: Trip }) {
   return (
     <Link href={`/trips/${trip.slug || trip.id}`} className="group block w-full h-full">
       <article className="relative rounded-lg overflow-hidden shadow-lg h-80">
-        <img
+        <Image
           src={imageUrl}
           alt={trip.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          unoptimized
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         <h3 className="absolute bottom-0 left-0 p-6 font-heading font-bold text-xl text-white group-hover:text-primary transition-colors">
@@ -93,9 +96,8 @@ export default function FeaturedCarousel({ items, itemsToShow = 4 }: FeaturedCar
               <button
                 key={pageIndex}
                 onClick={() => goToPage(pageIndex)}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  currentIndex === pageIndex ? 'bg-primary' : 'bg-medium-gray'
-                }`}
+                className={`w-2 h-2 rounded-full transition-colors ${currentIndex === pageIndex ? 'bg-primary' : 'bg-medium-gray'
+                  }`}
                 aria-label={`Go to slide ${pageIndex + 1}`}
               />
             ))}

@@ -36,10 +36,8 @@ function toNumber(v: unknown): number | null {
 }
 
 function extractBlockCoords(block: CmsFullDayBlock | CmsWaypointBlock) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const b: any = block;
   // Candidate fields in descending priority
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const candidates: any[] = [];
   if (b.location?.coordinates) candidates.push(b.location.coordinates);
   // If location itself is an array (direct [lng, lat])
@@ -95,22 +93,17 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
     if (!trip.itinerary) return [];
     const m: { coord: { lat: number; lng: number }; block: CmsFullDayBlock | CmsWaypointBlock; idx: number }[] = [];
     trip.itinerary.forEach((block, idx) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const coord = extractBlockCoords(block as unknown as any);
       if (coord) {
         m.push({ coord, block, idx });
       } else if (process.env.NODE_ENV === 'development') {
-        // eslint-disable-next-line no-console
         console.debug('[TripDetailMap] no coords for block', idx, {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           location: (block as unknown as any).location,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           locationType: typeof (block as unknown as any).location,
         });
       }
     });
     if (process.env.NODE_ENV === 'development') {
-      // eslint-disable-next-line no-console
       console.debug('[TripDetailMap] itinerary blocks:', trip.itinerary.length, 'markers:', m.length);
     }
     return m;
@@ -193,7 +186,6 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
         {markers.map(m => {
           const L = leafletRef.current;
           const isActive = activeIndex === m.idx;
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const blockType = (m.block as any).blockType;
           const isFullDay = blockType === 'fullDay';
           const typeClass = isFullDay ? 'rr-marker-fullday' : 'rr-marker-waypoint';
@@ -230,7 +222,6 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
         {/* Segmented polylines with transportation icons */}
         {markers.length > 1 && markers.slice(0, -1).map((currentMarker, idx) => {
           const nextMarker = markers[idx + 1];
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const nextBlock = nextMarker.block as any;
           const arrivalMethod = nextBlock.transportation?.arrivalMethod;
 

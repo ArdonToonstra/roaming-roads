@@ -19,6 +19,8 @@ import React, { useState, useEffect } from 'react';
 import { useField, useFormFields } from '@payloadcms/ui';
 import { getCountryBounds, getCountryBoundsByName } from '../utils/countryBounds';
 
+import { DynamicMapProps } from './DynamicMapComponent';
+
 type Props = {
   path: string;
 }
@@ -27,7 +29,7 @@ const MapPicker: React.FC<Props> = ({ path }) => {
   const { value, setValue } = useField<[number, number]>({ path });
   const formFields = useFormFields(([fields]) => fields);
   const [isClient, setIsClient] = useState(false);
-  const [MapComponent, setMapComponent] = useState<React.ComponentType<any> | null>(null);
+  const [MapComponent, setMapComponent] = useState<React.ComponentType<DynamicMapProps> | null>(null);
   const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(null);
   const [previewPosition, setPreviewPosition] = useState<[number, number] | null>(null);
   const [mapTilerKey, setMapTilerKey] = useState<string>('');
@@ -44,12 +46,12 @@ const MapPicker: React.FC<Props> = ({ path }) => {
   useEffect(() => {
     // Only run on client side to avoid hydration issues
     if (typeof window === 'undefined') return;
-    
+
     setIsClient(true);
-    
+
     // Get MapTiler key from environment (client-side only)
     setMapTilerKey(process.env.NEXT_PUBLIC_MAPTILER_KEY || '');
-    
+
     // Dynamically import the map component to avoid SSR issues
     import('./DynamicMapComponent')
       .then(module => {
@@ -61,13 +63,13 @@ const MapPicker: React.FC<Props> = ({ path }) => {
   // Separate effect for country bounds to avoid dependency issues
   useEffect(() => {
     if (!isClient) return;
-    
+
     try {
       // Look for country in form data (for trips)
       if (formFields?.country?.value) {
         const countryData = formFields.country.value;
         let bounds = null;
-        
+
         // Try by country code first
         if (typeof countryData === 'object' && countryData && 'countryCode' in countryData) {
           bounds = getCountryBounds(countryData.countryCode as string);
@@ -80,7 +82,7 @@ const MapPicker: React.FC<Props> = ({ path }) => {
         else if (typeof countryData === 'string') {
           bounds = getCountryBoundsByName(countryData);
         }
-        
+
         if (bounds) {
           setCountryBounds(bounds);
         }
@@ -111,10 +113,10 @@ const MapPicker: React.FC<Props> = ({ path }) => {
 
   // Prevent hydration mismatches by not rendering anything until client-side
   if (!isClient) {
-    return <div style={{ 
-      height: '400px', 
-      display: 'flex', 
-      alignItems: 'center', 
+    return <div style={{
+      height: '400px',
+      display: 'flex',
+      alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: '#f5f5f5',
       border: '1px solid #ddd',
@@ -135,11 +137,11 @@ const MapPicker: React.FC<Props> = ({ path }) => {
           {mapTilerKey && <span> Use the search box in the top-right to find places quickly.</span>}
         </p>
         {!mapTilerKey && (
-          <div style={{ 
-            padding: '0.5rem', 
-            backgroundColor: '#fff3cd', 
-            border: '1px solid #ffeaa7', 
-            borderRadius: '4px', 
+          <div style={{
+            padding: '0.5rem',
+            backgroundColor: '#fff3cd',
+            border: '1px solid #ffeaa7',
+            borderRadius: '4px',
             margin: '0.5rem 0',
             fontSize: '0.8rem',
             color: '#856404'
@@ -147,14 +149,14 @@ const MapPicker: React.FC<Props> = ({ path }) => {
             💡 <strong>Tip:</strong> Add NEXT_PUBLIC_MAPTILER_KEY to .env.local for better maps and place search
           </div>
         )}
-        
+
         {/* Current field value */}
         {value && Array.isArray(value) && value.length === 2 && (
-          <div style={{ 
-            padding: '0.75rem', 
-            backgroundColor: '#f8f9fa', 
-            border: '1px solid #e9ecef', 
-            borderRadius: '4px', 
+          <div style={{
+            padding: '0.75rem',
+            backgroundColor: '#f8f9fa',
+            border: '1px solid #e9ecef',
+            borderRadius: '4px',
             margin: '0.5rem 0',
             fontSize: '0.9rem'
           }}>
@@ -163,7 +165,7 @@ const MapPicker: React.FC<Props> = ({ path }) => {
             <small style={{ color: '#6c757d' }}>Longitude: {value[0].toFixed(6)}, Latitude: {value[1].toFixed(6)}</small>
           </div>
         )}
-        
+
         {/* Preview selection */}
         {previewPosition && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', margin: '0.5rem 0' }}>
@@ -178,8 +180,8 @@ const MapPicker: React.FC<Props> = ({ path }) => {
       </div>
       <div style={{ height: '400px', width: '100%' }}>
         {isClient && MapComponent ? (
-          <MapComponent 
-            center={currentCenter} 
+          <MapComponent
+            center={currentCenter}
             zoom={initialZoom}
             onMapClick={handleMapClick}
             markerPosition={previewPosition}
@@ -188,10 +190,10 @@ const MapPicker: React.FC<Props> = ({ path }) => {
             onSearch={mapTilerKey ? handleSearchLocation : undefined}
           />
         ) : (
-          <div style={{ 
-            height: '100%', 
-            display: 'flex', 
-            alignItems: 'center', 
+          <div style={{
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: '#f5f5f5',
             border: '1px solid #ddd'

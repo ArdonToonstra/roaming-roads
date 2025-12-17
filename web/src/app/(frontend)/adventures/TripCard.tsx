@@ -1,8 +1,8 @@
 "use client";
 import Link from 'next/link';
+import Image from 'next/image';
 import { MapPin, Calendar } from 'lucide-react';
 import { getImageUrl } from '@/lib/images';
-import { formatCategory } from '@/lib/utils/tripFilters';
 import type { Trip } from '@/types/payload';
 
 export default function TripCard({ trip }: { trip: Trip }) {
@@ -14,11 +14,13 @@ export default function TripCard({ trip }: { trip: Trip }) {
   return (
     <Link href={`/trips/${trip.slug || trip.id}`} className="group">
       <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
-        <div className="aspect-[4/3] bg-muted overflow-hidden">
-          <img
+        <div className="aspect-[4/3] bg-muted overflow-hidden relative">
+          <Image
             src={imageUrl}
             alt={trip.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            unoptimized
           />
         </div>
         <div className="p-6 flex flex-col flex-grow">

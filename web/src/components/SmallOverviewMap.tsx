@@ -67,7 +67,6 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
     if (!trip.itinerary) return [];
     const m: { coord: { lat: number; lng: number }; idx: number }[] = [];
     trip.itinerary.forEach((block, idx) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const coord = extractBlockCoords(block as unknown as any);
       if (coord) {
         m.push({ coord, idx });

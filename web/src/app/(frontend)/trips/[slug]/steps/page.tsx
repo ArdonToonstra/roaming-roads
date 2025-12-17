@@ -3,7 +3,7 @@ import { Trip } from '@/types/payload';
 import { notFound } from 'next/navigation';
 import StepsLayout from '@/components/StepsLayout';
 import Link from 'next/link';
-import { ArrowLeft, MapPin } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 interface StepsPageProps { params: Promise<{ slug: string }> }
 
@@ -22,7 +22,7 @@ export default async function StepsPage({ params }: StepsPageProps) {
   const { slug } = await params;
   const trip = await getTrip(slug);
   if (!trip) notFound();
-  
+
   return (
     <div className="steps-page min-h-screen bg-background">
       {/* Subtle header with logo and back button */}
@@ -30,8 +30,8 @@ export default async function StepsPage({ params }: StepsPageProps) {
         <div className="flex items-center justify-between px-4 sm:px-6 py-3">
           <div className="flex items-center gap-4">
             {/* Roaming Roads Logo */}
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors group"
             >
               <div className="w-6 h-6 flex items-center justify-center group-hover:scale-105 transition-transform">
@@ -50,7 +50,7 @@ export default async function StepsPage({ params }: StepsPageProps) {
                 Roaming Roads
               </span>
             </Link>
-            
+
             {/* Trip title and Detailed Itinerary */}
             <div className="hidden sm:flex items-center gap-2">
               <span className="text-xs text-muted-foreground"></span>
@@ -63,10 +63,10 @@ export default async function StepsPage({ params }: StepsPageProps) {
               </span>
             </div>
           </div>
-          
+
           {/* Back button */}
-          <Link 
-            href={`/trips/${slug}`} 
+          <Link
+            href={`/trips/${slug}`}
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-primary hover:bg-card transition-all duration-200 group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
@@ -75,7 +75,7 @@ export default async function StepsPage({ params }: StepsPageProps) {
           </Link>
         </div>
       </div>
-      
+
       {/* Main content */}
       <StepsLayout trip={trip} />
     </div>

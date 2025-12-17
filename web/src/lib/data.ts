@@ -1,6 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import type { Trip, PayloadCollection } from '@/types/payload'
+import type { Trip, PayloadCollection, Country } from '@/types/payload'
 import { env } from './config'
 
 // Helper constants
@@ -18,7 +18,7 @@ export const data = {
     getTrips: async (options: {
         limit?: number;
         page?: number;
-        where?: any;
+        where?: Record<string, unknown>;
         depth?: number
     } = {}): Promise<PayloadCollection<Trip>> => {
         const payload = await getPayload({ config })
@@ -30,6 +30,7 @@ export const data = {
 
         try {
             // Build query
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const where: any = {
                 ...(options.where || {}),
             }
@@ -117,7 +118,7 @@ export const data = {
     // -------------------------------------------------------------------------
     // Get all countries
     // -------------------------------------------------------------------------
-    getCountries: async (): Promise<any[]> => {
+    getCountries: async (): Promise<Country[]> => {
         const payload = await getPayload({ config })
 
         try {
@@ -128,7 +129,7 @@ export const data = {
                 draft: IS_DEV,
             })
 
-            return result.docs
+            return result.docs as unknown as Country[]
         } catch (error) {
             console.error('[LocalAPI] Error fetching countries:', error)
             return []

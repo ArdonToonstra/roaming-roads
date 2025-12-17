@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { MapPin, Calendar, Filter, Grid, List, Search, X } from 'lucide-react';
+import { MapPin, Calendar, Filter, Search, X } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Trip } from '@/types/payload';
+import Image from 'next/image';
 import { getImageUrl } from '@/lib/images';
 import {
   filterTrips,
@@ -32,11 +33,13 @@ function TripCard({ trip }: { trip: Trip }) {
   return (
     <Link href={`/trips/${trip.slug || trip.id}`} className="group">
       <article className="bg-card rounded-lg border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
-        <div className="aspect-[4/3] bg-muted overflow-hidden">
-          <img
+        <div className="aspect-[4/3] bg-muted overflow-hidden relative">
+          <Image
             src={imageUrl}
             alt={trip.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            unoptimized
           />
         </div>
         <div className="p-6 flex flex-col flex-grow">

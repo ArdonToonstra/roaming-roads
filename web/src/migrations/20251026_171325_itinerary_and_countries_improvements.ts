@@ -1,6 +1,6 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
-export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    ALTER TYPE "public"."enum_countries_main_religion" ADD VALUE 'catholicism' BEFORE 'islam';
   CREATE TABLE "trips_rels" (
@@ -63,7 +63,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   DROP TYPE "public"."enum_trips_regions_visited_region_type";`)
 }
 
-export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+export async function down({ db }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
    CREATE TYPE "public"."enum_media_media_type" AS ENUM('photo', 'video', 'audio', 'document');
   CREATE TYPE "public"."enum_media_usage_license_type" AS ENUM('own', 'cc', 'stock', 'permission', 'fair-use');

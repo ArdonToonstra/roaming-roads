@@ -1,7 +1,8 @@
 import { data } from '@/lib/data';
 import Link from 'next/link';
-import { MapPin, Calendar, Clock, Camera, EuroIcon, ArrowLeft, Navigation, Globe, Users, AlertTriangle, Bed, Target, Info } from 'lucide-react';
-import { Trip, Media, Country, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
+import Image from 'next/image';
+import { MapPin, Calendar, Camera, EuroIcon, Navigation, Globe, AlertTriangle, Bed, Target } from 'lucide-react';
+import { Trip, Media, Country } from '@/types/payload';
 import { notFound } from 'next/navigation';
 import { getImageUrl } from '@/lib/images';
 // Removed embedded map + itinerary; now lives under /journey subpage
@@ -34,150 +35,6 @@ async function getTrip(slugOrId: string): Promise<Trip | null> {
 
 
 
-function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypointBlock; index: number }) {
-  const isFullDay = block.blockType === 'fullDay';
-  // Safely read coordinates: payload data may omit location or coordinates
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rawCoords = (block as any).location?.coordinates;
-  const hasCoords = Array.isArray(rawCoords) && rawCoords.length >= 2 && typeof rawCoords[0] === 'number' && typeof rawCoords[1] === 'number';
-  const coordsText = hasCoords ? `${rawCoords[1].toFixed(4)}, ${rawCoords[0].toFixed(4)}` : null;
-
-  return (
-    <div id={`day-${index + 1}`} data-day-index={index} className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300">
-      <div className="flex items-start gap-4 mb-6">
-        <div
-          className="w-10 h-10 rounded-full flex items-center justify-center font-heading font-bold text-white flex-shrink-0"
-          style={{ backgroundColor: '#F57D50' }}
-        >
-          {index + 1}
-        </div>
-        <div className="flex-1">
-          <h3 className="text-2xl font-heading font-bold mb-2" style={{ color: '#4C3A7A' }}>
-            {block.locationName}
-          </h3>
-
-          <div className="flex items-center gap-4 mb-4 text-sm" style={{ color: '#2A9D8F' }}>
-            {block.regionProvince && (
-              <div className="flex items-center gap-1">
-                <MapPin size={16} />
-                <span>{block.regionProvince}</span>
-              </div>
-            )}
-
-            {isFullDay && (block as CmsFullDayBlock).time && (
-              <div className="flex items-center gap-1">
-                <Clock size={16} />
-                <span>{(block as CmsFullDayBlock).time}</span>
-              </div>
-            )}
-
-            {coordsText ? (
-              <div className="flex items-center gap-1">
-                <Navigation size={16} />
-                <span>{coordsText}</span>
-              </div>
-            ) : (
-              // gracefully show nothing or a placeholder if coordinates are missing
-              <div className="flex items-center gap-1 opacity-70 text-sm">
-                <Navigation size={16} />
-                <span>Location unknown</span>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {block.description && (
-        <p className="mb-6 text-lg leading-relaxed" style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
-          {block.description}
-        </p>
-      )}
-
-      {block.activities && (
-        <div className="mb-6">
-          <h4 className="text-lg font-heading font-bold mb-3" style={{ color: '#2A9D8F' }}>
-            Activities & Details
-          </h4>
-          <RichText
-            content={block.activities}
-            className="prose max-w-none"
-            style={{ fontFamily: 'Lato, sans-serif' }}
-          />
-        </div>
-      )}
-
-      {/* Transportation info for full days */}
-      {isFullDay && (block as CmsFullDayBlock).transportation && (
-        <div className="mb-6 p-4 rounded-lg" style={{ backgroundColor: '#F4F1ED' }}>
-          <h4 className="text-sm font-heading font-bold mb-2" style={{ color: '#4C3A7A' }}>
-            Transportation
-          </h4>
-          <div className="text-sm" style={{ fontFamily: 'Lato, sans-serif', color: '#263238' }}>
-            {(block as CmsFullDayBlock).transportation?.arrivalMethod && (
-              <span>Arrived by: {(block as CmsFullDayBlock).transportation?.arrivalMethod?.replace('_', ' ')}</span>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Budget info for full days */}
-      {isFullDay && (block as CmsFullDayBlock).budget && (
-        <div className="mb-6 p-4 rounded-lg" style={{ backgroundColor: '#F4F1ED' }}>
-          <h4 className="text-sm font-heading font-bold mb-2" style={{ color: '#4C3A7A' }}>
-            Cost
-          </h4>
-          <div className="flex items-center gap-1 text-sm" style={{ color: '#263238' }}>
-            <EuroIcon size={16} />
-            <span>
-              {(block as CmsFullDayBlock).budget?.amount} {(block as CmsFullDayBlock).budget?.currency}
-            </span>
-          </div>
-        </div>
-      )}
-
-      {/* Gallery */}
-      {block.gallery && block.gallery.length > 0 && (
-        <div className="mb-6">
-          <h4 className="text-lg font-heading font-bold mb-3" style={{ color: '#2A9D8F' }}>
-            Photos
-          </h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {block.gallery.map((item, idx) => {
-              const media = typeof item.media === 'object' ? item.media as Media : null;
-              if (!media) return null;
-
-              return (
-                <div key={idx} className="rounded-lg overflow-hidden">
-                  <img
-                    src={getImageUrl(media.url)}
-                    alt={item.caption || media.alt || `Photo ${idx + 1}`}
-                    className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
-                  />
-                  {item.caption && (
-                    <p className="mt-2 text-sm italic" style={{ color: '#263238' }}>
-                      {item.caption}
-                    </p>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Tips for full days */}
-      {isFullDay && (block as CmsFullDayBlock).tips && (
-        <div className="p-4 rounded-lg" style={{ backgroundColor: '#2A9D8F', color: 'white' }}>
-          <h4 className="text-sm font-heading font-bold mb-2">Pro Tips</h4>
-          <p className="text-sm" style={{ fontFamily: 'Lato, sans-serif' }}>
-            {(block as CmsFullDayBlock).tips}
-          </p>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default async function TripDetailPage({ params }: TripPageProps) {
   const { slug } = await params;
   const trip = await getTrip(slug);
@@ -207,10 +64,13 @@ export default async function TripDetailPage({ params }: TripPageProps) {
     <div className="min-h-screen" style={{ backgroundColor: '#F4F1ED' }}>
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center text-white -mt-16">
-        <img
+        <Image
           src={imageUrl}
           alt={trip.title}
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          className="object-cover"
+          priority
+          unoptimized
         />
         <div className="absolute inset-0 bg-black/40" />
 
@@ -505,11 +365,13 @@ export default async function TripDetailPage({ params }: TripPageProps) {
 
                   return (
                     <div key={index} className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                      <div className="relative overflow-hidden">
-                        <img
+                      <div className="relative overflow-hidden h-80">
+                        <Image
                           src={getImageUrl(media.url)}
                           alt={highlight.caption || media.alt || `Highlight ${index + 1}`}
-                          className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700"
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-700"
+                          unoptimized
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       </div>

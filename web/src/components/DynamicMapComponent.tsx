@@ -13,7 +13,7 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 
-interface DynamicMapProps {
+export interface DynamicMapProps {
   center: [number, number];
   zoom: number;
   onMapClick: (lat: number, lng: number) => void;
@@ -35,12 +35,12 @@ const DynamicMapComponent: React.FC<DynamicMapProps> = ({
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
-  const searchControlRef = useRef<HTMLDivElement | null>(null);
+
 
   useEffect(() => {
     // Only run on client side
     if (typeof window === 'undefined') return;
-    
+
     // Load Leaflet CSS dynamically - only once
     if (!document.querySelector('link[href*="leaflet.css"]')) {
       const link = document.createElement('link');
@@ -48,9 +48,10 @@ const DynamicMapComponent: React.FC<DynamicMapProps> = ({
       link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
       document.head.appendChild(link);
     }
-    
+
     // Fix for default icon issue with webpack
     if (L && L.Icon && L.Icon.Default) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (L.Icon.Default.prototype as any)._getIconUrl;
       L.Icon.Default.mergeOptions({
         iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
@@ -67,7 +68,7 @@ const DynamicMapComponent: React.FC<DynamicMapProps> = ({
 
     // Initialize map
     const map = L.map(mapRef.current).setView(center, zoom);
-    
+
     // Add tile layers with better labels for place names
     if (mapTilerKey) {
       // Use streets map for better place name visibility in admin interface
@@ -164,7 +165,7 @@ const SearchControl: React.FC<SearchControlProps> = ({ mapTilerKey, onLocationSe
         `https://api.maptiler.com/geocoding/${encodeURIComponent(query)}.json?key=${mapTilerKey}&limit=1`
       );
       const data = await response.json();
-      
+
       if (data.features && data.features.length > 0) {
         const [lng, lat] = data.features[0].center;
         onLocationSelect(lat, lng);
@@ -194,7 +195,7 @@ const SearchControl: React.FC<SearchControlProps> = ({ mapTilerKey, onLocationSe
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             e.preventDefault();
-            handleSearch(e as any);
+            handleSearch(e);
           }
         }}
       />

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 
 export default function Navigation() {
@@ -74,12 +75,15 @@ export default function Navigation() {
               className="absolute left-1/2 transform -translate-x-1/2 flex items-center group"
               onClick={closeMenu}
             >
-              <div className="w-40 h-20 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+              <div className="w-40 h-20 flex items-center justify-center group-hover:scale-105 transition-transform duration-200 relative">
                 {/* Ensure your svg exists in public folder, otherwise this alt text shows */}
-                <img
+                <Image
                   src="/roaming-roads-logo.svg"
                   alt="Roaming Roads"
-                  className="w-full h-full object-contain"
+                  fill
+                  className="object-contain"
+                  priority
+                  unoptimized
                 />
               </div>
             </Link>

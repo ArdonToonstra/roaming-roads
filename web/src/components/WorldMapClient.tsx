@@ -54,7 +54,6 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
       if (!f) {
         try {
           // Dynamic import to avoid type issues during SSR build time; this runs client-side
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
           const iso = require('i18n-iso-countries')
           // alpha3ToNumeric returns a zero-padded string like '040' for Austria (AUT)
           const numeric = iso.alpha3ToNumeric(cc)
@@ -121,7 +120,7 @@ export default function WorldMapClient({ trips }: { trips: Trip[] }) {
             {(markers.map(m => {
               const firstCountry = m.trip?.countries && Array.isArray(m.trip.countries) && m.trip.countries.length > 0 && typeof m.trip.countries[0] === 'object' ? m.trip.countries[0] as Country : null
               return { id: m.id, code: firstCountry?.countryCode || 'unknown' }
-            })).slice(0,10).map((x) => (
+            })).slice(0, 10).map((x) => (
               <li key={x.id}>{String(x.code)} (trip {x.id})</li>
             ))}
           </ul>
@@ -145,35 +144,35 @@ function getFeatureCentroid(feature: GeoJSONFeature): [number, number] {
     // Type guard to check if geometry has coordinates
     const geometry = feature.geometry
     if (!geometry || geometry.type === 'GeometryCollection') return [0, 0]
-    
+
     // Type assertion for geometries that have coordinates
     const coords = (geometry as { coordinates: unknown[] }).coordinates
     if (!coords || !Array.isArray(coords) || coords.length === 0) return [0, 0]
-    
+
     // Navigate through nested coordinate arrays to find actual coordinate pairs
     let ring: unknown = coords[0]
-    
+
     // For MultiPolygon geometries, drill down to the first polygon's first ring
     while (Array.isArray(ring) && Array.isArray(ring[0]) && !isCoordinatePair(ring[0])) {
       ring = ring[0]
     }
-    
+
     // Ensure we have an array of coordinate pairs
     if (!Array.isArray(ring)) return [0, 0]
-    
+
     // Filter to only valid coordinate pairs and limit for performance
     const coordinatePairs = (ring as unknown[])
       .filter(isCoordinatePair)
       .slice(0, 10) as [number, number][]
-    
+
     if (coordinatePairs.length === 0) return [0, 0]
-    
+
     // Calculate average coordinates
     const sum = coordinatePairs.reduce(
       (acc, coord) => [acc[0] + coord[0], acc[1] + coord[1]] as [number, number],
       [0, 0] as [number, number]
     )
-    
+
     return [sum[0] / coordinatePairs.length, sum[1] / coordinatePairs.length]
   } catch {
     return [0, 0]
@@ -182,8 +181,8 @@ function getFeatureCentroid(feature: GeoJSONFeature): [number, number] {
 
 // Type guard to check if a value is a coordinate pair [longitude, latitude]
 function isCoordinatePair(value: unknown): value is [number, number] {
-  return Array.isArray(value) && 
-         value.length === 2 && 
-         typeof value[0] === 'number' && 
-         typeof value[1] === 'number'
+  return Array.isArray(value) &&
+    value.length === 2 &&
+    typeof value[0] === 'number' &&
+    typeof value[1] === 'number'
 }
