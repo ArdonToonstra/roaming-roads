@@ -3,18 +3,29 @@ import { withPayload } from '@payloadcms/next/withPayload'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Your Next.js config here
-  sassOptions: {
-    silenceDeprecations: ['legacy-js-api', 'import'],
-    quietDeps: true,
+  silenceDeprecations: ['legacy-js-api', 'import'],
+  quietDeps: true,
+},
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.public.blob.vercel-storage.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+      }
+    ],
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
-      '.cjs': ['.cts', '.cjs'],
-      '.js': ['.ts', '.tsx', '.js', '.jsx'],
-      '.mjs': ['.mts', '.mjs'],
-    }
+  '.cjs': ['.cts', '.cjs'],
+  '.js': ['.ts', '.tsx', '.js', '.jsx'],
+  '.mjs': ['.mts', '.mjs'],
+}
 
-    return webpackConfig
+return webpackConfig
   },
 }
 
