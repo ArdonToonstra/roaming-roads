@@ -1,4 +1,5 @@
-﻿import { data } from '@/lib/data';
+﻿import Link from 'next/link';
+import { data } from '@/lib/data';
 import { Trip } from '@/types/payload';
 import { env } from '@/lib/config';
 import { getImageUrl } from '@/lib/images';
