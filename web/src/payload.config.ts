@@ -35,8 +35,12 @@ export default buildConfig({
   },
   // Public base URL of the deployed CMS (used for generating absolute asset URLs)
   // Critical: This MUST match the domain you are visiting the Admin panel on.
-  // If you are on roamingroads.nl/admin, this needs to be https://roamingroads.nl
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'https://www.roamingroads.nl',
+  // We explicitly hardcode the production URL to ensure we don't accidentally
+  // use the old CMS URL from stale environment variables.
+  serverURL:
+    process.env.NODE_ENV === 'production'
+      ? 'https://www.roamingroads.nl'
+      : process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
 
   // Explicitly allowing both the main domain and Vercel Deployment URLs
   cors: [
