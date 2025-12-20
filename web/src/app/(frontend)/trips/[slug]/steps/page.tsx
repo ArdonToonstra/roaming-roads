@@ -1,4 +1,4 @@
-import { payload } from '@/lib/api';
+import { data } from '@/lib/data';
 import { Trip } from '@/types/payload';
 import { notFound } from 'next/navigation';
 import StepsLayout from '@/components/StepsLayout';
@@ -10,7 +10,7 @@ interface StepsPageProps { params: Promise<{ slug: string }> }
 async function getTrip(slugOrId: string): Promise<Trip | null> {
   try {
     if (slugOrId.match(/\.(png|jpg|jpeg|gif|svg|css|js|ico|woff|woff2|ttf|eot)$/i)) return null;
-    const response = await payload.getTrip(slugOrId);
+    const response = await data.getTrip(slugOrId);
     return response;
   } catch (e) {
     console.error('[steps] failed to fetch trip', e);
