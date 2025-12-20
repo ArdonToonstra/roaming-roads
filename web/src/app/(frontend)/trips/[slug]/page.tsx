@@ -180,28 +180,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                 </div>
               </div>
 
-              {/* Regions Explored */}
-              <div className="border-b border-gray-200 pb-8">
-                <div className="flex items-center gap-2 mb-6">
-                  <MapPin size={20} style={{ color: '#2A9D8F' }} />
-                  <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
-                    Regions Explored
-                  </h3>
-                </div>
-                {trip.regionsVisited && trip.regionsVisited.length > 0 ? (
-                  <div className="flex flex-wrap gap-3">
-                    {trip.regionsVisited.map((region, index) => (
-                      <div key={index} className="bg-gray-100 px-4 py-2 rounded-full border border-gray-200 hover:border-gray-300 transition-colors">
-                        <span className="font-medium text-gray-800">
-                          {region.regionName}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-500 italic">No specific regions documented for this trip</p>
-                )}
-              </div>
+
 
               {/* Main Activities */}
               <div className="border-b border-gray-200 pb-8">
@@ -229,7 +208,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                 <div className="flex items-center gap-2 mb-6">
                   <AlertTriangle size={20} style={{ color: '#F57D50' }} />
                   <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
-                    Important Preparations
+                    Before You Go: The Essentials
                   </h3>
                 </div>
                 {trip.importantPreparations ? (
@@ -288,6 +267,29 @@ export default async function TripDetailPage({ params }: TripPageProps) {
             <div className="lg:col-span-1 space-y-8">
               {/* Map */}
               <div className="sticky top-8">
+                {/* Regions Explored */}
+                <div className="mb-8">
+                  <div className="flex items-center gap-2 mb-4">
+                    <MapPin size={20} style={{ color: '#2A9D8F' }} />
+                    <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
+                      Regions Explored
+                    </h3>
+                  </div>
+                  {trip.regionsVisited && trip.regionsVisited.length > 0 ? (
+                    <div className="flex flex-wrap gap-3">
+                      {trip.regionsVisited.map((region, index) => (
+                        <div key={index} className="bg-gray-100 px-4 py-2 rounded-full border border-gray-200 hover:border-gray-300 transition-colors">
+                          <span className="font-medium text-gray-800">
+                            {region.regionName}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500 italic">No specific regions documented for this trip</p>
+                  )}
+                </div>
+
                 <MountSmallOverview trip={trip} />
 
                 {/* Detailed Journey CTA */}
