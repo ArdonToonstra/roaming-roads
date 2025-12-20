@@ -456,6 +456,13 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
   const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
     if (isProgrammaticScroll.current) return;
 
+    // If activeIndex is already 0 and we are near top, keep it 0 to avoid jumping to 1
+    // or if we are just simply near the top, force 0.
+    if (window.scrollY < 100) {
+      setActiveIndex(0);
+      return;
+    }
+
     const viewportCenter = window.innerHeight / 2;
 
     const closest = entries.reduce<{ idx: number; distance: number } | null>((acc, entry) => {
