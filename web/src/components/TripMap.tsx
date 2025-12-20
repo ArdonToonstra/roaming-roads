@@ -148,7 +148,6 @@ export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMap
         />
         {env.MAPTILER_KEY && (
           <TileLayer
-            attribution='&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors'
             url={`https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.png?key=${env.MAPTILER_KEY}`}
             zIndex={650}
             opacity={1}

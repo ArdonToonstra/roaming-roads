@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { MapPin, Mail, Heart } from 'lucide-react';
+import { MapPin, Github, Heart } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 export default function Footer() {
@@ -40,25 +40,25 @@ export default function Footer() {
           <div>
             <h3 className="font-heading font-bold text-foreground mb-4">Explore</h3>
             <nav className="space-y-2">
-              <Link 
+              <Link
                 href="/"
                 className="block text-muted-foreground hover:text-primary transition-colors text-sm"
               >
                 Home
               </Link>
-              <Link 
+              <Link
                 href="/adventures"
                 className="block text-muted-foreground hover:text-primary transition-colors text-sm"
               >
                 All Adventures
               </Link>
-              <Link 
+              <Link
                 href="/globe"
                 className="block text-muted-foreground hover:text-primary transition-colors text-sm"
               >
                 World Map
               </Link>
-              <Link 
+              <Link
                 href="/about"
                 className="block text-muted-foreground hover:text-primary transition-colors text-sm"
               >
@@ -71,25 +71,25 @@ export default function Footer() {
           <div>
             <h3 className="font-heading font-bold text-foreground mb-4">Adventure Types</h3>
             <nav className="space-y-2">
-              <Link 
+              <Link
                 href="/adventures?category=city_trip"
                 className="block text-muted-foreground hover:text-primary transition-colors text-sm"
               >
                 City Trips
               </Link>
-              <Link 
+              <Link
                 href="/adventures?category=road_trip"
                 className="block text-muted-foreground hover:text-primary transition-colors text-sm"
               >
                 Road Trips
               </Link>
-              <Link 
+              <Link
                 href="/adventures?category=backpacking"
                 className="block text-muted-foreground hover:text-primary transition-colors text-sm"
               >
                 Backpacking
               </Link>
-              <Link 
+              <Link
                 href="/adventures?category=hiking"
                 className="block text-muted-foreground hover:text-primary transition-colors text-sm"
               >
@@ -103,15 +103,17 @@ export default function Footer() {
             <h3 className="font-heading font-bold text-foreground mb-4">Connect</h3>
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-primary" />
-                <a 
-                  href="mailto:hello@roamingroads.nl"
+                <Github className="w-4 h-4 text-primary" />
+                <a
+                  href="https://github.com/ArdonToonstra/roaming-roads/issues"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
-                  hello@roamingroads.nl
+                  Report an issue
                 </a>
               </div>
-              
+
             </div>
           </div>
         </div>
@@ -122,13 +124,13 @@ export default function Footer() {
             © {currentYear} Roaming Roads. All rights reserved.
           </p>
           <div className="flex gap-6 text-xs">
-            <Link 
+            <Link
               href="/privacy"
               className="text-muted-foreground hover:text-primary transition-colors"
             >
               Privacy Policy
             </Link>
-            <Link 
+            <Link
               href="/terms"
               className="text-muted-foreground hover:text-primary transition-colors"
             >

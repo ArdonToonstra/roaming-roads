@@ -1,8 +1,13 @@
 "use client";
 
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { createPortal } from 'react-dom';
-import TripDetailMap from '@/components/TripDetailMap';
+
+const TripDetailMap = dynamic(() => import('@/components/TripDetailMap'), {
+  ssr: false,
+  loading: () => <div className="h-full w-full bg-muted/20 animate-pulse flex items-center justify-center text-muted-foreground text-sm">Loading Map...</div>
+});
 import RichText from '@/components/RichText';
 import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media } from '@/types/payload';
 import {

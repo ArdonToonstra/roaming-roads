@@ -176,7 +176,6 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
           // Add a label/hybrid overlay on top of the satellite imagery so city names, borders and POI labels are visible.
           // MapTiler provides hybrid/label tiles you can overlay; this keeps satellite imagery as the base layer.
           <TileLayer
-            attribution='&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors'
             url={`https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.png?key=${env.MAPTILER_KEY}`}
             // Ensure overlay sits above base tiles
             zIndex={650}

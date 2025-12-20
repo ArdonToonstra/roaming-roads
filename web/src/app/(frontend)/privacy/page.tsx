@@ -34,7 +34,7 @@ export default function PrivacyPage() {
                     <section>
                         <h2 className="text-2xl font-bold text-gray-900 mb-3">Contact Us</h2>
                         <p>
-                            If you have any questions about our privacy practices, please contact us at <a href="mailto:hello@roamingroads.nl" className="text-orange-600 hover:underline">hello@roamingroads.nl</a>.
+                            If you have any questions about our privacy practices, please create an issue on our <a href="https://github.com/ArdonToonstra/roaming-roads/issues" target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:underline">GitHub repository</a>.
                         </p>
                     </section>
                 </div>

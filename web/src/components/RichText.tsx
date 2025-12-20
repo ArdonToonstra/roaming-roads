@@ -108,6 +108,14 @@ function transformChild(child: any): any {
     };
   }
 
+  // Handle line breaks
+  if (child.type === 'linebreak') {
+    return {
+      _type: 'hardBreak',
+      _key: Math.random().toString(36)
+    };
+  }
+
   return {
     _type: 'span',
     _key: Math.random().toString(36),
@@ -212,7 +220,8 @@ const ptComponents: any = {
           })}
         </a>
       );
-    }
+    },
+    hardBreak: () => <br />
   }
 };
 
