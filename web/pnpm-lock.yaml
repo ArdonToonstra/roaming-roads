@@ -27,8 +27,8 @@ importers:
         specifier: 3.64.0
         version: 3.64.0(@types/react@19.1.8)(monaco-editor@0.54.0)(next@15.5.7(@babel/core@7.28.4)(@playwright/test@1.54.1)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.93.2))(payload@3.64.0(graphql@16.11.0)(typescript@5.7.3))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(typescript@5.7.3)
       '@portabletext/react':
-        specifier: ^4.0.3
-        version: 4.0.3(react@19.1.2)
+        specifier: ^6.0.0
+        version: 6.0.0(react@19.1.2)
       '@tailwindcss/typography':
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@4.1.18)
@@ -1551,19 +1551,19 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@portabletext/react@4.0.3':
-    resolution: {integrity: sha512-sdVSXbi0L5MBVb1Ch5KwbBPZjW/Oqe6s5ZkPi4LcItzHl8rqY2jB0VxsFaGywZyn8Jc47cGLaOtyBM9HkW/9Hg==}
-    engines: {node: ^14.13.1 || >=16.0.0}
+  '@portabletext/react@6.0.0':
+    resolution: {integrity: sha512-8jzmFruC6fhC8A47c+RdiFfldzRq/rRW/FwRsr5ZMeNeCf3S0dXVlM/LJQRWH5JLQXbH3oxINN1UV2mbuZQJ9w==}
+    engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^18.2 || ^19
 
-  '@portabletext/toolkit@3.0.3':
-    resolution: {integrity: sha512-EI59/l4E0E5wCyWUzvW1FPKWfqDsbebCnCf9ZDHjXGH95X4EORlCtnPuA79PpKaHv0LTChORy55trRzW6tYnOQ==}
-    engines: {node: ^14.13.1 || >=16.0.0}
+  '@portabletext/toolkit@5.0.0':
+    resolution: {integrity: sha512-jcDOv1RKO/j08pdnc/6i5tULcAzEYCR41XDVYOqmmX8bvEJbWJabhpVjHT1ls6p27v9gtA4NG2SO5xdMpgWSQQ==}
+    engines: {node: '>=20.19 <22 || >=22.12'}
 
-  '@portabletext/types@2.0.15':
-    resolution: {integrity: sha512-2e6i2gSQsrA/5OL5Gm4/9bxB9MNO73Fa47zj+0mT93xkoQUCGCWX5fZh1YBJ86hszaRYlqvqG08oULxvvPPp/Q==}
-    engines: {node: ^14.13.1 || >=16.0.0 || >=18.0.0}
+  '@portabletext/types@4.0.0':
+    resolution: {integrity: sha512-mEoN82OQckrshqRx8idp+x8B/OpMfUMSjQp1w1wZFM3hf8cplGhK59Sa/UuGU6XdgAnFq90vJtnj5ejOmZmhvw==}
+    engines: {node: '>=20.19 <22 || >=22.12'}
 
   '@react-leaflet/core@3.0.0':
     resolution: {integrity: sha512-3EWmekh4Nz+pGcr+xjf0KNyYfC3U2JjnkWsh0zcqaexYqmmB5ZhH37kz41JXGmKzpaMZCnPofBBm64i+YrEvGQ==}
@@ -3711,8 +3711,8 @@ packages:
   lexical@0.35.0:
     resolution: {integrity: sha512-3VuV8xXhh5xJA6tzvfDvE0YBCMkIZUmxtRilJQDDdCgJCc+eut6qAv2qbN+pbqvarqcQqPN1UF+8YvsjmyOZpw==}
 
-  lib0@0.2.114:
-    resolution: {integrity: sha512-gcxmNFzA4hv8UYi8j43uPlQ7CGcyMJ2KQb5kZASw6SnAKAf10hK12i2fjrS3Cl/ugZa5Ui6WwIu1/6MIXiHttQ==}
+  lib0@0.2.115:
+    resolution: {integrity: sha512-noaW4yNp6hCjOgDnWWxW0vGXE3kZQI5Kqiwz+jIWXavI9J9WyfJ9zjsbQlQlgjIbHBrvlA/x3TSIXBUJj+0L6g==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -3981,6 +3981,7 @@ packages:
   next@15.5.7:
     resolution: {integrity: sha512-+t2/0jIJ48kUpGKkdlhgkv+zPTEOoXyr60qXe68eB/pl3CMJaLeIGjzp5D6Oqt25hCBiBTt8wEeeAzfJvUKnPQ==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
+    deprecated: This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/security-update-2025-12-11 for more details.
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
@@ -4507,6 +4508,7 @@ packages:
 
   scmp@2.1.0:
     resolution: {integrity: sha512-o/mRQGk9Rcer/jEEw/yw4mwo3EU/NvYvp577/Btqrym9Qy5/MdWGBqipbALgd2lrdWTJ5/gqDusxfnQBxOxT2Q==}
+    deprecated: Just use Node.js's crypto.timingSafeEqual()
 
   secure-json-parse@4.1.0:
     resolution: {integrity: sha512-l4KnYfEyqYJxDwlNVyRfO2E4NTHfMKAWdUuA8J0yve2Dz/E/PdBepY03RvyJpssIpRFwJoCD55wA+mEDs6ByWA==}
@@ -6953,17 +6955,17 @@ snapshots:
     dependencies:
       playwright: 1.54.1
 
-  '@portabletext/react@4.0.3(react@19.1.2)':
+  '@portabletext/react@6.0.0(react@19.1.2)':
     dependencies:
-      '@portabletext/toolkit': 3.0.3
-      '@portabletext/types': 2.0.15
+      '@portabletext/toolkit': 5.0.0
+      '@portabletext/types': 4.0.0
       react: 19.1.2
 
-  '@portabletext/toolkit@3.0.3':
+  '@portabletext/toolkit@5.0.0':
     dependencies:
-      '@portabletext/types': 2.0.15
+      '@portabletext/types': 4.0.0
 
-  '@portabletext/types@2.0.15': {}
+  '@portabletext/types@4.0.0': {}
 
   '@react-leaflet/core@3.0.0(leaflet@1.9.4)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)':
     dependencies:
@@ -9331,7 +9333,7 @@ snapshots:
 
   lexical@0.35.0: {}
 
-  lib0@0.2.114:
+  lib0@0.2.115:
     dependencies:
       isomorphic.js: 0.2.5
 
@@ -11014,7 +11016,7 @@ snapshots:
 
   yjs@13.6.27:
     dependencies:
-      lib0: 0.2.114
+      lib0: 0.2.115
 
   yocto-queue@0.1.0: {}
 
