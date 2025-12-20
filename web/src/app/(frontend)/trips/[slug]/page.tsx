@@ -8,6 +8,7 @@ import { getImageUrl } from '@/lib/images';
 // Removed embedded map + itinerary; now lives under /journey subpage
 import MountSmallOverview from '@/components/mountSmallOverview';
 import RichText from '@/components/RichText';
+import FeaturedAccommodations from '@/components/FeaturedAccommodations';
 
 interface TripPageProps {
   params: Promise<{
@@ -235,28 +236,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                   </h3>
                 </div>
                 {trip.featuredAccommodations && trip.featuredAccommodations.length > 0 ? (
-                  <div className="space-y-4">
-                    {trip.featuredAccommodations.map((item, index) => {
-                      const accommodation = typeof item.accommodation === 'object' ? item.accommodation : null;
-                      if (!accommodation) return null;
-
-                      return (
-                        <div key={index} className="border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors">
-                          <h4 className="font-heading font-bold text-gray-800 mb-1">
-                            {accommodation.name}
-                          </h4>
-                          <p className="text-sm text-gray-500 capitalize mb-1">
-                            {accommodation.type?.replace('_', ' ')}
-                          </p>
-                          {accommodation.priceRange && (
-                            <p className="text-sm text-gray-600">
-                              Price range: <span className="capitalize">{accommodation.priceRange}</span>
-                            </p>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
+                  <FeaturedAccommodations items={trip.featuredAccommodations} />
                 ) : (
                   <p className="text-gray-500 italic">No featured accommodations for this trip</p>
                 )}
