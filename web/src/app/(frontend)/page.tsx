@@ -67,7 +67,7 @@ export default async function HomePage() {
           </h1>
 
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
-            Authentic travel guides, honestly written. No ads. No affiliate links. Ever.
+            Our personal experiences and stories from around the world. No ads, no affiliate links, just our own experiences and practical advice.
           </p>
 
           <Link

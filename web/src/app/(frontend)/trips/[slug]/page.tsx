@@ -287,26 +287,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                       Complete step-by-step itinerary with interactive maps and detailed locations.
                     </p>
 
-                    <div className="grid grid-cols-3 gap-4 mb-6 text-center">
-                      <div>
-                        <div className="text-2xl font-bold" style={{ color: '#2A9D8F' }}>
-                          {trip.itinerary.length}
-                        </div>
-                        <div className="text-xs text-gray-500">Steps</div>
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold" style={{ color: '#F57D50' }}>
-                          {trip.itinerary.filter(day => day.gallery && day.gallery.length > 0).length}
-                        </div>
-                        <div className="text-xs text-gray-500">Galleries</div>
-                      </div>
-                      <div>
-                        <div className="text-lg font-bold" style={{ color: '#4C3A7A' }}>
-                          Map
-                        </div>
-                        <div className="text-xs text-gray-500">Interactive</div>
-                      </div>
-                    </div>
+
 
                     <Link
                       href={`/trips/${trip.slug || trip.id}/steps`}
