@@ -1,4 +1,5 @@
 import type { Block } from 'payload';
+import { transportFields } from '../fields/transportation';
 
 export const Waypoint: Block = {
   slug: 'waypoint',
@@ -10,10 +11,10 @@ export const Waypoint: Block = {
     { name: 'locationName', type: 'text', label: 'Waypoint Name', required: true },
     { name: 'description', type: 'textarea', label: 'Description' },
     { name: 'activities', type: 'richText', label: 'Activities and details' },
-    
-    { 
-      name: 'location', 
-      type: 'point', 
+
+    {
+      name: 'location',
+      type: 'point',
       label: 'GPS Coordinates',
       admin: {
         description: 'The exact coordinates for this waypoint. You can use the map picker below to set these coordinates.',
@@ -22,7 +23,7 @@ export const Waypoint: Block = {
         }
       }
     },
-    
+
     {
       name: 'regionProvince',
       type: 'text',
@@ -33,6 +34,22 @@ export const Waypoint: Block = {
     },
 
     {
+      name: 'connectionType',
+      label: 'Connection Type',
+      type: 'select',
+      defaultValue: 'route',
+      options: [
+        { label: 'Main Route', value: 'route' },
+        { label: 'Side Trip', value: 'side_trip' },
+      ],
+      admin: {
+        description: 'Side trips will be visually displayed as branching off from the previous main stop.',
+      },
+    },
+
+    transportFields,
+
+    {
       name: 'gallery',
       label: 'Media Gallery',
       type: 'array',
@@ -41,17 +58,17 @@ export const Waypoint: Block = {
         {
           name: 'media',
           type: 'upload',
-          relationTo: 'media', 
+          relationTo: 'media',
           required: true,
         },
         {
           name: 'caption',
           type: 'text',
           label: 'Caption',
-          localized: true, 
+          localized: true,
         },
       ]
     }
   ],
-  
+
 };

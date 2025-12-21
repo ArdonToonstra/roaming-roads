@@ -9,7 +9,7 @@ const Accommodations: CollectionConfig = {
   access: {
     // Allow public read access for the frontend API to fetch accommodations
     read: () => true,
-    
+
     // Only authenticated users can create, update, and delete
     create: ({ req: { user } }) => !!user,
     update: ({ req: { user } }) => !!user,
@@ -143,17 +143,14 @@ const Accommodations: CollectionConfig = {
       ]
     },
     {
-      name: 'priceRange',
-      label: 'Price Range',
-      type: 'select',
-      options: [
-        { label: 'Budget (€) - Under €50/night', value: 'budget' },
-        { label: 'Mid-range (€€) - €50-150/night', value: 'midrange' },
-        { label: 'Luxury (€€€) - €150-300/night', value: 'luxury' },
-        { label: 'Ultra-luxury (€€€€) - Over €300/night', value: 'ultra_luxury' },
-      ],
+      name: 'media',
+      label: 'Media',
+      type: 'upload',
+      relationTo: 'media',
+      hasMany: true,
+      required: false,
       admin: {
-        description: 'General price category for this accommodation',
+        description: 'Upload photos of this accommodation',
       },
     },
     {

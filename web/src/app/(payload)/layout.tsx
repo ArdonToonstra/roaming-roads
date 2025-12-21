@@ -23,7 +23,8 @@ const serverFunction: ServerFunctionClient = async function (args) {
 }
 
 const Layout = ({ children }: Args) => (
-  <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
+  // @ts-expect-error - suppressHydrationWarning is passed to html tag
+  <RootLayout config={config} importMap={importMap} serverFunction={serverFunction} suppressHydrationWarning>
     {children}
   </RootLayout>
 )

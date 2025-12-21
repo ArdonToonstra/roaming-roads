@@ -49,12 +49,6 @@ export default function FeaturedAccommodations({ items }: FeaturedAccommodations
                                 {accommodation.type?.replace(/_/g, ' ')}
                             </p>
 
-                            {accommodation.priceRange && (
-                                <div className="flex items-center gap-1 text-xs text-gray-600">
-                                    <EuroIcon size={12} />
-                                    <span className="capitalize">{accommodation.priceRange}</span>
-                                </div>
-                            )}
                         </div>
 
                         <div className="mt-3 text-xs text-teal-600 font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -81,15 +75,15 @@ export default function FeaturedAccommodations({ items }: FeaturedAccommodations
                             </button>
 
                             {/* Header Image (if any) */}
-                            {selected.photos && selected.photos.length > 0 && (() => {
-                                const coverPhoto = selected.photos[0];
+                            {selected.media && selected.media.length > 0 && (() => {
+                                const coverPhoto = selected.media?.[0];
                                 const url = typeof coverPhoto === 'object' ? getImageUrl(coverPhoto.url) : null;
                                 if (!url) return null;
                                 return (
                                     <div className="relative h-64 w-full">
                                         <Image
                                             src={url}
-                                            alt={typeof coverPhoto === 'object' ? coverPhoto.alt : selected.name}
+                                            alt={typeof coverPhoto === 'object' ? coverPhoto.alt || selected.name : selected.name}
                                             fill
                                             className="object-cover"
                                         />
@@ -111,11 +105,6 @@ export default function FeaturedAccommodations({ items }: FeaturedAccommodations
                                             {selected.starRating && (
                                                 <span className="flex items-center gap-1 px-3 py-1 bg-yellow-50 text-yellow-700 rounded-full">
                                                     {selected.starRating} <Star size={14} fill="currentColor" />
-                                                </span>
-                                            )}
-                                            {selected.priceRange && (
-                                                <span className="flex items-center gap-1 px-3 py-1 bg-green-50 text-green-700 rounded-full capitalize">
-                                                    <EuroIcon size={14} /> {selected.priceRange}
                                                 </span>
                                             )}
                                         </div>

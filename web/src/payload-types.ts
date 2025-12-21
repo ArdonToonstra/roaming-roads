@@ -528,6 +528,54 @@ export interface Trip {
              * Which region/province this waypoint is in (e.g., "Issyk-Kul Region", "Naryn Province")
              */
             regionProvince?: string | null;
+            /**
+             * Side trips will be visually displayed as branching off from the previous main stop.
+             */
+            connectionType?: ('route' | 'side_trip') | null;
+            transportation?: {
+              arrivalMethod?:
+                | (
+                    | 'walking'
+                    | 'rental_car'
+                    | 'public_bus'
+                    | 'taxi'
+                    | 'train'
+                    | 'flight'
+                    | 'boat'
+                    | 'bicycle'
+                    | 'hitchhiking'
+                    | 'tour_bus'
+                    | 'other'
+                  )
+                | null;
+              departureMethod?:
+                | (
+                    | 'walking'
+                    | 'rental_car'
+                    | 'public_bus'
+                    | 'taxi'
+                    | 'train'
+                    | 'flight'
+                    | 'boat'
+                    | 'bicycle'
+                    | 'hitchhiking'
+                    | 'tour_bus'
+                    | 'other'
+                  )
+                | null;
+              travelTime?: {
+                value?: number | null;
+                unit?: ('minutes' | 'hours' | 'days') | null;
+              };
+              distance?: {
+                value?: number | null;
+                unit?: ('km' | 'mi') | null;
+              };
+              /**
+               * Tips, costs, booking info, etc.
+               */
+              transportationNotes?: string | null;
+            };
             gallery?:
               | {
                   media: number | Media;
@@ -622,9 +670,9 @@ export interface Accommodation {
     email?: string | null;
   };
   /**
-   * General price category for this accommodation
+   * Upload photos of this accommodation
    */
-  priceRange?: ('budget' | 'midrange' | 'luxury' | 'ultra_luxury') | null;
+  media?: (number | Media)[] | null;
   quality?: {
     /**
      * Our star rating or equivalent
@@ -986,6 +1034,26 @@ export interface TripsSelect<T extends boolean = true> {
               activities?: T;
               location?: T;
               regionProvince?: T;
+              connectionType?: T;
+              transportation?:
+                | T
+                | {
+                    arrivalMethod?: T;
+                    departureMethod?: T;
+                    travelTime?:
+                      | T
+                      | {
+                          value?: T;
+                          unit?: T;
+                        };
+                    distance?:
+                      | T
+                      | {
+                          value?: T;
+                          unit?: T;
+                        };
+                    transportationNotes?: T;
+                  };
               gallery?:
                 | T
                 | {
@@ -1051,7 +1119,7 @@ export interface AccommodationsSelect<T extends boolean = true> {
         phone?: T;
         email?: T;
       };
-  priceRange?: T;
+  media?: T;
   quality?:
     | T
     | {

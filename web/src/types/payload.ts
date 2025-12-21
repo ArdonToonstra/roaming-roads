@@ -42,10 +42,10 @@ export interface Accommodation {
     phone?: string
     email?: string
   }
-  priceRange?: 'budget' | 'midrange' | 'luxury' | 'premium'
+  // priceRange removed
   starRating?: number
   amenities?: string[]
-  photos?: Media[]
+  media?: Media[] // Renamed from photos
   bookingLinks?: Array<{
     platform: string
     url: string
@@ -155,19 +155,11 @@ export interface CmsFullDayBlock {
   description?: string
   activities?: RichTextContent // Rich text content
   accommodation?: string | Accommodation // Accommodation relationship
-  transportation?: {
-    arrivalMethod?: 'walking' | 'rental_car' | 'public_bus' | 'taxi' | 'train' | 'flight' | 'boat' | 'bicycle' | 'hitchhiking' | 'tour_bus' | 'other'
-    departureMethod?: string
-  }
+  transportation?: Transportation
   gallery?: Array<{
     media: string | Media
     caption?: string
   }>
-  tips?: string
-  budget?: {
-    amount: number
-    currency: string
-  }
 }
 
 export interface CmsWaypointBlock {
@@ -181,6 +173,8 @@ export interface CmsWaypointBlock {
     coordinates: [number, number] // [longitude, latitude]
   }
   regionProvince?: string
+  connectionType?: 'route' | 'side_trip'
+  transportation?: Transportation
   gallery?: Array<{
     media: string | Media
     caption?: string
@@ -219,18 +213,14 @@ interface Transportation {
   arrivalMethod?: string
   departureMethod?: string
   travelTime?: {
-    duration: number
+    value: number
     unit: 'minutes' | 'hours' | 'days'
   }
   distance?: {
     value: number
     unit: 'km' | 'mi'
   }
-  cost?: {
-    amount: number
-    currency: string
-  }
-  notes?: string
+  transportationNotes?: string
 }
 
 // Waypoint type (from blocks)

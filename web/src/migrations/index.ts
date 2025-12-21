@@ -5,6 +5,8 @@ import * as migration_20251026_171325_itinerary_and_countries_improvements from 
 import * as migration_20251026_181852 from './20251026_181852';
 import * as migration_20251123_214524 from './20251123_214524';
 import * as migration_20251207_170607_update_trips_category from './20251207_170607_update_trips_category';
+import * as migration_20251221_180041_accommodations_and_itinerary_update from './20251221_180041_accommodations_and_itinerary_update';
+import * as migration_20251221_181918_fix_lexical_activities_data from './20251221_181918_fix_lexical_activities_data';
 
 export const migrations = [
   {
@@ -40,6 +42,16 @@ export const migrations = [
   {
     up: migration_20251207_170607_update_trips_category.up,
     down: migration_20251207_170607_update_trips_category.down,
-    name: '20251207_170607_update_trips_category'
+    name: '20251207_170607_update_trips_category',
+  },
+  {
+    up: migration_20251221_180041_accommodations_and_itinerary_update.up,
+    down: migration_20251221_180041_accommodations_and_itinerary_update.down,
+    name: '20251221_180041_accommodations_and_itinerary_update',
+  },
+  {
+    up: migration_20251221_181918_fix_lexical_activities_data.up,
+    down: migration_20251221_181918_fix_lexical_activities_data.down,
+    name: '20251221_181918_fix_lexical_activities_data'
   },
 ];

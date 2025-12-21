@@ -219,62 +219,90 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
         })}
 
         {/* Segmented polylines with transportation icons */}
-        {markers.length > 1 && markers.slice(0, -1).map((currentMarker, idx) => {
-          const nextMarker = markers[idx + 1];
-          const nextBlock = nextMarker.block as any;
-          const arrivalMethod = nextBlock.transportation?.arrivalMethod;
+        {/* Main Route Polyline */}
+        {(() => {
+          const mainRouteMarkers = markers.filter(m => (m.block as any).connectionType !== 'side_trip');
+          if (mainRouteMarkers.length <= 1) return null;
 
-          // Calculate midpoint between markers for transport icon placement
-          const midLat = (currentMarker.coord.lat + nextMarker.coord.lat) / 2;
-          const midLng = (currentMarker.coord.lng + nextMarker.coord.lng) / 2;
+          return mainRouteMarkers.slice(0, -1).map((currentMarker, i) => {
+            const nextMarker = mainRouteMarkers[i + 1];
+            // Fix: We need to check transportation of the NEXT block in the sequence
+            // but nextMarker.block might not be the immediate next block in the original list if we skipped side trips.
+            // However, visually we want the line.
+            // For transportation icons, we technically should check the *nextMarker's* transportation info.
+            const nextBlock = nextMarker.block as any;
+            const arrivalMethod = nextBlock.transportation?.arrivalMethod;
+
+            const midLat = (currentMarker.coord.lat + nextMarker.coord.lat) / 2;
+            const midLng = (currentMarker.coord.lng + nextMarker.coord.lng) / 2;
+
+            return (
+              <div key={`main-segment-${i}`}>
+                <Polyline
+                  positions={[
+                    [currentMarker.coord.lat, currentMarker.coord.lng],
+                    [midLat, midLng]
+                  ]}
+                  pathOptions={{ color: '#F57D50', weight: 4, opacity: 0.9 }}
+                />
+
+                {/* Transportation icon */}
+                {arrivalMethod && (() => {
+                  const L = leafletRef.current;
+                  const transportIcon = getTransportationIcon(arrivalMethod);
+                  const icon = L ? L.divIcon({
+                    html: `<div class="rr-transport-icon">${transportIcon}</div>`,
+                    className: '',
+                    iconSize: [32, 32]
+                  }) : undefined;
+
+                  return (
+                    <Marker position={[midLat, midLng]} {...(icon ? { icon } : {})}>
+                      <Popup>
+                        <div className="text-sm max-w-[200px]">
+                          <strong className="block mb-1">Transportation</strong>
+                          <div className="text-xs font-medium mt-1">
+                            Method: {arrivalMethod.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}
+                          </div>
+                        </div>
+                      </Popup>
+                    </Marker>
+                  );
+                })()}
+
+                <Polyline
+                  positions={[
+                    [midLat, midLng],
+                    [nextMarker.coord.lat, nextMarker.coord.lng]
+                  ]}
+                  pathOptions={{ color: '#F57D50', weight: 4, opacity: 0.9 }}
+                />
+              </div>
+            );
+          });
+        })()}
+
+        {/* Side Trip Connections (Dashed Lines) */}
+        {markers.filter(m => (m.block as any).connectionType === 'side_trip').map((sideMarker, i) => {
+          // Find the last FullDay before this sideMarker
+          // We search backwards from sideMarker.idx
+          // Note: markers are ordered by idx, so we can just look in the markers array
+          const precedingFullDay = markers
+            .slice(0, markers.indexOf(sideMarker))
+            .reverse()
+            .find(m => (m.block as any).blockType === 'fullDay');
+
+          if (!precedingFullDay) return null;
 
           return (
-            <div key={`segment-${idx}`}>
-              {/* First half of the line (from current marker to midpoint) */}
-              <Polyline
-                positions={[
-                  [currentMarker.coord.lat, currentMarker.coord.lng],
-                  [midLat, midLng]
-                ]}
-                pathOptions={{ color: '#F57D50', weight: 3, opacity: 0.8 }}
-              />
-
-              {/* Transportation icon at midpoint */}
-              {arrivalMethod && (() => {
-                const L = leafletRef.current;
-                const transportIcon = getTransportationIcon(arrivalMethod);
-                const icon = L ? L.divIcon({
-                  html: `<div class="rr-transport-icon">${transportIcon}</div>`,
-                  className: '',
-                  iconSize: [32, 32]
-                }) : undefined;
-
-                return (
-                  <Marker position={[midLat, midLng]} {...(icon ? { icon } : {})}>
-                    <Popup>
-                      <div className="text-sm max-w-[200px]">
-                        <strong className="block mb-1">Transportation</strong>
-                        <div className="text-xs">
-                          From Day {idx + 1} to Day {idx + 2}
-                        </div>
-                        <div className="text-xs font-medium mt-1">
-                          Method: {arrivalMethod.replace('_', ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}
-                        </div>
-                      </div>
-                    </Popup>
-                  </Marker>
-                );
-              })()}
-
-              {/* Second half of the line (from midpoint to next marker) */}
-              <Polyline
-                positions={[
-                  [midLat, midLng],
-                  [nextMarker.coord.lat, nextMarker.coord.lng]
-                ]}
-                pathOptions={{ color: '#F57D50', weight: 3, opacity: 0.8 }}
-              />
-            </div>
+            <Polyline
+              key={`side-trip-${i}`}
+              positions={[
+                [precedingFullDay.coord.lat, precedingFullDay.coord.lng],
+                [sideMarker.coord.lat, sideMarker.coord.lng]
+              ]}
+              pathOptions={{ color: '#F57D50', weight: 3, opacity: 0.8, dashArray: '10, 10' }}
+            />
           );
         })}
       </MapContainer>

@@ -172,11 +172,6 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                     ) : (
                       <p className="text-gray-500 italic">Not specified</p>
                     )}
-                    {trip.itinerary && (
-                      <p className="text-sm text-gray-500">
-                        {trip.itinerary.length} steps planned
-                      </p>
-                    )}
                   </div>
                 </div>
               </div>

@@ -11,12 +11,13 @@ import { getImageUrl } from '@/lib/images';
 
 function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypointBlock; index: number }) {
   const isFullDay = block.blockType === 'fullDay';
-  const rawCoords = (block as unknown as any).location?.coordinates;
+  const blockData = block as any;
+  const rawCoords = blockData.location?.coordinates;
   const hasCoords = Array.isArray(rawCoords) && rawCoords.length >= 2 && typeof rawCoords[0] === 'number' && typeof rawCoords[1] === 'number';
   const coordsText = hasCoords ? `${rawCoords[1].toFixed(4)}, ${rawCoords[0].toFixed(4)}` : null;
 
   return (
-    <div id={`day-${index + 1}`} data-day-index={index} className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300">
+    <div id={`day-${index + 1}`} data-day-index={index} className={`bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300 ${block.blockType === 'waypoint' && (block as any).connectionType === 'side_trip' ? 'ml-8 border-l-4 border-dashed border-gray-300' : ''}`}>
       <div className="flex items-start gap-4 mb-6">
         <div className="w-10 h-10 rounded-full flex items-center justify-center font-heading font-bold text-white flex-shrink-0" style={{ backgroundColor: '#F57D50' }}>{index + 1}</div>
         <div className="flex-1">
@@ -26,6 +27,21 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
             {isFullDay && (block as CmsFullDayBlock).time && <div className="flex items-center gap-1"><Clock size={16} /><span>{(block as CmsFullDayBlock).time}</span></div>}
             {coordsText ? <div className="flex items-center gap-1"><Navigation size={16} /><span>{coordsText}</span></div> : <div className="flex items-center gap-1 opacity-70 text-sm"><Navigation size={16} /><span>Location unknown</span></div>}
           </div>
+          {/* Transportation Summary */}
+          {(block as any).transportation && (
+            <div className="flex flex-wrap gap-3 mt-2 text-xs text-gray-500">
+              {(block as any).transportation.arrivalMethod && (
+                <span className="bg-gray-100 px-2 py-1 rounded inline-flex items-center gap-1">
+                  Arrived via <span className="font-semibold uppercase">{(block as any).transportation.arrivalMethod.replace(/_/g, ' ')}</span>
+                </span>
+              )}
+              {(block as any).transportation.travelTime?.value && (
+                <span className="bg-gray-100 px-2 py-1 rounded inline-flex items-center gap-1">
+                  Duration: <span className="font-semibold">{(block as any).transportation.travelTime.value} {(block as any).transportation.travelTime.unit}</span>
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -60,12 +76,12 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
       )}
 
       {/* Gallery */}
-      {block.gallery && block.gallery.length > 0 && (
+      {blockData.gallery && blockData.gallery.length > 0 && (
         <div className="mb-6">
           <h4 className="text-lg font-heading font-bold mb-3" style={{ color: '#2A9D8F' }}>Photos</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {block.gallery.map((item, idx) => {
-              const media = typeof (item as any).media === 'object' ? (item as any).media as Media : null;
+            {blockData.gallery.map((item: any, idx: number) => {
+              const media = typeof item.media === 'object' ? item.media as Media : null;
               if (!media) return null;
               return (
                 <div key={idx} className="rounded-lg overflow-hidden">
@@ -80,18 +96,18 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
       )}
 
       {/* Budget */}
-      {isFullDay && (block as CmsFullDayBlock).budget && (
+      {isFullDay && blockData.budget && (
         <div className="mb-6 p-4 rounded-lg" style={{ backgroundColor: '#F4F1ED' }}>
           <h4 className="text-sm font-heading font-bold mb-2" style={{ color: '#4C3A7A' }}>Cost</h4>
-          <div className="flex items-center gap-1 text-sm" style={{ color: '#263238' }}><DollarSign size={16} /><span>{(block as CmsFullDayBlock).budget?.amount} {(block as CmsFullDayBlock).budget?.currency}</span></div>
+          <div className="flex items-center gap-1 text-sm" style={{ color: '#263238' }}><DollarSign size={16} /><span>{blockData.budget?.amount} {blockData.budget?.currency}</span></div>
         </div>
       )}
 
       {/* Tips */}
-      {isFullDay && (block as CmsFullDayBlock).tips && (
+      {isFullDay && blockData.tips && (
         <div className="p-4 rounded-lg" style={{ backgroundColor: '#2A9D8F', color: 'white' }}>
           <h4 className="text-sm font-heading font-bold mb-2">Pro Tips</h4>
-          <p className="text-sm" style={{ fontFamily: 'Lato, sans-serif' }}>{(block as CmsFullDayBlock).tips}</p>
+          <p className="text-sm" style={{ fontFamily: 'Lato, sans-serif' }}>{blockData.tips}</p>
         </div>
       )}
     </div>

@@ -279,6 +279,8 @@ function GalleryCarousel({ items }: { items: GalleryItem[] }) {
   );
 }
 
+
+
 function Connector({ prevBlock, nextBlock }: { prevBlock: StepBlock; nextBlock: StepBlock }) {
   const transportInfo = buildConnectorLabel(prevBlock, nextBlock);
 
@@ -405,30 +407,12 @@ function ItineraryBlock({
       )}
 
       <div className="flex flex-wrap gap-2">
-        {block.blockType === 'fullDay' && block.budget && (
-          <div className="px-3 py-1.5 rounded-full bg-[#F4F1ED] dark:bg-stone-900 flex items-center gap-1.5 text-xs text-[#4C3A7A] font-medium">
-            <Euro size={12} />
-            <span>
-              {block.budget?.amount} {block.budget?.currency}
-            </span>
-          </div>
-        )}
 
-        {block.blockType === 'fullDay' && block.tips && (
-          <div className="px-3 py-1.5 rounded-full bg-[#2A9D8F]/10 dark:bg-[#2A9D8F]/20 text-[#2A9D8F] text-xs font-medium">
-            Pro Tip Available
-          </div>
-        )}
+
+
       </div>
 
-      {block.blockType === 'fullDay' && block.tips && active && (
-        <div className="mt-4 p-4 rounded-lg bg-[#2A9D8F] text-white text-sm shadow-md animate-in slide-in-from-top-2 duration-300">
-          <h4 className="font-heading font-bold mb-1 flex items-center gap-2">
-            Inside Scoop
-          </h4>
-          <p className="text-white/90">{block.tips}</p>
-        </div>
-      )}
+
     </div>
   );
 }
