@@ -42,8 +42,6 @@ export const data = {
                 }
             }
 
-            console.log(`[LocalAPI] Fetching trips (page ${page}, limit ${limit})`)
-
             const result = await payload.find({
                 collection: 'trips',
                 where,

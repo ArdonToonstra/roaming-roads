@@ -1,6 +1,6 @@
-import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
 
-export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db: _db, payload, req }: MigrateUpArgs): Promise<void> {
     const trips = await payload.find({
         collection: 'trips',
         limit: 1000,
@@ -10,9 +10,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
 
     for (const trip of trips.docs) {
         let modified = false
-        const newItinerary = (trip.itinerary || []).map((block: any) => {
+        const newItinerary = (trip.itinerary || []).map((block: unknown) => {
             let blockModified = false
-            const newBlock = { ...block }
+            const newBlock = { ...block } as Record<string, unknown>
 
             // Check activities field
             if (typeof newBlock.activities === 'string') {
@@ -66,7 +66,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
     }
 }
 
-export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+export async function down({ db: _db, payload: _payload, req: _req }: MigrateDownArgs): Promise<void> {
     // No down migration
 }
 

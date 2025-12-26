@@ -1,8 +1,8 @@
 import { data } from '@/lib/data';
 import Link from 'next/link';
 import Image from 'next/image';
-import { MapPin, Calendar, Camera, EuroIcon, Navigation, Globe, AlertTriangle, Bed, Target } from 'lucide-react';
-import { Trip, Media, Country } from '@/types/payload';
+import { MapPin, Calendar, Camera, Navigation, Globe, AlertTriangle, Bed, Target, Euro } from 'lucide-react';
+import { Trip, Country } from '@/types/payload';
 import { notFound } from 'next/navigation';
 import { getImageUrl } from '@/lib/images';
 // Removed embedded map + itinerary; now lives under /journey subpage
@@ -144,7 +144,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                   {/* Budget */}
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-gray-600">
-                      <EuroIcon size={18} />
+                      <Euro size={18} />
                       <span className="font-medium">Budget</span>
                     </div>
                     {trip.budget ? (
