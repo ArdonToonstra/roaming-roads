@@ -12,7 +12,7 @@ export async function up({ db: _db, payload, req }: MigrateUpArgs): Promise<void
         let modified = false
         const newItinerary = (trip.itinerary || []).map((block: unknown) => {
             let blockModified = false
-            const newBlock = { ...block } as Record<string, unknown>
+            const newBlock = { ...(block as Record<string, unknown>) } as Record<string, unknown>
 
             // Check activities field
             if (typeof newBlock.activities === 'string') {
