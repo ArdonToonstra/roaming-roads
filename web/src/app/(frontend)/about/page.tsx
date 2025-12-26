@@ -143,7 +143,7 @@ export default function AboutPage() {
             Ready to Start Your Adventure?
           </h2>
           <p className="text-lg mb-8 font-sans text-foreground">
-            Explore our collection of authentic travel stories and start planning your next journey.
+            Explore our collection of authentic travel itineraries and start planning your next journey.
           </p>
           <Link 
             href="/trips"

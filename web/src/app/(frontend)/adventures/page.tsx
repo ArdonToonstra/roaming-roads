@@ -37,7 +37,7 @@ export default async function AdventuresPage() {
             Our Adventures
           </h1>
           <p className="text-xl text-primary-foreground/90 max-w-2xl mx-auto">
-            Authentic travel stories from around the world. No ads, no affiliate links, just honest experiences and practical advice.
+            Authentic travel itineraries from around the world. No ads, no affiliate links, just honest experiences and practical advice.
           </p>
         </div>
       </section>

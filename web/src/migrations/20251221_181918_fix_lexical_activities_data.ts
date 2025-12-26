@@ -58,7 +58,7 @@ export async function up({ db: _db, payload, req }: MigrateUpArgs): Promise<void
                 collection: 'trips',
                 id: trip.id,
                 data: {
-                    itinerary: newItinerary,
+                    itinerary: newItinerary as any,
                 },
                 req,
             })
