@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Accommodation, Media } from '@/types/payload';
-import { X, MapPin, Globe, Phone, Mail, Star, ExternalLink, Bed, EuroIcon } from 'lucide-react';
+import { Accommodation } from '@/types/payload';
+import { X, MapPin, Globe, Phone, Star, ExternalLink, Bed } from 'lucide-react';
 import Image from 'next/image';
 import RichText from '@/components/RichText';
 import { getImageUrl } from '@/lib/images';

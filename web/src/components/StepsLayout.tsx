@@ -11,7 +11,7 @@ const TripDetailMap = dynamic(() => import('@/components/TripDetailMap'), {
 import RichText from '@/components/RichText';
 import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media } from '@/types/payload';
 import {
-  Clock, MapPin, Euro, ChevronLeft, ChevronRight, X, Bed,
+  Clock, MapPin, ChevronLeft, ChevronRight, X, Bed,
   Car, Plane, Train, Bus, Ship, MapPinIcon, Footprints,
   ArrowLeft, Map as MapIcon
 } from 'lucide-react';

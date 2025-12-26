@@ -32,6 +32,46 @@ function transformToPortableText(data: PayloadRichTextData | PayloadRichTextNode
   const blocks: any[] = [];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function processListItems(items: any[], listTag: string, level: number = 1) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    items.forEach((item: any) => {
+      if (item.type === 'listitem') {
+        // Process direct children that are not nested lists
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const textChildren: any[] = [];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const nestedLists: any[] = [];
+        
+        item.children?.forEach((child: any) => {
+          if (child.type === 'list') {
+            nestedLists.push(child);
+          } else {
+            textChildren.push(child);
+          }
+        });
+
+        // Add the list item block with text content
+        if (textChildren.length > 0) {
+          blocks.push({
+            _type: 'block',
+            _key: Math.random().toString(36),
+            style: 'normal',
+            listItem: listTag === 'ul' ? 'bullet' : 'number',
+            level: level,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            children: textChildren.map((child: any) => transformChild(child))
+          });
+        }
+
+        // Process nested lists recursively
+        nestedLists.forEach((nestedList) => {
+          processListItems(nestedList.children || [], nestedList.tag, level + 1);
+        });
+      }
+    });
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data.forEach((block: any) => {
     if (block.type === 'paragraph') {
       blocks.push({
@@ -42,21 +82,8 @@ function transformToPortableText(data: PayloadRichTextData | PayloadRichTextNode
         children: block.children?.map((child: any) => transformChild(child)) || []
       });
     } else if (block.type === 'list') {
-      // Transform list items into individual blocks with listItem property
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      block.children?.forEach((item: any, _index: number) => {
-        if (item.type === 'listitem') {
-          blocks.push({
-            _type: 'block',
-            _key: Math.random().toString(36),
-            style: 'normal',
-            listItem: block.tag === 'ul' ? 'bullet' : 'number',
-            level: 1,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            children: item.children?.map((child: any) => transformChild(child)) || []
-          });
-        }
-      });
+      // Transform list items recursively to handle nested lists
+      processListItems(block.children || [], block.tag);
     } else if (block.type?.startsWith('h')) {
       blocks.push({
         _type: 'block',
@@ -145,15 +172,23 @@ const ptComponents: any = {
   },
   list: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    bullet: ({ children }: any) => <ul className="list-disc pl-6 mb-2">{children}</ul>,
+    bullet: ({ children }: any) => <ul className="list-disc pl-6 mb-2 space-y-1">{children}</ul>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    number: ({ children }: any) => <ol className="list-decimal pl-6 mb-2">{children}</ol>,
+    number: ({ children }: any) => <ol className="list-decimal pl-6 mb-2 space-y-1">{children}</ol>,
   },
   listItem: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    bullet: ({ children }: any) => <li className="mb-1">{children}</li>,
+    bullet: ({ children, value }: any) => {
+      const level = value?.level || 1;
+      const indentClass = level > 1 ? `ml-${(level - 1) * 6}` : '';
+      return <li className={`mb-1 ${indentClass}`}>{children}</li>;
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    number: ({ children }: any) => <li className="mb-1">{children}</li>,
+    number: ({ children, value }: any) => {
+      const level = value?.level || 1;
+      const indentClass = level > 1 ? `ml-${(level - 1) * 6}` : '';
+      return <li className={`mb-1 ${indentClass}`}>{children}</li>;
+    },
   },
   marks: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

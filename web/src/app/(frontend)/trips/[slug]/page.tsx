@@ -2,7 +2,7 @@ import { data } from '@/lib/data';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Calendar, Camera, Navigation, Globe, AlertTriangle, Bed, Target, Euro } from 'lucide-react';
-import { Trip, Country } from '@/types/payload';
+import { Trip, Country, Media } from '@/types/payload';
 import { notFound } from 'next/navigation';
 import { getImageUrl } from '@/lib/images';
 // Removed embedded map + itinerary; now lives under /journey subpage
