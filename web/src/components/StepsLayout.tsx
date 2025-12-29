@@ -9,7 +9,7 @@ const TripDetailMap = dynamic(() => import('@/components/TripDetailMap'), {
   loading: () => <div className="h-full w-full bg-muted/20 animate-pulse flex items-center justify-center text-muted-foreground text-sm">Loading Map...</div>
 });
 import RichText from '@/components/RichText';
-import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media, Accommodation, Country } from '@/types/payload';
+import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media, Accommodation } from '@/types/payload';
 import {
   Clock, MapPin, ChevronLeft, ChevronRight, X, Bed,
   Car, Plane, Train, Bus, Ship, MapPinIcon, Footprints,
@@ -644,16 +644,21 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
             </button>
 
             {/* Header Image */}
-            {selectedAccommodation.media && selectedAccommodation.media.length > 0 && (
-              <div className="relative h-64 w-full bg-gray-200">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={getImageUrl(selectedAccommodation.media[0], 800)}
-                  alt={selectedAccommodation.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            )}
+            {selectedAccommodation.media && selectedAccommodation.media.length > 0 && (() => {
+              const coverPhoto = selectedAccommodation.media[0];
+              const url = typeof coverPhoto === 'object' ? getImageUrl(coverPhoto.url) : getImageUrl(coverPhoto);
+              if (!url) return null;
+              return (
+                <div className="relative h-64 w-full bg-gray-200">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={url}
+                    alt={selectedAccommodation.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              );
+            })()}
 
             {/* Content */}
             <div className="p-8 space-y-6">
@@ -703,16 +708,20 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
                 <div className="pt-4 border-t border-gray-200">
                   <h3 className="text-lg font-semibold text-gray-800 mb-4">More Photos</h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {selectedAccommodation.media.slice(1).map((photo, idx) => (
-                      <div key={idx} className="relative aspect-video bg-gray-200 rounded-lg overflow-hidden">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={getImageUrl(photo, 400)}
-                          alt={`${selectedAccommodation.name} - Photo ${idx + 2}`}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                    ))}
+                    {selectedAccommodation.media.slice(1).map((photo, idx) => {
+                      const url = typeof photo === 'object' ? getImageUrl(photo.url) : getImageUrl(photo);
+                      if (!url) return null;
+                      return (
+                        <div key={idx} className="relative aspect-video bg-gray-200 rounded-lg overflow-hidden">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={url}
+                            alt={`${selectedAccommodation.name} - Photo ${idx + 2}`}
+                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}

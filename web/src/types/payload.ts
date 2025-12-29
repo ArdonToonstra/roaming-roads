@@ -92,7 +92,7 @@ export interface Trip {
   id: string
   title: string
   slug: string
-  status: 'draft' | 'published'
+  status: 'draft' | 'coming_soon' | 'published'
   category: ('city_trip' | 'road_trip' | 'backpacking' | 'hiking' | 'base_camp')[]
   coverImage: string | Media
   highlightsMedia?: Array<{

@@ -11,31 +11,37 @@ import { getImageUrl } from '@/lib/images';
 function FeaturedTripCard({ trip }: { trip: Trip }) {
   const imageUrl = getImageUrl(trip.coverImage);
   const isComingSoon = trip.status === 'coming_soon';
-  const CardWrapper = isComingSoon ? 'div' : Link;
-  const wrapperProps = isComingSoon ? { className: "group block w-full h-full cursor-default" } : { href: `/trips/${trip.slug || trip.id}`, className: "group block w-full h-full" };
 
-  return (
-    <CardWrapper {...wrapperProps}>
-      <article className={`relative rounded-lg overflow-hidden shadow-lg h-80 ${isComingSoon ? 'opacity-60' : ''}`}>
-        {isComingSoon && (
-          <div className="absolute top-4 right-4 z-10 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
-            <Clock size={12} />
-            Coming Soon
-          </div>
-        )}
-        <Image
-          src={imageUrl}
-          alt={trip.title}
-          fill
-          className={`object-cover transition-transform duration-500 ${isComingSoon ? 'grayscale' : 'group-hover:scale-105'}`}
-          unoptimized
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        <h3 className={`absolute bottom-0 left-0 p-6 font-heading font-bold text-xl text-white transition-colors ${!isComingSoon && 'group-hover:text-primary'}`}>
-          {trip.title}
-        </h3>
-      </article>
-    </CardWrapper>
+  const cardContent = (
+    <article className={`relative rounded-lg overflow-hidden shadow-lg h-80 ${isComingSoon ? 'opacity-60' : ''}`}>
+      {isComingSoon && (
+        <div className="absolute top-4 right-4 z-10 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+          <Clock size={12} />
+          Coming Soon
+        </div>
+      )}
+      <Image
+        src={imageUrl}
+        alt={trip.title}
+        fill
+        className={`object-cover transition-transform duration-500 ${isComingSoon ? 'grayscale' : 'group-hover:scale-105'}`}
+        unoptimized
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      <h3 className={`absolute bottom-0 left-0 p-6 font-heading font-bold text-xl text-white transition-colors ${!isComingSoon && 'group-hover:text-primary'}`}>
+        {trip.title}
+      </h3>
+    </article>
+  );
+
+  return isComingSoon ? (
+    <div className="group block w-full h-full cursor-default">
+      {cardContent}
+    </div>
+  ) : (
+    <Link href={`/trips/${trip.slug || trip.id}`} className="group block w-full h-full">
+      {cardContent}
+    </Link>
   );
 }
 

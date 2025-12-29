@@ -1,6 +1,6 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
-export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload: _payload, req: _req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    ALTER TYPE "public"."enum_trips_status" ADD VALUE 'coming_soon' BEFORE 'published';
   ALTER TABLE "trips_regions_visited" DISABLE ROW LEVEL SECURITY;
@@ -38,7 +38,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   DROP TYPE "public"."enum_accommodations_quality_service";`)
 }
 
-export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+export async function down({ db, payload: _payload, req: _req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
    CREATE TYPE "public"."enum_accommodations_amenities_amenity" AS ENUM('wifi', 'parking', 'restaurant', 'bar', 'pool', 'spa', 'gym', 'laundry', 'kitchen', 'ac', 'heating', 'hot_water', 'breakfast', 'pet_friendly', 'family_friendly', 'accessible', 'luggage_storage', 'tour_desk', 'other');
   CREATE TYPE "public"."enum_accommodations_suitable_for_traveler_type" AS ENUM('solo', 'couples', 'families', 'groups', 'backpackers', 'business', 'adventure', 'digital_nomads');
