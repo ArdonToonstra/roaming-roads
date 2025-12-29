@@ -8,6 +8,7 @@ import { env } from '@/lib/config';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getImageUrl } from '@/lib/images';
+import { Clock } from 'lucide-react';
 import type * as L from 'leaflet';
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -32,22 +33,34 @@ interface LeafletModule {
 // A simple card component for the popup
 function PopupCard({ trip }: { trip: Trip }) {
   const imageUrl = getImageUrl(trip.coverImage);
+  const isComingSoon = trip.status === 'coming_soon';
+  
   return (
-    <div className="w-64">
+    <div className={`w-64 ${isComingSoon ? 'opacity-60' : ''}`}>
+      {isComingSoon && (
+        <div className="bg-orange-500 text-white px-3 py-1 text-xs font-semibold flex items-center justify-center gap-1 rounded-t-lg">
+          <Clock size={12} />
+          Coming Soon
+        </div>
+      )}
       <div className="relative w-full h-32">
         <Image
           src={imageUrl}
           alt={trip.title}
           fill
-          className="object-cover rounded-t-lg"
+          className={`object-cover ${isComingSoon ? 'rounded-t-none' : 'rounded-t-lg'} ${isComingSoon ? 'grayscale' : ''}`}
           unoptimized
         />
       </div>
       <div className="p-3">
         <h3 className="font-heading font-bold text-lg mb-2">{trip.title}</h3>
-        <Link href={`/trips/${trip.slug || trip.id}`} className="text-primary font-bold hover:underline text-sm">
-          View Trip &rarr;
-        </Link>
+        {isComingSoon ? (
+          <p className="text-muted-foreground text-sm">Details coming soon...</p>
+        ) : (
+          <Link href={`/trips/${trip.slug || trip.id}`} className="text-primary font-bold hover:underline text-sm">
+            View Trip &rarr;
+          </Link>
+        )}
       </div>
     </div>
   );

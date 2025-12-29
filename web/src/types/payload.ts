@@ -29,27 +29,9 @@ export interface Accommodation {
   name: string
   type: 'hotel' | 'hostel' | 'camping' | 'guesthouse' | 'resort' | 'apartment' | 'yurt' | 'wild_camping' | 'homestay' | 'ecolodge' | 'other'
   description?: RichTextContent
-  location?: PointLocation
-  address?: {
-    street?: string
-    city?: string
-    region?: string
-    postalCode?: string
-    country?: string | Country
-  }
-  contact?: {
-    website?: string
-    phone?: string
-    email?: string
-  }
-  // priceRange removed
-  starRating?: number
-  amenities?: string[]
-  media?: Media[] // Renamed from photos
-  bookingLinks?: Array<{
-    platform: string
-    url: string
-  }>
+  country?: string | Country
+  website?: string
+  media?: Media[] | string[]
   createdAt: string
   updatedAt: string
 }

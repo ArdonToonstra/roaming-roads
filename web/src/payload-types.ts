@@ -332,7 +332,10 @@ export interface Trip {
    * URL-friendly version of the title (e.g., "kyrgyzstan-adventure")
    */
   slug: string;
-  status?: ('draft' | 'published') | null;
+  /**
+   * Draft: Not visible. Coming Soon: Shows as preview (grayed out, not clickable). Published: Fully available.
+   */
+  status?: ('draft' | 'coming_soon' | 'published') | null;
   /**
    * Select the type of trip this represents
    */
@@ -624,139 +627,17 @@ export interface Accommodation {
     [k: string]: unknown;
   } | null;
   /**
-   * Exact location coordinates
-   *
-   * @minItems 2
-   * @maxItems 2
+   * Select the country where this accommodation is located
    */
-  location?: [number, number] | null;
+  country?: (number | null) | Country;
   /**
-   * Full address information
+   * Official website URL
    */
-  address: {
-    street?: string | null;
-    city?: string | null;
-    region?: string | null;
-    postalCode?: string | null;
-    /**
-     * Select the country where this accommodation is located
-     */
-    country: number | Country;
-  };
-  contact?: {
-    /**
-     * Official website URL
-     */
-    website?: string | null;
-    /**
-     * Primary phone number with country code
-     */
-    phone?: string | null;
-    /**
-     * Contact email address
-     */
-    email?: string | null;
-  };
+  website?: string | null;
   /**
    * Upload photos of this accommodation
    */
   media?: (number | Media)[] | null;
-  quality?: {
-    /**
-     * Our star rating or equivalent
-     */
-    starRating?: ('1' | '2' | '3' | '4' | '5' | 'unrated') | null;
-    cleanliness?: ('excellent' | 'very_good' | 'good' | 'fair' | 'poor') | null;
-    service?: ('excellent' | 'very_good' | 'good' | 'fair' | 'poor') | null;
-  };
-  /**
-   * Available amenities and services
-   */
-  amenities?:
-    | {
-        amenity?:
-          | (
-              | 'wifi'
-              | 'parking'
-              | 'restaurant'
-              | 'bar'
-              | 'pool'
-              | 'spa'
-              | 'gym'
-              | 'laundry'
-              | 'kitchen'
-              | 'ac'
-              | 'heating'
-              | 'hot_water'
-              | 'breakfast'
-              | 'pet_friendly'
-              | 'family_friendly'
-              | 'accessible'
-              | 'luggage_storage'
-              | 'tour_desk'
-              | 'other'
-            )
-          | null;
-        /**
-         * Additional details about this amenity
-         */
-        notes?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Types of travelers this accommodation is best suited for
-   */
-  suitableFor?:
-    | {
-        travelerType:
-          | 'solo'
-          | 'couples'
-          | 'families'
-          | 'groups'
-          | 'backpackers'
-          | 'business'
-          | 'adventure'
-          | 'digital_nomads';
-        id?: string | null;
-      }[]
-    | null;
-  personalNotes?: {
-    /**
-     * When you stayed at this accommodation
-     */
-    stayDate?: string | null;
-    /**
-     * Would you recommend this accommodation to others?
-     */
-    wouldRecommend?: boolean | null;
-    /**
-     * What you liked most about this place
-     */
-    highlights?: string | null;
-    /**
-     * Any issues or things to be aware of
-     */
-    drawbacks?: string | null;
-    /**
-     * Helpful tips for future guests
-     */
-    tips?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-  };
   updatedAt: string;
   createdAt: string;
 }
@@ -1084,53 +965,9 @@ export interface AccommodationsSelect<T extends boolean = true> {
   name?: T;
   type?: T;
   description?: T;
-  location?: T;
-  address?:
-    | T
-    | {
-        street?: T;
-        city?: T;
-        region?: T;
-        postalCode?: T;
-        country?: T;
-      };
-  contact?:
-    | T
-    | {
-        website?: T;
-        phone?: T;
-        email?: T;
-      };
+  country?: T;
+  website?: T;
   media?: T;
-  quality?:
-    | T
-    | {
-        starRating?: T;
-        cleanliness?: T;
-        service?: T;
-      };
-  amenities?:
-    | T
-    | {
-        amenity?: T;
-        notes?: T;
-        id?: T;
-      };
-  suitableFor?:
-    | T
-    | {
-        travelerType?: T;
-        id?: T;
-      };
-  personalNotes?:
-    | T
-    | {
-        stayDate?: T;
-        wouldRecommend?: T;
-        highlights?: T;
-        drawbacks?: T;
-        tips?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
 }

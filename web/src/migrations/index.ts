@@ -7,6 +7,7 @@ import * as migration_20251123_214524 from './20251123_214524';
 import * as migration_20251207_170607_update_trips_category from './20251207_170607_update_trips_category';
 import * as migration_20251221_180041_accommodations_and_itinerary_update from './20251221_180041_accommodations_and_itinerary_update';
 import * as migration_20251221_181918_fix_lexical_activities_data from './20251221_181918_fix_lexical_activities_data';
+import * as migration_20251229_162512 from './20251229_162512';
 
 export const migrations = [
   {
@@ -52,6 +53,11 @@ export const migrations = [
   {
     up: migration_20251221_181918_fix_lexical_activities_data.up,
     down: migration_20251221_181918_fix_lexical_activities_data.down,
-    name: '20251221_181918_fix_lexical_activities_data'
+    name: '20251221_181918_fix_lexical_activities_data',
+  },
+  {
+    up: migration_20251229_162512.up,
+    down: migration_20251229_162512.down,
+    name: '20251229_162512'
   },
 ];

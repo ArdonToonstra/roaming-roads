@@ -286,7 +286,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                       
                       return (
                         <div key={index} className="mb-4">
-                          {trip.countries.length > 1 && (
+                          {(trip.countries?.length ?? 0) > 1 && (
                             <p className="font-semibold text-gray-700 mb-2">{countryData.name}</p>
                           )}
                           <div className="flex flex-wrap gap-2">

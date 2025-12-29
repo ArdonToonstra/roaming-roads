@@ -35,10 +35,10 @@ export const data = {
                 ...(options.where || {}),
             }
 
-            // Production filter: only published
+            // Production filter: only published and coming_soon
             if (IS_PROD) {
                 where.status = {
-                    equals: 'published',
+                    in: ['published', 'coming_soon'],
                 }
             }
 
@@ -101,7 +101,7 @@ export const data = {
 
             if (!trip) return null
 
-            // Enforce published status in production
+            // Enforce published status in production (coming_soon trips are not accessible)
             if (IS_PROD && trip.status !== 'published') {
                 return null
             }

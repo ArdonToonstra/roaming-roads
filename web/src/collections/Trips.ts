@@ -43,11 +43,13 @@ const Trips: CollectionConfig = {
       type: 'select',
       options: [
         { label: 'Draft', value: 'draft' },
+        { label: 'Coming Soon', value: 'coming_soon' },
         { label: 'Published', value: 'published' },
       ],
       defaultValue: 'draft',
       admin: {
         position: 'sidebar',
+        description: 'Draft: Not visible. Coming Soon: Shows as preview (grayed out, not clickable). Published: Fully available.',
       }
     },
     {

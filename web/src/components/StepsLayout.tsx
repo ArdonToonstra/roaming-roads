@@ -9,11 +9,11 @@ const TripDetailMap = dynamic(() => import('@/components/TripDetailMap'), {
   loading: () => <div className="h-full w-full bg-muted/20 animate-pulse flex items-center justify-center text-muted-foreground text-sm">Loading Map...</div>
 });
 import RichText from '@/components/RichText';
-import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media } from '@/types/payload';
+import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media, Accommodation, Country } from '@/types/payload';
 import {
   Clock, MapPin, ChevronLeft, ChevronRight, X, Bed,
   Car, Plane, Train, Bus, Ship, MapPinIcon, Footprints,
-  ArrowLeft, Map as MapIcon
+  ArrowLeft, Map as MapIcon, ExternalLink
 } from 'lucide-react';
 import Link from 'next/link';
 import { getImageUrl } from '@/lib/images';
@@ -314,12 +314,14 @@ function ItineraryBlock({
   block,
   index,
   active,
-  onClick
+  onClick,
+  setSelectedAccommodation
 }: {
   block: StepBlock;
   index: number;
   active: boolean;
-  onClick: () => void
+  onClick: () => void;
+  setSelectedAccommodation: (acc: Accommodation) => void;
 }) {
   return (
     <div
@@ -367,7 +369,15 @@ function ItineraryBlock({
             {block.accommodation && (
               <div className="flex items-center gap-1" title="Accommodation">
                 <Bed size={14} />
-                <span className="truncate max-w-[150px] sm:max-w-[200px]">
+                <span 
+                  className="truncate max-w-[150px] sm:max-w-[200px] cursor-pointer hover:underline transition-all"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (typeof block.accommodation === 'object' && block.accommodation) {
+                      setSelectedAccommodation(block.accommodation as Accommodation);
+                    }
+                  }}
+                >
                   {typeof block.accommodation === 'string'
                     ? block.accommodation
                     : (block.accommodation?.name || 'Accommodation')}
@@ -422,6 +432,7 @@ function ItineraryBlock({
 export default function StepsLayout({ trip }: StepsLayoutProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
   const [showMap, setShowMap] = useState(true);
+  const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodation | null>(null);
   const isProgrammaticScroll = useRef(false);
 
   const handleStepClick = (index: number) => {
@@ -580,8 +591,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
                     block={step}
                     index={index}
                     active={activeIndex === index}
-                    onClick={() => handleStepClick(index)}
-                  />
+                    onClick={() => handleStepClick(index)}                    setSelectedAccommodation={setSelectedAccommodation}                  />
 
                   {index < (trip.itinerary!.length - 1) && (
                     <Connector
@@ -616,6 +626,100 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
           </div>
         </div>
       </div>
+
+      {/* Accommodation Modal */}
+      {selectedAccommodation && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedAccommodation(null)}>
+          <div 
+            className="relative max-w-3xl w-full max-h-[90vh] overflow-y-auto bg-white rounded-xl shadow-2xl" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/90 hover:bg-white shadow-lg transition-colors"
+              onClick={() => setSelectedAccommodation(null)}
+              aria-label="Close"
+            >
+              <X size={24} className="text-gray-700" />
+            </button>
+
+            {/* Header Image */}
+            {selectedAccommodation.media && selectedAccommodation.media.length > 0 && (
+              <div className="relative h-64 w-full bg-gray-200">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={getImageUrl(selectedAccommodation.media[0], 800)}
+                  alt={selectedAccommodation.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+
+            {/* Content */}
+            <div className="p-8 space-y-6">
+              {/* Title and Type */}
+              <div>
+                <h2 className="text-3xl font-heading font-bold text-[#4C3A7A] mb-2">
+                  {selectedAccommodation.name}
+                </h2>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#2A9D8F]/10 text-[#2A9D8F] border border-[#2A9D8F]/20">
+                    {selectedAccommodation.type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                  </span>
+                  {selectedAccommodation.country && (
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                      {typeof selectedAccommodation.country === 'string' 
+                        ? selectedAccommodation.country 
+                        : selectedAccommodation.country.name}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Description */}
+              {selectedAccommodation.description && (
+                <div className="prose prose-lg max-w-none">
+                  <RichText content={selectedAccommodation.description} />
+                </div>
+              )}
+
+              {/* Website */}
+              {selectedAccommodation.website && (
+                <div className="pt-4 border-t border-gray-200">
+                  <a
+                    href={selectedAccommodation.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-[#2A9D8F] hover:text-[#1f7a6f] font-medium transition-colors"
+                  >
+                    Visit Website
+                    <ExternalLink size={16} />
+                  </a>
+                </div>
+              )}
+
+              {/* Additional Photos */}
+              {selectedAccommodation.media && selectedAccommodation.media.length > 1 && (
+                <div className="pt-4 border-t border-gray-200">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">More Photos</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {selectedAccommodation.media.slice(1).map((photo, idx) => (
+                      <div key={idx} className="relative aspect-video bg-gray-200 rounded-lg overflow-hidden">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={getImageUrl(photo, 400)}
+                          alt={`${selectedAccommodation.name} - Photo ${idx + 2}`}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

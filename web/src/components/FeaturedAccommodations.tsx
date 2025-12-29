@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Accommodation } from '@/types/payload';
-import { X, MapPin, Globe, Phone, Star, ExternalLink, Bed } from 'lucide-react';
+import { X, Globe, ExternalLink, Bed } from 'lucide-react';
 import Image from 'next/image';
 import RichText from '@/components/RichText';
 import { getImageUrl } from '@/lib/images';
@@ -13,6 +13,24 @@ interface FeaturedAccommodationsProps {
 
 export default function FeaturedAccommodations({ items }: FeaturedAccommodationsProps) {
     const [selected, setSelected] = useState<Accommodation | null>(null);
+
+    // Hide map elements when modal is open
+    useEffect(() => {
+        if (selected) {
+            // Find all leaflet map containers and hide them
+            const mapContainers = document.querySelectorAll('.leaflet-container');
+            mapContainers.forEach((container) => {
+                (container as HTMLElement).style.visibility = 'hidden';
+            });
+
+            // Cleanup: restore visibility when modal closes
+            return () => {
+                mapContainers.forEach((container) => {
+                    (container as HTMLElement).style.visibility = 'visible';
+                });
+            };
+        }
+    }, [selected]);
 
     // Filter valid accommodations
     const validItems = items
@@ -37,12 +55,6 @@ export default function FeaturedAccommodations({ items }: FeaturedAccommodations
                                 <h4 className="font-heading font-bold text-gray-800 group-hover:text-teal-700 transition-colors line-clamp-1">
                                     {accommodation.name}
                                 </h4>
-                                {accommodation.starRating && (
-                                    <div className="flex items-center text-yellow-400 shrink-0 ml-2">
-                                        <span className="text-xs font-bold text-gray-600 mr-1">{accommodation.starRating}</span>
-                                        <Star size={14} fill="currentColor" />
-                                    </div>
-                                )}
                             </div>
 
                             <p className="text-xs text-gray-500 capitalize mb-2 font-medium">
@@ -60,7 +72,7 @@ export default function FeaturedAccommodations({ items }: FeaturedAccommodations
 
             {/* Modal */}
             {selected && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelected(null)}>
+                <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelected(null)}>
                     <div
                         className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl animate-in fade-in zoom-in duration-200"
                         onClick={e => e.stopPropagation()}
@@ -85,7 +97,8 @@ export default function FeaturedAccommodations({ items }: FeaturedAccommodations
                                             src={url}
                                             alt={typeof coverPhoto === 'object' ? coverPhoto.alt || selected.name : selected.name}
                                             fill
-                                            className="object-cover"
+                                            className="object-cover rounded-t-2xl"
+                                            unoptimized
                                         />
                                     </div>
                                 )
@@ -102,87 +115,63 @@ export default function FeaturedAccommodations({ items }: FeaturedAccommodations
                                                 <Bed size={14} />
                                                 {selected.type?.replace(/_/g, ' ')}
                                             </span>
-                                            {selected.starRating && (
-                                                <span className="flex items-center gap-1 px-3 py-1 bg-yellow-50 text-yellow-700 rounded-full">
-                                                    {selected.starRating} <Star size={14} fill="currentColor" />
+                                            {selected.country && typeof selected.country === 'object' && (
+                                                <span className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full">
+                                                    {selected.country.name}
                                                 </span>
                                             )}
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                    {/* Left: Description & Info */}
-                                    <div className="md:col-span-2 space-y-6">
-                                        {selected.description && (
-                                            <div className="prose prose-sm max-w-none text-gray-600">
-                                                <RichText content={selected.description} />
-                                            </div>
-                                        )}
+                                <div className="space-y-6">
+                                    {/* Description */}
+                                    {selected.description && (
+                                        <div className="prose prose-sm max-w-none text-gray-600">
+                                            <RichText content={selected.description} />
+                                        </div>
+                                    )}
 
-                                        {selected.amenities && selected.amenities.length > 0 && (
-                                            <div>
-                                                <h4 className="font-bold text-gray-900 mb-3">Amenities</h4>
-                                                <div className="flex flex-wrap gap-2">
-                                                    {selected.amenities.map((amenity, i) => (
-                                                        <span key={i} className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full capitalize">
-                                                            {amenity.replace(/_/g, ' ')}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    {/* Right: Contact & Location */}
-                                    <div className="space-y-6">
+                                    {/* Website */}
+                                    {selected.website && (
                                         <div className="bg-gray-50 p-5 rounded-xl border border-gray-100">
-                                            <h4 className="font-bold text-gray-900 mb-4">Contact & Location</h4>
-                                            <div className="space-y-3 text-sm">
-                                                {(selected.address?.city || selected.address?.country) && (
-                                                    <div className="flex items-start gap-2 text-gray-600">
-                                                        <MapPin size={16} className="mt-1 shrink-0" />
-                                                        <span>
-                                                            {[
-                                                                selected.address.street,
-                                                                selected.address.city,
-                                                                typeof selected.address.country === 'object' ? selected.address.country?.name : selected.address.country
-                                                            ].filter(Boolean).join(', ')}
-                                                        </span>
-                                                    </div>
-                                                )}
+                                            <h4 className="font-bold text-gray-900 mb-3">Visit Website</h4>
+                                            <a 
+                                                href={selected.website} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer" 
+                                                className="flex items-center gap-2 text-teal-600 hover:text-teal-700 hover:underline"
+                                            >
+                                                <Globe size={16} />
+                                                <span>{selected.website}</span>
+                                            </a>
+                                        </div>
+                                    )}
 
-                                                {selected.contact?.website && (
-                                                    <a href={selected.contact.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-teal-600 hover:underline">
-                                                        <Globe size={16} />
-                                                        <span>Website</span>
-                                                    </a>
-                                                )}
-
-                                                {selected.contact?.phone && (
-                                                    <div className="flex items-center gap-2 text-gray-600">
-                                                        <Phone size={16} />
-                                                        <span>{selected.contact.phone}</span>
-                                                    </div>
-                                                )}
-
-                                                {selected.bookingLinks && selected.bookingLinks.length > 0 && (
-                                                    <div className="pt-3 mt-3 border-t border-gray-200">
-                                                        <p className="text-xs font-semibold text-gray-500 uppercase mb-2">Book via</p>
-                                                        <div className="space-y-2">
-                                                            {selected.bookingLinks.map((link, i) => (
-                                                                <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="block text-center w-full py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-xs font-bold">
-                                                                    {link.platform}
-                                                                </a>
-                                                            ))}
+                                    {/* Additional Photos */}
+                                    {selected.media && selected.media.length > 1 && (
+                                        <div>
+                                            <h4 className="font-bold text-gray-900 mb-3">Photos</h4>
+                                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                                {selected.media.slice(1).map((photo, i) => {
+                                                    const url = typeof photo === 'object' ? getImageUrl(photo.url) : null;
+                                                    if (!url) return null;
+                                                    return (
+                                                        <div key={i} className="relative h-32 rounded-lg overflow-hidden">
+                                                            <Image
+                                                                src={url}
+                                                                alt={typeof photo === 'object' ? photo.alt || `Photo ${i + 2}` : `Photo ${i + 2}`}
+                                                                fill
+                                                                className="object-cover"
+                                                                unoptimized
+                                                            />
                                                         </div>
-                                                    </div>
-                                                )}
+                                                    );
+                                                })}
                                             </div>
                                         </div>
-                                    </div>
+                                    )}
                                 </div>
-
                             </div>
                         </div>
                     </div>
