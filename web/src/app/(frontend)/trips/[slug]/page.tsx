@@ -176,30 +176,72 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                 </div>
               </div>
 
+             
 
-
-              {/* Main Activities */}
-              <div className="border-b border-gray-200 pb-8">
-                <div className="flex items-center gap-2 mb-6">
-                  <Target size={20} style={{ color: '#2A9D8F' }} />
-                  <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
-                    Main Activities
-                  </h3>
-                </div>
-                {trip.activities ? (
-                  <div className="bg-gray-50 p-6 rounded-lg">
-                    <RichText
-                      content={trip.activities}
-                      className="prose max-w-none text-gray-700"
-                      style={{ fontFamily: 'Lato, sans-serif' }}
-                    />
+              {/* Itinerary with Map and List */}
+              {trip.itinerary && trip.itinerary.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 rounded-lg" style={{ backgroundColor: '#2A9D8F', color: 'white' }}>
+                      <Navigation size={24} />
+                    </div>
+                    <h3 className="text-2xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
+                      Itinerary
+                    </h3>
                   </div>
-                ) : (
-                  <p className="text-gray-500 italic">No specific activities documented for this trip</p>
-                )}
-              </div>
+                  
+                  {/* Large Map with Hover CTA */}
+                  <div className="relative group cursor-pointer mb-8">
+                    <Link href={`/trips/${trip.slug || trip.id}/steps`}>
+                      <div className="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 min-h-[500px]">
+                        <MountSmallOverview trip={trip} />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-20 pointer-events-none">
+                          <div className="text-center">
+                            <p className="text-white text-2xl font-heading font-bold mb-2">
+                              View Step-by-Step
+                            </p>
+                            <p className="text-white/90 text-lg" style={{ fontFamily: 'Lato, sans-serif' }}>
+                              Explore the complete itinerary
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
 
-              {/* Important Preparations */}
+                  {/* Itinerary List */}
+                  <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+                    <ul className="space-y-3 mb-6">
+                      {trip.itinerary
+                        .filter((item) => item.blockType === 'fullDay')
+                        .map((day, index) => {
+                          const fullDay = day as any;
+                          return (
+                            <li key={index} className="flex justify-between items-start gap-3 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+                              <span className="text-gray-800 font-medium flex-1" style={{ fontFamily: 'Lato, sans-serif' }}>
+                                {fullDay.locationName}
+                              </span>
+                              {fullDay.time && (
+                                <span className="text-gray-500 text-sm whitespace-nowrap" style={{ fontFamily: 'Lato, sans-serif' }}>
+                                  {fullDay.time}
+                                </span>
+                              )}
+                            </li>
+                          );
+                        })}
+                    </ul>
+                    <Link
+                      href={`/trips/${trip.slug || trip.id}/steps`}
+                      className="block w-full text-center px-6 py-3 text-white font-heading font-bold rounded-xl transition-all duration-300 hover:opacity-90 hover:scale-105"
+                      style={{ backgroundColor: '#2A9D8F' }}
+                    >
+                      View Detailed Step-by-Step Journey
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+ {/* Important Preparations */}
               <div className="border-b border-gray-200 pb-8">
                 <div className="flex items-center gap-2 mb-6">
                   <AlertTriangle size={20} style={{ color: '#F57D50' }} />
@@ -222,77 +264,79 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                 )}
               </div>
 
-              {/* Featured Accommodations */}
-              <div>
-                <div className="flex items-center gap-2 mb-6">
-                  <Bed size={20} style={{ color: '#2A9D8F' }} />
-                  <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
-                    Featured Accommodations
-                  </h3>
-                </div>
-                {trip.featuredAccommodations && trip.featuredAccommodations.length > 0 ? (
-                  <FeaturedAccommodations items={trip.featuredAccommodations} />
-                ) : (
-                  <p className="text-gray-500 italic">No featured accommodations for this trip</p>
-                )}
-              </div>
             </div>
 
-            {/* Right Column - Map and Journey CTA */}
+
+
+            {/* Right Column - Sidebar Information */}
             <div className="lg:col-span-1 space-y-8">
-              {/* Map */}
-              <div className="sticky top-8">
-                {/* Regions Explored */}
-                <div className="mb-8">
+              <div className="sticky top-8 space-y-8">
+                {/* Best Time to Visit */}
+                {trip.countries && trip.countries.length > 0 && (
+                  <div>
+                    <div className="flex items-center gap-2 mb-4">
+                      <Calendar size={20} style={{ color: '#2A9D8F' }} />
+                      <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
+                        Best Time to Visit
+                      </h3>
+                    </div>
+                    {trip.countries.map((country, index) => {
+                      const countryData = typeof country === 'object' ? country as Country : null;
+                      if (!countryData?.bestTimeToVisit || countryData.bestTimeToVisit.length === 0) return null;
+                      
+                      return (
+                        <div key={index} className="mb-4">
+                          {trip.countries.length > 1 && (
+                            <p className="font-semibold text-gray-700 mb-2">{countryData.name}</p>
+                          )}
+                          <div className="flex flex-wrap gap-2">
+                            {countryData.bestTimeToVisit.map((month, i) => (
+                              <span key={i} className="bg-teal-50 text-teal-700 px-3 py-1 rounded-full text-sm font-medium border border-teal-200">
+                                {month.charAt(0).toUpperCase() + month.slice(1)}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {/* Main Activities */}
+                <div>
                   <div className="flex items-center gap-2 mb-4">
-                    <MapPin size={20} style={{ color: '#2A9D8F' }} />
+                    <Target size={20} style={{ color: '#2A9D8F' }} />
                     <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
-                      Regions Explored
+                      Main Activities
                     </h3>
                   </div>
-                  {trip.regionsVisited && trip.regionsVisited.length > 0 ? (
-                    <div className="flex flex-wrap gap-3">
-                      {trip.regionsVisited.map((region, index) => (
-                        <div key={index} className="bg-gray-100 px-4 py-2 rounded-full border border-gray-200 hover:border-gray-300 transition-colors">
-                          <span className="font-medium text-gray-800">
-                            {region.regionName}
-                          </span>
-                        </div>
-                      ))}
+                  {trip.activities ? (
+                    <div className="bg-gray-50 p-6 rounded-lg">
+                      <RichText
+                        content={trip.activities}
+                        className="prose prose-sm max-w-none text-gray-700"
+                        style={{ fontFamily: 'Lato, sans-serif' }}
+                      />
                     </div>
                   ) : (
-                    <p className="text-gray-500 italic">No specific regions documented for this trip</p>
+                    <p className="text-gray-500 italic">No specific activities documented for this trip</p>
                   )}
                 </div>
 
-                <MountSmallOverview trip={trip} />
-
-                {/* Detailed Journey CTA */}
-                {trip.itinerary && trip.itinerary.length > 0 && (
-                  <div className="mt-8 bg-gradient-to-br from-gray-50 to-gray-100 p-8 rounded-2xl border border-gray-200">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="p-3 rounded-xl" style={{ backgroundColor: '#2A9D8F', color: 'white' }}>
-                        <Navigation size={24} />
-                      </div>
-                      <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
-                        Detailed Journey
-                      </h3>
-                    </div>
-                    <p className="text-gray-600 mb-6 leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
-                      Complete step-by-step itinerary with interactive maps and detailed locations.
-                    </p>
-
-
-
-                    <Link
-                      href={`/trips/${trip.slug || trip.id}/steps`}
-                      className="block w-full text-center px-6 py-3 text-white font-heading font-bold rounded-xl transition-all duration-300 hover:opacity-90 hover:scale-105"
-                      style={{ backgroundColor: '#2A9D8F' }}
-                    >
-                      View Step-by-Step
-                    </Link>
+                {/* Featured Accommodations */}
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <Bed size={20} style={{ color: '#2A9D8F' }} />
+                    <h3 className="text-xl font-heading font-bold" style={{ color: '#4C3A7A' }}>
+                      Featured Accommodations
+                    </h3>
                   </div>
-                )}
+                  {trip.featuredAccommodations && trip.featuredAccommodations.length > 0 ? (
+                    <FeaturedAccommodations items={trip.featuredAccommodations} />
+                  ) : (
+                    <p className="text-gray-500 italic">No featured accommodations for this trip</p>
+                  )}
+                </div>
               </div>
             </div>
           </div>

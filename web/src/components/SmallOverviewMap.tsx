@@ -176,12 +176,12 @@ export default function SmallOverviewMap({ trip }: { trip: Trip }) {
   const zoom = countryBounds ? 8 : (markers.length > 0 ? 7 : 3);
 
   return (
-    <div className="rounded-lg overflow-hidden border border-border bg-card shadow-sm w-full md:w-96">
+    <div className="rounded-lg overflow-hidden w-full h-[500px]">
       <MapContainer
         key={`${trip.id}-${center[0]}`}
         center={center}
         zoom={zoom}
-        className="h-48 w-full"
+        className="h-full w-full"
         scrollWheelZoom={false}
         dragging={false}
         doubleClickZoom={false}

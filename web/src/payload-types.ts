@@ -352,18 +352,6 @@ export interface Trip {
    * Select all countries visited during this trip (for multi-country adventures)
    */
   countries: (number | Country)[];
-  /**
-   * Track which regions/provinces you visited within the country
-   */
-  regionsVisited?:
-    | {
-        /**
-         * e.g., "Issyk-Kul Region", "Naryn Province", "Chuy Oblast"
-         */
-        regionName: string;
-        id?: string | null;
-      }[]
-    | null;
   period?: string | null;
   budget?: {
     amount?: number | null;
@@ -963,12 +951,6 @@ export interface TripsSelect<T extends boolean = true> {
       };
   description?: T;
   countries?: T;
-  regionsVisited?:
-    | T
-    | {
-        regionName?: T;
-        id?: T;
-      };
   period?: T;
   budget?:
     | T

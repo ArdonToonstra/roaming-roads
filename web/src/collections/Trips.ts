@@ -121,25 +121,6 @@ const Trips: CollectionConfig = {
               },
             },
             {
-              name: 'regionsVisited',
-              label: 'Regions/Provinces Visited',
-              type: 'array',
-              fields: [
-                {
-                  name: 'regionName',
-                  type: 'text',
-                  label: 'Region/Province Name',
-                  required: true,
-                  admin: {
-                    description: 'e.g., "Issyk-Kul Region", "Naryn Province", "Chuy Oblast"',
-                  },
-                },
-              ],
-              admin: {
-                description: 'Track which regions/provinces you visited within the country',
-              },
-            },
-            {
               name: 'period',
               label: 'Our Travel Period (e.g., June 2025)',
               type: 'text',
