@@ -25,15 +25,6 @@ export const Waypoint: Block = {
     },
 
     {
-      name: 'regionProvince',
-      type: 'text',
-      label: 'Region/Province',
-      admin: {
-        description: 'Which region/province this waypoint is in (e.g., "Issyk-Kul Region", "Naryn Province")',
-      },
-    },
-
-    {
       name: 'connectionType',
       label: 'Connection Type',
       type: 'select',

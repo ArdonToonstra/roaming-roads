@@ -11,7 +11,7 @@ const TripDetailMap = dynamic(() => import('@/components/TripDetailMap'), {
 import RichText from '@/components/RichText';
 import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media, Accommodation } from '@/types/payload';
 import {
-  Clock, MapPin, ChevronLeft, ChevronRight, X, Bed,
+  Clock, ChevronLeft, ChevronRight, X, Bed,
   Car, Plane, Train, Bus, Ship, MapPinIcon, Footprints,
   ArrowLeft, Map as MapIcon, ExternalLink
 } from 'lucide-react';
@@ -359,13 +359,6 @@ function ItineraryBlock({
           </h3>
 
           <div className="flex flex-wrap items-center gap-3 text-xs text-[#2A9D8F] font-medium">
-            {block.regionProvince && (
-              <div className="flex items-center gap-1">
-                <MapPin size={14} />
-                <span>{block.regionProvince}</span>
-              </div>
-            )}
-
             {block.accommodation && (
               <div className="flex items-center gap-1" title="Accommodation">
                 <Bed size={14} />

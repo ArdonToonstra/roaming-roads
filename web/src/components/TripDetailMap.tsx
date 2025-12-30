@@ -205,7 +205,6 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
                       {isFullDay ? 'Stay' : 'Visit'}
                     </span>
                   </div>
-                  {m.block.regionProvince && <div className="text-xs opacity-80 mb-1">{m.block.regionProvince}</div>}
                   {m.block.description && (
                     <div className="text-xs leading-relaxed">
                       {String(m.block.description).slice(0, 120)}{String(m.block.description).length > 120 ? '…' : ''}

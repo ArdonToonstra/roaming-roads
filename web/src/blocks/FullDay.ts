@@ -21,14 +21,6 @@ export const FullDay: Block = {
         }
       }
     },
-    {
-      name: 'regionProvince',
-      type: 'text',
-      label: 'Region/Province',
-      admin: {
-        description: 'Which region/province this location is in (e.g., "Issyk-Kul Region", "Naryn Province")',
-      },
-    },
     { name: 'description', type: 'textarea', label: 'Short description' },
     { name: 'activities', type: 'richText', label: 'Activities and details' },
     {
@@ -37,12 +29,12 @@ export const FullDay: Block = {
       relationTo: 'accommodations',
       label: 'Accommodation Used',
       filterOptions: ({ data }) => {
-        // Attempt to filter by countries present in the parent trip doc
+        // Filter by countries present in the parent trip doc
         // 'data' here refers to the document being edited (the Trip)
         const countryIds = data?.countries || [];
         if (Array.isArray(countryIds) && countryIds.length > 0) {
           return {
-            'address.country': {
+            country: {
               in: countryIds,
             }
           }

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import TripDetailMap from '@/components/TripDetailMap';
 import RichText from '@/components/RichText';
 import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media } from '@/types/payload';
-import { MapPin, Clock, Navigation, DollarSign } from 'lucide-react';
+import { Clock, Navigation, DollarSign } from 'lucide-react';
 import { getImageUrl } from '@/lib/images';
 
 
@@ -23,7 +23,6 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
         <div className="flex-1">
           <h3 className="text-2xl font-heading font-bold mb-2" style={{ color: '#4C3A7A' }}>{block.locationName}</h3>
           <div className="flex items-center gap-4 mb-4 text-sm" style={{ color: '#2A9D8F' }}>
-            {block.regionProvince && <div className="flex items-center gap-1"><MapPin size={16} /><span>{block.regionProvince}</span></div>}
             {isFullDay && (block as CmsFullDayBlock).time && <div className="flex items-center gap-1"><Clock size={16} /><span>{(block as CmsFullDayBlock).time}</span></div>}
             {coordsText ? <div className="flex items-center gap-1"><Navigation size={16} /><span>{coordsText}</span></div> : <div className="flex items-center gap-1 opacity-70 text-sm"><Navigation size={16} /><span>Location unknown</span></div>}
           </div>

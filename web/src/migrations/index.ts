@@ -8,6 +8,7 @@ import * as migration_20251207_170607_update_trips_category from './20251207_170
 import * as migration_20251221_180041_accommodations_and_itinerary_update from './20251221_180041_accommodations_and_itinerary_update';
 import * as migration_20251221_181918_fix_lexical_activities_data from './20251221_181918_fix_lexical_activities_data';
 import * as migration_20251229_162512 from './20251229_162512';
+import * as migration_20251230_094713 from './20251230_094713';
 
 export const migrations = [
   {
@@ -58,6 +59,11 @@ export const migrations = [
   {
     up: migration_20251229_162512.up,
     down: migration_20251229_162512.down,
-    name: '20251229_162512'
+    name: '20251229_162512',
+  },
+  {
+    up: migration_20251230_094713.up,
+    down: migration_20251230_094713.down,
+    name: '20251230_094713'
   },
 ];
