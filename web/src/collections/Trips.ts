@@ -1,11 +1,67 @@
-import type { CollectionConfig } from 'payload';
+import type { CollectionConfig, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload';
+import { revalidatePath } from 'next/cache';
 import { FullDay } from '../blocks/FullDay';
 import { Waypoint } from '../blocks/WayPoint';
 import { Point } from '../blocks/Point';
 import formatSlug from '../utils/formatSlug';
 
+/**
+ * Revalidate all pages that display trip data after a trip is created or updated.
+ */
+const revalidateTripAfterChange: CollectionAfterChangeHook = ({
+  doc,
+  previousDoc,
+  req: { payload },
+}) => {
+  // Revalidate the specific trip page
+  if (doc.slug) {
+    payload.logger.info(`Revalidating /trips/${doc.slug}`);
+    revalidatePath(`/trips/${doc.slug}`);
+  }
+
+  // If the slug changed, also revalidate the old URL
+  if (previousDoc?.slug && previousDoc.slug !== doc.slug) {
+    payload.logger.info(`Revalidating old slug /trips/${previousDoc.slug}`);
+    revalidatePath(`/trips/${previousDoc.slug}`);
+  }
+
+  // Revalidate listing pages
+  payload.logger.info('Revalidating trip listing pages');
+  revalidatePath('/trips');
+  revalidatePath('/adventures');
+  revalidatePath('/'); // Homepage shows featured trips
+
+  return doc;
+};
+
+/**
+ * Revalidate all pages that display trip data after a trip is deleted.
+ */
+const revalidateTripAfterDelete: CollectionAfterDeleteHook = ({
+  doc,
+  req: { payload },
+}) => {
+  // Revalidate the specific trip page (will now show 404)
+  if (doc.slug) {
+    payload.logger.info(`Revalidating deleted trip /trips/${doc.slug}`);
+    revalidatePath(`/trips/${doc.slug}`);
+  }
+
+  // Revalidate listing pages
+  payload.logger.info('Revalidating trip listing pages after deletion');
+  revalidatePath('/trips');
+  revalidatePath('/adventures');
+  revalidatePath('/'); // Homepage shows featured trips
+
+  return doc;
+};
+
 const Trips: CollectionConfig = {
   slug: 'trips',
+  hooks: {
+    afterChange: [revalidateTripAfterChange],
+    afterDelete: [revalidateTripAfterDelete],
+  },
   access: {
     // Public read access; restrict write operations to authenticated users
     read: () => true,
