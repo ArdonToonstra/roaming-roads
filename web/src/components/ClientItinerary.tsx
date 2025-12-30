@@ -1,15 +1,15 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import TripDetailMap from '@/components/TripDetailMap';
 import RichText from '@/components/RichText';
-import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media } from '@/types/payload';
+import { Trip, CmsFullDayBlock, CmsWaypointBlock, CmsPointBlock, Media } from '@/types/payload';
 import { Clock, Navigation, DollarSign } from 'lucide-react';
 import { getImageUrl } from '@/lib/images';
 
 
 
-function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypointBlock; index: number }) {
+function ItineraryBlock({ block, index, displayNumber }: { block: CmsFullDayBlock | CmsWaypointBlock; index: number; displayNumber: number }) {
   const isFullDay = block.blockType === 'fullDay';
   const blockData = block as any;
   const rawCoords = blockData.location?.coordinates;
@@ -19,7 +19,7 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
   return (
     <div id={`day-${index + 1}`} data-day-index={index} className={`bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300 ${block.blockType === 'waypoint' && (block as any).connectionType === 'side_trip' ? 'ml-8 border-l-4 border-dashed border-gray-300' : ''}`}>
       <div className="flex items-start gap-4 mb-6">
-        <div className="w-10 h-10 rounded-full flex items-center justify-center font-heading font-bold text-white flex-shrink-0" style={{ backgroundColor: '#F57D50' }}>{index + 1}</div>
+        <div className="w-10 h-10 rounded-full flex items-center justify-center font-heading font-bold text-white flex-shrink-0" style={{ backgroundColor: '#F57D50' }}>{displayNumber}</div>
         <div className="flex-1">
           <h3 className="text-2xl font-heading font-bold mb-2" style={{ color: '#4C3A7A' }}>{block.locationName}</h3>
           <div className="flex items-center gap-4 mb-4 text-sm" style={{ color: '#2A9D8F' }}>
@@ -116,6 +116,14 @@ function ItineraryBlock({ block, index }: { block: CmsFullDayBlock | CmsWaypoint
 export default function ClientItinerary({ trip }: { trip: Trip }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
+  // Filter out 'point' blocks - they only appear on the map, not as step cards
+  const visibleBlocks = useMemo(() => {
+    if (!trip.itinerary) return [];
+    return trip.itinerary
+      .map((block, originalIndex) => ({ block, originalIndex }))
+      .filter(({ block }) => (block as any).blockType !== 'point');
+  }, [trip.itinerary]);
+
   useEffect(() => {
     const blocks = Array.from(document.querySelectorAll('[data-day-index]')) as HTMLElement[];
     if (blocks.length === 0) return;
@@ -140,8 +148,13 @@ export default function ClientItinerary({ trip }: { trip: Trip }) {
           <TripDetailMap trip={trip} heightClass="h-[50vh]" activeIndex={activeIndex} />
         </div>
         <div className="space-y-8 pb-16">
-          {trip.itinerary?.map((block, index) => (
-            <ItineraryBlock key={((block as unknown as any).id as string) || index} block={block} index={index} />
+          {visibleBlocks.map(({ block, originalIndex }, displayIndex) => (
+            <ItineraryBlock 
+              key={((block as unknown as any).id as string) || originalIndex} 
+              block={block as CmsFullDayBlock | CmsWaypointBlock} 
+              index={originalIndex}
+              displayNumber={displayIndex + 1}
+            />
           ))}
         </div>
       </div>

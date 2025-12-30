@@ -118,7 +118,7 @@ export interface Trip {
     accommodation: string | Accommodation // Accommodation relationship
   }>
   importantPreparations?: RichTextContent
-  itinerary?: Array<CmsFullDayBlock | CmsWaypointBlock>
+  itinerary?: Array<CmsFullDayBlock | CmsWaypointBlock | CmsPointBlock>
   createdAt: string
   updatedAt: string
 }
@@ -161,6 +161,19 @@ export interface CmsWaypointBlock {
     media: string | Media
     caption?: string
   }>
+}
+
+export interface CmsPointBlock {
+  blockType: 'point'
+  id: string
+  locationName: string
+  description?: string
+  location?: {
+    type: 'Point'
+    coordinates: [number, number] // [longitude, latitude]
+  }
+  pointType?: 'intermediate' | 'start' | 'end'
+  transportation?: Transportation
 }
 
 // Trip blocks (daily itinerary)

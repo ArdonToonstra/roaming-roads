@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useMemo, useRef } from 'react';
-import type { Trip, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
+import type { Trip, CmsFullDayBlock, CmsWaypointBlock, CmsPointBlock } from '@/types/payload';
 import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
 import MapController from './MapController';
@@ -35,7 +35,7 @@ function toNumber(v: unknown): number | null {
   return null;
 }
 
-function extractBlockCoords(block: CmsFullDayBlock | CmsWaypointBlock) {
+function extractBlockCoords(block: CmsFullDayBlock | CmsWaypointBlock | CmsPointBlock) {
   const b: any = block;
   // Candidate fields in descending priority
   const candidates: any[] = [];
@@ -91,7 +91,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
 
   const markers = useMemo(() => {
     if (!trip.itinerary) return [];
-    const m: { coord: { lat: number; lng: number }; block: CmsFullDayBlock | CmsWaypointBlock; idx: number }[] = [];
+    const m: { coord: { lat: number; lng: number }; block: CmsFullDayBlock | CmsWaypointBlock | CmsPointBlock; idx: number }[] = [];
     trip.itinerary.forEach((block, idx) => {
       const coord = extractBlockCoords(block as unknown as any);
       if (coord) {
@@ -187,22 +187,35 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
           const isActive = activeIndex === m.idx;
           const blockType = (m.block as any).blockType;
           const isFullDay = blockType === 'fullDay';
-          const typeClass = isFullDay ? 'rr-marker-fullday' : 'rr-marker-waypoint';
+          const isPoint = blockType === 'point';
+          const pointType = isPoint ? (m.block as any).pointType : null;
+          
+          // Point blocks get a different, smaller marker style
+          let typeClass = isFullDay ? 'rr-marker-fullday' : 'rr-marker-waypoint';
+          if (isPoint) {
+            typeClass = pointType === 'start' ? 'rr-marker-start' : pointType === 'end' ? 'rr-marker-end' : 'rr-marker-point';
+          }
           const classes = `rr-marker ${typeClass} ${isActive ? 'rr-marker-active' : ''}`;
 
-          // All markers use simple step numbering
-          const iconContent = `${m.idx + 1}`;
+          // Point blocks show icons instead of numbers
+          let iconContent: string;
+          if (isPoint) {
+            iconContent = pointType === 'start' ? '▶' : pointType === 'end' ? '■' : '•';
+          } else {
+            iconContent = `${m.idx + 1}`;
+          }
 
-          const icon = L ? L.divIcon({ html: `<div class=\"${classes}\">${iconContent}</div>`, className: '', iconSize: [40, 40] }) : undefined;
+          const iconSize: [number, number] = isPoint ? [24, 24] : [40, 40];
+          const icon = L ? L.divIcon({ html: `<div class=\"${classes}\">${iconContent}</div>`, className: '', iconSize }) : undefined;
           // If Leaflet hasn't loaded yet, render marker without custom icon
           return (
             <Marker key={m.idx} position={[m.coord.lat, m.coord.lng]} {...(icon ? { icon } : {})}>
               <Popup>
                 <div className="text-sm max-w-[240px]">
                   <div className="flex items-center gap-1 mb-1">
-                    <strong>Step {m.idx + 1}: {m.block.locationName || `Stop ${m.idx + 1}`}</strong>
-                    <span className={`text-xs px-1.5 py-0.5 rounded-full text-white ${isFullDay ? 'bg-orange-500' : 'bg-blue-500'}`}>
-                      {isFullDay ? 'Stay' : 'Visit'}
+                    <strong>{isPoint ? '' : `Step ${m.idx + 1}: `}{m.block.locationName || `Stop ${m.idx + 1}`}</strong>
+                    <span className={`text-xs px-1.5 py-0.5 rounded-full text-white ${isFullDay ? 'bg-orange-500' : isPoint ? 'bg-gray-500' : 'bg-blue-500'}`}>
+                      {isFullDay ? 'Stay' : isPoint ? (pointType === 'start' ? 'Start' : pointType === 'end' ? 'End' : 'Route') : 'Visit'}
                     </span>
                   </div>
                   {m.block.description && (
@@ -210,7 +223,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
                       {String(m.block.description).slice(0, 120)}{String(m.block.description).length > 120 ? '…' : ''}
                     </div>
                   )}
-                  <a href={`#day-${m.idx + 1}`} className="mt-2 inline-block text-xs font-medium text-primary hover:underline">Jump to step</a>
+                  {!isPoint && <a href={`#day-${m.idx + 1}`} className="mt-2 inline-block text-xs font-medium text-primary hover:underline">Jump to step</a>}
                 </div>
               </Popup>
             </Marker>

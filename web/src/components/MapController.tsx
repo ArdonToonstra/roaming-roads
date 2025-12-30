@@ -2,14 +2,14 @@
 
 import { useEffect, useRef } from 'react';
 import { useMap } from 'react-leaflet';
-import type { CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
+import type { CmsFullDayBlock, CmsWaypointBlock, CmsPointBlock } from '@/types/payload';
 
 interface MapControllerProps {
   activeIndex: number | null | undefined;
   markers: Array<{
     idx: number;
     coord: { lat: number; lng: number };
-    block: CmsFullDayBlock | CmsWaypointBlock;
+    block: CmsFullDayBlock | CmsWaypointBlock | CmsPointBlock;
   }>;
 }
 

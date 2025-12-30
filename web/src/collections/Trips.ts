@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload';
 import { FullDay } from '../blocks/FullDay';
 import { Waypoint } from '../blocks/WayPoint';
+import { Point } from '../blocks/Point';
 import formatSlug from '../utils/formatSlug';
 
 const Trips: CollectionConfig = {
@@ -63,6 +64,10 @@ const Trips: CollectionConfig = {
         { label: 'Backpacking', value: 'backpacking' },
         { label: 'Hiking', value: 'hiking' },
         { label: 'Base Camp', value: 'base_camp' },
+        { label: 'Diving', value: 'diving' },
+        { label: 'Wintersport', value: 'wintersport' },
+        { label: 'Culinary', value: 'culinary' },
+
       ],
       required: false,
       admin: {
@@ -175,7 +180,8 @@ const Trips: CollectionConfig = {
       minRows: 1,
       blocks: [
         FullDay,
-        Waypoint
+        Waypoint,
+        Point
       ]
     },
   ],

@@ -128,6 +128,31 @@
     background: hsl(210 100% 60%); /* Brand blue for activities */
     border: 2px solid #fff;
   }
+
+  /* Route point markers (smaller, for closing routes without step cards) */
+  .rr-marker-point {
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    background: hsl(0 0% 50%); /* Gray for intermediate points */
+    border: 2px solid #fff;
+  }
+  
+  .rr-marker-start {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    background: hsl(142 70% 45%); /* Green for start point */
+    border: 2px solid #fff;
+  }
+  
+  .rr-marker-end {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    background: hsl(0 70% 50%); /* Red for end point */
+    border: 2px solid #fff;
+  }
   
   .rr-marker-fullday.rr-marker-active {
     background: hsl(16 90% 54%);
@@ -136,6 +161,12 @@
   
   .rr-marker-waypoint.rr-marker-active {
     background: hsl(210 100% 50%);
+    transform: scale(1.1);
+  }
+
+  .rr-marker-point.rr-marker-active,
+  .rr-marker-start.rr-marker-active,
+  .rr-marker-end.rr-marker-active {
     transform: scale(1.1);
   }
   
