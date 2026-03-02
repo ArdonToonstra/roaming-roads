@@ -614,7 +614,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
 
         {/* Map - Right/Bottom (split) or Full Screen (fullmap) */}
         <div className={`
-            z-10 order-1 lg:order-2 overflow-hidden relative bg-card
+            z-10 order-1 lg:order-2 overflow-hidden bg-card
             ${view === 'fullmap'
               ? 'fixed top-14 left-0 right-0 bottom-0'
               : 'hidden lg:block lg:w-[45%] h-[calc(100vh-3.5rem)] sticky top-14 border-l border-border'}
