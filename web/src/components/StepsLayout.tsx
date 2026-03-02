@@ -427,6 +427,9 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
   const [view, setView] = useState<'split' | 'fullmap'>('split');
   const [selectedMarkerIndex, setSelectedMarkerIndex] = useState<number | null>(null);
   const [selectedMarkerPoint, setSelectedMarkerPoint] = useState<{ x: number; y: number } | null>(null);
+  const [dragPos, setDragPos] = useState<{ left: number; top: number } | null>(null);
+  const dragStateRef = useRef<{ mouseX: number; mouseY: number; cardLeft: number; cardTop: number } | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
   const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodation | null>(null);
   const isProgrammaticScroll = useRef(false);
 
@@ -490,6 +493,45 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
     blocks.forEach(b => observer.observe(b));
     return () => observer.disconnect();
   }, [observerCallback, trip.itinerary]);
+
+  // Drag-to-move for the fullmap overlay card
+  useEffect(() => {
+    const onMouseMove = (e: MouseEvent) => {
+      if (!dragStateRef.current) return;
+      const { mouseX, mouseY, cardLeft, cardTop } = dragStateRef.current;
+      setDragPos({ left: cardLeft + e.clientX - mouseX, top: cardTop + e.clientY - mouseY });
+    };
+    const onMouseUp = () => { dragStateRef.current = null; };
+    const onTouchMove = (e: TouchEvent) => {
+      if (!dragStateRef.current) return;
+      e.preventDefault();
+      const t = e.touches[0];
+      const { mouseX, mouseY, cardLeft, cardTop } = dragStateRef.current;
+      setDragPos({ left: cardLeft + t.clientX - mouseX, top: cardTop + t.clientY - mouseY });
+    };
+    const onTouchEnd = () => { dragStateRef.current = null; };
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('touchmove', onTouchMove, { passive: false });
+    document.addEventListener('touchend', onTouchEnd);
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('touchmove', onTouchMove);
+      document.removeEventListener('touchend', onTouchEnd);
+    };
+  }, []);
+
+  const startDrag = (clientX: number, clientY: number) => {
+    if (!cardRef.current) return;
+    const cardRect = cardRef.current.getBoundingClientRect();
+    const containerRect = (cardRef.current.parentElement as HTMLElement).getBoundingClientRect();
+    dragStateRef.current = {
+      mouseX: clientX, mouseY: clientY,
+      cardLeft: cardRect.left - containerRect.left,
+      cardTop: cardRect.top - containerRect.top,
+    };
+  };
 
   if (!trip.itinerary || trip.itinerary.length === 0) {
     return <div className="p-8 text-center text-muted-foreground">No itinerary steps found.</div>;
@@ -626,7 +668,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
               heightClass="h-full"
               activeIndex={activeIndex}
               interactive={view === 'fullmap'}
-              onMarkerClick={view === 'fullmap' ? (idx, point) => { setSelectedMarkerIndex(idx); setSelectedMarkerPoint(point); } : undefined}
+              onMarkerClick={view === 'fullmap' ? (idx, point) => { setSelectedMarkerIndex(idx); setSelectedMarkerPoint(point); setDragPos(null); } : undefined}
             />
           </div>
 
@@ -644,8 +686,10 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
               : null;
             const coverUrl = firstMedia ? getImageUrl(firstMedia.url) : null;
 
-            // Position the card above the clicked marker, clamped to screen edges
-            const cardStyle: React.CSSProperties = selectedMarkerPoint ? (() => {
+            // Position: use drag position when dragged, otherwise auto-place above clicked marker
+            const cardStyle: React.CSSProperties = dragPos
+              ? { left: dragPos.left, top: dragPos.top }
+              : selectedMarkerPoint ? (() => {
               const HALF_W = 160; // half of w-80 (320px)
               const MARGIN = 16;
               const isAbove = selectedMarkerPoint.y > 300;
@@ -660,6 +704,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
 
             return (
               <div
+                ref={cardRef}
                 className="absolute w-80 max-h-[70vh] overflow-y-auto rounded-xl shadow-lg bg-card border border-border ring-2 ring-[#F57D50] z-[1000]"
                 style={cardStyle}
               >
@@ -671,8 +716,12 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
                   </div>
                 )}
 
-                {/* Header */}
-                <div className="flex items-start gap-3 p-4 border-b border-border">
+                {/* Header — drag handle */}
+                <div
+                  className="flex items-start gap-3 p-4 border-b border-border cursor-grab active:cursor-grabbing select-none"
+                  onMouseDown={(e) => { startDrag(e.clientX, e.clientY); e.preventDefault(); }}
+                  onTouchStart={(e) => startDrag(e.touches[0].clientX, e.touches[0].clientY)}
+                >
                   <div
                     className="w-9 h-9 rounded-full flex items-center justify-center font-heading text-sm font-bold text-white flex-shrink-0 shadow-md"
                     style={{ backgroundColor: '#F57D50' }}
