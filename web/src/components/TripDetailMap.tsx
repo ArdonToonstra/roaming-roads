@@ -153,7 +153,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex, interact
   return (
     <div className={`overflow-hidden border border-border bg-card shadow-sm ${heightClass || 'h-[360px]'} z-0`}>
       <MapContainer
-        key={`${trip.id}-${initialCenter[0]}`}
+        key={`${trip.id}-${initialCenter[0]}-${interactive ? 'full' : 'split'}`}
         center={initialCenter}
         zoom={initialZoom}
         className="h-full w-full"
