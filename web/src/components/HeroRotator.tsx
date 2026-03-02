@@ -42,6 +42,7 @@ export default function HeroRotator({ images, intervalMs = 60000 }: HeroRotatorP
             transitionTimingFunction: 'ease',
           }}
           priority={i === 0}
+          loading={i === 0 ? 'eager' : 'lazy'}
           unoptimized
         />
       ))}

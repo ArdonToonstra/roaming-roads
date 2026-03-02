@@ -92,12 +92,14 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
+  fallbackLocale: null;
   globals: {};
   globalsSelect: {};
   locale: null;
-  user: User & {
-    collection: 'users';
+  widgets: {
+    collections: CollectionsWidget;
   };
+  user: User;
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -144,6 +146,7 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -339,7 +342,9 @@ export interface Trip {
   /**
    * Select the type of trip this represents
    */
-  category?: ('city_trip' | 'road_trip' | 'backpacking' | 'hiking' | 'base_camp')[] | null;
+  category?:
+    | ('city_trip' | 'road_trip' | 'backpacking' | 'hiking' | 'base_camp' | 'diving' | 'wintersport' | 'culinary')[]
+    | null;
   coverImage: number | Media;
   /**
    * Select up to 10 key images that represent the best moments of this trip
@@ -415,10 +420,6 @@ export interface Trip {
              * @maxItems 2
              */
             location?: [number, number] | null;
-            /**
-             * Which region/province this location is in (e.g., "Issyk-Kul Region", "Naryn Province")
-             */
-            regionProvince?: string | null;
             description?: string | null;
             activities?: {
               root: {
@@ -516,10 +517,6 @@ export interface Trip {
              */
             location?: [number, number] | null;
             /**
-             * Which region/province this waypoint is in (e.g., "Issyk-Kul Region", "Naryn Province")
-             */
-            regionProvince?: string | null;
-            /**
              * Side trips will be visually displayed as branching off from the previous main stop.
              */
             connectionType?: ('route' | 'side_trip') | null;
@@ -577,6 +574,68 @@ export interface Trip {
             id?: string | null;
             blockName?: string | null;
             blockType: 'waypoint';
+          }
+        | {
+            locationName: string;
+            description?: string | null;
+            /**
+             * The exact coordinates for this point. You can use the map picker below to set these coordinates.
+             *
+             * @minItems 2
+             * @maxItems 2
+             */
+            location?: [number, number] | null;
+            /**
+             * Mark this as a start or end point if it represents the beginning or end of your route.
+             */
+            pointType?: ('intermediate' | 'start' | 'end') | null;
+            transportation?: {
+              arrivalMethod?:
+                | (
+                    | 'walking'
+                    | 'rental_car'
+                    | 'public_bus'
+                    | 'taxi'
+                    | 'train'
+                    | 'flight'
+                    | 'boat'
+                    | 'bicycle'
+                    | 'hitchhiking'
+                    | 'tour_bus'
+                    | 'other'
+                  )
+                | null;
+              departureMethod?:
+                | (
+                    | 'walking'
+                    | 'rental_car'
+                    | 'public_bus'
+                    | 'taxi'
+                    | 'train'
+                    | 'flight'
+                    | 'boat'
+                    | 'bicycle'
+                    | 'hitchhiking'
+                    | 'tour_bus'
+                    | 'other'
+                  )
+                | null;
+              travelTime?: {
+                value?: number | null;
+                unit?: ('minutes' | 'hours' | 'days') | null;
+              };
+              distance?: {
+                value?: number | null;
+                unit?: ('km' | 'mi') | null;
+              };
+              /**
+               * Tips, costs, booking info, etc.
+               */
+              transportationNotes?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'point';
           }
       )[]
     | null;
@@ -857,7 +916,6 @@ export interface TripsSelect<T extends boolean = true> {
               time?: T;
               locationName?: T;
               location?: T;
-              regionProvince?: T;
               description?: T;
               activities?: T;
               accommodation?: T;
@@ -896,7 +954,6 @@ export interface TripsSelect<T extends boolean = true> {
               description?: T;
               activities?: T;
               location?: T;
-              regionProvince?: T;
               connectionType?: T;
               transportation?:
                 | T
@@ -923,6 +980,35 @@ export interface TripsSelect<T extends boolean = true> {
                     media?: T;
                     caption?: T;
                     id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        point?:
+          | T
+          | {
+              locationName?: T;
+              description?: T;
+              location?: T;
+              pointType?: T;
+              transportation?:
+                | T
+                | {
+                    arrivalMethod?: T;
+                    departureMethod?: T;
+                    travelTime?:
+                      | T
+                      | {
+                          value?: T;
+                          unit?: T;
+                        };
+                    distance?:
+                      | T
+                      | {
+                          value?: T;
+                          unit?: T;
+                        };
+                    transportationNotes?: T;
                   };
               id?: T;
               blockName?: T;
@@ -1010,6 +1096,16 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_widget".
+ */
+export interface CollectionsWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

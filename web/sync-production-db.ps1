@@ -9,7 +9,8 @@ param(
 Write-Host "Syncing production database to local development environment..." -ForegroundColor Green
 
 # Load production database configuration
-if (-not (Test-Path ".env.production")) {
+$envProductionPath = Join-Path $PSScriptRoot ".env.production"
+if (-not (Test-Path $envProductionPath)) {
     Write-Host "ERROR: .env.production file not found!" -ForegroundColor Red
     Write-Host "Please create .env.production with your production database details:" -ForegroundColor Yellow
     Write-Host "   1. Copy .env.production.template to .env.production" -ForegroundColor White
@@ -21,7 +22,7 @@ if (-not (Test-Path ".env.production")) {
 Write-Host "Loading production database configuration..." -ForegroundColor Cyan
 
 # Read and parse .env.production file
-$envContent = Get-Content ".env.production" | Where-Object { $_ -match "^[^#].*=" }
+$envContent = Get-Content $envProductionPath | Where-Object { $_ -match "^[^#].*=" }
 $envVars = @{}
 foreach ($line in $envContent) {
     $parts = $line -split "=", 2
