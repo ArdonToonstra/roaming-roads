@@ -426,6 +426,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
   const [view, setView] = useState<'split' | 'fullmap'>('split');
   const [selectedMarkerIndex, setSelectedMarkerIndex] = useState<number | null>(null);
+  const [selectedMarkerPoint, setSelectedMarkerPoint] = useState<{ x: number; y: number } | null>(null);
   const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodation | null>(null);
   const isProgrammaticScroll = useRef(false);
 
@@ -539,7 +540,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
             {/* View Toggle */}
             <div className="flex items-center rounded-lg border border-border overflow-hidden">
               <button
-                onClick={() => { setView('split'); setSelectedMarkerIndex(null); }}
+                onClick={() => { setView('split'); setSelectedMarkerIndex(null); setSelectedMarkerPoint(null); }}
                 title="Cards + Map"
                 className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors
                   ${view === 'split' ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground'}`}
@@ -549,7 +550,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
               </button>
               <div className="w-px self-stretch bg-border" />
               <button
-                onClick={() => { setView('fullmap'); setSelectedMarkerIndex(null); }}
+                onClick={() => { setView('fullmap'); setSelectedMarkerIndex(null); setSelectedMarkerPoint(null); }}
                 title="Full Map"
                 className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors
                   ${view === 'fullmap' ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground'}`}
@@ -625,7 +626,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
               heightClass="h-full"
               activeIndex={activeIndex}
               interactive={view === 'fullmap'}
-              onMarkerClick={view === 'fullmap' ? (idx) => setSelectedMarkerIndex(idx) : undefined}
+              onMarkerClick={view === 'fullmap' ? (idx, point) => { setSelectedMarkerIndex(idx); setSelectedMarkerPoint(point); } : undefined}
             />
           </div>
 
@@ -637,8 +638,39 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
             const accName = typeof block.accommodation === 'string'
               ? block.accommodation
               : block.accommodation?.name;
+            const isFullDay = block.blockType === 'fullDay';
+            const firstMedia = block.gallery && block.gallery.length > 0
+              ? (typeof block.gallery[0].media === 'object' ? block.gallery[0].media as import('@/types/payload').Media : null)
+              : null;
+            const coverUrl = firstMedia ? getImageUrl(firstMedia.url) : null;
+
+            // Position the card above the clicked marker, clamped to screen edges
+            const cardStyle: React.CSSProperties = selectedMarkerPoint ? (() => {
+              const HALF_W = 160; // half of w-80 (320px)
+              const MARGIN = 16;
+              const isAbove = selectedMarkerPoint.y > 300;
+              return {
+                left: `clamp(${HALF_W + MARGIN}px, ${selectedMarkerPoint.x}px, calc(100% - ${HALF_W + MARGIN}px))`,
+                ...(isAbove
+                  ? { top: `${selectedMarkerPoint.y - 48}px`, transform: 'translate(-50%, -100%)' }
+                  : { top: `${selectedMarkerPoint.y + 48}px`, transform: 'translateX(-50%)' }
+                ),
+              };
+            })() : { bottom: '1rem', right: '1rem' };
+
             return (
-              <div className="absolute bottom-4 right-4 w-80 max-h-[70vh] overflow-y-auto rounded-xl shadow-2xl bg-card/95 backdrop-blur-sm border border-border z-[1000] max-sm:bottom-0 max-sm:left-0 max-sm:right-0 max-sm:w-auto max-sm:rounded-b-none max-sm:max-h-[55vh]">
+              <div
+                className="absolute w-80 max-h-[70vh] overflow-y-auto rounded-xl shadow-lg bg-card border border-border ring-2 ring-[#F57D50] z-[1000]"
+                style={cardStyle}
+              >
+                {/* Cover image */}
+                {coverUrl && (
+                  <div className="h-32 w-full overflow-hidden rounded-t-xl flex-shrink-0">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={coverUrl} alt={firstMedia?.alt || ''} className="w-full h-full object-cover" />
+                  </div>
+                )}
+
                 {/* Header */}
                 <div className="flex items-start gap-3 p-4 border-b border-border">
                   <div
@@ -648,7 +680,12 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
                     {selectedMarkerIndex + 1}
                   </div>
                   <div className="flex-1 min-w-0 pt-0.5">
-                    <h3 className="font-heading font-bold text-[#4C3A7A] leading-tight">{block.locationName}</h3>
+                    <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                      <h3 className="font-heading font-bold text-[#4C3A7A] leading-tight">{block.locationName}</h3>
+                      <span className={`text-xs px-1.5 py-0.5 rounded-full text-white flex-shrink-0 ${isFullDay ? 'bg-orange-500' : 'bg-blue-500'}`}>
+                        {isFullDay ? 'Stay' : 'Visit'}
+                      </span>
+                    </div>
                     {accName && (
                       <div className="flex items-center gap-1 text-xs text-[#2A9D8F] mt-1">
                         <Bed size={12} />
@@ -657,7 +694,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
                     )}
                   </div>
                   <button
-                    onClick={() => setSelectedMarkerIndex(null)}
+                    onClick={() => { setSelectedMarkerIndex(null); setSelectedMarkerPoint(null); }}
                     className="flex-shrink-0 p-1 rounded-full hover:bg-muted transition-colors text-muted-foreground"
                     aria-label="Close"
                   >
@@ -674,7 +711,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
                       {transportInfo.time && <span>· {transportInfo.time}</span>}
                     </div>
                   )}
-                  {block.blockType === 'fullDay' && block.time && (
+                  {isFullDay && block.time && (
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <Clock size={13} />
                       <span>{block.time}</span>
@@ -682,6 +719,14 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
                   )}
                   {block.description && (
                     <p className="text-sm text-foreground/80 leading-relaxed">{block.description}</p>
+                  )}
+                  {block.activities && (
+                    <div className="border-t border-border pt-3">
+                      <h4 className="text-xs font-heading font-bold mb-1.5 uppercase tracking-wide text-[#2A9D8F]">Activities</h4>
+                      <div className="text-xs prose prose-sm max-w-none prose-p:my-1 text-foreground/70">
+                        <RichText content={block.activities} />
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>

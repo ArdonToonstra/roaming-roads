@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Lato, Poppins } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -60,6 +61,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Footer now handled by client wrapper below */}
         <Footer />
         <ClientLayoutShell />
+        {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
+          <Script
+            src={`${process.env.NEXT_PUBLIC_UMAMI_URL ?? ''}/script.js`}
+            data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+            strategy="afterInteractive"
+            defer
+          />
+        )}
       </body>
     </html>
   );

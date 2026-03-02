@@ -7,7 +7,7 @@ import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
 import MapController from './MapController';
 import type * as L from 'leaflet';
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 
 // Types for Leaflet
 interface LeafletMapInstance extends L.Map {
@@ -61,6 +61,20 @@ function extractBlockCoords(block: CmsFullDayBlock | CmsWaypointBlock | CmsPoint
   return null;
 }
 
+// Fits the map to all markers once on mount (re-runs on remount via MapContainer key)
+function FitBoundsOnMount({ coords }: { coords: [number, number][] }) {
+  const map = useMap();
+  useEffect(() => {
+    if (coords.length === 0) return;
+    map.fitBounds(
+      coords as L.LatLngBoundsExpression,
+      coords.length === 1 ? { padding: [50, 50], maxZoom: 12 } : { padding: [30, 30] }
+    );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // intentionally empty — key on MapContainer ensures remount per view-switch
+  return null;
+}
+
 // Function to get transportation icon based on method
 function getTransportationIcon(method: string): string {
   switch (method) {
@@ -83,7 +97,7 @@ export interface TripDetailMapProps {
   heightClass?: string; // height applied to outer wrapper now
   activeIndex?: number | null; // highlighted itinerary block index for scroll spy
   interactive?: boolean; // when false: lock map interactions, fit all markers; default true
-  onMarkerClick?: (idx: number) => void; // called when a marker is clicked (fullmap mode)
+  onMarkerClick?: (idx: number, point: { x: number; y: number }) => void; // called when a marker is clicked (fullmap mode)
 }
 
 export default function TripDetailMap({ trip, heightClass, activeIndex, interactive = true, onMarkerClick }: TripDetailMapProps) {
@@ -165,6 +179,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex, interact
         touchZoom={true}
       >
         <MapController activeIndex={activeIndex} markers={markers} interactive={interactive} />
+        <FitBoundsOnMount coords={markers.map(m => [m.coord.lat, m.coord.lng])} />
         <TileLayer
           attribution={env.MAPTILER_KEY ? '&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors' : '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'}
           // Use MapTiler raster tiles (satellite imagery) when a key is provided; fall back to OSM raster tiles
@@ -215,7 +230,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex, interact
               key={m.idx}
               position={[m.coord.lat, m.coord.lng]}
               {...(icon ? { icon } : {})}
-              eventHandlers={onMarkerClick ? { click: () => onMarkerClick(m.idx) } : undefined}
+              eventHandlers={onMarkerClick ? { click: (e: any) => onMarkerClick(m.idx, { x: e.containerPoint.x, y: e.containerPoint.y }) } : undefined}
             >
               {/* Show Leaflet popup only when no onMarkerClick handler (i.e. not in fullmap mode) */}
               {!onMarkerClick && (
