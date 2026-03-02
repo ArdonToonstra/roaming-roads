@@ -10,6 +10,7 @@ import * as migration_20251221_181918_fix_lexical_activities_data from './202512
 import * as migration_20251229_162512 from './20251229_162512';
 import * as migration_20251230_094713 from './20251230_094713';
 import * as migration_20251230_134941_add_point_block from './20251230_134941_add_point_block';
+import * as migration_20260302_200000_fix_media_urls from './20260302_200000_fix_media_urls';
 
 export const migrations = [
   {
@@ -70,6 +71,11 @@ export const migrations = [
   {
     up: migration_20251230_134941_add_point_block.up,
     down: migration_20251230_134941_add_point_block.down,
-    name: '20251230_134941_add_point_block'
+    name: '20251230_134941_add_point_block',
+  },
+  {
+    up: migration_20260302_200000_fix_media_urls.up,
+    down: migration_20260302_200000_fix_media_urls.down,
+    name: '20260302_200000_fix_media_urls',
   },
 ];

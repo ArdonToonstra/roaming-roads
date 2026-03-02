@@ -36,7 +36,7 @@ yarn-error.log*
 
 # Database sync files
 production-sync.sql
-production-backup.sql
+production-backup*.sql
 
 # vercel
 .vercel

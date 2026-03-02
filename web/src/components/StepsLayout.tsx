@@ -13,7 +13,7 @@ import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media, Accommodation } from '@
 import {
   Clock, ChevronLeft, ChevronRight, X, Bed,
   Car, Plane, Train, Bus, Ship, MapPinIcon, Footprints,
-  ArrowLeft, Map as MapIcon, ExternalLink
+  ArrowLeft, Map as MapIcon, ExternalLink, List
 } from 'lucide-react';
 import Link from 'next/link';
 import { getImageUrl } from '@/lib/images';
@@ -424,7 +424,8 @@ function ItineraryBlock({
 
 export default function StepsLayout({ trip }: StepsLayoutProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
-  const [showMap, setShowMap] = useState(true);
+  const [view, setView] = useState<'split' | 'fullmap'>('split');
+  const [selectedMarkerIndex, setSelectedMarkerIndex] = useState<number | null>(null);
   const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodation | null>(null);
   const isProgrammaticScroll = useRef(false);
 
@@ -535,20 +536,28 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Map Toggle */}
-            <button
-              onClick={() => setShowMap(!showMap)}
-              className={`
-                hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 border
-                ${showMap
-                  ? 'bg-primary/10 text-primary border-primary/20'
-                  : 'bg-card text-muted-foreground border-border hover:text-foreground'
-                }
-              `}
-            >
-              <MapIcon size={16} />
-              <span>{showMap ? 'Hide Map' : 'Show Map'}</span>
-            </button>
+            {/* View Toggle */}
+            <div className="flex items-center rounded-lg border border-border overflow-hidden">
+              <button
+                onClick={() => { setView('split'); setSelectedMarkerIndex(null); }}
+                title="Cards + Map"
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors
+                  ${view === 'split' ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+              >
+                <List size={15} />
+                <span className="hidden lg:inline">Cards + Map</span>
+              </button>
+              <div className="w-px self-stretch bg-border" />
+              <button
+                onClick={() => { setView('fullmap'); setSelectedMarkerIndex(null); }}
+                title="Full Map"
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors
+                  ${view === 'fullmap' ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+              >
+                <MapIcon size={15} />
+                <span className="hidden lg:inline">Full Map</span>
+              </button>
+            </div>
 
             {/* Back button */}
             <Link
@@ -569,7 +578,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
         <div className={`
           px-4 sm:px-6 py-10 order-2 lg:order-1 min-h-[100vh]
           transition-all duration-500 ease-in-out
-          ${showMap ? 'w-full lg:w-[55%]' : 'w-full max-w-5xl mx-auto'}
+          ${view === 'fullmap' ? 'hidden' : 'w-full lg:w-[55%]'}
         `}>
           <div className="max-w-2xl mx-auto space-y-2">
             <h2 className="text-3xl font-heading font-bold mb-8 text-[#4C3A7A]">
@@ -603,20 +612,81 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
           </div>
         </div>
 
-        {/* Fixed Map - Right/Bottom */}
+        {/* Map - Right/Bottom (split) or Full Screen (fullmap) */}
         <div className={`
-            hidden lg:block h-[calc(100vh-3.5rem)] sticky top-14 border-l border-border bg-card z-10 order-1 lg:order-2 overflow-hidden
-            transition-all duration-500 ease-in-out
-            ${showMap ? 'lg:w-[45%] opacity-100' : 'lg:w-0 opacity-0'}
-            ${!showMap && 'pointer-events-none'}
+            z-10 order-1 lg:order-2 overflow-hidden relative bg-card
+            ${view === 'fullmap'
+              ? 'fixed top-14 left-0 right-0 bottom-0'
+              : 'hidden lg:block lg:w-[45%] h-[calc(100vh-3.5rem)] sticky top-14 border-l border-border'}
         `}>
           <div className="h-full w-full">
             <TripDetailMap
               trip={trip}
               heightClass="h-full"
               activeIndex={activeIndex}
+              interactive={view === 'fullmap'}
+              onMarkerClick={view === 'fullmap' ? (idx) => setSelectedMarkerIndex(idx) : undefined}
             />
           </div>
+
+          {/* Fullmap overlay card — shown when a marker is clicked */}
+          {view === 'fullmap' && selectedMarkerIndex !== null && (() => {
+            const block = trip.itinerary![selectedMarkerIndex] as unknown as StepBlock;
+            const transportInfo = buildConnectorLabel(null, block);
+            const TransportIcon = transportInfo?.Icon;
+            const accName = typeof block.accommodation === 'string'
+              ? block.accommodation
+              : block.accommodation?.name;
+            return (
+              <div className="absolute bottom-4 right-4 w-80 max-h-[70vh] overflow-y-auto rounded-xl shadow-2xl bg-card/95 backdrop-blur-sm border border-border z-[1000] max-sm:bottom-0 max-sm:left-0 max-sm:right-0 max-sm:w-auto max-sm:rounded-b-none max-sm:max-h-[55vh]">
+                {/* Header */}
+                <div className="flex items-start gap-3 p-4 border-b border-border">
+                  <div
+                    className="w-9 h-9 rounded-full flex items-center justify-center font-heading text-sm font-bold text-white flex-shrink-0 shadow-md"
+                    style={{ backgroundColor: '#F57D50' }}
+                  >
+                    {selectedMarkerIndex + 1}
+                  </div>
+                  <div className="flex-1 min-w-0 pt-0.5">
+                    <h3 className="font-heading font-bold text-[#4C3A7A] leading-tight">{block.locationName}</h3>
+                    {accName && (
+                      <div className="flex items-center gap-1 text-xs text-[#2A9D8F] mt-1">
+                        <Bed size={12} />
+                        <span className="truncate">{accName}</span>
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => setSelectedMarkerIndex(null)}
+                    className="flex-shrink-0 p-1 rounded-full hover:bg-muted transition-colors text-muted-foreground"
+                    aria-label="Close"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+
+                {/* Body */}
+                <div className="p-4 space-y-3">
+                  {transportInfo && (
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      {TransportIcon && <TransportIcon size={13} />}
+                      <span>{transportInfo.method}</span>
+                      {transportInfo.time && <span>· {transportInfo.time}</span>}
+                    </div>
+                  )}
+                  {block.blockType === 'fullDay' && block.time && (
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <Clock size={13} />
+                      <span>{block.time}</span>
+                    </div>
+                  )}
+                  {block.description && (
+                    <p className="text-sm text-foreground/80 leading-relaxed">{block.description}</p>
+                  )}
+                </div>
+              </div>
+            );
+          })()}
         </div>
       </div>
 

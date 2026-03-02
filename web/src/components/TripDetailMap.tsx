@@ -82,9 +82,11 @@ export interface TripDetailMapProps {
   trip: Trip;
   heightClass?: string; // height applied to outer wrapper now
   activeIndex?: number | null; // highlighted itinerary block index for scroll spy
+  interactive?: boolean; // when false: lock map interactions, fit all markers; default true
+  onMarkerClick?: (idx: number) => void; // called when a marker is clicked (fullmap mode)
 }
 
-export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDetailMapProps) {
+export default function TripDetailMap({ trip, heightClass, activeIndex, interactive = true, onMarkerClick }: TripDetailMapProps) {
   // mapRef is used for initial bounds fitting when the map loads
   const mapRef = useRef<LeafletMapInstance | null>(null);
   const leafletRef = useRef<LeafletModule | null>(null);
@@ -162,7 +164,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
         dragging={true}
         touchZoom={true}
       >
-        <MapController activeIndex={activeIndex} markers={markers} />
+        <MapController activeIndex={activeIndex} markers={markers} interactive={interactive} />
         <TileLayer
           attribution={env.MAPTILER_KEY ? '&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors' : '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'}
           // Use MapTiler raster tiles (satellite imagery) when a key is provided; fall back to OSM raster tiles
@@ -209,23 +211,31 @@ export default function TripDetailMap({ trip, heightClass, activeIndex }: TripDe
           const icon = L ? L.divIcon({ html: `<div class=\"${classes}\">${iconContent}</div>`, className: '', iconSize }) : undefined;
           // If Leaflet hasn't loaded yet, render marker without custom icon
           return (
-            <Marker key={m.idx} position={[m.coord.lat, m.coord.lng]} {...(icon ? { icon } : {})}>
-              <Popup>
-                <div className="text-sm max-w-[240px]">
-                  <div className="flex items-center gap-1 mb-1">
-                    <strong>{isPoint ? '' : `Step ${m.idx + 1}: `}{m.block.locationName || `Stop ${m.idx + 1}`}</strong>
-                    <span className={`text-xs px-1.5 py-0.5 rounded-full text-white ${isFullDay ? 'bg-orange-500' : isPoint ? 'bg-gray-500' : 'bg-blue-500'}`}>
-                      {isFullDay ? 'Stay' : isPoint ? (pointType === 'start' ? 'Start' : pointType === 'end' ? 'End' : 'Route') : 'Visit'}
-                    </span>
-                  </div>
-                  {m.block.description && (
-                    <div className="text-xs leading-relaxed">
-                      {String(m.block.description).slice(0, 120)}{String(m.block.description).length > 120 ? '…' : ''}
+            <Marker
+              key={m.idx}
+              position={[m.coord.lat, m.coord.lng]}
+              {...(icon ? { icon } : {})}
+              eventHandlers={onMarkerClick ? { click: () => onMarkerClick(m.idx) } : undefined}
+            >
+              {/* Show Leaflet popup only when no onMarkerClick handler (i.e. not in fullmap mode) */}
+              {!onMarkerClick && (
+                <Popup>
+                  <div className="text-sm max-w-[240px]">
+                    <div className="flex items-center gap-1 mb-1">
+                      <strong>{isPoint ? '' : `Step ${m.idx + 1}: `}{m.block.locationName || `Stop ${m.idx + 1}`}</strong>
+                      <span className={`text-xs px-1.5 py-0.5 rounded-full text-white ${isFullDay ? 'bg-orange-500' : isPoint ? 'bg-gray-500' : 'bg-blue-500'}`}>
+                        {isFullDay ? 'Stay' : isPoint ? (pointType === 'start' ? 'Start' : pointType === 'end' ? 'End' : 'Route') : 'Visit'}
+                      </span>
                     </div>
-                  )}
-                  {!isPoint && <a href={`#day-${m.idx + 1}`} className="mt-2 inline-block text-xs font-medium text-primary hover:underline">Jump to step</a>}
-                </div>
-              </Popup>
+                    {m.block.description && (
+                      <div className="text-xs leading-relaxed">
+                        {String(m.block.description).slice(0, 120)}{String(m.block.description).length > 120 ? '…' : ''}
+                      </div>
+                    )}
+                    {!isPoint && <a href={`#day-${m.idx + 1}`} className="mt-2 inline-block text-xs font-medium text-primary hover:underline">Jump to step</a>}
+                  </div>
+                </Popup>
+              )}
             </Marker>
           );
         })}

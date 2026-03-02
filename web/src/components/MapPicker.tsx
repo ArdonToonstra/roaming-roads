@@ -17,7 +17,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useField, useFormFields } from '@payloadcms/ui';
-import { getCountryBounds, getCountryBoundsByName } from '../utils/countryBounds';
+import { getCountryBounds, getCountryBoundsByName } from '@/lib/countryBounds';
 
 import { DynamicMapProps } from './DynamicMapComponent';
 
