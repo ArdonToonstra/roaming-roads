@@ -1,0 +1,18 @@
+name: Sri Lanka
+countryCode: LKA
+capital: Colombo
+currency: LKR
+currencyName: Sri Lankan Rupee
+officialLanguages:
+  - language: Sinhala
+  - language: Tamil
+mainReligion: buddhism
+mainReligionPercentage: 70
+visaRequirements: "From EU: need to obtain an Electronic Travel Authorization (ETA) online before arrival"
+safetyLevel: caution
+bestTimeToVisit:
+  - december
+  - january
+  - february
+  - march
+  - april

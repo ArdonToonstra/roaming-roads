@@ -1,0 +1,18 @@
+name: Thailand
+countryCode: THA
+capital: Bangkok
+currency: THB
+currencyName: Thai Baht
+officialLanguages:
+  - language: Thai
+mainReligion: buddhism
+mainReligionPercentage: 93
+visaRequirements: "From EU: No need for tourist visa up to 30 days"
+safetyLevel: caution
+bestTimeToVisit:
+  - november
+  - december
+  - january
+  - february
+  - march
+  - april

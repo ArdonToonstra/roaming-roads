@@ -1,23 +1,8 @@
 /**
- * Image URLs now point at static files under web/public/images/, so no CMS
- * base URL resolution is needed — this just normalizes the handful of shapes
- * callers pass in (a MediaItem object, a bare path string, or nothing).
+ * Media objects carry a site-relative url (/media/...), so this is now only
+ * a null guard plus the object/string shorthand the components rely on.
  */
-export function resolveImageUrl(url: string | null | undefined): string {
-    if (!url) return '/placeholder-trip.jpg'
-    return url
-}
-
-export function getImageUrl(media: { url: string } | string | null | undefined): string {
-    if (!media) return '/placeholder-trip.jpg'
-
-    if (typeof media === 'object' && media.url) {
-        return resolveImageUrl(media.url)
-    }
-
-    if (typeof media === 'string') {
-        return resolveImageUrl(media)
-    }
-
-    return '/placeholder-trip.jpg'
+export function getImageUrl(media: { url?: string | null } | string | null | undefined): string {
+  const url = typeof media === 'string' ? media : media?.url
+  return url || '/placeholder-trip.jpg'
 }

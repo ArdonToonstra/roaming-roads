@@ -1,0 +1,647 @@
+title: "Zuid-Amerika: Chile"
+status: draft
+category:
+  - backpacking
+coverImage: chile-step01-punta-arenas-01.jpg
+description: "{\"root\":{\"type\":\"root\",\"children\":[{\"type\":\"paragraph\",\"children\":[{\"type\":\"text\",\"text\":\"Deel 2 van onze Zuid-Amerika reis: Chile\",\"format\":0,\"version\":1}],\"format\":\"\",\"indent\":0,\"version\":1}],\"format\":\"\",\"indent\":0,\"version\":1}}"
+period: January – March 2024
+budget:
+  currency: EUR
+  perPerson: true
+added: "2025-12-26"
+countries:
+  - chile
+itinerary:
+  - time: Day 1
+    locationName: Punta Arenas
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Punta Arenas in Chili is een praktische tussenstop ter voorbereiding van onze 8 daagse hike in Torres Del Paine! 🥾
+
+      We lopen verschillende supermarkten af op zoek naar lichtgewicht en voedzaam eten. In een grote shopping mall vinden we wandelstokken en waterdichte wandelschoenen voor Ardon.
+
+      We houden onze wandelspieren warm en proberen dagelijks flink wat kilometers af te leggen. Bijvoorbeeld in het Reserva Nacional Magallanes en tijdens een wandelingetje aan zee worden we verrast door een groep dolfijnen. 🐬 Verder is dit stadje niet om over naar huis te schrijven: vrijwel alle gebouwen zijn lelijk of storten half in.
+
+      We zijn wel helemaal klaar voor onze volgende bestemming! 1 februari pas terug online 🛜
+    location:
+      - -70.907822
+      - -53.1625688
+    gallery:
+      - media: chile-step01-punta-arenas-01.jpg
+    blockType: fullDay
+  - time: Day 2
+    locationName: Unknown location
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Inpakken maar!
+
+      Lisa propt haar kleine rugzak vol met 48 maaltijden, 16 porties soep en 24 energy bar.
+
+      Ardon vult zijn grote rugzak met al de rest: tent, slaapzakken, matjes, reservekleren,…
+
+      De rugzakken zijn (echt heel) zwaar, maaar we zijn helemaal klaar voor 8 dagen Torres del Paine! 🏔️🏔️
+    location:
+      - -72.507347612
+      - -51.726062438
+    blockType: fullDay
+  - time: Day 3
+    locationName: "Día 1: Central - Serón (Torres del Paine)"
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Tijdens de 3 uur durende busrit naar het park zien we al flamingo’s, struisvogels en guanacos aan de kant van de weg. Wauw! 🦩
+
+      Helaas ontdekt Lisa al snel dat haar wandelschoenen nog nat zijn van de sneeuwstorm in Ushuaia (ohno) en Ardon verliest onze noodzakelijke waterfilter in de bus (weeral??). We beginnen met 2/0 achterstand 🫢
+
+      Gelukkig schijnt de zon, is het een korte wandeldag door een mooie vallei en lijkt onze achterstand snel vergeten. We drinken bij aankomst een biertje op de goed uitgeruste camping en leren al snel onze medewandelaars kennen. We vallen om 20u30 als een blok in slaap in ons tentje.
+    location:
+      - -72.89007046
+      - -50.860206289
+    gallery:
+      - media: chile-step03-dia-1-central---seron-torres-del-paine-01.jpg
+      - media: chile-step03-dia-1-central---seron-torres-del-paine-02.jpg
+      - media: chile-step03-dia-1-central---seron-torres-del-paine-03.jpg
+    blockType: fullDay
+  - time: Day 4
+    locationName: "Día 2: Serón - Dickson (Torres del Paine) "
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Op onze tweede dag wandelen we 18km verder de vallei door en zien stilaan de bergen in de verte. We proberen veel te eten zodat onze rugzak snel lichter wordt.
+
+      Op de volgende camping is een gezellig barretje waar we 3 leuke Chilenen leren kennen (die Engels spreken) en leren over het land, de geschiedenis, de cultuur, het eten, tips voor andere hikes in Chili,..
+
+      Vermoeid vallen we weer vroeeeg in slaap 😴
+    location:
+      - -73.084474553
+      - -50.876086616
+    gallery:
+      - media: chile-step04-dia-2-seron---dickson-torres-del-paine-01.jpg
+      - media: chile-step04-dia-2-seron---dickson-torres-del-paine-02.jpg
+      - media: chile-step04-dia-2-seron---dickson-torres-del-paine-03.jpg
+    blockType: fullDay
+  - time: Day 5
+    locationName: "Día 3: Dickson - Los Perros (Torres del Paine)"
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Onze spieren geraken gewend terwijl her landschap aan het veranderen is. We lopen nu door bergen met gletsjers en ijskoude rivieren stromen voorbij. 🏞️
+
+      Het kamp is primitief, ze verkopen niets en hebben enkel een koude douche in de aanbieding. We doen een wasje en een dutje aan het strand (lees riviertje naast de camping).
+
+      Na het koken van onze zoveelste dehydrated meal en spelen we het Lama spel met enkele andere wandelaars en ontdekken al snel dat het doodsaai is (zelf maar nieuwe regels bedenken dan).
+
+      Iedereen heeft het over morgen: de zwaarste etappe van de hele tocht. Spannend!
+    location:
+      - -73.131987767
+      - -50.928202852
+    gallery:
+      - media: chile-step05-dia-3-dickson---los-perros-torres-del-paine-01.jpg
+      - media: chile-step05-dia-3-dickson---los-perros-torres-del-paine-02.jpg
+    blockType: fullDay
+  - time: Day 6
+    locationName: "Día 4: Los Perros - Grey (Torres del Paine)"
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Tientallen wekkers beginnen af te gaan vanaf 4u.. het is vandaag de zwaarste dag en het pad naar de pas wordt afgesloten om 7u. Iedereen loopt nerveus rond op de camping. Er wordt een sneeuwstorm voorspeld ❄️
+
+      We beginnen aan onze klim over de John Gardner pas. Klinkt chique en dat was het ook. Onze voeten en knieëen moeten duur betalen om aan de overkant te geraken. Op de top worden we beloond met het uitzicht op de grootste gletsjer die we ooit zagen. In plaats van een sneeuwstorm krijgen we twee mooie regenbogen te zien. 🌈 We zijn ondertussen goed ingelopen en komen na 9u wandelen aan in het volgende kamp.
+
+      In camping Grey komen de o-trek en de w-trek samen. Het is hier dan ook ineens druk en er is een echt restaurant! We ontmoeten andere Nederlanders die die dag begonnen zijn. Ze ruiken naar zeep en hebben nog verse groeten en fruit (jaloers 😋).
+    location:
+      - -73.183753125
+      - -51.000289629
+    gallery:
+      - media: chile-step06-dia-4-los-perros---grey-torres-del-paine-01.jpg
+      - media: chile-step06-dia-4-los-perros---grey-torres-del-paine-02.jpg
+      - media: chile-step06-dia-4-los-perros---grey-torres-del-paine-03.jpg
+      - media: chile-step06-dia-4-los-perros---grey-torres-del-paine-04.jpg
+    blockType: fullDay
+  - time: Day 7
+    locationName: "Día 5: Grey - Paine Grande (Torres del Paine)"
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Na een helse nacht met veel wind worden we wakker onder een laag stof en zand in onze tent. 🌬️ Er zitten twee gaten in ons buitenzeil (hunk).
+
+      Het is gelukkig een korte wandeldag en komen vroeg aan in de beste camping tot nu toe!
+
+      Een avond met meer biertjes, Lama games en vroeg slapen. 🦙
+    location:
+      - -73.093278932
+      - -51.073584302
+    gallery:
+      - media: chile-step07-dia-5-grey---paine-grande-torres-del-paine-01.jpg
+      - media: chile-step07-dia-5-grey---paine-grande-torres-del-paine-03.jpg
+    blockType: fullDay
+  - time: Day 8
+    locationName: "Día 6: Paine Grande - Francés (Torres del Paine)"
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      We starten de etappe van 23km, die de tweede punt van de W ingaat. Terwijl dit het drukste deel van heel het circuit is, hebben we na 2u nog steeds niemand gezien.. Als we toch even de kaart checken blijkt dat we een detour door het afgebrande bos maken. 12 jaar geleden wou een tourist wc-papier wegbranden en stak daarmee voor 3 maanden een groot stuk van het park in brand 🫢
+
+      De detour, zere voeten en de klim van 1.368 meter zorgen voor een laag moraal bij Moreels. Maar het uitzichtpunt is wederom de moeite waard!
+
+      Onze tent staat vandaag op een fancy platform, en we trakteren onszelf op een welverdiende pizza (geen droogvoer meer voor ons bleh 😅).
+    location:
+      - -73.025811919
+      - -51.027213249
+    gallery:
+      - media: chile-step08-dia-6-paine-grande---frances-torres-del-paine-02.jpg
+      - media: chile-step08-dia-6-paine-grande---frances-torres-del-paine-03.jpg
+      - media: chile-step08-dia-6-paine-grande---frances-torres-del-paine-04.jpg
+      - media: chile-step08-dia-6-paine-grande---frances-torres-del-paine-05.jpg
+    blockType: fullDay
+  - time: Day 9
+    locationName: "Día 7: Francés - Central (Torres del Paine)"
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Opnieuw een pittige dag met veel stijgen en dalen. We lopen een groot stuk met onze zwitserse vrienden mee en zij houden ons tempo hoog. Geen tijd om over onze pijntjes na te denken vandaag!
+
+      Bij nader inzien hebben we vandaag niet de beste camping geboekt en slapen als enige van al onze o-trek vrienden in de camping aan de uitgang van het park. Hopelijk komen we iedereen morgen nog tegen op de weg om afscheid te nemen!
+
+      Opnieuw een welverdiende pizza 🍕
+    location:
+      - -72.868330854
+      - -50.964648253
+    gallery:
+      - media: chile-step09-dia-7-frances---central-torres-del-paine-01.jpg
+      - media: chile-step09-dia-7-frances---central-torres-del-paine-02.jpg
+      - media: chile-step09-dia-7-frances---central-torres-del-paine-03.jpg
+      - media: chile-step09-dia-7-frances---central-torres-del-paine-04.jpg
+      - media: chile-step09-dia-7-frances---central-torres-del-paine-05.jpg
+    blockType: fullDay
+  - time: Day 10
+    locationName: "Día 8: Las Torres! (del Paine) "
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      We moeten vandaag de laatste en meest bekende etappe van het circuit afleggen: de klim naar de ‘towers’. 🏔️ Onze bus vertrekt om 14u, dat wil zeggen dat we om 4u30 in de pikdonker starten (zonder rugzakken gelukkig). We hebben duidelijk al 7 dagen wandelen in de benen want we lopen de berg op alsof het niks is! We hebben de towers helemaal voor onszelf (vanaf 12u staan hier 100’en mensen)!
+
+      De afdaling wandelen we samen met onze vrienden en sluiten het circuit samen af met cervezas 🫶
+    location:
+      - -72.949722945
+      - -50.942678851
+    gallery:
+      - media: chile-step10-dia-8-las-torres-del-paine-01.jpg
+      - media: chile-step10-dia-8-las-torres-del-paine-02.jpg
+    blockType: fullDay
+  - time: Day 11
+    locationName: Puerto Natales
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    location:
+      - -72.5059982
+      - -51.7262003
+    blockType: fullDay
+  - time: Day 12
+    locationName: Puerto Varas
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      We komen na een lange reis uit Amersfoort terug aan in Chili (2000 km noordelijker van waar we vertrokken zijn). Wegens 8u vertraging (3u in Madrid en 2 gemiste vluchten in Santiago) moeten we onze plannen omgooien en boeken een comfortabel appartementje in Puerto Varas. Een leuk stadje aan het water!
+
+      Morgen proberen we ons plan verder te zetten: Kamperen in de Cochamo vallei!
+    location:
+      - -72.9829073
+      - -41.317802
+    gallery:
+      - media: chile-step12-puerto-varas-01.jpg
+    blockType: fullDay
+  - time: Day 13
+    locationName: Ensenada
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      De Cochamo vallei bereiken lijkt een onmogelijke missie 🤪 De beloofde bussen komen na 1,5h wachten nog steeds niet opdagen. 4 uber chauffeurs annuleren onze rit. Een brand in een hotel in het dorp zorgt er voor dat alle busroutes wijzigen.
+
+      Na nog eens 1,5u vinden we een busje dat de juiste richting uitgaat en ons kan afzetten halfweg, aan de Osorno vulkaan. Prima, let’s go!
+
+      Hopelijk morgen meer geluk op de weg naar Cochamo!
+    location:
+      - -72.539717381
+      - -41.206024187
+    blockType: fullDay
+  - time: Day 14
+    locationName: Cochamó - Basecamp
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Na nog eens een uur wachten maakt ons hart een sprongetje! We zien een bus aankomen richting Cochamo en ze hebben nog een plekje voor ons! 🚌
+
+      We komen aan in paradijs! We hebben een heerlijke middag: eerst een beetje niksen aan de tent, daarna niksen aan de rivier (ijskoud brrr 🥶) en daarna nog meer niksen in de plaatselijke cervezeria.
+
+      Op de camping sluiten we de dag af met een gezellig kampvuurtje.
+    location:
+      - -72.220495968
+      - -41.455888387
+    gallery:
+      - media: chile-step14-cochamo---basecamp-01.jpg
+      - media: chile-step14-cochamo---basecamp-02.jpg
+      - media: chile-step14-cochamo---basecamp-03.jpg
+    blockType: fullDay
+  - time: Day 15
+    locationName: Cochamó - Valley
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      We worden met een stralend zonnetje wakker ☀️ Al het vocht dat in deze vallei wordt vastgehouden, verdampt in grote wolken rond onze tent. We pakken snel in om aan onze tweedaagse wandeltocht te beginnen.
+
+      De eerste 12 kilometer naar de camping is wat saai, maar de bestemming zeker niet! We komen terecht in een hippe Chileense vakantie hotspot waar vriendengroepen komen klimmen, zwemmen en wandelen. In de avond ontstaan er spontane dansende mensen, andere leggen hun slaapzak buiten om naar de sterren te kijken en we ruiken af toe toe een vlaagje wiet voorbij komen.
+
+      Onze voorziene 4 dagen hier werd ingekort naar 2 dagen (problemen met de vluchten en bussen). Dan maar 4 wandelingen op twee dagen doen.. (ja dat was een slecht idee 🤪) We nemen het tokkelbaantje naar de overkant van de rivier en wandelen naar de bekende glijbaan watervallen en naar de spiegelgladde Trinidad lagoon (klim van 1200m). De laatste middag wandelen we bekaf de 12km de vallei terug uit. We belonen onszelf met een welverdiende cerceza!
+
+      Uit Cochamo wegkomen lijkt even moeilijk als er te geraken. Onze taxichauffeur dringt echt aan om de eerste bus om 6.15 te nemen.. we staan ‘s ochtends om 5u op en staan braaf klaar. Alleen ghost de taxichauffeur ons ineens en laat ons (letterlijk) in de koud staan 😭 Gelukkig geraken we uiteindelijk wel bij onze huurauto, waarmee we komende 3 weken een roadtrip maken over de wereldbekende Ruta 7! 🚗
+    location:
+      - -72.125539759
+      - -41.409557599
+    gallery:
+      - media: chile-step15-cochamo---valley-01.jpg
+      - media: chile-step15-cochamo---valley-02.jpg
+      - media: chile-step15-cochamo---valley-03.jpg
+      - media: chile-step15-cochamo---valley-04.jpg
+      - media: chile-step15-cochamo---valley-05.jpg
+    blockType: fullDay
+  - time: Day 16
+    locationName: Hornopirén
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Hornopirén: onze eerst stop op de Ruta 7!
+
+      ✅ Eerste keer raften voor ons beide. Super leuk!
+
+      ✅ Kamperen aan de ingang van het nationale park + korte hike door het park
+
+      ✅ Lokaal honingfestival waar we verschillende gerechtjes proberen zoals gefrituurd brood met saus (zie foto).
+
+      ✅ Ardon houdt een tor als huisdier op onze camping, die met ons mee eet en drinkt.
+
+      ✅ Stevige klim via een ‘derrumbe’ naar romantische zwemplaats met uitzicht!
+    location:
+      - -72.399211183
+      - -41.893488771
+    gallery:
+      - media: chile-step16-hornopiren-02.jpg
+      - media: chile-step16-hornopiren-03.jpg
+      - media: chile-step16-hornopiren-04.jpg
+      - media: chile-step16-hornopiren-05.jpg
+      - media: chile-step16-hornopiren-06.jpg
+      - media: chile-step16-hornopiren-07.jpg
+    blockType: fullDay
+  - time: Day 17
+    locationName: Chaitén Vulcan
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Tijdens de 6 uur durende ferry naar Chaiten zien we plots allemaal zeeleeuwen!! 🦭 Ze liggen lekker te chillen in de zon, heel cool!
+
+      Bij aankomst settelen we ons op een mooie camping met uitzicht over een meertje. Er is zowel ‘ avonds als ‘s ochtends niemand te bespeuren.. en ook geen bereik om de eigenaars te contacteren. Gratis overnachting dan maar!
+
+      Voor we onze roadtrip verder zetten, beklimmen we de smeulende Chaiten vulkaan in het Pumalin Douglas Tompskin park (gedoneerd park aan Chile door founder van North Face). We hebben prachtig uitzicht over de wolkige omgeving en zien de actieve vulkaan hier en daar smeulen 🌋
+
+      Op de vulkanische grond groeien allemaal roze bloemetjes, waar kolibries verzot op lijken. De vulkaan is een Walhalla voor deze kleine vogeltjes 🤩
+
+      We nemen de ene na de andere lifter mee richting Futaleufu. Blijkbaar is dit een hele hippe liftbestemming voor jonge Chilenen uit Santiago.
+    location:
+      - -72.651992215
+      - -42.835670324
+    gallery:
+      - media: chile-step17-chaiten-vulcan-01.jpg
+      - media: chile-step17-chaiten-vulcan-02.jpg
+    blockType: fullDay
+  - time: Day 18
+    locationName: Futaleufú
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Onze nieuwe bestemming is een wildwater paradijs. Op de planning: Kajakken en opnieuw raften. Maar die plannen lopen al snel in het water. De dag na onze aankomst is het ijskoud en veel regen 💧💧 We proberen door de buitjes door een wandelingetje te maken en rijden naar enkele sightseeings.
+
+      We korten onze tijd hier in en gaan de regendagen gebruiken om wat kilometers te maken richting het zuiden. 🚗
+    location:
+      - -71.867299765
+      - -43.185278169
+    gallery:
+      - media: chile-step18-futaleufu-01.jpg
+      - media: chile-step18-futaleufu-02.jpg
+      - media: chile-step18-futaleufu-03.jpg
+    blockType: fullDay
+  - time: Day 19
+    locationName: Coyhaique
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Roadtrip 🚙 !! Als we Futaleufu uitrijden pikken we al snel drie dames uit Vina Del Mar op, die komende 8 uur met ons meerijden naar Coyhaique.
+
+      Tijdens de hobbelende/onverharde wegen en de bergen door krijgen we wat Spaanse les en tips voor onze verdere reis.
+
+      Onze auto is zeer populair op de camping! De volgende hitchhiker heeft haar plekje al gereserveerd: naar het startpunt van onze 4 daagse hike in Cerro Castillo 🏔️
+    location:
+      - -72.078519976
+      - -45.576535966
+    gallery:
+      - media: chile-step19-coyhaique-01.jpg
+      - media: chile-step19-coyhaique-02.jpg
+    blockType: fullDay
+  - time: Day 20
+    locationName: Cerro Castillo
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Zonder al te veel onderzoek en voorbereidingen starten we aan Las Horquetas, een vrij onontdekte 4 daagse door het nationale park in Cerro Castillo.
+
+      We durven onszelf ondertussen doorwinterde hikers te noemen en besluiten om het Duits meisje, Leya, dat met ons meelift naar het startpunt, onder onze hoede te nemen. Dit wordt haar eerste keer kamperen + meerdaagse hike 🏕️
+
+      Tijdens de eerste dag ontmoeten we ook Barbs, die met een rugzak van 40 kg (beweert ze zelf) zelfzeker de berg oploopt. Ze komt wel elke dag pas uuuren na ons aan in het kamp.
+
+      De campings zijn basic: geen douche, wc-put en water haal je uit de rivier verder op. De eerste nacht vriest bijna heel het kamp weg. Het koelt hier ‘s avonds af richting de 0 graden 🥶 We hebben dan ook al snel de ‘teatime’ traditie, even lekker samen opwarmen na de hikes in het kamp.
+
+      De voorlaatste dag ontmoeten we ook nog een belg die met dezelfde organisatie als Lisa in Ghana is geweest. Toeval! We wandelen de laatste 1,5 dag samen.
+
+      De route brengt ons langs gletsjers, laguna’s en prachtige uitzichten. Doet zeker niet onder aan Torres Del Paine. De foto’s spreken voor zich! 📷
+
+      Na de laatste wandeldag moeten we nog 37 km terug naar de auto. Er zijn geen bussen of taxi’s dus proberen we het liften ook eens uit! Zonder veel succes.. de eerste 7 km komt er geen auto voorbij en in het eerst volgende dorp staan er 12 hitchhikers voor ons. Twee honden helpen zelfs een handje en proberen auto’s tegen te houden (zie foto). Ook Lisa die ergens zielig alleen staat, wordt niet meegenomen.. Na 4,5u vindt Lisa een park ranger die na zijn werk die richting uitgaat, jeeeuj!! 🎉 Respect voor al die lifters hier, het is geen pretje!
+    location:
+      - -72.283871065
+      - -46.037729259
+    gallery:
+      - media: chile-step20-cerro-castillo-01.jpg
+      - media: chile-step20-cerro-castillo-02.jpg
+      - media: chile-step20-cerro-castillo-03.jpg
+      - media: chile-step20-cerro-castillo-04.jpg
+      - media: chile-step20-cerro-castillo-05.jpg
+      - media: chile-step20-cerro-castillo-06.jpg
+      - media: chile-step20-cerro-castillo-07.jpg
+      - media: chile-step20-cerro-castillo-08.jpg
+    blockType: fullDay
+  - time: Day 21
+    locationName: Chiloé
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Na de wandeltocht boeken we een chille tiny house waar we terug van wat luxe kunnen genieten. We krijgen er een gezellige huiskat bij (zie laatste foto).
+
+      De volgende dag zetten we onze tocht terug richting het noorden en laten Patagonië achter ons. We rijden stevig wat kilometers en komen na een lange ferry aan op Chiloé, het grootste eiland van Chili.
+
+      Op Chiloé genieten we van het eilandleven vanop een rustige camping achter de duinen. We maken vanaf de camping een mooie kayak tocht en hebben eindelijk nog eens tijd voor een uitgebreide apero, diner en kampvuur 🔥
+
+      De laatste dag maken we nog een korte wandeling door het nationale park (beenspiertjes blijven trainen) en gaan met een bootje de pinguinkolonies bezichtigen. We proberen ook enkele stadjes te bezoeken maar dat is niet echt een aanrader 🤪
+
+      We zijn uit gerelaxt en al weer klaar om verder te reizen!
+    location:
+      - -74.086249557
+      - -42.629379771
+    gallery:
+      - media: chile-step21-chiloe-01.jpg
+      - media: chile-step21-chiloe-02.jpg
+      - media: chile-step21-chiloe-03.jpg
+      - media: chile-step21-chiloe-04.jpg
+      - media: chile-step21-chiloe-05.jpg
+    blockType: fullDay
+  - time: Day 22
+    locationName: Pucón
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Next up: het “Lake District” met Pucón als uitvalsbasis. We ruilen de glaciers in voor kegel vulkanen en krijgen er flink wat celcius bij.
+
+      We komen 1 dag na het hoofdseizoen van de Chilenen aan. Wat normaal een heel toeristisch stadje is, is nu rustig en gezellig. We merken al snel dat hier zooo veel te doen is en spenderen de eerste dag met een planning maken. We rijden ook 4 campings af om uiteindelijk ons perfecte plekje te vinden aan de rivier 🏞️ De Chilenen die hier verblijven hebben hun BBQ van ‘s ochtends vroeg tot ‘s avonds aanstaan. We nemen hun goede voorbeeld over en na een actieve (en koude) ochtend canyoning door lahars (lavakloven) beginnen we aan onze veggie Parilla. Met succes!
+
+      Dit is de perfecte plek en temperatuur voor een rustdag en die lassen we dan ook in! Overdag plukken we bergen met bramen en ‘s avonds genieten we vanuit een Tinaja van de natuurlijke warmwaterbron van de Villarica vulkaan.
+
+      Om toch fit te blijven beslissen we om een van de vulkanen effectief te beklimmen. De hoogste, Villarica, is enkel de bereiken met een dure tour en wegens het lavameer mag je niet tot de top. Wij doen het dus weer eens op onze eigen manier.. we vinden op internet een wandenpad dat naar de top van de tweede hoogste vulkaan gaat. We moeten er wel wat dirty roads voor afrijden om uiteindelijk bij een boerderijtje te komen waar we voor een paar euro de auto mogen parkeren en via hun tuin naar boven kunnen lopen. Heel de dag niemand gezien en prachtige uitzichten! Goeie beslissing dus 🌋
+
+      We verlengen onze auto een paar daagjes zodat we nog meer van deze omgeving kunnen verkennen!
+    location:
+      - -71.864418047
+      - -39.251548037
+    gallery:
+      - media: chile-step22-pucon-01.jpg
+      - media: chile-step22-pucon-02.jpg
+      - media: chile-step22-pucon-03.jpg
+      - media: chile-step22-pucon-04.jpg
+      - media: chile-step22-pucon-05.jpg
+    blockType: fullDay
+  - time: Day 23
+    locationName: Conguillío Nationaal Park
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Onze roadtrip komt aan zijn einde.. Nog twee daagjes in Conguillío nationaal park en dan moeten we onze auto inleveren 🥲
+
+      Tijdens de autotrip ernaar toe volgen we onze spaanse podcast lessen braaf verder, het begint al beter te gaan 🇪🇸
+
+      We mogen met de auto het park in rijden (4x4 had hier wel handig geweest 🤪). Het landschap is een gigantische lava woestijn met als middelpunt: de Llaima vulkaan. Overal waar we wandelen en komen zien we de vulkaan boven torenen.
+
+      We beklimmen de Serra Nevada met prachtig uitzicht, kijken (tevergeefs) uit naar de puma’s die hier leven, slapen midden in het park in ons tentje en kijken terug in de tijd via de duizend jaar oude aardlagen.
+
+      Lisa haar mat gaat lek midden in de nacht (vervloekte lavastenen 🪨🔥). Gelukkig is het onze tijdelijk laatste nacht in de tent!
+    location:
+      - -71.57153828
+      - -38.302767799
+    gallery:
+      - media: chile-step23-conguillio-nationaal-park-01.jpg
+      - media: chile-step23-conguillio-nationaal-park-02.jpg
+      - media: chile-step23-conguillio-nationaal-park-03.jpg
+    blockType: fullDay
+  - time: Day 24
+    locationName: Familie reünie @ Olmué
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Nico, de peter van Lisa, staat ons op te wachten in de luchthaven van Santiago en brengt ons naar Olmué, het dorpje waar hij samen met Paulina, Elena en Manu 12 jaar geleden naartoe is verhuisd. We komen aan in een klimaat waar het vol met cactussen staat en Lisa het nooit te koud heeft (30 graden). Het voelt als een vakantie op onze vakantie! 🌞
+
+      ✅ We genieten dagelijks van het zwembad en drinken Chileense biertjes op het terras. Met uitzicht op de vele kolibries die langs komen.
+
+      ✅ Voor Paulina haar bedrijf gaan we resttomaten plukken en maken we een batch pasata.
+
+      ✅ Op de lokale zondagsmarkt proberen we Mote con Huesillos, een Chileens drankje met granen en gedroogde perzik. Speciaal!
+
+      ✅ We bezoeken een marktje met een parade van Chino’s met zeer speciale (en onuitstaanbare) muziek. Zie het filmpje.
+
+      ✅ Met ze’n tweetjes doen we een wandeling van 17 km door het nationale park La Campana.
+
+      ✅ Nico brengt ons naar de grenspost met Argentinië, diep in de Andes op 3000m. Na 30 haarspeldbochten komen we aan een mooi meer met uitzicht!
+
+      ✅ Paulina leert ons de vegetarische Chileense keuken kennen, zoals Charquicán de Cochayuyos (enge zeewier slangen). Ze stuurt ons ook naar Katty, de lekkerste empanadas van Chili!
+
+      We chillen een weekje in de Chileense huize Moreels en leren veel over de normen, waarden, cultuur en hospitality hier. We laden onze batterijtjes (letterlijk en fysiek) op en zijn klaar om weer verder te gaan. Volgende halte: Valparaiso en Viña del Mar 🏖️
+    location:
+      - -71.200466082
+      - -32.998926784
+    gallery:
+      - media: chile-step24-familie-reunie-olmue-03.jpg
+      - media: chile-step24-familie-reunie-olmue-05.jpg
+      - media: chile-step24-familie-reunie-olmue-06.jpg
+    blockType: fullDay
+  - time: Day 25
+    locationName: "Valparaiso & Viña del Mar "
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Het lijkt hier de normaalste zaak van de wereld om bij kennissen van kennissen te verblijven dus surfen we verder op de Chileense gastvrijheid. Na een belletje van Paulina hebben we een verblijfplaats bij Robinson, op de hotspot in Valparaiso en kunnen we de sleutels ophalen in een supermarktje 😄
+
+      Na aankomst verkennen we Viña del Mar. We trekken een foto bij de bloemenklok (onder lichte dwang van Nico), we chillen op het strand, dwalen wat rond en gaan nog eens lekker uit eten. 🏖️
+
+      Volgende dag is Valparaiso aan de beurt. Het overtreft onze verwachtingen! Een autoluw doolhof op steile heuvels met vele trappetjes. Overal kleur en muurschilderingen. 🎨 We spotten chillende zeeleeuwen, bezoeken een oude gevangenis, typische begraafplaats, de familie Moreels sluit in de avond aan om samen uit eten te gaan.
+
+      Robinson, onze host, neemt ons vrijdagavond mee uit in de stad samen met een vriend. Ze willen filosoferen en diepe gesprekken voeren. De taalbarrières maken dat quasi onmogelijk.. maar we maken er het beste van! ❤️
+    location:
+      - -71.553938063
+      - -33.01470601
+    gallery:
+      - media: chile-step25-valparaiso-vina-del-mar-01.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-02.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-03.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-04.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-05.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-06.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-07.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-08.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-09.jpg
+    blockType: fullDay
+  - time: Day 26
+    locationName: Santiago
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Voordat we naar de woestijn in San Pedro de Atacama vliegen, hebben we een korte middag om Santiago verder te verkennen. Bij de lange overstap tijdens onze terugvlucht naar NL hebben we al een stukje van het centrum gezien rond het centraal station: niet best 🤪
+
+      We zigzaggen wat door het centrum. Zien veel mooie gebouwen en op elke hoek van de straat lijkt een protest bezig te zijn. We herzien onze mening van Santiago! Je moet de juiste buurten vinden.
+
+      De avond besteden we aan Dune - part 2, die hier blijkbaar met ondertiteling wordt getoond in de cinema! Een goeie voorbereiding op onze reis naar de woestijn 🏜️
+    location:
+      - -70.600522307
+      - -33.429280962
+    gallery:
+      - media: chile-step26-santiago-01.jpg
+      - media: chile-step26-santiago-02.jpg
+      - media: chile-step26-santiago-03.jpg
+      - media: chile-step26-santiago-04.jpg
+      - media: chile-step26-santiago-05.jpg
+    blockType: fullDay
+  - time: Day 27
+    locationName: "Laguna Baltinache (SPdA) "
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Een weekje kamperen en rondrijden in de woestijn van San Pedro de Atacama op de agenda! De woestijn blijkt al snel voor avonturiers te zijn 🌵⛺️🛻
+
+      Op de luchthaven stappen we in onze suv-achtige auto. Onze eerste stop is de supermarkt en China Mall, waar we onze camping gear wat upgraden (stoelen, geimproviseerde tafel, stargazing matjes,..). We voelen al snel de extreme hoogte (uitgeput en dizzy) terwijl we naar onze eerste campingspot offroad zoeken (spannend 🤞). De zon begint onder te gaan en we vinden niet direct een effen plaats zonder te veel rotsen en wind. Uiteindelijk vinden we de spot: het landschap, zonsondergang en sterrenhemel zijn hier prachtig! 🌌
+
+      ‘S ochtends vertrekken we naar Laguna Baltinache via een heeel moeilijke weg. Ardon adviseert Lisa om wat harder te rijden, ‘dan voelen we de bultjes en putten misschien minder’. Nadat we een prachtige wandeling maken en een lekkere lunch eten, zien we plots dat een van de banden volledig verwoest is 🫢 We besluiten om het probleem nog even te negeren.. en lekker te gaan zwemmen in het zout meertje, waar we ronddrijven.
+
+      Ardon steekt daarna snel zijn handen uit de mouwen en heeft de band snel verwisseld naar de reserve. We hebben geen bereik dus rijden zo traag als mogelijk terug naar de luchthaven. Naar verrassing hebben we hier geen gezeik en krijgen een 3x zo grote 4x4 truck in de plaats (waar we al van droomden). Geluk bij een ongeluk! 🍀
+    location:
+      - -68.479442536
+      - -23.282454951
+    gallery:
+      - media: chile-step27-laguna-baltinache-spda-01.jpg
+      - media: chile-step27-laguna-baltinache-spda-02.jpg
+      - media: chile-step27-laguna-baltinache-spda-03.jpg
+      - media: chile-step27-laguna-baltinache-spda-04.jpg
+      - media: chile-step27-laguna-baltinache-spda-05.jpg
+      - media: chile-step27-laguna-baltinache-spda-06.jpg
+    blockType: fullDay
+  - time: Day 28
+    locationName: Termas Bajas (SPdA)
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Na de lekke-band-affaire vinden we een officiële camping met faciliteiten in een oase dorpje. We chillen en zwemmen hier heel de ochtend en vertrekken dan terug richting de diepe woestijn. 🏜️
+
+      We rijden langs flamingomeertjes, vulcaan uitkijkpunten, we zien lama’s, guanaco’s en gaan richting de 4400 meter hoogte! ⛰️
+
+      Eens het wat afgekoeld is, durven we uit de auto te stappen en maken een wandeling door een canyon en vinden een privé hot spring badje, heerlijk! Wel met veel puffen en pauzes, aan deze hoogte moeten we nog even wennen 😅
+    location:
+      - -68.62947681
+      - -22.269263427
+    gallery:
+      - media: chile-step28-termas-bajas-spda-01.jpg
+      - media: chile-step28-termas-bajas-spda-02.jpg
+      - media: chile-step28-termas-bajas-spda-03.jpg
+      - media: chile-step28-termas-bajas-spda-04.jpg
+      - media: chile-step28-termas-bajas-spda-05.jpg
+    blockType: fullDay
+  - time: Day 29
+    locationName: El Tatio Geyser/Valle de Cactus & Muerte (SPdA)
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Na een verfrissend bad in de hotspings, zoeken we naar onze volgende wild kampeerplek, ergens strategisch gelegen op de weg voor morgen. We worden wederom beloond met een prachtig uitzicht en onvoorstelbare stilte.
+
+      Wekker gaat af om 5u want het schijnt dat je het derde grootste geyser veld ter wereld net voor de zonsopgang moet bekijken, wanneer ze het actiefste zijn. We slapen licht door de hoogte dus zijn zo wakker! Door de koud (-2) ‘s ochtends ontstaat er heel veel stoom en borrelend water. Het is een speciale ervaring!
+
+      Onderweg naar het stadje San Pedro maken we nog een prachtig wandelingetje in de Valle De Cactus. Nadat we geparkeerd zijn, nodigt een tourbus ons uit om aan te schuiven bij een luxe ontbijttafel ❤️🥖🍳🥑 Exact wat we nodig hadden!
+
+      Het is een vroege en dus lange dag. We hebben tijd om nog een wandeling te maken, nu op een plek waar nooit water te vinden is: de Valle De La Muerte. Er is een gigantische zandduin waar we geïmproviseerd een sandboard experience proberen!
+
+      Uitgeput na deze lange dag komen we ‘s middags aan in een chique hotelletje met zwembad en gaan ‘s avonds het stadje verkennen!
+    location:
+      - -68.0117987
+      - -22.3416368
+    gallery:
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-01.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-02.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-03.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-04.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-05.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-06.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-07.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-09.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-10.jpg
+    blockType: fullDay
+  - time: Day 30
+    locationName: Lagunas Antiplatos (SPdA)
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      San Pedro is, ondanks dat een tourist hotspot is, een super tof dorpje! De veel gelijkaardige adobe huisjes en auto luw centrum zorgen voor een goede dessert vibes. We drinken biertjes in een cool (letterlijk en figuurlijk) donker barretje, eten bij een veggie restaurantje, en duiken ons wel verdiend bedje in.
+
+      Volgende dag staan er een aantal hooggelegen meren op de planning. We hebben een tijdslot, dus zoeken we nog een bezienswaardigheid op de weg. Ardon raadt een monument aan, met 5 op 5 sterren op Google Maps. We rijden de weg af, verder de woestijn in, om bij een hoopje stenen aan te komen! Geinige hoax 🫨. We hebben wel mooi uitzicht en zijn onze volgende kampeerplek al aan het scouten.
+
+      We rijden naar de verschillende lagunas: Miscanti, Miñiques en Piedras Rojas. Het zijn trekpleisters voor dieren, flamingo’s en vele andere vogels. Onderweg picknicken we uitgebreid tussen de rotsen.
+
+      Vandaag gaan we iets eerder naar ons volgend kampeerplekje om daar wat te chillen. Hiervoor moeten we wel wat improviseren voor de felle zon. ⛺️
+    location:
+      - -67.669676664
+      - -23.916935648
+    gallery:
+      - media: chile-step30-lagunas-antiplatos-spda-01.jpg
+      - media: chile-step30-lagunas-antiplatos-spda-02.jpg
+      - media: chile-step30-lagunas-antiplatos-spda-03.jpg
+      - media: chile-step30-lagunas-antiplatos-spda-04.jpg
+      - media: chile-step30-lagunas-antiplatos-spda-05.jpg
+      - media: chile-step30-lagunas-antiplatos-spda-06.jpg
+      - media: chile-step30-lagunas-antiplatos-spda-07.jpg
+    blockType: fullDay
+  - time: Day 31
+    locationName: Laguna Cejar/Devil’s Throat (SPdA)
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      We hebben een leuke avond met uitzicht over de zoutvlakte van Atacama. Prachtige zonsondergang en sterrenhemel zijn hier ondertussen dagelijkse kost 🌌
+
+      ‘S ochtends rijden we naar een groot/zout meer waar we kunnen drijven! (En kunnen🚿😁)
+
+      Daarna gaan we naar de Devil’s Throat: een lang wandelpad door een canyon. We worden bijna opgeslokt door de hitte en droogte, maar vinden de uitweg gelukkig 🥵
+
+      Nog een late lunch in San Pedro en dan starten we op tijd onze zoektocht naar de volgende kampspot!
+    location:
+      - -68.065740407
+      - -23.601803208
+    gallery:
+      - media: chile-step31-laguna-cejardevils-throat-spda-01.jpg
+      - media: chile-step31-laguna-cejardevils-throat-spda-02.jpg
+      - media: chile-step31-laguna-cejardevils-throat-spda-03.jpg
+      - media: chile-step31-laguna-cejardevils-throat-spda-04.jpg
+      - media: chile-step31-laguna-cejardevils-throat-spda-05.jpg
+    blockType: fullDay
+  - time: Day 32
+    locationName: Fingerrocks/ Cerro Toco (SPdA)
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Omdat we moeten acclimatiseren voor de vulkaan hike morgen (Cerro Toco), zoeken we een kampeerplaats hoog gelegen. Na enkele plaatsen af te rijden, vinden we de mooiste kampeerplaats van de hele woestijn (op 4500 meter). We zetten ons tentje op in een soort nationaal park met super speciale ‘fingerrocks’. 🗿Naast de zonsondergang, sterrenhemel en zonsopgang, worden we hier ook getrakteerd op dieren: guanaco families en konijntjes huppelen voorbij.
+
+      ‘S ochtends breekt de grote dag aan: we willen naar de top van de Cerro Toco op 5600 meter klimmen! 🌋 We hebben een heel acclimatisatieplan gemaakt. Als we de weg inslagen naar het startpunt, blijkt al snel dat het gebied afgesloten is wegens sterrenkundig onderzoek. Om aan de ingang te komen, zouden we vooraf een permit moeten aangevraagd hebben.
+
+      Jammer maar helaas! In plaats van een dag van fysieke uitputting en hoofdpijn, keren we terug naar onze privé hotsprings van een van de eerste dagen en chillen daar!
+    location:
+      - -67.425460625
+      - -23.03115739
+    gallery:
+      - media: chile-step32-fingerrocks-cerro-toco-spda-01.jpg
+      - media: chile-step32-fingerrocks-cerro-toco-spda-02.jpg
+      - media: chile-step32-fingerrocks-cerro-toco-spda-03.jpg
+      - media: chile-step32-fingerrocks-cerro-toco-spda-04.jpg
+      - media: chile-step32-fingerrocks-cerro-toco-spda-05.jpg
+    blockType: fullDay
+  - time: Day 33
+    locationName: Calama
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      We leveren onze fancy 4x4 terug in bij de luchthaven en gaan naar ons hoteltje in Calama. Al onze spullen worden terug in 4 rugzakken gepropt. Helemaal klaar om naar Bolivia te gaan! 🇧🇴
+
+      Op zoek naar een restaurantje zien we een Diablada, een duivelsdans. De dansers zijn verkleed en maken er een grote show van! Buiten dit is Calama verder niet om over naar huis te schrijven.
+
+      De ochtend erna vertrekken we met veel goesting naar Bolivia! De grensovergang is al een groot avontuur. Dat belooft voor de komende weken!
+    location:
+      - -68.925026064
+      - -22.460475697
+    gallery:
+      - media: chile-step33-calama-01.jpg
+    blockType: fullDay

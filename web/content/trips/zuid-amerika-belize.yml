@@ -1,0 +1,56 @@
+title: "Zuid-Amerika: Belize"
+status: draft
+category:
+  - backpacking
+coverImage: belize-step01-caye-caulker-01.jpg
+description: "{\"root\":{\"type\":\"root\",\"children\":[{\"type\":\"paragraph\",\"children\":[{\"type\":\"text\",\"text\":\"Deel 7 van onze Zuid-Amerika reis: Belize\",\"format\":0,\"version\":1}],\"format\":\"\",\"indent\":0,\"version\":1}],\"format\":\"\",\"indent\":0,\"version\":1}}"
+period: June 2024
+budget:
+  currency: EUR
+  perPerson: true
+added: "2025-12-26"
+countries:
+  - belize
+itinerary:
+  - time: Day 1
+    locationName: Caye Caulker
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Na een bus, grensovergang en ferry komen we aan op een mini eilandje in Belize: Caye Caulker. We werden al gewaarschuwd dat het hier duur zou zijn dus boeken we een studio met eigen keukentje.
+
+      Het moto van het eiland is ‘go slow’, maar dat kan niet anders met deze extreme hitte. We beslissen om niks te plannen en te kijken wat onze dagen hier brengen. Nadat we het goede nieuws krijgen dat ons neefje (en petekindje van Lisa) geboren is, beslissen we om heel de dag in een coole waterbar te gaan vieren! 👶🏻🍻
+
+      Tijdens het verkennen van de rest van het eiland te voet zien we zeepaardjes, een tarpon feeding dock, leuke barretjes, een groooote stingray,..
+
+      Na twee nachten vertrekken we alweer naar het volgende eiland!
+    location:
+      - -88.03367941
+      - 17.73948765
+    gallery:
+      - media: belize-step01-caye-caulker-01.jpg
+      - media: belize-step01-caye-caulker-02.jpg
+      - media: belize-step01-caye-caulker-04.jpg
+      - media: belize-step01-caye-caulker-05.jpg
+    blockType: fullDay
+  - time: Day 2
+    locationName: Ambergris Caye
+    description: "{\"root\":{\"type\":\"root\",\"children\":[],\"format\":\"\",\"indent\":0,\"version\":1}}"
+    activities: |-
+      Duiken in het gigantische Belize barrier reef!
+
+      We doen 5 duiken en 1 snorkel trip en we zien zoooo veel haaien 🦈🦈 voornamelijk reef -en nursesharks. Op een bepaald moment zwemmen er wel 6 tegelijk onder ons en boven ons. Heel speciale ervaring! Verder zwemmen we door veel koraal canyons en enkele tunnels. Het is zeker de moeite! 🐟🐠🐡
+
+      Ambergris Caye blijkt al snel een groot vakantiepark voor Amerikaanse families te zijn, en iedereen verplaatst zich met golf carts. Wij dus ook! Het brengt ons naar een strandje en verschillende barretjes.
+
+      We hebben een leuke tijd maar zijn blij (vooral voor onze portefeuille) om weer verder te reizen naar Mexico. 🇲🇽🇲🇽
+    location:
+      - -87.98179321
+      - 17.9026253
+    gallery:
+      - media: belize-step02-ambergris-caye-01.jpg
+      - media: belize-step02-ambergris-caye-02.jpg
+      - media: belize-step02-ambergris-caye-03.jpg
+      - media: belize-step02-ambergris-caye-04.jpg
+      - media: belize-step02-ambergris-caye-05.jpg
+      - media: belize-step02-ambergris-caye-06.jpg
+    blockType: fullDay

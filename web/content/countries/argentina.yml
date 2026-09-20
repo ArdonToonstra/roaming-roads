@@ -1,0 +1,11 @@
+name: Argentina
+countryCode: ARG
+capital: Buenos Aires
+currency: ARS
+currencyName: Argentine Peso
+officialLanguages:
+  - language: Spanish
+mainReligion: christianity
+mainReligionPercentage: 63
+visaRequirements: "From EU: No need for tourist visa up to 90 days"
+safetyLevel: caution

@@ -1,0 +1,19 @@
+title: Budapest
+status: draft
+coverImage: WhatsApp Image 2025-10-12 at 16.36.19.jpeg
+description: A trip to Hungary titled 'Budapest', from 2017-09-27 to 2017-09-30.
+period: September 2017
+budget:
+  amount: 0
+  currency: EUR
+  perPerson: true
+added: "2025-10-26"
+countries:
+  - hungary
+itinerary:
+  - time: Day 1
+    locationName: Budapest
+    location:
+      - 19.0401609
+      - 47.4978918
+    blockType: fullDay

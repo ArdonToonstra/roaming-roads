@@ -1,0 +1,8 @@
+name: Mexico
+countryCode: MEX
+continent: north_america
+capital: Mexico City
+currency: MXN
+currencyName: Mexican Peso
+officialLanguages:
+  - language: Spanish

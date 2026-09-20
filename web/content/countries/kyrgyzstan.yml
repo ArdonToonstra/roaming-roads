@@ -1,0 +1,17 @@
+name: "Kyrgyzstan "
+countryCode: KGZ
+capital: Bishkek
+currency: KGS
+currencyName: Kyrgyz som
+officialLanguages:
+  - language: Russian
+  - language: Kyrgyz
+mainReligion: islam
+mainReligionPercentage: 90
+visaRequirements: No visa requirements traveling from Belgium or Netherlands
+safetyLevel: safe
+bestTimeToVisit:
+  - june
+  - july
+  - august
+  - september

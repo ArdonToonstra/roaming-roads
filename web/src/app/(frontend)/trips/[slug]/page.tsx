@@ -2,7 +2,7 @@ import { data } from '@/lib/data';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Calendar, Camera, Navigation, Globe, AlertTriangle, Bed, Target, Euro } from 'lucide-react';
-import { Trip, Country } from '@/types/content';
+import { Country } from '@/types/content';
 import { notFound } from 'next/navigation';
 import { getImageUrl } from '@/lib/images';
 // Removed embedded map + itinerary; now lives under /journey subpage
@@ -16,39 +16,19 @@ interface TripPageProps {
   }>;
 }
 
-export function generateStaticParams() {
-  return data.getAllTripSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  return (await data.getTripSlugs()).map((slug) => ({ slug }));
 }
-
-async function getTrip(slugOrId: string): Promise<Trip | null> {
-  try {
-    // Skip API calls for static assets (images, css, js, etc.)
-    if (slugOrId.match(/\.(png|jpg|jpeg|gif|svg|css|js|ico|woff|woff2|ttf|eot)$/i)) {
-      return null;
-    }
-
-    console.log('Fetching trip with slug/ID:', slugOrId);
-    const response = await data.getTrip(slugOrId);
-    console.log('Trip response:', response ? 'Found' : 'Not Found');
-    return response;
-  } catch (error) {
-    console.error('Failed to fetch trip:', error);
-    console.error('Slug/ID was:', slugOrId);
-    return null;
-  }
-}
-
-
 
 export default async function TripDetailPage({ params }: TripPageProps) {
   const { slug } = await params;
-  const trip = await getTrip(slug);
+  const trip = await data.getTrip(slug);
 
   if (!trip) {
     notFound();
   }
 
-  const imageUrl = trip.coverImage?.url ? getImageUrl(trip.coverImage.url) : '/placeholder-trip.jpg';
+  const imageUrl = getImageUrl(trip.coverImage);
 
   const country = (trip.countries && Array.isArray(trip.countries) && trip.countries.length > 0 && typeof trip.countries[0] === 'object')
     ? (trip.countries[0] as Country).name

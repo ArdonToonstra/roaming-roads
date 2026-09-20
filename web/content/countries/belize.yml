@@ -1,0 +1,19 @@
+name: Belize
+countryCode: BLZ
+capital: Belmopan
+currency: BZD
+currencyName: Belize Dollar
+officialLanguages:
+  - language: English
+mainReligion: christianity
+mainReligionPercentage: 32
+visaRequirements: "From EU: No need for a visa for tourist stays up to 30 days"
+safetyLevel: caution
+bestTimeToVisit:
+  - november
+  - december
+  - january
+  - february
+  - march
+  - april
+  - may

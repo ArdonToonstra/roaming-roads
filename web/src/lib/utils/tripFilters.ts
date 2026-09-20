@@ -199,7 +199,7 @@ export function sortTrips(trips: Trip[], sortBy: SortOption): Trip[] {
           return dateB.getTime() - dateA.getTime();
         }
         // Fallback to creation date if periods can't be parsed
-        return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
+        return new Date(b.added).getTime() - new Date(a.added).getTime();
 
       case 'oldest':
         const dateC = parsePeriod(a.period);
@@ -208,7 +208,7 @@ export function sortTrips(trips: Trip[], sortBy: SortOption): Trip[] {
           return dateC.getTime() - dateD.getTime();
         }
         // Fallback to creation date if periods can't be parsed
-        return new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime();
+        return new Date(a.added).getTime() - new Date(b.added).getTime();
 
       case 'title':
         return a.title.localeCompare(b.title);

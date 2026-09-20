@@ -1,0 +1,297 @@
+title: Roadtrip through Jordan
+status: published
+category:
+  - road_trip
+coverImage: jordan-overview.jpg
+highlightsMedia:
+  - media: IMG_0944.JPEG
+  - media: IMG_0970.JPEG
+  - media: IMG_0809.JPEG
+  - media: IMG_0822.JPEG
+  - media: IMG_0849.JPEG
+  - media: IMG_0994.JPEG
+description: "A diverse trip through Jordan: from the vibrant coral reefs of the Red Sea to the silent Wadi Rum’s desert. Visit ancient cities, wander through local markets, float in the Dead Sea and uncover the country’s rich culture and natural beauty at every turn."
+period: May 2022
+budget:
+  amount: 1700
+  currency: EUR
+  perPerson: true
+activities: |-
+  - Diving in the red sea
+  - Historical cities Petra, Jerash,..
+  - Canyoning
+  - Floating in the dead sea
+  - Hiking in Dana National Park
+  - Sleeping under the stars in de Desert 
+  - ...
+importantPreparations: |-
+  - Buy your flights! We had tickets directly from Brussels to Amman for €220. 
+  - Buy your travel permit in advance, through [the official site](https://moi.gov.jo/EN/Pages/Visa_E_Applications). It is also possible to buy a [Jordan Pass](https://www.jordanpass.jo/) which include a permit (40 days) and the entry of some of the highlights as Petra, Jerash, Wadi Rum,.. 
+  - Rent a car. You will not need a 4x4 for this route. 
+  - Install an eSim (only if you have eSim available on your phone).
+  - Bring cloths that cover your shoulders en knees. 
+  - Book a hotel for your first night.
+added: "2025-10-26"
+countries:
+  - jordan
+featuredAccommodations:
+  - dana-village-lodge-and-camp
+  - arab-divers-resort
+itinerary:
+  - time: 1 day - 1 night
+    locationName: Madaba
+    description: "Madaba is a charmin town 30min from the airport. A perfect first stop after a low travel day! "
+    activities: |-
+      During your first stop in Jordan, visit the Byzantine mosaics (Madaba map) in the St. George Church and explore some of the archeological sites. 
+
+      End your first day with a lovely local meal in the center of the town.
+    accommodation: aitch-boutique-hotel
+    location:
+      - 35.795496505
+      - 31.718179659
+    gallery:
+      - media: IMG_3691.JPEG
+      - media: IMG_3685.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 30
+        unit: minutes
+      distance:
+        value: 20
+        unit: km
+  - time: Daytrip
+    locationName: Wadi Mujib
+    description: "Hike and swim through a breathtaking sandstone canyon. "
+    activities: |-
+      - Drive from Madaba to [the entrance of the canyon](https://maps.app.goo.gl/gTVJwvv6LeDTQoj79). Make a stop on the top of Mount Nebo for beautiful views! 
+      - Bring your own waterproof bags or rent it here. Buy your entrance ticket (€25). You don't need a guide for this hike. 
+      - Hike and swim through the canyon (there is only one way and back) and take gorgeous pictures!
+    location:
+      - 35.567564671
+      - 31.617681293
+    gallery:
+      - media: IMG_0725.JPEG
+      - media: IMG_0743.JPEG
+      - media: IMG_0749.JPEG
+      - media: IMG_0702.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 1
+        unit: hours
+      distance:
+        value: 60
+        unit: km
+  - time: 2 days - 1 night
+    locationName: Dana Nature Reserve
+    activities: |-
+      - Drive from the Wadi Mujib canyon to Dana. On the way you can make an interesting stop at Kerak Castle. 
+      - Once you arrive in Dana, let your accomodation know and they will pick you up. 
+      - There are also nice guesthouses in the town. But in the lodge you will have the best views!
+    accommodation: dana-village-lodge-and-camp
+    location:
+      - 35.612806848
+      - 30.679534185
+    gallery:
+      - media: IMG_0761.JPEG
+      - media: IMG_0774.JPEG
+      - media: IMG_0849-1.JPEG
+      - media: IMG_0764.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 2
+        unit: hours
+      distance:
+        value: 120
+        unit: km
+  - time: Daytrip
+    locationName: Wadi Ghuweir trail
+    description: "Wonder through the most beautiful canyon in Jordan. "
+    activities: After a peacefull night with beautiful views over the Nature reserve, do the Wadi Ghuweir Trail. This is a beautiful trail through a canyon. Either you go to [the entrance](https://maps.app.goo.gl/QJNdH5mUPXjuB8fEA) yourself and do a one way and back trip, or you book a guide (in the Dana town or in your lodge) with pick-up and the end of the trail. This is a full day trip and you will walk about 15km. You will walk through the water in the canyon, so take proper shoes.
+    location:
+      - 35.553448261
+      - 30.601685041
+    gallery:
+      - media: IMG_0781.JPEG
+      - media: IMG_0788.JPEG
+      - media: IMG_0802.JPEG
+      - media: IMG_0812.JPEG
+      - media: IMG_0830.JPEG
+      - media: IMG_0839.JPEG
+    blockType: fullDay
+  - time: Day 5
+    locationName: Little Petra
+    description: "Visit the lesser known and visited little sister of the ancient town Petra. "
+    activities: |-
+      Drive to [the parking spot](https://maps.app.goo.gl/hsFCC8wXvYGND5Ne8) at Little Petra. There are some small shops and the possibility to hire a guide. The entrance is free. 
+
+      Start the Little Petra trail from here (only 1 km). There is also a possibility to take the 'backdoor' to Petra from here. This is about 10km one way and you will arrive at the monestary in Petra. This trail is nog always open so check in advance.
+    location:
+      - 35.4657495
+      - 30.3797403
+    gallery:
+      - media: IMG_0860.JPEG
+      - media: IMG_0869.JPEG
+      - media: IMG_0877.JPEG
+      - media: IMG_0899.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 1
+        unit: hours
+      distance:
+        value: 60
+        unit: km
+  - time: Day 6
+    locationName: Petra
+    description: "Visit Petra, an ancient city, famous as a UNESCO World Heritage site. It's popular for its stunning rock-cut architecture, particularly the iconic Treasury (Al-Khazneh) and Monastery (Ad Deir), carved directly into rose-red sandstone cliffs. "
+    activities: |-
+      If you booked a Jordan Pass, your entrance is already included. Otherwise, you will have to buy a ticket. 
+
+      You can choose how many days to visit. We decided to visit only one day, since we also visited the lesser known town of Little Petra (see last step). Start as early as possible and don't stay at the main attractions. We did a walking trip of around 20km through the town.  You can find the maps [here](https://www.visitpetra.jo/en/page/62/Main%20Trail). This is a long and though hike so bring enough water and good hiking shoes! 
+
+      Stay the night is Wadi Musa town.
+    location:
+      - 35.4745669
+      - 30.3258363
+    gallery:
+      - media: IMG_0937.JPEG
+      - media: IMG_0944-1.JPEG
+      - media: IMG_0960.JPEG
+      - media: IMG_0926.JPEG
+      - media: IMG_3955.JPEG
+      - media: IMG_3938.JPEG
+    blockType: fullDay
+    transportation:
+      travelTime:
+        value: 20
+        unit: minutes
+      distance:
+        value: 10
+        unit: km
+  - time: Day 7
+    locationName: Wadi Rum
+    description: Jordan's stunning desert, aslo known as the "Valley of the Moon" for its otherworldly red sands, towering sandstone cliffs, natural arches, and vast canyons, offering a landscape reminiscent of Mars.
+    activities: |-
+      Park your car in Wadi Rum Town and your accomodation will arrange a pick-up to the camp in the desert. You can arrange different activities while in the camp. You can make a short hike, book a 4x4 trip through the best spots in the dessert, go camel riding, watch the sunset and do some stargazing at night. 
+
+      There are a lot of different camps and options. Find one on booking you like and that has good reviews.
+    location:
+      - 35.403648551
+      - 29.512011525
+    gallery:
+      - media: IMG_0987.JPEG
+      - media: IMG_0994-1.JPEG
+      - media: IMG_1020.JPEG
+      - media: IMG_1026.JPEG
+      - media: IMG_1052.JPEG
+      - media: IMG_1059-1.JPEG
+      - media: IMG_1069.JPEG
+      - media: IMG_1056.JPEG
+    blockType: fullDay
+    transportation:
+      travelTime:
+        value: 2
+        unit: hours
+      distance:
+        value: 110
+        unit: km
+  - time: Day 8
+    locationName: "Aqaba "
+    description: "Jordan's only coastal city and the largest and most populous city on the Gulf of Aqaba. Come here if you want to go diving in the Red Sea! "
+    activities: Come to Aqaba for a diving experience in the Red Sea. We choose a diving resort and did some morning and afternoon dives. You can either do a short dive or a boat dive
+    accommodation: arab-divers-resort
+    location:
+      - 34.980864276
+      - 29.426277066
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 1
+        unit: hours
+      distance:
+        value: 70
+        unit: km
+  - time: Day 9
+    locationName: Dead Sea
+    description: "Float in the extreme high salty Dead Sea and stay in a resort. "
+    activities: |-
+      If you want to swim in the Dead Sea, the best thing to do is stay in one of the hotels at the shore. From there you can walk or take a bus (depending on the hotel you choose). They have showers en clay you can use. 
+
+      Don't stay in the salty sea to long and drink enough water!!
+    location:
+      - 35.57795113
+      - 31.758432168
+    gallery:
+      - media: IMG_1089.JPEG
+      - media: IMG_1083.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 3
+        unit: hours
+      distance:
+        value: 270
+        unit: km
+  - time: Day 10
+    locationName: Jerash
+    description: "Jerash is a major archaeological site in northern Jordan, renowned for its remarkably well-preserved Roman ruins, often called the \"Pompeii of the East,\". "
+    activities: |-
+      You can visit Jerash as a day trip from the Dead Sea or from Amman. 
+      If you have a Jordan Pass, the entrance is included. Start your trip in [the visitors center.](https://maps.app.goo.gl/kRx8HytBV8VugJAz6)
+    location:
+      - 35.9010013
+      - 32.281235
+    gallery:
+      - media: IMG_1098.JPEG
+      - media: IMG_1104.JPEG
+      - media: IMG_1105.JPEG
+      - media: IMG_1106.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 1.5
+        unit: hours
+      distance:
+        value: 80
+        unit: km
+  - time: Day 11
+    locationName: Amman
+    description: Jordan's bustling capital, a vibrant metropolis built on rolling hills, with Roman ruins like the Citadel alongside contemporary shops, art galleries, and diverse neighborhoods.
+    activities: |-
+      The capital of Jordan, Amman, is really worth visiting. You can make a big city walk (we did the one from the Lonely Planet), do a cooking class, eat in delicious restaurants (like Shams El Balad) 
+
+      From here you deliver you back to the rental company and take a taxi to the airport.
+    location:
+      - 35.9239625
+      - 31.9515694
+    gallery:
+      - media: IMG_1140.JPEG
+      - media: IMG_1128.JPEG
+      - media: IMG_1123.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 1
+        unit: hours
+      distance:
+        value: 50
+        unit: km

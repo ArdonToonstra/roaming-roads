@@ -1,0 +1,86 @@
+title: Maleisië and Signapore
+status: draft
+coverImage: header-7.jpg
+description: A trip to Singapore titled 'Maleisië + Signapore', from 2018-01-09 to 2018-01-26.
+period: January 2018
+budget:
+  amount: 0
+  currency: EUR
+  perPerson: true
+added: "2025-10-26"
+countries:
+  - malaysia
+  - signapore
+itinerary:
+  - time: Day 1
+    locationName: Brussels
+    location:
+      - 4.351697
+      - 50.8465573
+    blockType: fullDay
+  - time: Day 2
+    locationName: Singapore
+    location:
+      - 103.8519072
+      - 1.2899175
+    blockType: fullDay
+  - time: Day 3
+    locationName: Malacca City
+    location:
+      - 102.2486651
+      - 2.1942647
+    blockType: fullDay
+  - time: Day 4
+    locationName: Kuala Lumpur
+    location:
+      - 101.6942371
+      - 3.1516964
+    blockType: fullDay
+  - time: Day 5
+    locationName: Batu Caves
+    location:
+      - 101.6833464
+      - 3.2369148
+    blockType: fullDay
+  - time: Day 6
+    locationName: Pangkor Island
+    location:
+      - 100.545744001
+      - 4.237121882
+    blockType: fullDay
+  - time: Day 7
+    locationName: Cameron Highlands
+    location:
+      - 101.376414456
+      - 4.467229996
+    blockType: fullDay
+  - time: Day 8
+    locationName: George Town
+    location:
+      - 100.3287352
+      - 5.4141619
+    blockType: fullDay
+  - time: Day 9
+    locationName: Langkawi Island
+    location:
+      - 99.79298507
+      - 6.3682606
+    blockType: fullDay
+  - time: Day 10
+    locationName: Pulau Payar
+    location:
+      - 100.04007883
+      - 6.06255145
+    blockType: fullDay
+  - time: Day 11
+    locationName: Singapore
+    location:
+      - 103.8194992
+      - 1.357107
+    blockType: fullDay
+  - time: Day 12
+    locationName: Brussels
+    location:
+      - 4.351697
+      - 50.8465573
+    blockType: fullDay

@@ -3,10 +3,8 @@
 // relationships fully embedded (no ids to resolve) since content now lives
 // as plain JSON files instead of a database.
 
-export interface GeoPoint {
-  type: 'Point'
-  coordinates: [number, number] // [longitude, latitude]
-}
+// [longitude, latitude], as exported straight from the CMS's point field.
+export type GeoPoint = [number, number]
 
 export interface MediaItem {
   url: string
@@ -148,5 +146,6 @@ export interface Trip {
   featuredAccommodations?: Accommodation[]
   importantPreparations?: string // markdown
   itinerary: ItineraryBlock[]
-  createdAt?: string
+  /** Date the trip was added to the site (YYYY-MM-DD), used by the sort options. */
+  added: string
 }

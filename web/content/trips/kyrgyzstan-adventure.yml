@@ -1,0 +1,439 @@
+title: Kyrgyzstan adventure
+status: published
+category:
+  - hiking
+  - road_trip
+coverImage: header-3.JPEG
+highlightsMedia:
+  - media: IMG_2598.JPEG
+  - media: IMG_2515.JPEG
+  - media: IMG_2357-1.JPEG
+  - media: IMG_2326-1.JPEG
+  - media: IMG_2460.JPEG
+  - media: IMG_2193.JPEG
+  - media: IMG_3613-1.JPEG
+  - media: IMG_2556.JPEG
+  - media: IMG_2652.JPEG
+  - media: IMG_2705.JPEG
+description: A 10-day adventure in Kyrgyzstan with a 4x4 exploring stunning landscapes, wild campspots and cultural experiences.
+period: June 2025
+budget:
+  amount: 2000
+  currency: EUR
+  perPerson: true
+activities: |-
+  - Roadtrip with 4x4 
+  - Hiking & multiday treks 
+  - Wild camping 
+  - Yurt stays
+importantPreparations: |-
+  - Buy your flights a couple of months before you planned to travel. We bought our tickets with Turkish Airlines from Brussel (with a layover in Istanbul) and payed €450/person. 
+  - Choose a car rental and make a reservation in advance. We had great a great experience with [CAB car rental](https://cab.kg/). They are reachable through whatsapp 24/7 and give you a long explanation about where you can/ can not go. 
+  - In case you want to go to Kel-Suu, buy your border permit in advance from [CBT Naryn](https://www.cbt-naryn.com/). You can send an email to [info@cbt-naryn.com](mailto:info@cbt-naryn.com) or whatsapp [(+996) 559 567 685](tel:+996559567685). They will arrange a permit for Kel-Suu (€20/person) or other permits if needed. 
+  - Make a hotel/guesthouse reservation for you first night, so you can arrive in Bishkek without worries! 
+  - It is obligated to carry a copy of your passport. Make a copy at home and bring it on your journey. 
+  - Choose a translation app like Google Translate and download Dutch, English, Russian and Kyrgyz). 
+  - Download offline driving and hiking maps of all the regions you like to visit (Google Maps, MapsMe, WikiLoc,..).
+added: "2025-10-12"
+countries:
+  - kyrgyzstan
+featuredAccommodations:
+  - jaichy-agro-yurt-camp
+  - wild-camp-spot-at-kel-tor
+itinerary:
+  - locationName: Bishkek
+    description: Practical preparation day.
+    activities: |-
+      Arrive in Bishkek airport and take a direct taxi to you car rental company. Should cost around €10/1000 soms. Please rent the best available 4x4. You will need it! 
+
+      After you are settled in the car, go for all the groceries you need along your trip: 
+
+      - Pick up you border permit at SilkRoad Guesthouse (if you need one for your trip). Order one week in advance through a travel agency.
+      - Buy campinggas at the Silkroad Guesthouse or the Red Fox campingshop (€10-15)
+      - Do groceries in a large hypermarket and get out of Bishkek! You will not find a lot of grocery shop on your trip (except for Naryn).
+    connectionType: route
+    location:
+      - 74.6066926
+      - 42.8777895
+    blockType: waypoint
+  - locationName: "Burana Tower "
+    description: Stopover to the first destination.
+    activities: Go to the historical Burana Tower with petroglyphs on your way to the first destination. It is a nice and cultural stopover 1,5 driving from Bishkek.
+    connectionType: route
+    location:
+      - 75.250102067
+      - 42.746340132
+    gallery:
+      - media: IMG_2078.JPEG
+      - media: IMG_2088.JPEG
+      - media: IMG_2090.JPEG
+      - media: IMG_3153.JPEG
+    blockType: waypoint
+  - time: 1 day - 1 night
+    locationName: Chong-Kemin National Park
+    description: "Lush alpine meadows and crystal-clear rivers. Relaxed and hiddem gem, a perfect first stop. "
+    activities: |-
+      Arrive at the accomodation and enjoy the view, the food and the lovely family. 
+
+      There are some beautiful hikes you can do, starting from the guesthouse.
+    accommodation: kok-archa-guesthouse
+    location:
+      - 76.055990021
+      - 42.672238632
+    gallery:
+      - media: WhatsApp Image 2025-10-12 at 16.44.28.jpeg
+      - media: WhatsApp Image 2025-10-12 at 16.44.28 (1).jpeg
+      - media: WhatsApp Image 2025-10-12 at 16.44.28 (2).jpeg
+      - media: IMG_2097.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 150
+        unit: minutes
+      distance:
+        value: 146
+        unit: km
+  - time: 1 day - 1 night
+    locationName: Konorchek Canyon
+    description: Natural gorge with dramatic red/white cliffs and geological formations.
+    activities: Drive from you last destination to [the parking lot](https://www.google.be/maps/place/Konorchekskiye+Kan'ony+Parking/@42.6002587,75.7821576,13.61z/data=!4m6!3m5!1s0x389b730076a1cba5:0xfc30d40ca55a2c90!8m2!3d42.5990042!4d75.8136524!16s%2Fg%2F11yccljcbg?entry=tts&g_ep=EgoyMDI1MDcxNi4wIPu8ASoASAFQAw%3D%3D&skid=9f07f372-c52c-4cce-91f1-51748171a044). There is a information board with a map suggesting different hikes. The 10.6km to the panorama and back is beautiful. Enjoy!
+    accommodation: wild-camp-spot-at-konorchek-canyon
+    location:
+      - 75.781168583
+      - 42.593004919
+    gallery:
+      - media: IMG_2168.JPEG
+      - media: IMG_2152.JPEG
+      - media: IMG_2197.JPEG
+      - media: IMG_3227.JPEG
+      - media: IMG_2178.JPEG
+      - media: IMG_2153.JPEG
+      - media: IMG_2219.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 1
+        unit: hours
+      distance:
+        value: 40
+        unit: km
+      transportationNotes: "It is 1 hour driving from de last destination to this one. "
+  - locationName: Grigor’yevka Gorge
+    description: "Green detour on the northern road of Issyk-kul. "
+    activities: Leave the main road at Issyk-kul en drive to Grigor’yevka Gorge. Pay at the tol station (€3/300 soms per person + car) at [this destination](https://maps.app.goo.gl/23PzzSdGBCeujt52A). Drive the beautiful green valley (+- 45 minutes detour) and arrive back on the main road of Issyk-kul. You can stop at different locations for a picknick or hike.
+    connectionType: route
+    location:
+      - 77.373919915
+      - 42.84002446
+    gallery:
+      - media: IMG_3335.JPEG
+      - media: IMG_2230.JPEG
+      - media: IMG_2227.JPEG
+      - media: IMG_2228.JPEG
+      - media: IMG_2235-2.JPEG
+    blockType: waypoint
+  - locationName: Karakol Yurt Village
+    description: Family homestay at the start of the Ala Kul trekking.
+    activities: Sleep at the Karakol Yurt Village before you start your trek. This is a very small family homestay with 2 yurt camps in the garden. They are very welcoming and relaxed. They don't speek English so hold you Google Translate close!
+    connectionType: route
+    location:
+      - 78.419798204
+      - 42.433268882
+    gallery:
+      - media: IMG_2241.JPEG
+      - media: IMG_2239.JPEG
+      - media: IMG_2252.JPEG
+    blockType: waypoint
+  - time: 3/4 days
+    locationName: Karakol Nature Park & Ala-kul Lake
+    description: Multi-day trek leading to the stunning turquoise Ala-Kul Lake at 3,560 meters.
+    activities: |-
+      From the Karakol Yurt Village you can start the 3 day Ala-Kul trekking. 
+
+      Starting the trek:
+
+      - There are options to shorten the walking trip on the first day, using a military van. This is very expensive (around €90/9000 soms per persons) and only cut 14km of the trail. 
+      - We drove as far as possible and started the hike from there. There is a lot of confusing information about where you can park: at the first, second or last bridge. Just don't go any further than [this point](https://maps.app.goo.gl/LbU3HjtyuTfRiFSS7). There will be some other cars on the side of the road where you can put yours. 
+
+      Finishing the trek:
+
+      - If you want to do the full tour (to Altyn Arashan), you will also need to arrange transport back to you car. You first have to walk all the way from Altyn Arashan back to the main road and arrange a taxi from there. This will cost you an extra day of hiking.
+      - To make it more easy, we did the trip to Ala-Kul and back to the same starting point. We did this in two days. 
+
+      Sleeping on the trail: 
+
+      On the trail you can choose to sleep in de Yurt camps or to do wild camping. For wild camping check the marked options on MapsMe. It is not easy to camp on any other spot since the area is not flat and very rocky. 
+
+      Navigation: 
+
+      The walking trails itself, is easy to find on all walking apps (we use Wikiloc).
+    accommodation: wild-camp-spot-on-ala-kul-trail
+    location:
+      - 78.535838838
+      - 42.317329097
+    gallery:
+      - media: IMG_2315-1.JPEG
+      - media: IMG_2270.JPEG
+      - media: IMG_2331-1.JPEG
+      - media: IMG_2278-1.JPEG
+      - media: IMG_2293-1.JPEG
+      - media: IMG_2311-1.JPEG
+      - media: IMG_2264.JPEG
+      - media: IMG_2304.JPEG
+      - media: IMG_3365.JPEG
+      - media: IMG_3457.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+  - time: 1 day - 1 night
+    locationName: Chon-Kyzyl-Suu gorge
+    description: Various gorge with red rocks, cristal clear rivers and high altitude passes.
+    activities: |-
+      - Drive your 4x4 to [the red mountains](https://maps.app.goo.gl/BLYwyvUVAQw92vqu7) and walk around/picknick 
+      - Get back in the car and drive even further in the canyon to Chon-Kyzyl-Suu gorge. Make a walk from the car. 
+      - Sleep at the most friendly guest house.
+    accommodation: svetlaya-polyana-guest-house
+    location:
+      - 78.197528627
+      - 42.197113347
+    gallery:
+      - media: IMG_2357.JPEG
+      - media: IMG_2368.JPEG
+      - media: IMG_3538.JPEG
+      - media: IMG_2335.JPEG
+      - media: IMG_2345.JPEG
+    blockType: fullDay
+    transportation:
+      travelTime:
+        value: 1
+        unit: hours
+      distance:
+        value: 45
+        unit: km
+  - locationName: Issyk Kul Lake
+    description: "Swimming & chilling around Issyk Kul "
+    activities: |-
+      - Park your car at one of the beaches around Issyl Kul Lake 
+      - Swim & chill 
+      - There are also a lot of Yurt Camps around the lake
+    connectionType: route
+    location:
+      - 77.516772486
+      - 42.160263571
+    gallery:
+      - media: IMG_3550.JPEG
+    blockType: waypoint
+  - time: 1 dag - 1 night
+    locationName: Jaichy Agro Yurt Camp
+    description: "Yurt Camp stay with a lot of possible activities. "
+    activities: |-
+      You can stay in this beautiful Yurt camp close to Issyk-Kul lake. The camp is in the middle of a beautiful valley. The facilities are nice and the owners very friendly. 
+
+      This camp is also used for tours and offer a lot of activities as biking, hiking, horse back riding,.. they will arrange anything you like to do! 
+
+      We rented bikes for a couple of hours and did a cool trip through the valley (€10/day)
+    accommodation: jaichy-agro-yurt-camp
+    location:
+      - 76.784769569
+      - 42.096301849
+    gallery:
+      - media: IMG_2392.JPEG
+      - media: IMG_2388.JPEG
+      - media: IMG_2417.JPEG
+      - media: IMG_2391.JPEG
+      - media: IMG_2393.JPEG
+      - media: IMG_2405.JPEG
+      - media: IMG_2386.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 1
+        unit: hours
+  - time: 1 day - 1 night
+    locationName: Kol-Ukok & Kel’tor
+    description: Secret wild camp spot at Kel'Tor lake!
+    activities: |-
+      Follow the regular navigation an drive all the way up the mountain. You will need a good 4x4 and even then it will take a long time. Once arrived at Kel'Tor lake you have to leave the car at the Yurts. Take your camping stuff and walk on the right side of the lake. There are a few different and quiet spots. You can arrange a diner at one of the Yurts or cook yourself. 
+
+      If you have time left, walk to the upper lake Kol-Ukok. This is so beautiful and you will not find another soul here! It is 12,5 km up and down.
+    accommodation: wild-camp-spot-at-kel-tor
+    location:
+      - 75.917530842
+      - 42.088895695
+    gallery:
+      - media: IMG_2433.JPEG
+      - media: IMG_2437.JPEG
+      - media: IMG_2443.JPEG
+      - media: IMG_2454.JPEG
+      - media: IMG_2474.JPEG
+      - media: IMG_2505.JPEG
+      - media: IMG_3613.JPEG
+      - media: IMG_3595.JPEG
+      - media: IMG_3575.JPEG
+    blockType: fullDay
+    transportation:
+      travelTime:
+        value: 2
+        unit: hours
+  - time: 1 day - 1 night
+    locationName: Son-Kul Lake
+    description: Stay at the high-altitude, alpine freshwater lake with scenic mountain setting and traditional nomadic culture.
+    activities: |-
+      - Choose one the many yurt camps around the lake (there are with bathrooms, toilets and without) 
+      - There are plenty of wild camp spots around the lake. 
+      - Make a hike or ask your camp to organize a horsetrip. Enjoy the food, the stove in your tent and the most beautiful sunset!
+    accommodation: yurt-camp-sary-bulun
+    location:
+      - 75.126417217
+      - 41.759815001
+    gallery:
+      - media: IMG_2511.JPEG
+      - media: IMG_2514.JPEG
+      - media: IMG_2510.JPEG
+      - media: IMG_2521.JPEG
+      - media: IMG_3621.JPEG
+      - media: IMG_3751.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 4
+        unit: hours
+  - locationName: Teskey-Torpok
+    description: "Beautiful pass from Son Kol to the south of Kyrgyzstan "
+    activities: |-
+      - Take a different road from the lake in the direction of the south of Kyrgyzstan 
+      - Drive the many sharp turns and stop at different places for the wide views.
+    connectionType: route
+    location:
+      - 75.429270811
+      - 41.731908367
+    gallery:
+      - media: IMG_2528.JPEG
+      - media: IMG_2537.JPEG
+      - media: IMG_3762.JPEG
+    blockType: waypoint
+  - time: 1 dag - 1 night
+    locationName: Kel-Suu
+    description: "Gorgeous lake close to the border with China. "
+    activities: |-
+      **Important!!** If you are travelling in June, please ask around and make sure there lake is already filled with water. Before June there is no water in the lake (we saw videos). It is a long drive so make sure it is worth if! 
+
+      On your way to the lake, make a stop in Naryn town. This will be the last place to buy groceries and take money from the ATM. 
+      After this stop, continu driving to the south and look for a quiet wild camping spot. You will need a whole driving day for this trip. We camped at a spot we found on iOverlander. The valley in front of the lake is busy with Yurt Camps. So if you want more luxery, search for a camp there. 
+
+      The next morning, drive to the starting point of the hike. You can drive through all the Yurt Camp until the road stops and you will see a small parking lot. 
+
+      The hike is an easy 9 km return. At the lake there is a possibility to rent a boat. From the hiking stop, you only see a glimpse of the lake. 
+
+      Be aware: Despite the isolated location, this lake is more popular than others. Tour buses and groups with horses will also go to the lake.
+    accommodation: wild-camp-spot-around-kel-suu-lake
+    location:
+      - 76.389780485
+      - 40.701286695
+    gallery:
+      - media: IMG_2549.JPEG
+      - media: IMG_2560.JPEG
+      - media: IMG_2598-1.JPEG
+      - media: IMG_2568-1.JPEG
+      - media: IMG_2575.JPEG
+      - media: IMG_2587.JPEG
+      - media: IMG_2607.JPEG
+      - media: IMG_2610.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 6
+        unit: hours
+  - time: 1 day - 1 night
+    locationName: Kol-Tor
+    description: "Off the beaten track hike and camping. "
+    activities: |-
+      Drive from Kel-Suu back to Naryn and sleep somewhere on the road or in Naryn. The next day, drive to this (almost) secret lake. 
+
+      The road is not mentioned on Google Maps and only locals seems to know this place. Only try to find this if you have a 4x4. 
+
+      Directions: 
+
+      - Take the turn at [this point](https://maps.app.goo.gl/WZcX1T1nCxzfpJG6A?g_st=com.google.maps.preview.copy) in Bosogo and keep driving. 
+      - At some point you will see a small sign on your right side, pointing to your left. Follow the trail all the way to the river and keep on following and following. 
+      - After a while you will see a Yurt Camp and keep on driving untill you see a big P sign (see picture, you cannot miss it!). Here you can park you car and start the trail. 
+      - It is only 4,5km return. Take you picknick and swimming stuff and enjoy your time! 
+      - It is also possible to camp at the lake or at any other place along the driving trail. We camped somewhere [here](https://maps.app.goo.gl/iHe5EjtiqMUQJf269) next to the river. 
+
+      Find the information, directions and hiking map on [WikiLoc](https://nl.wikiloc.com/routes-wandelen/kol-tor-219013064?utm_medium=app&utm_campaign=share&utm_source=14331771).
+    location:
+      - 76.625740858
+      - 41.363290053
+    gallery:
+      - media: IMG_2624.JPEG
+      - media: IMG_2626.JPEG
+      - media: IMG_2632.JPEG
+      - media: IMG_2635.JPEG
+      - media: IMG_2653.JPEG
+      - media: IMG_2663.JPEG
+      - media: IMG_2679.JPEG
+      - media: IMG_2680.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 1
+        unit: hours
+  - time: 1 day - 1 night
+    locationName: Kegeti gorge
+    description: "Last stop on this beautiful journey. "
+    activities: |-
+      A climb to a very blue lake close to Bishkek. You can stay in Tazabak Guesthouse. Great price and very good food and friendly owners. 
+
+      From here it is 20 min driving further in the valley until you reach the starting point of the hike. The trail is 11km return and 825m climbing. 
+
+      We started early and were alone at the lake. Other tourist are coming from Bishkek and will arrive later.
+    accommodation: tazabek-guesthouse
+    location:
+      - 75.15080568
+      - 42.527543103
+    gallery:
+      - media: IMG_2697.JPEG
+      - media: IMG_2704.JPEG
+      - media: IMG_2707.JPEG
+      - media: IMG_2718.JPEG
+      - media: IMG_2726.JPEG
+      - media: IMG_2730.JPEG
+      - media: IMG_3990.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+      travelTime:
+        value: 6
+        unit: hours
+      distance:
+        value: 350
+        unit: km
+  - time: 1 day - 1 night
+    locationName: Bishkek
+    description: "One busy night in the capital! "
+    activities: |-
+      Stay in this cheap and comfortable hotel in the center of Bishkek. 
+
+      From here you can visit the city, walk around, eat and shop.
+    accommodation: inter-hotel-bishkek
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: flight
+      travelTime:
+        value: 2
+        unit: hours

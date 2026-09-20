@@ -4,7 +4,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      # GitHub Actions rsyncs the built site into ./site/current on every deploy.
+      # deploy.sh rsyncs the built site into ./site/current on every deploy.
       - ./site/current:/srv/roamingroads:ro
     # Not published to the host — only cloudflared talks to this container,
     # over the internal compose network. The public internet never sees an

@@ -1,0 +1,7 @@
+name: France
+countryCode: FRA
+capital: Paris
+currency: EUR
+currencyName: Euro
+officialLanguages:
+  - language: France

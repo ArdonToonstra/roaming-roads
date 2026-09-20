@@ -1,0 +1,61 @@
+title: Thailand
+status: draft
+coverImage: header-4.jpg
+description: "Een campingtrip naar Slovenië wordt wegens slecht weer vervangen door Thailand! "
+period: May – June 2023
+budget:
+  amount: 0
+  currency: EUR
+  perPerson: true
+added: "2025-10-26"
+countries:
+  - thailand
+itinerary:
+  - time: Day 1
+    locationName: Nai Yang beach
+    location:
+      - 98.298571816
+      - 8.093158022
+    blockType: fullDay
+  - time: Day 2
+    locationName: Phang Nga Bay
+    location:
+      - 98.593114495
+      - 8.376840816
+    blockType: fullDay
+  - time: Day 3
+    locationName: Ko Tao
+    location:
+      - 99.827803509
+      - 10.094943075
+    blockType: fullDay
+  - time: Day 4
+    locationName: Ko Pha Ngan
+    location:
+      - 100.028792182
+      - 9.696925264
+    blockType: fullDay
+  - time: Day 5
+    locationName: Surat Thani Province
+    location:
+      - 98.523889256
+      - 8.910669625
+    blockType: fullDay
+  - time: Day 6
+    locationName: Khao Sok national park
+    location:
+      - 98.617342775
+      - 9.065140126
+    blockType: fullDay
+  - time: Day 7
+    locationName: Nai Yang Beach
+    location:
+      - 98.298595549
+      - 8.093174958
+    blockType: fullDay
+  - time: Day 8
+    locationName: Airport
+    location:
+      - 98.305899383
+      - 8.105616454
+    blockType: fullDay

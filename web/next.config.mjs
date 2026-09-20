@@ -1,13 +1,10 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+export default {
+  // Plain HTML/CSS/JS in out/ — no Node server to run on the Pi.
   output: 'export',
-  sassOptions: {
-    silenceDeprecations: ['legacy-js-api', 'import'],
-    quietDeps: true,
-  },
-  images: {
-    unoptimized: true,
-  },
+  // Static export has no image optimizer; scripts/fetch-media.ts already
+  // resized everything into public/media.
+  images: { unoptimized: true },
+  // Emit /trips/foo/index.html so any web server resolves it without rewrites.
+  trailingSlash: true,
 }
-
-export default nextConfig

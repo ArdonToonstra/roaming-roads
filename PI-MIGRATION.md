@@ -3,10 +3,11 @@
 Self-hosting the Roaming Roads website on a home Raspberry Pi using Docker.
 
 The site is now a fully static export (Payload CMS, Postgres, and Vercel
-Blob have all been removed — content lives as JSON + images in `web/content/`
-and `web/public/images/`, edited via git). That makes this simpler than the
-original plan: there's no database to run or seed, and no Node server to
-keep alive on the Pi — just static files behind Caddy.
+Blob have all been removed — content lives as YAML in `web/content/`, edited
+via git; media lives in `web/public/media/`, kept out of git and rsynced as
+part of each deploy — see `web/content/README.md`). That makes this simpler
+than the original plan: there's no database to run or seed, and no Node
+server to keep alive on the Pi — just static files behind Caddy.
 
 ---
 
@@ -91,8 +92,8 @@ Add it as a service in `~/umami/docker-compose.yml`:
 
 ### Step 4 — Set the analytics env vars
 
-Once the site is deployed (Phase 2), set these as GitHub repository secrets
-so the build picks them up (see `deploy/pi/README.md`):
+Once the site is deployed (Phase 2), add these to `web/.env` so
+`deploy/pi/deploy.sh` picks them up on the next build:
 
 ```
 NEXT_PUBLIC_UMAMI_URL=https://umami.roamingroads.nl
@@ -106,29 +107,32 @@ Dashboard at `https://umami.roamingroads.nl`.
 ## Phase 2: Static Site on the Pi
 
 Everything needed for this lives in `deploy/pi/` (Caddy + Cloudflare Tunnel
-compose setup and full instructions) and `.github/workflows/deploy.yml` (the
-build-and-deploy pipeline). Summary:
+compose setup, plus `deploy.sh`). Deploys are built and pushed from home,
+not CI. Summary:
 
-1. GitHub Actions builds the static export (`pnpm build`, `output: 'export'`
-   in `next.config.mjs`) on every push to `main` — no ARM cross-compilation
-   needed, it's plain HTML/CSS/JS/images.
-2. It ships `web/out/` to the Pi over SSH, tunneled through the same
-   Cloudflare Tunnel used for Umami above, via `rsync`.
+1. `deploy/pi/deploy.sh` runs `pnpm build` (static export, `output: 'export'`
+   in `next.config.mjs`) locally — no ARM cross-compilation needed, it's
+   plain HTML/CSS/JS/images.
+2. It `rsync`s `web/out/` straight to the Pi over the local network (SSH,
+   your own login — no Cloudflare Tunnel needed for this, that's only for
+   public traffic).
 3. On the Pi, Caddy serves those files directly; `cloudflared` routes
    `roamingroads.nl` / `www.roamingroads.nl` to it. No Node process, no
    database, nothing to keep running besides Caddy and cloudflared.
 
-See `deploy/pi/README.md` for the one-time setup (Cloudflare Tunnel
-hostnames, the restricted deploy SSH key, GitHub secrets) and
-`deploy/pi/docker-compose.yml` / `deploy/pi/Caddyfile` for the Pi-side
-config.
+GitHub Actions (`.github/workflows/test.yml`) only runs lint/typecheck/tests
+on push — it never builds or deploys.
+
+See `deploy/pi/README.md` for the one-time setup (SSH access, Cloudflare
+Tunnel hostname) and `deploy/pi/docker-compose.yml` / `deploy/pi/Caddyfile`
+for the Pi-side config.
 
 ### Architecture
 
 ```
-                  GitHub Actions (on push to main)
+                   Home machine (on demand)
                     → pnpm build (static export)
-                    → rsync over SSH via Cloudflare Tunnel
+                    → rsync over SSH, local network
                             │
                             ▼
                   ┌───────────────────────────┐

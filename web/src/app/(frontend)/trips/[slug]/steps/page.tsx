@@ -1,28 +1,16 @@
 import { data } from '@/lib/data';
-import { Trip } from '@/types/content';
 import { notFound } from 'next/navigation';
 import StepsLayout from '@/components/StepsLayout';
 
 interface StepsPageProps { params: Promise<{ slug: string }> }
 
-export function generateStaticParams() {
-  return data.getAllTripSlugs().map((slug) => ({ slug }));
-}
-
-async function getTrip(slugOrId: string): Promise<Trip | null> {
-  try {
-    if (slugOrId.match(/\.(png|jpg|jpeg|gif|svg|css|js|ico|woff|woff2|ttf|eot)$/i)) return null;
-    const response = await data.getTrip(slugOrId);
-    return response;
-  } catch (e) {
-    console.error('[steps] failed to fetch trip', e);
-    return null;
-  }
+export async function generateStaticParams() {
+  return (await data.getTripSlugs()).map((slug) => ({ slug }));
 }
 
 export default async function StepsPage({ params }: StepsPageProps) {
   const { slug } = await params;
-  const trip = await getTrip(slug);
+  const trip = await data.getTrip(slug);
   if (!trip) notFound();
 
   return <StepsLayout trip={trip} />;
