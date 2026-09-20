@@ -2,11 +2,19 @@
 	root * /srv/roamingroads
 	encode gzip zstd
 
-	try_files {path} {path}.html {path}/index.html /404.html
+	try_files {path} {path}.html {path}/index.html
 	file_server
 
 	header {
 		X-Content-Type-Options nosniff
 		Referrer-Policy strict-origin-when-cross-origin
+	}
+
+	# Serve the exported 404 page with a real 404 status, not a soft 200.
+	handle_errors {
+		rewrite * /404.html
+		file_server {
+			status {err.status_code}
+		}
 	}
 }

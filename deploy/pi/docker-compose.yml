@@ -1,22 +1,14 @@
 services:
   web:
     image: caddy:2-alpine
+    container_name: roamingroads-web
     restart: unless-stopped
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      # deploy.sh rsyncs the built site into ./site/current on every deploy.
+      # deploy.sh ships the built site into ./site/current on every deploy.
       - ./site/current:/srv/roamingroads:ro
-    # Not published to the host — only cloudflared talks to this container,
-    # over the internal compose network. The public internet never sees an
-    # open port on the Pi.
-    expose:
-      - "80"
-
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    restart: unless-stopped
-    command: tunnel --no-autoupdate run
-    environment:
-      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
-    depends_on:
-      - web
+    # The Pi already runs a cloudflared for its other services; it reaches
+    # this over the docker bridge gateway at http://172.17.0.1:8081.
+    # That's the same pattern umami/homepage/wallos already use here.
+    ports:
+      - "8081:80"
