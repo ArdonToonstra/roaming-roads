@@ -1,9 +1,13 @@
 import { data } from '@/lib/data';
-import { Trip } from '@/types/payload';
+import { Trip } from '@/types/content';
 import { notFound } from 'next/navigation';
 import StepsLayout from '@/components/StepsLayout';
 
 interface StepsPageProps { params: Promise<{ slug: string }> }
+
+export function generateStaticParams() {
+  return data.getAllTripSlugs().map((slug) => ({ slug }));
+}
 
 async function getTrip(slugOrId: string): Promise<Trip | null> {
   try {

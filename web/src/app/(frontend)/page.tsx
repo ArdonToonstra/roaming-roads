@@ -1,6 +1,6 @@
 ﻿import Link from 'next/link';
 import { data } from '@/lib/data';
-import { Trip } from '@/types/payload';
+import { Trip } from '@/types/content';
 import { getImageUrl } from '@/lib/images';
 import HeroRotator from '@/components/HeroRotator';
 import FeaturedCarousel from '@/components/FeaturedCarousel';

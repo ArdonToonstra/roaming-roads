@@ -1,24 +1,13 @@
-import { withPayload } from '@payloadcms/next/withPayload'
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Your Next.js config here
+  output: 'export',
   sassOptions: {
     silenceDeprecations: ['legacy-js-api', 'import'],
     quietDeps: true,
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '*.public.blob.vercel-storage.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'localhost',
-      }
-    ],
+    unoptimized: true,
   },
 }
 
-export default withPayload(nextConfig, { devBundleServerPackages: false })
+export default nextConfig

@@ -2,14 +2,14 @@
 
 import { useEffect, useRef } from 'react';
 import { useMap } from 'react-leaflet';
-import type { CmsFullDayBlock, CmsWaypointBlock, CmsPointBlock } from '@/types/payload';
+import type { FullDayBlock, WaypointBlock, PointBlock } from '@/types/content';
 
 interface MapControllerProps {
   activeIndex: number | null | undefined;
   markers: Array<{
     idx: number;
     coord: { lat: number; lng: number };
-    block: CmsFullDayBlock | CmsWaypointBlock | CmsPointBlock;
+    block: FullDayBlock | WaypointBlock | PointBlock;
   }>;
   interactive?: boolean; // when false: lock interactions and fit all markers; when true: enable interactions
 }

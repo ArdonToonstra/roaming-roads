@@ -1,6 +1,6 @@
 "use client";
 import dynamic from 'next/dynamic';
-import type { Trip } from '@/types/payload';
+import type { Trip } from '@/types/content';
 
 const TripMap = dynamic(() => import('@/components/TripMap'), { ssr: false });
 

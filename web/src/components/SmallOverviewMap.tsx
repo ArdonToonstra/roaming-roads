@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useMemo, useRef, useEffect, useState } from 'react';
-import type { Trip, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
+import type { Trip, FullDayBlock, WaypointBlock } from '@/types/content';
 import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
 import { getCombinedCountryBounds, getCountryBounds } from '@/lib/countryBounds';
@@ -35,7 +35,7 @@ function toNumber(v: unknown): number | null {
   return null;
 }
 
-function extractBlockCoords(block: CmsFullDayBlock | CmsWaypointBlock) {
+function extractBlockCoords(block: FullDayBlock | WaypointBlock) {
   const b: any = block;
   const candidates: any[] = [];
   if (b.location?.coordinates) candidates.push(b.location.coordinates);

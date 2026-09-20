@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useMemo, useRef } from 'react';
-import type { Trip, CmsFullDayBlock, CmsWaypointBlock, CmsPointBlock } from '@/types/payload';
+import type { Trip, FullDayBlock, WaypointBlock, PointBlock } from '@/types/content';
 import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
 import MapController from './MapController';
@@ -35,7 +35,7 @@ function toNumber(v: unknown): number | null {
   return null;
 }
 
-function extractBlockCoords(block: CmsFullDayBlock | CmsWaypointBlock | CmsPointBlock) {
+function extractBlockCoords(block: FullDayBlock | WaypointBlock | PointBlock) {
   const b: any = block;
   // Candidate fields in descending priority
   const candidates: any[] = [];
@@ -107,7 +107,7 @@ export default function TripDetailMap({ trip, heightClass, activeIndex, interact
 
   const markers = useMemo(() => {
     if (!trip.itinerary) return [];
-    const m: { coord: { lat: number; lng: number }; block: CmsFullDayBlock | CmsWaypointBlock | CmsPointBlock; idx: number }[] = [];
+    const m: { coord: { lat: number; lng: number }; block: FullDayBlock | WaypointBlock | PointBlock; idx: number }[] = [];
     trip.itinerary.forEach((block, idx) => {
       const coord = extractBlockCoords(block as unknown as any);
       if (coord) {

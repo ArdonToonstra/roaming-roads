@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import type { Trip } from '@/types/payload';
+import type { Trip } from '@/types/content';
 
 const SmallOverviewMap = dynamic(() => import('@/components/SmallOverviewMap'), { ssr: false });
 

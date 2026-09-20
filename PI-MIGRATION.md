@@ -1,6 +1,12 @@
 # Raspberry Pi Migration Plan
 
-Self-hosting the Roaming Roads website on a home Raspberry Pi using Docker, running side-by-side with Vercel during the transition.
+Self-hosting the Roaming Roads website on a home Raspberry Pi using Docker.
+
+The site is now a fully static export (Payload CMS, Postgres, and Vercel
+Blob have all been removed — content lives as JSON + images in `web/content/`
+and `web/public/images/`, edited via git). That makes this simpler than the
+original plan: there's no database to run or seed, and no Node server to
+keep alive on the Pi — just static files behind Caddy.
 
 ---
 
@@ -19,7 +25,7 @@ services:
     ports:
       - "3001:3000"
     environment:
-      DATABASE_URL: postgresql://umami:umami@umami-db:5432/umami
+      DATABASE_URL: postgresql://umami:<same password as below>@umami-db:5432/umami
       APP_SECRET: <generate with: openssl rand -hex 32>
     depends_on:
       umami-db:
@@ -31,7 +37,7 @@ services:
     environment:
       POSTGRES_DB: umami
       POSTGRES_USER: umami
-      POSTGRES_PASSWORD: umami
+      POSTGRES_PASSWORD: <generate with: openssl rand -hex 32>
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U umami"]
       interval: 5s
@@ -57,7 +63,9 @@ cd ~/umami && docker compose up -d
 
 ### Step 3 — Expose via Cloudflare Tunnel
 
-This makes Umami reachable from the internet without port forwarding.
+This makes Umami reachable from the internet without port forwarding. The
+same tunnel is reused for the site itself in Phase 2 below — you only need
+to set this up once.
 
 ```bash
 # Install cloudflared on Pi (ARM64)
@@ -66,16 +74,13 @@ chmod +x cloudflared && sudo mv cloudflared /usr/local/bin/
 
 # Login and create tunnel
 cloudflared tunnel login
-cloudflared tunnel create umami-tunnel
+cloudflared tunnel create roamingroads
 
-# Route your subdomain (must have roamingroads.nl in Cloudflare DNS)
-cloudflared tunnel route dns umami-tunnel umami.roamingroads.nl
-
-# Run as a systemd service
-sudo cloudflared service install
+# Route subdomains (roamingroads.nl must already be in Cloudflare DNS)
+cloudflared tunnel route dns roamingroads umami.roamingroads.nl
 ```
 
-Alternatively, add to your `~/umami/docker-compose.yml` as a service:
+Add it as a service in `~/umami/docker-compose.yml`:
 
 ```yaml
   cloudflared:
@@ -84,212 +89,57 @@ Alternatively, add to your `~/umami/docker-compose.yml` as a service:
     restart: unless-stopped
 ```
 
-### Step 4 — Activate on Vercel
+### Step 4 — Set the analytics env vars
 
-Set these in the **Vercel project environment variables**:
+Once the site is deployed (Phase 2), set these as GitHub repository secrets
+so the build picks them up (see `deploy/pi/README.md`):
 
 ```
 NEXT_PUBLIC_UMAMI_URL=https://umami.roamingroads.nl
 NEXT_PUBLIC_UMAMI_WEBSITE_ID=<website id from step 2>
 ```
 
-Redeploy → analytics start flowing immediately. Dashboard at `https://umami.roamingroads.nl`.
+Dashboard at `https://umami.roamingroads.nl`.
 
 ---
 
-## Phase 2: Full App Migration to Pi
+## Phase 2: Static Site on the Pi
 
-### Code changes required
+Everything needed for this lives in `deploy/pi/` (Caddy + Cloudflare Tunnel
+compose setup and full instructions) and `.github/workflows/deploy.yml` (the
+build-and-deploy pipeline). Summary:
 
-#### 1. `web/next.config.mjs` — Enable standalone output
+1. GitHub Actions builds the static export (`pnpm build`, `output: 'export'`
+   in `next.config.mjs`) on every push to `main` — no ARM cross-compilation
+   needed, it's plain HTML/CSS/JS/images.
+2. It ships `web/out/` to the Pi over SSH, tunneled through the same
+   Cloudflare Tunnel used for Umami above, via `rsync`.
+3. On the Pi, Caddy serves those files directly; `cloudflared` routes
+   `roamingroads.nl` / `www.roamingroads.nl` to it. No Node process, no
+   database, nothing to keep running besides Caddy and cloudflared.
 
-Add `output: 'standalone'` (required by the production Dockerfile — it's in a comment there but missing from config):
+See `deploy/pi/README.md` for the one-time setup (Cloudflare Tunnel
+hostnames, the restricted deploy SSH key, GitHub secrets) and
+`deploy/pi/docker-compose.yml` / `deploy/pi/Caddyfile` for the Pi-side
+config.
 
-```js
-const nextConfig = {
-  output: 'standalone',
-  // ...rest unchanged
-  images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: '*.public.blob.vercel-storage.com' },
-      { protocol: 'https', hostname: 'localhost' },
-      // Add Pi's hostname via env var (no code change needed per domain):
-      ...(process.env.NEXT_PUBLIC_SERVER_HOSTNAME
-        ? [{ protocol: 'https', hostname: process.env.NEXT_PUBLIC_SERVER_HOSTNAME }]
-        : []),
-    ],
-  },
-}
-```
-
-#### 2. `web/src/payload.config.ts` — Remove hardcoded URL + fix CORS
-
-Problems: `serverURL` is hardcoded to `www.roamingroads.nl` in production mode. CORS/CSRF only whitelist that domain. `payloadCloudPlugin` is Vercel-specific.
-
-```ts
-// Remove: payloadCloudPlugin() from plugins array
-
-// Change serverURL from:
-serverURL: process.env.NODE_ENV === 'production'
-  ? 'https://www.roamingroads.nl'
-  : process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
-
-// To:
-serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
-
-// Add PAYLOAD_ADDITIONAL_CORS to cors and csrf arrays:
-cors: [
-  'https://roamingroads.nl',
-  'https://www.roamingroads.nl',
-  process.env.PAYLOAD_ADDITIONAL_CORS || '',
-  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '',
-].filter(Boolean),
-```
-
-**Important:** After this change, add `NEXT_PUBLIC_SERVER_URL=https://www.roamingroads.nl` to Vercel's environment variables.
-
-#### 3. `web/docker-compose.prod.yml` — Production compose for Pi
-
-```yaml
-services:
-  postgres:
-    image: postgis/postgis:16-3.4
-    environment:
-      POSTGRES_DB: roamingroads
-      POSTGRES_USER: rruser
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U rruser -d roamingroads"]
-      interval: 5s
-      retries: 5
-    restart: unless-stopped
-
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    env_file:
-      - .env.pi
-    environment:
-      - DATABASE_URI=postgresql://rruser:${DB_PASSWORD}@postgres:5432/roamingroads
-      - NODE_ENV=production
-    entrypoint: ["./docker-entrypoint-prod.sh"]
-    depends_on:
-      postgres:
-        condition: service_healthy
-    restart: unless-stopped
-
-volumes:
-  postgres_data:
-```
-
-#### 4. `web/scripts/docker-entrypoint-prod.sh`
-
-```sh
-#!/bin/sh
-set -e
-echo "[entrypoint] Running Payload migrations..."
-node node_modules/.bin/payload migrate
-echo "[entrypoint] Starting server..."
-exec node server.js
-```
-
-```bash
-chmod +x web/scripts/docker-entrypoint-prod.sh
-```
-
-#### 5. `web/.env.pi.template` → copy to `web/.env.pi` on Pi
-
-```env
-# === Roaming Roads — Pi Production ===
-
-NEXT_PUBLIC_SERVER_URL=https://www.roamingroads.nl
-NEXT_PUBLIC_SERVER_HOSTNAME=www.roamingroads.nl
-
-PAYLOAD_SECRET=<generate: openssl rand -hex 32>
-NODE_ENV=production
-
-# DB password (match docker-compose.prod.yml DB_PASSWORD)
-DB_PASSWORD=<strong random password>
-
-# Media: keep Vercel Blob during transition (same token as Vercel)
-BLOB_READ_WRITE_TOKEN=<from Vercel dashboard → Storage → Blob>
-
-# CORS for Pi's URL during side-by-side testing
-PAYLOAD_ADDITIONAL_CORS=https://pi.roamingroads.nl
-
-# Analytics
-NEXT_PUBLIC_UMAMI_URL=https://umami.roamingroads.nl
-NEXT_PUBLIC_UMAMI_WEBSITE_ID=<from Umami dashboard>
-
-# Optional
-NEXT_PUBLIC_MAPTILER_KEY=
-```
-
----
-
-### Initial database seed (one-time)
-
-Reuse the existing `sync-production-db.ps1` script. It already dumps Neon → local Docker PostgreSQL. For the Pi:
-
-**Option A (easiest):** Run sync locally, then copy the dump to Pi and restore there.
-```bash
-# On your dev machine — produces production-sync.sql locally
-./sync-production-db.ps1
-
-# Copy dump to Pi
-scp production-sync.sanitized.sql pi@<pi-ip>:~/roaming-roads/
-
-# On Pi — restore into the prod postgres container
-docker compose -f docker-compose.prod.yml up -d postgres
-docker exec -i <postgres-container> psql -U rruser -d roamingroads < production-sync.sanitized.sql
-```
-
-**Option B:** Modify `sync-production-db.ps1` to accept a target host parameter and point it at the Pi's exposed postgres port.
-
----
-
-### Deployment sequence
-
-1. On your dev machine: `docker build -t roaming-roads ./web`
-2. Save & copy to Pi: `docker save roaming-roads | ssh pi@<pi-ip> docker load`
-   — or build directly on the Pi (slower but simpler)
-3. On Pi: copy `docker-compose.prod.yml` and create `.env.pi`
-4. Seed the database (see above)
-5. `docker compose -f docker-compose.prod.yml up -d`
-6. Test at `http://<pi-ip>:3000`
-
-### Going live
-
-When the Pi is stable:
-1. Update DNS A record for `www.roamingroads.nl` → Pi's public IP
-2. Set up Caddy or nginx reverse proxy on Pi for HTTPS (Let's Encrypt)
-3. Update Vercel env: `NEXT_PUBLIC_SERVER_URL=https://www.roamingroads.nl` (still needed for Vercel)
-4. Remove Vercel deployment when fully migrated
-
----
-
-## Side-by-side architecture
+### Architecture
 
 ```
-                    ┌─────────────────────────────────┐
-                    │         Vercel (live)            │
-                    │  www.roamingroads.nl             │
-                    │  → Neon PostgreSQL               │
-                    │  → Vercel Blob (media)           │
-                    └─────────────────────────────────┘
-
-                    ┌─────────────────────────────────┐
-                    │      Raspberry Pi (staging)      │
-                    │  pi.roamingroads.nl              │
-                    │  → Local PostgreSQL (seeded)     │
-                    │  → Vercel Blob (same token)      │
-                    │  → Umami analytics               │
-                    └─────────────────────────────────┘
+                  GitHub Actions (on push to main)
+                    → pnpm build (static export)
+                    → rsync over SSH via Cloudflare Tunnel
+                            │
+                            ▼
+                  ┌───────────────────────────┐
+                  │       Raspberry Pi         │
+                  │  Caddy — serves web/out/   │
+                  │  cloudflared — the tunnel  │
+                  │  Umami — analytics         │
+                  └───────────────────────────┘
+                            │
+                cloudflared tunnel (no open ports)
+                            │
+                            ▼
+              roamingroads.nl / www.roamingroads.nl
 ```
-
-Media stays on Vercel Blob throughout — zero migration needed for images.

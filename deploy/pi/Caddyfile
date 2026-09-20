@@ -1,0 +1,12 @@
+:80 {
+	root * /srv/roamingroads
+	encode gzip zstd
+
+	try_files {path} {path}.html {path}/index.html /404.html
+	file_server
+
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+	}
+}

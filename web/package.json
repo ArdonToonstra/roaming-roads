@@ -1,58 +1,42 @@
 {
-  "name": "roaming-roads-cms",
-  "version": "1.0.0",
-  "description": "A blank template to get started with Payload 3.0",
+  "name": "roaming-roads",
+  "version": "2.0.0",
+  "description": "Roaming Roads — static travel inspiration site",
   "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" SASS_SILENCE_DEPRECATIONS=true next build",
     "dev": "cross-env SASS_SILENCE_DEPRECATIONS=true NODE_OPTIONS=--no-deprecation next dev",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
-    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
-    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "eslint .",
-    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "migrate": "cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=production payload migrate --force || echo 'No migrations to apply'",
-    "migrate:ci": "echo 'yes' | cross-env NODE_OPTIONS=--no-deprecation NODE_ENV=production payload migrate --force || echo 'No migrations to apply'",
-    "vercel-build": "npm run migrate:ci && npm run build",
-    "seed:users": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed-users.ts",
+    "start": "npx serve out",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test",
-    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
+    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts --passWithNoTests"
   },
   "dependencies": {
-    "@payloadcms/db-postgres": "3.78.0",
-    "@payloadcms/next": "3.78.0",
-    "@payloadcms/payload-cloud": "3.78.0",
-    "@payloadcms/richtext-lexical": "3.78.0",
-    "@payloadcms/storage-vercel-blob": "^3.78.0",
-    "@payloadcms/ui": "3.78.0",
-    "@portabletext/react": "^6.0.0",
     "@tailwindcss/typography": "^0.5.19",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "d3-geo": "^3.0.1",
     "dotenv": "16.4.7",
     "i18n-iso-countries": "^7.14.0",
-    "js-yaml": "^4.1.1",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.563.0",
-    "next": "16.2.0-canary.71",
+    "next": "16.3.4",
     "next-themes": "^0.4.6",
-    "payload": "3.78.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-leaflet": "^5.0.0",
+    "react-markdown": "^9.0.1",
     "react-simple-maps": "^3.0.0",
     "sass": "^1.97.1",
-    "sharp": "0.34.5",
     "tailwind-merge": "^3.3.1",
     "topojson-client": "^3.1.0",
     "world-atlas": "^2.0.2"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "16.2.0-canary.71",
+    "@next/eslint-plugin-next": "16.3.4",
     "@playwright/test": "1.57.0",
     "@tailwindcss/postcss": "^4",
     "@types/d3-geo": "^3.1.0",
@@ -84,9 +68,7 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "sharp",
-      "esbuild",
-      "unrs-resolver"
+      "esbuild"
     ]
   },
   "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a"

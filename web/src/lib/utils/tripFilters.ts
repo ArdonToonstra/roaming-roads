@@ -1,48 +1,13 @@
-import type { RichTextContent, Trip, Country } from '@/types/payload';
+import type { Trip, Country } from '@/types/content';
 
-// Extract activities from rich text content
-export function extractActivitiesFromRichText(richText: RichTextContent | undefined): string[] {
-  if (!richText || typeof richText !== 'object') return [];
-
-  const activities: string[] = [];
-
-  function traverseNode(node: Record<string, unknown>): void {
-    if (typeof node !== 'object' || !node) return;
-
-    // Handle different node types based on Lexical format
-    if (node.type === 'paragraph' || node.type === 'listitem') {
-      if (node.children && Array.isArray(node.children)) {
-        let textContent = '';
-        node.children.forEach((child: Record<string, unknown>) => {
-          if (child.type === 'text' && typeof child.text === 'string') {
-            textContent += child.text;
-          }
-        });
-
-        if (textContent.trim()) {
-          activities.push(textContent.trim());
-        }
-      }
-    }
-
-    // Recursively traverse children
-    if (node.children && Array.isArray(node.children)) {
-      (node.children as Record<string, unknown>[]).forEach(traverseNode);
-    }
-
-    // Handle root level nodes
-    if (node.root && typeof node.root === 'object' && node.root !== null) {
-      const root = node.root as Record<string, unknown>;
-      if (root.children && Array.isArray(root.children)) {
-        (root.children as Record<string, unknown>[]).forEach(traverseNode);
-      }
-    }
-  }
-
-  // Start traversal
-  traverseNode(richText);
-
-  return activities.filter(activity => activity.length > 0);
+// Extract activities from a markdown activities string (one activity per line,
+// optionally prefixed with a list marker like "-", "*" or "1.")
+export function extractActivitiesFromRichText(text: string | undefined): string[] {
+  if (!text) return [];
+  return text
+    .split('\n')
+    .map(line => line.replace(/^[\s]*[-*]\s+/, '').replace(/^\d+\.\s+/, '').trim())
+    .filter(Boolean);
 }
 
 // Get unique continents from trips (through their countries)
@@ -140,7 +105,10 @@ export function formatCategory(category: string): string {
     'road_trip': 'Road Trip',
     'backpacking': 'Backpacking',
     'hiking': 'Hiking',
-    'base_camp': 'Base Camp'
+    'base_camp': 'Base Camp',
+    'diving': 'Diving',
+    'wintersport': 'Wintersport',
+    'culinary': 'Culinary'
   };
 
   return categoryMap[category] || category;
@@ -174,7 +142,7 @@ export function filterTrips(trips: Trip[], filters: TripFilters): Trip[] {
     // Category filter
     if (filters.category) {
       // Check if the trip has categories and if the selected filter is in its list
-      if (!trip.category || !Array.isArray(trip.category) || !trip.category.includes(filters.category as Trip['category'][number])) {
+      if (!trip.category || !Array.isArray(trip.category) || !trip.category.includes(filters.category as NonNullable<Trip['category']>[number])) {
         return false;
       }
     }
@@ -231,7 +199,7 @@ export function sortTrips(trips: Trip[], sortBy: SortOption): Trip[] {
           return dateB.getTime() - dateA.getTime();
         }
         // Fallback to creation date if periods can't be parsed
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
 
       case 'oldest':
         const dateC = parsePeriod(a.period);
@@ -240,7 +208,7 @@ export function sortTrips(trips: Trip[], sortBy: SortOption): Trip[] {
           return dateC.getTime() - dateD.getTime();
         }
         // Fallback to creation date if periods can't be parsed
-        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+        return new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime();
 
       case 'title':
         return a.title.localeCompare(b.title);

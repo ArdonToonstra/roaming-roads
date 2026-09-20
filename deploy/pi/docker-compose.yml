@@ -1,0 +1,22 @@
+services:
+  web:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      # GitHub Actions rsyncs the built site into ./site/current on every deploy.
+      - ./site/current:/srv/roamingroads:ro
+    # Not published to the host — only cloudflared talks to this container,
+    # over the internal compose network. The public internet never sees an
+    # open port on the Pi.
+    expose:
+      - "80"
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+    depends_on:
+      - web

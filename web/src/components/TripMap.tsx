@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useMemo, useRef } from 'react';
-import type { Trip } from '@/types/payload';
+import type { Trip } from '@/types/content';
 import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
 import Link from 'next/link';

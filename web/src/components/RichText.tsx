@@ -1,288 +1,46 @@
 import React from 'react';
-import { PortableText } from '@portabletext/react';
+import ReactMarkdown, { type Components } from 'react-markdown';
 
-// Types for Payload CMS rich text structure
-interface PayloadRichTextNode {
-  type?: string;
-  tag?: string;
-  children?: PayloadRichTextNode[];
-  text?: string;
-  format?: number;
-}
-
-interface PayloadRichTextData {
-  root?: {
-    children: PayloadRichTextNode[];
-  };
-}
-
-// Transform Payload CMS rich text to Portable Text format
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function transformToPortableText(data: PayloadRichTextData | PayloadRichTextNode[] | any): any[] {
-  if (!data) return [];
-
-  // Handle root wrapper
-  if (data.root && data.root.children) {
-    data = data.root.children;
-  }
-
-  if (!Array.isArray(data)) return [];
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const blocks: any[] = [];
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function processListItems(items: any[], listTag: string, level: number = 1) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    items.forEach((item: any) => {
-      if (item.type === 'listitem') {
-        // Process direct children that are not nested lists
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const textChildren: any[] = [];
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const nestedLists: any[] = [];
-        
-        item.children?.forEach((child: any) => {
-          if (child.type === 'list') {
-            nestedLists.push(child);
-          } else {
-            textChildren.push(child);
-          }
-        });
-
-        // Add the list item block with text content
-        if (textChildren.length > 0) {
-          blocks.push({
-            _type: 'block',
-            _key: Math.random().toString(36),
-            style: 'normal',
-            listItem: listTag === 'ul' ? 'bullet' : 'number',
-            level: level,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            children: textChildren.map((child: any) => transformChild(child))
-          });
-        }
-
-        // Process nested lists recursively
-        nestedLists.forEach((nestedList) => {
-          processListItems(nestedList.children || [], nestedList.tag, level + 1);
-        });
-      }
-    });
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data.forEach((block: any) => {
-    if (block.type === 'paragraph') {
-      blocks.push({
-        _type: 'block',
-        _key: Math.random().toString(36),
-        style: 'normal',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        children: block.children?.map((child: any) => transformChild(child)) || []
-      });
-    } else if (block.type === 'list') {
-      // Transform list items recursively to handle nested lists
-      processListItems(block.children || [], block.tag);
-    } else if (block.type?.startsWith('h')) {
-      blocks.push({
-        _type: 'block',
-        _key: Math.random().toString(36),
-        style: block.type,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        children: block.children?.map((child: any) => transformChild(child)) || []
-      });
-    }
-  });
-
-  return blocks;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function transformChild(child: any): any {
-  if (typeof child === 'string') {
-    return {
-      _type: 'span',
-      _key: Math.random().toString(36),
-      text: child,
-      marks: []
-    };
-  }
-
-  // Handle links
-  if (child.type === 'link') {
-    return {
-      ...child,
-      _type: 'payloadLink',
-      _key: Math.random().toString(36),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      children: child.children?.map((c: any) => transformChild(c)) || []
-    };
-  }
-
-  if (child.text !== undefined) {
-    const marks: string[] = [];
-    if (child.format) {
-      if (child.format & 1) marks.push('strong'); // bold
-      if (child.format & 2) marks.push('em'); // italic
-    }
-
-    return {
-      _type: 'span',
-      _key: Math.random().toString(36),
-      text: child.text,
-      marks
-    };
-  }
-
-  // Handle line breaks
-  if (child.type === 'linebreak') {
-    return {
-      _type: 'hardBreak',
-      _key: Math.random().toString(36)
-    };
-  }
-
-  return {
-    _type: 'span',
-    _key: Math.random().toString(36),
-    text: String(child),
-    marks: []
-  };
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ptComponents: any = {
-  block: {
-    // Render different heading levels and paragraphs
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    h1: ({ children }: any) => <h1 className="font-heading font-bold text-2xl my-2">{children}</h1>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    h2: ({ children }: any) => <h2 className="font-heading font-bold text-xl my-2">{children}</h2>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    h3: ({ children }: any) => <h3 className="font-heading font-bold text-lg my-2">{children}</h3>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    h4: ({ children }: any) => <h4 className="font-heading font-bold text-base my-2">{children}</h4>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    h5: ({ children }: any) => <h5 className="font-heading font-bold text-sm my-2">{children}</h5>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    h6: ({ children }: any) => <h6 className="font-heading font-bold text-xs my-2">{children}</h6>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    normal: ({ children }: any) => <p className="mb-2">{children}</p>,
-  },
-  list: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    bullet: ({ children }: any) => <ul className="list-disc pl-6 mb-2 space-y-1">{children}</ul>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    number: ({ children }: any) => <ol className="list-decimal pl-6 mb-2 space-y-1">{children}</ol>,
-  },
-  listItem: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    bullet: ({ children, value }: any) => {
-      const level = value?.level || 1;
-      const indentClass = level > 1 ? `ml-${(level - 1) * 6}` : '';
-      return <li className={`mb-1 ${indentClass}`}>{children}</li>;
-    },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    number: ({ children, value }: any) => {
-      const level = value?.level || 1;
-      const indentClass = level > 1 ? `ml-${(level - 1) * 6}` : '';
-      return <li className={`mb-1 ${indentClass}`}>{children}</li>;
-    },
-  },
-  marks: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    strong: ({ children }: any) => <strong>{children}</strong>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    em: ({ children }: any) => <em>{children}</em>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    code: ({ children }: any) => <code className="bg-gray-100 px-1 rounded text-sm">{children}</code>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    link: ({ value, children }: any) => <a href={value?.href} target="_blank" rel="noreferrer" className="underline text-blue-600 hover:text-blue-800">{children}</a>,
-  },
-  types: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    payloadLink: ({ value }: any) => {
-      const { fields } = value;
-      let href = "";
-
-      if (fields?.linkType === 'custom') {
-        href = fields.url;
-      } else if (fields?.linkType === 'internal' && fields.doc?.value) {
-        // Handle internal links - assuming default generic structure for now
-        // This might need adjustment based on collection type ('trips', 'pages' etc)
-        const slug = fields.doc.value.slug || fields.doc.value.id;
-        const relationTo = fields.doc.relationTo;
-
-        if (relationTo === 'trips') {
-          href = `/trips/${slug}`;
-        } else {
-          href = `/${slug}`;
-        }
-      } else {
-        // Fallback for older structure or direct mapping
-        href = value.url || value.href || "#";
-      }
-
-      const newTab = fields?.newTab || value.newTab;
-      const target = newTab ? "_blank" : undefined;
-      const rel = newTab ? "noreferrer" : undefined;
-
-      return (
-        <a
-          href={href}
-          target={target}
-          rel={rel}
-          className="underline text-[#2A9D8F] hover:text-[#F57D50] transition-colors"
-        >
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {value.children?.map((child: any) => {
-            if (child._type === 'span') {
-              const isBold = child.marks?.includes('strong');
-              const isItalic = child.marks?.includes('em');
-              const classes = [
-                isBold ? 'font-bold' : '',
-                isItalic ? 'italic' : ''
-              ].filter(Boolean).join(' ');
-
-              return (
-                <span key={child._key} className={classes}>
-                  {child.text}
-                </span>
-              );
-            }
-            return null;
-          })}
-        </a>
-      );
-    },
-    hardBreak: () => <br />
-  }
+// Content fields (activities, preparations, descriptions, visa info) are
+// authored as plain Markdown strings in the content/ JSON files.
+const markdownComponents: Components = {
+  h1: ({ children }) => <h1 className="font-heading font-bold text-2xl my-2">{children}</h1>,
+  h2: ({ children }) => <h2 className="font-heading font-bold text-xl my-2">{children}</h2>,
+  h3: ({ children }) => <h3 className="font-heading font-bold text-lg my-2">{children}</h3>,
+  h4: ({ children }) => <h4 className="font-heading font-bold text-base my-2">{children}</h4>,
+  h5: ({ children }) => <h5 className="font-heading font-bold text-sm my-2">{children}</h5>,
+  h6: ({ children }) => <h6 className="font-heading font-bold text-xs my-2">{children}</h6>,
+  p: ({ children }) => <p className="mb-2">{children}</p>,
+  ul: ({ children }) => <ul className="list-disc pl-6 mb-2 space-y-1">{children}</ul>,
+  ol: ({ children }) => <ol className="list-decimal pl-6 mb-2 space-y-1">{children}</ol>,
+  li: ({ children }) => <li className="mb-1">{children}</li>,
+  strong: ({ children }) => <strong>{children}</strong>,
+  em: ({ children }) => <em>{children}</em>,
+  code: ({ children }) => <code className="bg-gray-100 px-1 rounded text-sm">{children}</code>,
+  a: ({ href, children }) => (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="underline text-[#2A9D8F] hover:text-[#F57D50] transition-colors"
+    >
+      {children}
+    </a>
+  ),
 };
 
 export interface RichTextProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  content: any;
+  content?: string | null;
   className?: string;
   style?: React.CSSProperties;
 }
 
-/**
- * Reusable RichText component that handles Payload CMS rich text content
- * and renders it using PortableText with proper formatting.
- */
-export default function RichText({ content, className = "", style }: RichTextProps) {
+export default function RichText({ content, className = '', style }: RichTextProps) {
   if (!content) return null;
 
-  // Handle plain strings
-  if (typeof content === 'string') {
-    return <div className={className} style={style}>{content}</div>;
-  }
-
-  // Use PortableText for rich content
   return (
     <div className={className} style={style}>
-      <PortableText value={transformToPortableText(content)} components={ptComponents} />
+      <ReactMarkdown components={markdownComponents}>{content}</ReactMarkdown>
     </div>
   );
 }

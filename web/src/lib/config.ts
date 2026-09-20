@@ -1,17 +1,7 @@
 // Environment variables
 export const env = {
-  CMS_URL: process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3000',
-  CMS_SECRET: process.env.CMS_SECRET || '',
   NODE_ENV: process.env.NODE_ENV || 'development',
   MAPTILER_KEY: process.env.NEXT_PUBLIC_MAPTILER_KEY || '',
-} as const
-
-// API endpoints
-export const API_ENDPOINTS = {
-  TRIPS: '/api/trips',
-  COUNTRIES: '/api/countries', 
-  MEDIA: '/api/media',
-  ACCOMMODATIONS: '/api/accommodations',
 } as const
 
 // Site configuration

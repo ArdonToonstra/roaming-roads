@@ -1,14 +1,13 @@
 import { Suspense } from 'react';
 import { data } from '@/lib/data';
-import { Trip } from '@/types/payload';
+import { Trip } from '@/types/content';
 import AdventureFilters from './components/AdventureFilters';
 
 async function getTrips(): Promise<Trip[]> {
   try {
     // Fetch all trips for filtering (set high limit to get all)
     const response = await data.getTrips({
-      limit: 1000,
-      depth: 2 // Include full country and media data
+      limit: 1000
     });
     return response.docs;
   } catch (error) {

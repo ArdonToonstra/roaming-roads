@@ -1,14 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Accommodation } from '@/types/payload';
+import { Accommodation } from '@/types/content';
 import { X, Globe, ExternalLink, Bed } from 'lucide-react';
 import Image from 'next/image';
 import RichText from '@/components/RichText';
 import { getImageUrl } from '@/lib/images';
 
 interface FeaturedAccommodationsProps {
-    items: NonNullable<import('@/types/payload').Trip['featuredAccommodations']>;
+    items: NonNullable<import('@/types/content').Trip['featuredAccommodations']>;
 }
 
 export default function FeaturedAccommodations({ items }: FeaturedAccommodationsProps) {
@@ -33,9 +33,7 @@ export default function FeaturedAccommodations({ items }: FeaturedAccommodations
     }, [selected]);
 
     // Filter valid accommodations
-    const validItems = items
-        .map(item => typeof item.accommodation === 'object' ? item.accommodation as Accommodation : null)
-        .filter((item): item is Accommodation => item !== null);
+    const validItems = items.filter((item): item is Accommodation => Boolean(item));
 
     if (validItems.length === 0) {
         return <p className="text-gray-500 italic">No featured accommodations for this trip</p>;
@@ -88,14 +86,13 @@ export default function FeaturedAccommodations({ items }: FeaturedAccommodations
 
                             {/* Header Image (if any) */}
                             {selected.media && selected.media.length > 0 && (() => {
-                                const coverPhoto = selected.media?.[0];
-                                const url = typeof coverPhoto === 'object' ? getImageUrl(coverPhoto.url) : null;
-                                if (!url) return null;
+                                const coverPhoto = selected.media[0];
+                                const url = getImageUrl(coverPhoto.url);
                                 return (
                                     <div className="relative h-64 w-full">
                                         <Image
                                             src={url}
-                                            alt={typeof coverPhoto === 'object' ? coverPhoto.alt || selected.name : selected.name}
+                                            alt={coverPhoto.alt || selected.name}
                                             fill
                                             className="object-cover rounded-t-2xl"
                                             unoptimized
@@ -115,7 +112,7 @@ export default function FeaturedAccommodations({ items }: FeaturedAccommodations
                                                 <Bed size={14} />
                                                 {selected.type?.replace(/_/g, ' ')}
                                             </span>
-                                            {selected.country && typeof selected.country === 'object' && (
+                                            {selected.country && (
                                                 <span className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full">
                                                     {selected.country.name}
                                                 </span>
@@ -153,21 +150,17 @@ export default function FeaturedAccommodations({ items }: FeaturedAccommodations
                                         <div>
                                             <h4 className="font-bold text-gray-900 mb-3">Photos</h4>
                                             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                                                {selected.media.slice(1).map((photo, i) => {
-                                                    const url = typeof photo === 'object' ? getImageUrl(photo.url) : null;
-                                                    if (!url) return null;
-                                                    return (
-                                                        <div key={i} className="relative h-32 rounded-lg overflow-hidden">
-                                                            <Image
-                                                                src={url}
-                                                                alt={typeof photo === 'object' ? photo.alt || `Photo ${i + 2}` : `Photo ${i + 2}`}
-                                                                fill
-                                                                className="object-cover"
-                                                                unoptimized
-                                                            />
-                                                        </div>
-                                                    );
-                                                })}
+                                                {selected.media.slice(1).map((photo, i) => (
+                                                    <div key={i} className="relative h-32 rounded-lg overflow-hidden">
+                                                        <Image
+                                                            src={getImageUrl(photo.url)}
+                                                            alt={photo.alt || `Photo ${i + 2}`}
+                                                            fill
+                                                            className="object-cover"
+                                                            unoptimized
+                                                        />
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
                                     )}
