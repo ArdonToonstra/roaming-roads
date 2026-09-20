@@ -1,0 +1,71 @@
+title: Diving the Belize Barrier Reef
+status: draft
+category:
+  - backpacking
+  - diving
+coverImage: belize-step01-caye-caulker-01.jpg
+description: "Two islands off the Belizean coast and a week on the second largest barrier reef in the world. Reef and nurse sharks in numbers, coral canyons and swim-through tunnels, paired with some of the highest prices in Central America."
+period: June 2024
+budget:
+  currency: EUR
+  perPerson: true
+activities: |-
+  Diving
+
+  Snorkelling
+
+  Island life
+
+  Beach bars
+added: "2025-12-26"
+countries:
+  - belize
+importantPreparations: |-
+  - **Belize is expensive.** A studio with a kitchen cuts costs sharply on Caye Caulker, where eating out adds up fast.
+  - **Bring cash.** Card acceptance is patchy on the smaller cayes.
+  - **Allow a full day to get here** from Guatemala or Mexico. The trip means a bus, a land border and a ferry.
+  - **Plan around the heat.** It is intense year round, so do anything active early or late.
+  - **Book diving on Ambergris, not Caye Caulker.** The bigger island has the established shops and easier reef access.
+itinerary:
+  - time: Day 1
+    locationName: Caye Caulker
+    description: "A small, car-free island whose official motto is go slow, which the heat enforces regardless. Best approached with no itinerary at all."
+    activities: |-
+      - Walk the whole island in an afternoon. That is roughly how long it takes.
+      - Watch the tarpon feeding at the dock, and look for seahorses and stingrays in the shallows.
+      - Book a studio with a kitchen rather than eating out every meal.
+      - Spend a day at one of the waterfront bars. That is more or less the point of the island.
+    location:
+      - -88.03367941
+      - 17.73948765
+    gallery:
+      - media: belize-step01-caye-caulker-01.jpg
+      - media: belize-step01-caye-caulker-02.jpg
+      - media: belize-step01-caye-caulker-04.jpg
+      - media: belize-step01-caye-caulker-05.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: boat
+      departureMethod: boat
+  - time: Day 2
+    locationName: Ambergris Caye
+    description: "The larger and far more developed island, closer to a resort town than a backpacker stop, where everyone moves by golf cart. The diving is the reason to come."
+    activities: |-
+      - Dive the barrier reef. Five dives plus a snorkel trip covers the coral canyons and tunnels well.
+      - Expect sharks on nearly every dive, mostly reef and nurse sharks, sometimes six circling at once.
+      - Rent a golf cart, the standard transport here, to reach the quieter beaches and bars.
+      - Budget carefully. This is usually the most expensive stop on a Central American route.
+    location:
+      - -87.98179321
+      - 17.9026253
+    gallery:
+      - media: belize-step02-ambergris-caye-01.jpg
+      - media: belize-step02-ambergris-caye-02.jpg
+      - media: belize-step02-ambergris-caye-03.jpg
+      - media: belize-step02-ambergris-caye-04.jpg
+      - media: belize-step02-ambergris-caye-05.jpg
+      - media: belize-step02-ambergris-caye-06.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: boat
+      departureMethod: boat

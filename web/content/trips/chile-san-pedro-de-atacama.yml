@@ -1,0 +1,166 @@
+title: San Pedro de Atacama Desert Roadtrip
+status: draft
+category:
+  - road_trip
+  - backpacking
+coverImage: chile-step30-lagunas-antiplatos-spda-01.jpg
+description: "A week of self-driving and wild camping in the Atacama desert. Salt lagoons, geysers at 4,300 m, altiplano lakes and some of the clearest night skies anywhere, with San Pedro de Atacama as the only real town for hundreds of kilometres."
+period: March 2024
+budget:
+  currency: EUR
+  perPerson: true
+activities: |-
+  Road tripping
+
+  Wild camping
+
+  Stargazing
+
+  Hot springs
+
+  Salt lagoons
+
+  High altitude hiking
+added: "2025-12-26"
+countries:
+  - chile
+importantPreparations: |-
+  - **Rent a 4x4, not a car.** Many of the best roads are rough gravel. Punctures are common, so check the spare before leaving the airport and carry more water than you think you need.
+  - **Altitude is the real constraint.** San Pedro sits at 2,400 m and the drives go well above 4,000 m. Expect to feel exhausted and dizzy for the first days, and plan a proper acclimatisation build-up before any summit attempt.
+  - **Cerro Toco needs a permit** arranged in advance. The access road is gated for the astronomical observatories and turned away without one.
+  - **There is no phone signal** outside San Pedro and Calama. Download offline maps and tell someone your route.
+  - **Stock up in Calama.** San Pedro has small shops at tourist prices. The China Mall in Calama is the place for camping chairs, mats and other kit.
+  - **Camp high for the stars, but bring shade.** Nights are freezing and the daytime sun is brutal with no natural cover anywhere.
+itinerary:
+  - time: Day 1
+    locationName: Laguna Baltinache
+    description: "A chain of hidden salt lagoons reached by a long, punishing gravel track. The salinity is high enough to float in, and the approach road is where most rental tyres meet their end."
+    activities: |-
+      - Drive the rough track slowly. Speeding over the corrugations is how tyres get destroyed out here.
+      - Walk the loop between the lagoons before the midday heat.
+      - Float in the salt pools, then rinse off. The salt crust is hard to remove later.
+      - Find a wild camping spot before sunset. Look for flat ground with some wind shelter.
+    location:
+      - -68.479442536
+      - -23.282454951
+    gallery:
+      - media: chile-step27-laguna-baltinache-spda-01.jpg
+      - media: chile-step27-laguna-baltinache-spda-02.jpg
+      - media: chile-step27-laguna-baltinache-spda-03.jpg
+      - media: chile-step27-laguna-baltinache-spda-04.jpg
+      - media: chile-step27-laguna-baltinache-spda-05.jpg
+      - media: chile-step27-laguna-baltinache-spda-06.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: flight
+      departureMethod: rental_car
+  - time: Day 2
+    locationName: Termas Bajas
+    description: "An oasis village campsite with actual facilities, then the long climb toward 4,400 m past flamingo lakes and volcano viewpoints. A canyon walk at the top leads to small private hot spring pools."
+    activities: |-
+      - Use the oasis campsite for a swim and a proper wash before heading back into the deep desert.
+      - Drive past the flamingo lagoons and volcano viewpoints, watching for vicuñas and guanacos.
+      - Walk the canyon to the hot springs once the afternoon cools. Move slowly at this altitude.
+    location:
+      - -68.62947681
+      - -22.269263427
+    gallery:
+      - media: chile-step28-termas-bajas-spda-01.jpg
+      - media: chile-step28-termas-bajas-spda-02.jpg
+      - media: chile-step28-termas-bajas-spda-03.jpg
+      - media: chile-step28-termas-bajas-spda-04.jpg
+      - media: chile-step28-termas-bajas-spda-05.jpg
+    blockType: fullDay
+  - time: Day 3
+    locationName: El Tatio Geysers and Valle de la Muerte
+    description: "The third largest geyser field in the world, best seen just before sunrise when the cold makes the steam column up. A long day that also takes in two of the valleys closer to town."
+    activities: |-
+      - Camp strategically the night before and set an alarm for 05:00. The field is most active at dawn.
+      - Dress for minus two. The cold is what makes the steam, and it is genuinely bitter up there.
+      - Walk in the Valle de los Cactus on the way back toward San Pedro.
+      - Sandboard the dune in the Valle de la Muerte, where no water has ever been recorded.
+    location:
+      - -68.0117987
+      - -22.3416368
+    gallery:
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-01.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-02.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-03.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-04.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-05.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-06.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-07.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-09.jpg
+      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-10.jpg
+    blockType: fullDay
+  - time: Day 4
+    locationName: Lagunas Altiplánicas
+    description: "High altitude lakes at around 4,000 m: Miscanti, Miñiques and Piedras Rojas. Timed entry slots apply, so plan the drive around them."
+    activities: |-
+      - Book a time slot for the lagoons and plan the route around it.
+      - Visit Miscanti, Miñiques and Piedras Rojas in one loop, watching for flamingos and altiplano birds.
+      - Picnic among the rocks. There is nowhere to buy food once you leave San Pedro.
+      - Spend an evening in San Pedro itself. The adobe centre is largely car-free and has good bars and vegetarian food despite the tourist crowds.
+    location:
+      - -67.669676664
+      - -23.916935648
+    gallery:
+      - media: chile-step30-lagunas-antiplatos-spda-01.jpg
+      - media: chile-step30-lagunas-antiplatos-spda-02.jpg
+      - media: chile-step30-lagunas-antiplatos-spda-03.jpg
+      - media: chile-step30-lagunas-antiplatos-spda-04.jpg
+      - media: chile-step30-lagunas-antiplatos-spda-05.jpg
+      - media: chile-step30-lagunas-antiplatos-spda-06.jpg
+      - media: chile-step30-lagunas-antiplatos-spda-07.jpg
+    blockType: fullDay
+  - time: Day 5
+    locationName: Laguna Cejar and Devil's Throat
+    description: "A salt lake on the edge of the Salar de Atacama where the water is dense enough to float in, paired with a canyon trail that gets dangerously hot by late morning."
+    activities: |-
+      - Float in Laguna Cejar early. There are showers on site, which is rarer than it sounds out here.
+      - Walk the Devil's Throat canyon, but start early and carry plenty of water. The heat and dryness build fast.
+      - Camp overlooking the Salar de Atacama for the sunset and the night sky.
+    location:
+      - -68.065740407
+      - -23.601803208
+    gallery:
+      - media: chile-step31-laguna-cejardevils-throat-spda-01.jpg
+      - media: chile-step31-laguna-cejardevils-throat-spda-02.jpg
+      - media: chile-step31-laguna-cejardevils-throat-spda-03.jpg
+      - media: chile-step31-laguna-cejardevils-throat-spda-04.jpg
+      - media: chile-step31-laguna-cejardevils-throat-spda-05.jpg
+    blockType: fullDay
+  - time: Day 6
+    locationName: Fingerrocks and Cerro Toco
+    description: "Camping at 4,500 m among wind-carved rock pillars, with guanacos and vizcachas around the tent. The staging point for Cerro Toco at 5,600 m, if you have the permit."
+    activities: |-
+      - Camp high to acclimatise. The rock formations here make it the best wild site in the desert.
+      - Watch for guanaco families and vizcachas at dawn and dusk.
+      - Arrange the Cerro Toco permit well in advance. The access road is gated for astronomical research and there is no way around it.
+      - Keep a fallback plan. The hot springs are a decent consolation if the summit is closed.
+    location:
+      - -67.425460625
+      - -23.03115739
+    gallery:
+      - media: chile-step32-fingerrocks-cerro-toco-spda-01.jpg
+      - media: chile-step32-fingerrocks-cerro-toco-spda-02.jpg
+      - media: chile-step32-fingerrocks-cerro-toco-spda-03.jpg
+      - media: chile-step32-fingerrocks-cerro-toco-spda-04.jpg
+      - media: chile-step32-fingerrocks-cerro-toco-spda-05.jpg
+    blockType: fullDay
+  - time: Day 7
+    locationName: Calama
+    description: "The mining city with the regional airport, where rental cars go back. Not a destination, but the necessary last stop before the Bolivian border."
+    activities: |-
+      - Return the car at the airport and repack for onward travel.
+      - Look out for a diablada, the costumed devil dance performed in the streets.
+      - Start early for the Bolivian border. The crossing itself is a long day.
+    location:
+      - -68.925026064
+      - -22.460475697
+    gallery:
+      - media: chile-step33-calama-01.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: public_bus

@@ -1,0 +1,180 @@
+title: Lake Atitlán, Volcanoes and Maya Ruins
+status: draft
+category:
+  - backpacking
+  - hiking
+coverImage: guatemala-step01-antigua-guatemala-01.jpg
+description: "A loop through highland Guatemala. Colonial Antigua, a week around Lake Atitlán with weaving villages and a yoga retreat, an overnight climb on Acatenango facing the erupting Fuego, the limestone pools of Semuc Champey and the Maya city of Tikal."
+period: May – June 2024
+budget:
+  currency: EUR
+  perPerson: true
+activities: |-
+  Volcano hiking
+
+  Yoga retreat
+
+  Weaving workshops
+
+  Markets
+
+  Maya ruins
+
+  Swimming
+added: "2025-12-26"
+countries:
+  - guatemala
+importantPreparations: |-
+  - **Skip Guatemala City.** Shuttles run straight from the airport to Antigua, which is a far better base and only an hour away.
+  - **Choose the Acatenango operator carefully.** It is a 1,200 m climb to a camp opposite an active volcano and standards vary a lot.
+  - **Stomach illness is common on the Acatenango trek**, and is often traced to the food the operator provides rather than to the altitude. Ask how meals are handled and carry backup food of your own.
+  - **Bargain at the markets.** Chichicastenango sellers routinely drop from 300 to 50 quetzales without being pushed.
+  - **Lanchas are the transport around Lake Atitlán.** Boats between the villages are frequent and cheap, so village hopping is easy.
+  - **Pack layers.** The highlands are mild by day and cold at night, and genuinely cold on the volcano.
+itinerary:
+  - time: Day 1
+    locationName: Antigua Guatemala
+    description: "A colonial town ringed by volcanoes, with a mild climate and a dense cafe and restaurant scene. The standard first stop and the launch point for the Acatenango climb."
+    activities: |-
+      - Spend a full day on the churches, ruins and colonial streets.
+      - Visit the art history museums for background on Guatemalan and Maya culture.
+      - Climb Cerro de la Cruz above town for the view across to the volcanoes.
+      - Take a shuttle onward to Lake Atitlán. They run daily and take about three hours.
+    location:
+      - -90.7337346
+      - 14.5567814
+    gallery:
+      - media: guatemala-step01-antigua-guatemala-01.jpg
+      - media: guatemala-step01-antigua-guatemala-02.jpg
+      - media: guatemala-step01-antigua-guatemala-03.jpg
+      - media: guatemala-step01-antigua-guatemala-04.jpg
+      - media: guatemala-step01-antigua-guatemala-05.jpg
+      - media: guatemala-step01-antigua-guatemala-06.jpg
+      - media: guatemala-step01-antigua-guatemala-07.jpg
+      - media: guatemala-step01-antigua-guatemala-08.jpg
+      - media: guatemala-step01-antigua-guatemala-09.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: flight
+      departureMethod: tour_bus
+  - time: Day 2
+    locationName: "Lake Atitlán: Eagle's Nest Retreat"
+    description: "Multi-day yoga retreats on the slopes above Lake Atitlán, with a shala looking straight out over the water. A common four-day stop on the route around the lake."
+    activities: |-
+      - Book a four-day retreat: early morning meditation and yoga, workshops in the afternoons.
+      - Work through the workshop range, which covers breathwork, acroyoga, chakra dance and aerial silks.
+      - Use the temazcal sauna and plunge pool in the evening. It is a shared, fairly ceremonial affair.
+      - Stay on around the lake afterwards and hop between villages by lancha.
+    location:
+      - -91.260787793
+      - 14.728797919
+    gallery:
+      - media: guatemala-step02-yoga-retreat-eagles-nest-01.jpg
+      - media: guatemala-step02-yoga-retreat-eagles-nest-02.jpg
+      - media: guatemala-step02-yoga-retreat-eagles-nest-03.jpg
+      - media: guatemala-step02-yoga-retreat-eagles-nest-04.jpg
+      - media: guatemala-step02-yoga-retreat-eagles-nest-05.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: tour_bus
+      departureMethod: boat
+  - time: Day 3
+    locationName: San Juan La Laguna
+    description: "The weaving village on Lake Atitlán, known for natural dyes and women's cooperatives. Small, bright and covered in murals."
+    activities: |-
+      - Book a weaving workshop. A scarf takes around four hours on a backstrap loom.
+      - Buy textiles directly from the cooperatives rather than the tourist shops.
+      - Walk the murals and the main street. One night is enough here.
+    location:
+      - -91.2866837
+      - 14.6944965
+    gallery:
+      - media: guatemala-step03-san-juan-la-laguna-01.jpg
+      - media: guatemala-step03-san-juan-la-laguna-02.jpg
+      - media: guatemala-step03-san-juan-la-laguna-03.jpg
+      - media: guatemala-step03-san-juan-la-laguna-04.jpg
+      - media: guatemala-step03-san-juan-la-laguna-06.jpg
+      - media: guatemala-step03-san-juan-la-laguna-07.jpg
+      - media: guatemala-step03-san-juan-la-laguna-08.jpg
+      - media: guatemala-step03-san-juan-la-laguna-09.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: boat
+      departureMethod: boat
+  - time: Day 4
+    locationName: Panajachel and Chichicastenango
+    description: "Panajachel is the lake's transport hub and the easiest base for reaching the Sunday market at Chichicastenango, the largest in Guatemala."
+    activities: |-
+      - Take chicken buses to Chichicastenango for the Sunday market, a few hours of decorated streets and food stalls.
+      - Haggle hard. Opening prices bear little relation to the real one.
+      - Camp at the Atitlán Nature Reserve, with trails past monkeys, suspension bridges, a butterfly garden and a small beach.
+      - Check hotel names carefully. Several in Panajachel are near-identical.
+    location:
+      - -91.1559757
+      - 14.7421699
+    gallery:
+      - media: guatemala-step04-panajachel-chichicastenango-02.jpg
+      - media: guatemala-step04-panajachel-chichicastenango-07.jpg
+      - media: guatemala-step04-panajachel-chichicastenango-09.jpg
+      - media: guatemala-step04-panajachel-chichicastenango-12.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: boat
+      departureMethod: tour_bus
+  - time: Day 5
+    locationName: Acatenango and Fuego Volcanoes
+    description: "An overnight climb up Acatenango to a camp facing Fuego, one of the most active volcanoes in the world. Around 1,200 m of steep ascent, with eruptions audible and visible through the night."
+    activities: |-
+      - Start early from Antigua. The climb to base camp takes most of the day.
+      - Expect cloud on arrival. The eruptions are usually heard well before anything is visible.
+      - Consider the optional four hour extension hike toward Fuego itself for a closer view.
+      - Pack warm clothes. The camp is high and drops sharply in temperature after dark.
+      - Ask the operator about food handling and carry your own backup. Group-wide illness on this trek is common.
+    location:
+      - -90.9423053
+      - 14.5538872
+    gallery:
+      - media: guatemala-step05-acatenango-fuego-vulcanes-01.jpg
+      - media: guatemala-step05-acatenango-fuego-vulcanes-02.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: tour_bus
+      departureMethod: tour_bus
+  - time: Day 6
+    locationName: Semuc Champey
+    description: "A natural monument of stepped limestone pools above a river, deep in jungle. The viewpoint above gives the classic shot, the pools themselves are the reward."
+    activities: |-
+      - Walk up to the mirador first for the view over the pools, then swim.
+      - Allow a full day either side. The roads in are slow and rough.
+    location:
+      - -89.96495831
+      - 15.52323315
+    gallery:
+      - media: guatemala-step06-semuc-champey-02.jpg
+      - media: guatemala-step06-semuc-champey-03.jpg
+      - media: guatemala-step06-semuc-champey-05.jpg
+      - media: guatemala-step06-semuc-champey-06.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: tour_bus
+      departureMethod: tour_bus
+  - time: Day 7
+    locationName: Tikal National Park
+    description: "One of the largest Maya cities, deep in the jungle of the Petén. Flores, a small island town on a lake, is the usual base for two nights."
+    activities: |-
+      - Base yourself in Flores and take a morning tour out to the ruins.
+      - Go early. Outside peak hours Tikal can be almost empty.
+      - Watch the jungle as much as the temples. Toucans, monkeys and tarantulas are common along the paths.
+      - Spend leftover quetzales before crossing into Belize.
+    location:
+      - -89.8914817
+      - 16.9298524
+    gallery:
+      - media: guatemala-step07-tikal-national-park-01.jpg
+      - media: guatemala-step07-tikal-national-park-02.jpg
+      - media: guatemala-step07-tikal-national-park-04.jpg
+      - media: guatemala-step07-tikal-national-park-05.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: tour_bus
+      departureMethod: public_bus

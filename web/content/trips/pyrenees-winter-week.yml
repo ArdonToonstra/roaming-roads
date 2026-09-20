@@ -1,0 +1,113 @@
+title: An Atypical Winter Week in the Pyrenees
+status: draft
+category:
+  - wintersport
+  - hiking
+coverImage: day3-6.jpg
+description: "A week in the Hautes-Pyrénées that is only half a ski holiday. Three days on the slopes at Cauterets, Gavarnie and Grand Tourmalet, the rest given over to snowshoeing, a biathlon initiation, thermal baths and raclette, all from one house in the valley."
+period: February 2025
+budget:
+  currency: EUR
+  perPerson: true
+activities: |-
+  Skiing
+
+  Snowshoeing
+
+  Biathlon and cross-country
+
+  Winter hiking
+
+  Thermal baths
+added: "2025-10-26"
+countries:
+  - france
+importantPreparations: |-
+  - **Rent snowshoes, do not improvise.** Off the groomed trails the snow is deep enough to sink into past the knee. Rental is cheap in every village and the locals will assume you have them.
+  - **Base yourself in one valley.** The ski areas here are all within about an hour's drive, so a single house covers the whole week without moving.
+  - **It is roughly twelve hours by car from Belgium or the Netherlands.** Split the drive or leave the night before.
+  - **Book the biathlon session ahead.** Val d'Azun runs beginner initiations with laser rifles and slots are limited.
+  - **Budget for the thermal baths.** Cauterets and Barèges both have spa complexes below the slopes, and they are the best recovery after a ski day.
+  - **Plan around the village markets** for bread and cheese. They are cheaper and better than the supermarkets.
+itinerary:
+  - time: Day 1
+    locationName: Ayros-Arbouix
+    description: "A small village in the Hautes-Pyrénées, central to the valley's ski areas and a practical base for a week."
+    activities: |-
+      - Book a house with a wood stove. Evenings are cold and the stove ends up being the main room.
+      - Split the drive or set off the night before. Twelve hours is a long single stint.
+      - Arrive with supplies. Village shops are small and close early.
+    location:
+      - -0.0656027
+      - 43.0042725
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+  - time: Day 2
+    locationName: Hautacam
+    description: "A small ski area above Argelès-Gazost with hiking trails up to a mountain lake. The snow off the pistes is deep, and this is where you find out whether you brought the right kit."
+    activities: |-
+      - Rent snowshoes before setting out. Without them you sink to the waist within minutes and will have to turn back.
+      - Fall back on the easier marked routes if you are unequipped. The views are just as good.
+      - Eat at the restaurant on the piste, a reliable plan B when the hike does not work out.
+    location:
+      - -0.0075484
+      - 42.9719895
+    blockType: fullDay
+  - time: Day 3
+    locationName: Cauterets
+    description: "One of the better known ski areas in the valley, with a thermal spa in the village below. A good pairing for a first day on skis."
+    activities: |-
+      - Ski for the day at Cauterets.
+      - Soak at the village thermal baths afterwards. They exist for exactly this.
+      - Eat in the village before driving back.
+    location:
+      - -0.114546
+      - 42.8893451
+    blockType: fullDay
+  - time: Day 4
+    locationName: Val d'Azun
+    description: "A cross-country and biathlon centre, and the most unusual day of the week. Beginner sessions use laser rifles, so no shooting or skiing experience is needed."
+    activities: |-
+      - Start at the morning market for baguettes and cheese.
+      - Book a biathlon initiation. An instructor covers the basics, then you shoot at laser targets between laps.
+      - Finish with the timed race, a circuit with shooting stops along the way.
+      - Add a longer cross-country tour in the afternoon if your legs hold up.
+    location:
+      - -0.1937854
+      - 42.9736799
+    blockType: fullDay
+  - time: Day 5
+    locationName: Gavarnie
+    description: "A small, quiet ski area near the Cirque de Gavarnie. Far less busy than the big resorts, which is the reason to make the drive."
+    activities: |-
+      - Ski Gavarnie for an uncrowded day on the snow.
+      - Expect a small area. The appeal is the scenery and the space, not the piste count.
+    location:
+      - -0.0093524
+      - 42.7322036
+    blockType: fullDay
+  - time: Day 6
+    locationName: Barèges
+    description: "Snowshoe country above the village, with a mountain terrace at the top and a second thermal complex below. The classic day off the skis."
+    activities: |-
+      - Rent raquettes, the local word for snowshoes, and climb the marked routes above the village.
+      - Stop at the mountain terrace at the top of the climb.
+      - Use the Barèges thermal baths afterwards, which have a hammam and sauna.
+      - Eat raclette. It is the standard end to a day like this.
+    location:
+      - 0.0622368
+      - 42.8958816
+    blockType: fullDay
+  - time: Day 7
+    locationName: Grand Tourmalet
+    description: "The largest ski area in the region, linking Barèges and La Mongie across the Col du Tourmalet. The obvious choice for a final day."
+    activities: |-
+      - Ski the full Grand Tourmalet area, the biggest in the Hautes-Pyrénées.
+      - Leave time to pack. The drive north takes a full day.
+    location:
+      - 0.1776751
+      - 42.9119184
+    blockType: fullDay
+    transportation:
+      departureMethod: rental_car

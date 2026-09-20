@@ -1,0 +1,308 @@
+title: Carretera Austral and the Lake District
+status: draft
+category:
+  - backpacking
+  - road_trip
+coverImage: chile-step20-cerro-castillo-01.jpg
+description: "The long middle of Chile by road. Granite valleys at Cochamó, a rental car up the Ruta 7 through volcanoes, fjords and ferries, a four-day trek in Cerro Castillo, then north through the Lake District to Valparaíso and Santiago."
+period: February – March 2024
+budget:
+  currency: EUR
+  perPerson: true
+activities: |-
+  Road tripping
+
+  Hiking and trekking
+
+  Camping
+
+  Rafting and canyoning
+
+  Volcanoes
+
+  Hot springs
+added: "2025-12-26"
+countries:
+  - chile
+importantPreparations: |-
+  - **Rent a car for the Ruta 7.** Public transport along the Carretera Austral is thin and unreliable. A car also lets you pick up hitchhikers, which is how most travellers move here.
+  - **Book the ferries.** Several sections of the Ruta 7 are only passable by ferry, and slots sell out in February.
+  - **Buses in the Lake District are unpredictable.** Reaching Cochamó in particular can take a full day of waiting and cancelled rides. Build in slack.
+  - **Camping gear pays for itself.** Campsites are cheap and plentiful, and the best spots in the national parks have no other option.
+  - **Nights get cold.** Even in summer, mountain camps near Cerro Castillo drop to freezing.
+  - **Hitchhiking is normal and safe here**, but competitive. Expect long waits in peak season.
+itinerary:
+  - time: Day 1
+    locationName: Puerto Varas
+    description: "A lakeside town below the Osorno volcano, and the obvious base for the northern Lake District. Comfortable, walkable and well connected."
+    activities: |-
+      - Walk the waterfront for views across Lago Llanquihue to the Osorno and Calbuco volcanoes.
+      - Use the town to regroup and book onward transport before heading into the valleys.
+    location:
+      - -72.9829073
+      - -41.317802
+    gallery:
+      - media: chile-step12-puerto-varas-01.jpg
+    blockType: fullDay
+  - time: Day 2
+    locationName: Ensenada
+    description: "A small settlement at the foot of the Osorno volcano, and a useful staging point when the direct buses to Cochamó fall through, which they often do."
+    activities: |-
+      - Break the journey here if connections fail. Buses toward Cochamó are infrequent and frequently rerouted.
+      - Use the stop for volcano views and short walks on the lava fields.
+    location:
+      - -72.539717381
+      - -41.206024187
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: public_bus
+  - time: Day 3
+    locationName: Cochamó - Basecamp
+    description: "The village at the mouth of the Cochamó valley, sometimes called the Yosemite of South America. A quiet base of campsites, a river and a local brewery before the walk in."
+    activities: |-
+      - Camp in the village and spend a day doing nothing before the hike.
+      - Swim in the river, which is glacially cold year round.
+      - Drink at the local cervecería and use the campsite fire pits in the evening.
+    location:
+      - -72.220495968
+      - -41.455888387
+    gallery:
+      - media: chile-step14-cochamo---basecamp-01.jpg
+      - media: chile-step14-cochamo---basecamp-02.jpg
+      - media: chile-step14-cochamo---basecamp-03.jpg
+    blockType: fullDay
+  - time: Day 4
+    locationName: Cochamó - Valley
+    description: "A 12 km walk in to a valley of granite domes, waterfalls and swimming holes. It is a Chilean climbing and hiking hotspot with a relaxed, festival-like camp scene. Four days is better than two."
+    activities: |-
+      - Hike the 12 km valley trail to the campsite. The walk in is dull, the destination is not.
+      - Cross the river by the cable trolley to reach the main trails.
+      - Walk to the granite slide waterfalls, the classic day out here.
+      - Climb to Laguna Trinidad, a 1,200 m ascent to a mirror-flat lake.
+      - Arrange your ride out in advance and have a backup. Taxis here cancel without warning.
+    location:
+      - -72.125539759
+      - -41.409557599
+    gallery:
+      - media: chile-step15-cochamo---valley-01.jpg
+      - media: chile-step15-cochamo---valley-02.jpg
+      - media: chile-step15-cochamo---valley-03.jpg
+      - media: chile-step15-cochamo---valley-04.jpg
+      - media: chile-step15-cochamo---valley-05.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: walking
+      departureMethod: rental_car
+  - time: Day 5
+    locationName: Hornopirén
+    description: "First stop on the Ruta 7 proper, at the entrance to Hornopirén National Park. A small town with a good river and a strong local food scene."
+    activities: |-
+      - Go rafting. The rivers here are a good place to try it for the first time.
+      - Camp at the park entrance and walk the short trails inside.
+      - Climb the steep derrumbe path to a swimming spot with a view.
+      - Time your visit with the local honey festival if you can.
+    location:
+      - -72.399211183
+      - -41.893488771
+    gallery:
+      - media: chile-step16-hornopiren-02.jpg
+      - media: chile-step16-hornopiren-03.jpg
+      - media: chile-step16-hornopiren-04.jpg
+      - media: chile-step16-hornopiren-05.jpg
+      - media: chile-step16-hornopiren-06.jpg
+      - media: chile-step16-hornopiren-07.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: boat
+  - time: Day 6
+    locationName: Chaitén Volcano
+    description: "Reached by a six hour ferry with sea lions along the way. The still-smoking Chaitén volcano sits in Pumalín Douglas Tompkins park, land donated to Chile by the founder of The North Face."
+    activities: |-
+      - Take the ferry from Hornopirén and watch for sea lions hauled out along the route.
+      - Climb the Chaitén volcano for views over the caldera, where vents still smoke.
+      - Look for hummingbirds on the pink flowers growing across the volcanic soil.
+      - Camp by one of the lakes in the park. Sites are basic and often unstaffed.
+    location:
+      - -72.651992215
+      - -42.835670324
+    gallery:
+      - media: chile-step17-chaiten-vulcan-01.jpg
+      - media: chile-step17-chaiten-vulcan-02.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: boat
+      departureMethod: rental_car
+  - time: Day 7
+    locationName: Futaleufú
+    description: "A whitewater town near the Argentine border, built around one of the best rafting and kayaking rivers in the world. Entirely weather dependent."
+    activities: |-
+      - Raft or kayak the Futaleufú river, the main reason to come.
+      - Have a plan B. Cold rain can shut the water sports down for days at a time.
+      - Drive the short sightseeing loops around the valley between showers.
+    location:
+      - -71.867299765
+      - -43.185278169
+    gallery:
+      - media: chile-step18-futaleufu-01.jpg
+      - media: chile-step18-futaleufu-02.jpg
+      - media: chile-step18-futaleufu-03.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+  - time: Day 8
+    locationName: Coyhaique
+    description: "The largest town in Aysén and the main resupply point on the southern Carretera Austral. Roughly eight hours of rough, mostly unpaved road to get here."
+    activities: |-
+      - Stock up. This is the last proper supermarket before Cerro Castillo.
+      - Pick up hitchhikers on the way in. It is the normal way to travel this road and a good source of route advice.
+      - Camp on the edge of town and sort gear for the trek.
+    location:
+      - -72.078519976
+      - -45.576535966
+    gallery:
+      - media: chile-step19-coyhaique-01.jpg
+      - media: chile-step19-coyhaique-02.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+  - time: Day 9
+    locationName: Cerro Castillo
+    description: "A four-day trek from Las Horquetas through glaciers, lagoons and high passes. Far less known than Torres del Paine and every bit as good, with a fraction of the traffic."
+    activities: |-
+      - Start at Las Horquetas and walk the four-day route through the national park.
+      - Expect basic camps: no showers, pit toilets, and water collected from the river.
+      - Pack for freezing nights. Temperatures drop to around zero after dark even in summer.
+      - Plan your exit. It is 37 km back to the trailhead with no buses or taxis, and hitchhiking here can take half a day.
+    location:
+      - -72.283871065
+      - -46.037729259
+    gallery:
+      - media: chile-step20-cerro-castillo-01.jpg
+      - media: chile-step20-cerro-castillo-02.jpg
+      - media: chile-step20-cerro-castillo-03.jpg
+      - media: chile-step20-cerro-castillo-04.jpg
+      - media: chile-step20-cerro-castillo-05.jpg
+      - media: chile-step20-cerro-castillo-06.jpg
+      - media: chile-step20-cerro-castillo-07.jpg
+      - media: chile-step20-cerro-castillo-08.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: hitchhiking
+  - time: Day 10
+    locationName: Chiloé
+    description: "The largest island in Chile, reached by ferry on the way back north. Dunes, wooden churches, penguin colonies and a slower pace after Patagonia."
+    activities: |-
+      - Camp behind the dunes and kayak straight from the beach.
+      - Take a boat trip to the penguin colonies, the island's main draw.
+      - Walk the short trails in Chiloé National Park.
+      - Skip the towns if time is short. The coast and the park are the reason to come.
+    location:
+      - -74.086249557
+      - -42.629379771
+    gallery:
+      - media: chile-step21-chiloe-01.jpg
+      - media: chile-step21-chiloe-02.jpg
+      - media: chile-step21-chiloe-03.jpg
+      - media: chile-step21-chiloe-04.jpg
+      - media: chile-step21-chiloe-05.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: boat
+      departureMethod: rental_car
+  - time: Day 11
+    locationName: Pucón
+    description: "The adventure capital of the Lake District, under the Villarrica volcano. Glaciers give way to cone volcanoes and a noticeably warmer climate. Arriving just after the Chilean holiday season means low prices and empty campsites."
+    activities: |-
+      - Camp by the river. Shop around, since the sites vary a lot in quality.
+      - Go canyoning through the lahars, the lava channels cut by the volcano.
+      - Soak in a tinaja fed by the volcano's natural hot springs.
+      - Climb a volcano. Villarrica itself requires an expensive guided tour and is closed at the summit, so the second highest cone nearby is the better DIY option.
+      - Pick blackberries and run your own parrilla. Vegetarian versions work fine.
+    location:
+      - -71.864418047
+      - -39.251548037
+    gallery:
+      - media: chile-step22-pucon-01.jpg
+      - media: chile-step22-pucon-02.jpg
+      - media: chile-step22-pucon-03.jpg
+      - media: chile-step22-pucon-04.jpg
+      - media: chile-step22-pucon-05.jpg
+    blockType: fullDay
+  - time: Day 12
+    locationName: Conguillío National Park
+    description: "A lava desert centred on the Llaima volcano, with thousand-year-old ash layers exposed along the trails. Pumas live here, though they are rarely seen."
+    activities: |-
+      - Drive into the park. The internal roads are rough and a 4x4 helps.
+      - Climb Sierra Nevada for the best views over the volcano.
+      - Camp inside the park. Bring a thick mat, since the lava rock punctures thin ones.
+    location:
+      - -71.57153828
+      - -38.302767799
+    gallery:
+      - media: chile-step23-conguillio-nationaal-park-01.jpg
+      - media: chile-step23-conguillio-nationaal-park-02.jpg
+      - media: chile-step23-conguillio-nationaal-park-03.jpg
+    blockType: fullDay
+    transportation:
+      departureMethod: flight
+  - time: Day 13
+    locationName: Olmué
+    description: "A village inland from Valparaíso, in cactus country at the foot of La Campana National Park. Hot, dry and green, and a common weekend escape from Santiago."
+    activities: |-
+      - Hike the 17 km route through La Campana National Park.
+      - Try mote con huesillos at the Sunday market, a local drink of wheat grains and dried peach.
+      - Drive up to the Andean border post with Argentina at 3,000 m, around thirty hairpins up to a mountain lake.
+      - Eat the vegetarian side of Chilean cooking, such as charquicán de cochayuyo made with sea kelp.
+    location:
+      - -71.200466082
+      - -32.998926784
+    gallery:
+      - media: chile-step24-familie-reunie-olmue-03.jpg
+      - media: chile-step24-familie-reunie-olmue-05.jpg
+      - media: chile-step24-familie-reunie-olmue-06.jpg
+    blockType: fullDay
+  - time: Day 14
+    locationName: Valparaíso and Viña del Mar
+    description: "Two coastal cities side by side. Viña del Mar is the beach resort, Valparaíso the far more interesting one: a largely car-free maze of steep hills, stairways and street art."
+    activities: |-
+      - Wander Valparaíso's hills on foot. The murals and stairways are the whole point.
+      - Visit the old prison, now a cultural centre, and the hillside cemetery.
+      - Spot sea lions along the working docks.
+      - Cross to Viña del Mar for the beach and the flower clock.
+    location:
+      - -71.553938063
+      - -33.01470601
+    gallery:
+      - media: chile-step25-valparaiso-vina-del-mar-01.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-02.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-03.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-04.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-05.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-06.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-07.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-08.jpg
+      - media: chile-step25-valparaiso-vina-del-mar-09.jpg
+    blockType: fullDay
+  - time: Day 15
+    locationName: Santiago
+    description: "Worth more than the transit stop most travellers give it, but only in the right neighbourhoods. The area around the central station is grim; the rest of the centre is not."
+    activities: |-
+      - Zigzag through the centre on foot for the architecture. Street protests are a regular feature.
+      - Pick your districts carefully and skip the station quarter.
+      - Use it as the staging point for the flight north to the Atacama.
+    location:
+      - -70.600522307
+      - -33.429280962
+    gallery:
+      - media: chile-step26-santiago-01.jpg
+      - media: chile-step26-santiago-02.jpg
+      - media: chile-step26-santiago-03.jpg
+      - media: chile-step26-santiago-04.jpg
+      - media: chile-step26-santiago-05.jpg
+    blockType: fullDay
+    transportation:
+      departureMethod: flight

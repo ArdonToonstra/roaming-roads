@@ -51,7 +51,7 @@ itinerary:
     blockType: fullDay
     transportation:
       arrivalMethod: flight
-      departureMethod: bus
+      departureMethod: public_bus
   - time: Day 2
     locationName: Capilla del Señor
     description: "A small country town in the Pampas roughly 80 km from Buenos Aires, reachable by regional train. There is effectively no tourism here — no English, few services and very little onward public transport — which is exactly the appeal. A handful of rural hotels on the edge of town offer pools and outdoor kitchens at prices well below the capital."

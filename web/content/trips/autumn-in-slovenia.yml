@@ -1,9 +1,144 @@
 title: Autumn in Slovenia
 status: draft
-coverImage: WhatsApp Image 2025-10-12 at 16.33.27-1.jpeg
+category:
+  - road_trip
+  - hiking
+coverImage: FullSizeRender-3.JPEG
+description: "Hiking and mountain biking across Slovenia in late autumn, when the trails empty out and the mountain huts are still open. One rented house as a base, with day trips out to the Julian Alps, the Škocjan caves, Lake Bled and Ljubljana."
+period: November 2024
 budget:
+  amount: 1500
   currency: EUR
   perPerson: true
-added: "2025-10-12"
+activities: |-
+  Hiking
+
+  Mountain biking
+
+  Caves
+
+  Lakes
+
+  City walking
+added: "2025-10-26"
 countries:
   - slovenia
+  - italy
+importantPreparations: |-
+  - **Rent one house centrally and do day trips.** Slovenia is small enough that most of the country is within a two hour drive, so there is no need to move base. A fireplace is worth paying for in November.
+  - **Autumn means empty trails.** The well-known hikes that are crowded in summer are close to deserted, but check hut opening dates before relying on one for food or shelter.
+  - **Download the routes in advance.** Signage on the mountain trails is inconsistent. The Wikiloc tracks linked below cover each day.
+  - **A car is essential.** Trailheads and parking areas are rarely reachable by public transport.
+  - **Book e-bikes ahead in the off season.** Rental shops run reduced hours, and battery range on the longer alpine loops is the limiting factor.
+itinerary:
+  - time: Day 1
+    locationName: Debela Peč
+    description: "A ridge hike in the Julian Alps above Krnica, taking in the Blejska Koča hut. One of the best value days in the area and quiet outside summer."
+    activities: |-
+      - Hike the Blejska Koča and Debela Peč loop from Krnica.
+      - Park at [the Krnica trailhead](https://maps.app.goo.gl/WCJhfSsCtEkVcW786).
+      - Follow [the Wikiloc route](https://nl.wikiloc.com/routes-wandelen/blejska-koca-en-debela-pec-vanaf-krnica-191036175).
+    accommodation: rental-house
+    location:
+      - 13.935699254
+      - 46.387338582
+    blockType: fullDay
+  - time: Day 2
+    locationName: Mostnica Gorge
+    description: "A walk along a narrow limestone gorge to the Mostnica waterfall, starting from Stara Fužina near Lake Bohinj. Short, easy and worth the small entry fee."
+    activities: |-
+      - Walk the gorge trail past the Devil's Bridge to the waterfall.
+      - Budget about €3 entry.
+      - Park at [Stara Fužina](https://maps.app.goo.gl/WPTM88DMbc2d8ujNA) and follow [the Wikiloc route](https://nl.wikiloc.com/routes-wandelen/devils-bridge-en-cascada-mostnica-vanaf-stara-fuzina-191149688).
+    accommodation: rental-house
+    location:
+      - 13.875492487
+      - 46.330602375
+    blockType: fullDay
+  - time: Day 3
+    locationName: Kranjska Gora
+    description: "A 50 km e-bike loop from Kranjska Gora across the Italian border, past the Fusine lakes and two mountain huts. The standout day of the trip."
+    activities: |-
+      - Rent e-mountain bikes from [Extreme Vital](https://maps.app.goo.gl/Mu3NFaKR1c7rf7pS6), around €25 per bike.
+      - Ride the loop to Lago di Fusine Inferiore, Rifugio Zacchi and Planinarski Dom Tamar.
+      - Follow [the Wikiloc route](https://nl.wikiloc.com/routes-mountainbike/lago-di-fusine-inferiore-rifugio-zacchi-en-planinarski-dom-tamar-vanaf-log-191326222).
+      - Bring a passport. The route crosses into Italy.
+    location:
+      - 13.713710822
+      - 46.445980733
+    blockType: fullDay
+  - time: Day 4
+    locationName: Škocjan Caves
+    description: "A UNESCO-listed cave system in the karst region, with an underground canyon crossed by a bridge high above the river. Among the most impressive caves in Europe."
+    activities: |-
+      - Book a guided tour through [the park website](https://www.park-skocjanske-jame.si). Entry is around €17.
+      - Leave the camera packed. Photography is not permitted inside.
+      - Dress warmly. The caves stay cold regardless of the season.
+    location:
+      - 13.9936022
+      - 45.6655056
+    blockType: fullDay
+  - time: Day 5
+    locationName: Trieste
+    description: "The nearest Italian city, an easy detour from the karst region. Busy and not a highlight compared with the rest of this route."
+    activities: |-
+      - Treat it as a half day at most. The mountains and caves are the reason to be here.
+    location:
+      - 13.7772781
+      - 45.6496485
+    blockType: fullDay
+  - time: Day 6
+    locationName: Bled
+    description: "The classic Slovenian postcard, best approached on foot from a neighbouring village rather than driving to the lakeside car parks."
+    activities: |-
+      - Walk in from Bohinjska Bela, over the Velika Osojnica viewpoint and down past the castle.
+      - Follow [the Wikiloc route](https://nl.wikiloc.com/routes-wandelen/velika-osojnica-bled-castle-en-lago-bled-vanaf-bohinjska-bela-191454844).
+      - Circle the lake itself at the end rather than the start.
+    location:
+      - 14.1100595
+      - 46.3684202
+    blockType: fullDay
+  - time: Day 7
+    locationName: Planina Blato and the Seven Lakes
+    description: "The Valley of the Seven Lakes in Triglav National Park: 19 km and around 1,000 m of ascent from the Planina Blato car park. The biggest day of the trip."
+    activities: |-
+      - Start early from the Planina Blato parking area.
+      - Allow a full day for 19 km and 1,000 m of climbing.
+      - Follow [the Wikiloc route](https://nl.wikiloc.com/routes-wandelen/planina-blato-refugio-koca-pri-seven-lakes-valley-144981628).
+      - Check hut opening dates before counting on food along the way.
+    location:
+      - 13.8490805
+      - 46.3140114
+    blockType: fullDay
+  - time: Day 8
+    locationName: Velika Planina
+    description: "A high plateau of traditional herders' huts above Kamnik. Reachable by bike, on foot or by car plus a final hour's walk."
+    activities: |-
+      - Rent bikes at the Kamnik tourist information point, around €20.
+      - Ride the Velika Planina loop from Kamnik and follow [the Wikiloc route](https://nl.wikiloc.com/routes-outdoor/gpx-download-velika-planina-velika-planina-rondtocht-vanuit-kamnik-graben-191670226).
+      - Check the battery range first. Rental batteries may not cover the full climb, leaving you to walk the last stretch.
+      - Drive most of the way and walk the final hour instead if you would rather not cycle it.
+    location:
+      - 14.6616231
+      - 46.285883
+    blockType: fullDay
+  - time: Day 9
+    locationName: Ljubljana
+    description: "A compact, walkable capital with a dense cafe and restaurant scene along the river. An easy contrast to the mountain days."
+    activities: |-
+      - Walk the riverside centre and the old town.
+      - Browse the independent shops, which are the better part of the centre.
+    location:
+      - 14.5069289
+      - 46.0500268
+    blockType: fullDay
+  - time: Day 10
+    locationName: Radovljica
+    description: "A small medieval town near Bled with a preserved old centre, and a good final stop on the way out."
+    activities: |-
+      - Walk the old town, which takes about an hour.
+      - Visit the wine shop, where bottles can be filled from the barrel.
+    location:
+      - 14.1720227
+      - 46.343509
+    blockType: fullDay
