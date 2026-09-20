@@ -1,0 +1,73 @@
+title: "Ushuaia: Hiking at the End of the World"
+status: draft
+category:
+  - backpacking
+  - hiking
+coverImage: argentina-step06-ushuaia-01.jpg
+description: "Tierra del Fuego from the southernmost city in the world. A compact base for four to six days on foot: an easy introduction in the national park, a glacier day hike straight out of town, and a two-day trek over a mountain pass to Laguna del Caminante. Expect four seasons in a single day — snow in midsummer is normal. From here it is a twelve-hour bus ride on to Chilean Patagonia."
+period: January 2024
+budget:
+  currency: EUR
+  perPerson: true
+activities: |-
+  Hiking
+
+  Multi-day trekking
+
+  Camping
+
+  Glaciers
+
+  National park
+added: "2025-12-26"
+countries:
+  - argentina
+importantPreparations: |-
+  - **Pack for winter even in high summer.** December to February is the hiking season, but snow, rain, wind and sun can all arrive within a few hours. Waterproofs, layers and a genuinely cold-rated sleeping bag are not optional.
+  - **Camping gear earns its keep here.** A tent that handles wind and wet snow, plus a good sleeping mat, makes the difference between a rough night and a fine one. Many mountain campsites have a heated shared hut for cooking and drying gear.
+  - **Download offline maps and GPS tracks.** Trail markers are sparse and disappear entirely in poor visibility; there is no phone signal on the passes.
+  - **Ushuaia is expensive** compared with the rest of Argentina. Self-catering from the supermarket keeps costs down, and a cheap apartment in town is useful for drying out and repacking between treks.
+  - **Vegetarians:** say so clearly and more than once, and carry backup food. Meat is the default in everything, including dishes described as vegetable-based.
+  - **Dinner starts late.** An invitation for seven in the evening can mean sitting down to eat at midnight. Eat something beforehand.
+  - **Onward to Chile:** buses to Punta Arenas take around twelve hours and cross two border posts. Book a day or two ahead and keep passports and any fresh food declarations to hand.
+itinerary:
+  - time: Day 1
+    locationName: Ushuaia
+    description: "Ushuaia lies between the Beagle Channel and the Fuegian Andes, and is the jumping-off point for Antarctic cruises, Tierra del Fuego National Park and the trekking routes in the mountains behind town. Family-run campsites in the hills above the centre are the cheapest base and put the trailheads within reach."
+    activities: |-
+      - Stay at one of the mountain campsites above town; most have a shared hut with a wood stove for cooking, warming up and drying gear.
+      - Day hike in Tierra del Fuego National Park at the end of Ruta 3 — well marked and beautiful, though the busiest trails in the region.
+      - Hike to Glaciar Vinciguerra, a longer and muddier climb starting close to town, with wide views over the surrounding peaks.
+      - Use the town itself for resupply, laundry and onward bus tickets between hikes.
+      - Accept dinner invitations from hosts and other campers; the shared meal is a large part of the experience, however late it starts.
+    location:
+      - -68.291917661
+      - -54.766414193
+    gallery:
+      - media: argentina-step06-ushuaia-01.jpg
+      - media: argentina-step06-ushuaia-02.jpg
+      - media: argentina-step06-ushuaia-03.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: flight
+  - time: Day 2
+    locationName: Laguna del Caminante
+    description: "The standard introduction to multi-day trekking around Ushuaia: two days into the Sierra Valdivieso to a lake camp, crossing a high pass on the way back. Distances are short, but the weather turns by the hour — sun, rain, wind and a snowstorm in a single crossing is an ordinary day. \"Que te sea leve\", roughly \"may it be light on you\", is what locals say to anyone setting off."
+    activities: |-
+      - Pack for one night only; the route is short enough to walk with two daypacks instead of full packs.
+      - Camp at Laguna del Caminante, a mountain lake ringed by peaks and one of the finest pitches in the area.
+      - Cross the pass on the second day. Markers are minimal and easily lost in snow or fog, so carry a GPS track.
+      - Look for the glacier cave just off the route near the pass; it is simple to walk straight past in bad visibility.
+      - Finish in Ushuaia and take a night or two indoors before the long bus south-west into Chile.
+    location:
+      - -68.446071172
+      - -54.758054594
+    gallery:
+      - media: argentina-step07-laguna-del-caminante-01.jpg
+      - media: argentina-step07-laguna-del-caminante-02.jpg
+      - media: argentina-step07-laguna-del-caminante-03.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: walking
+      departureMethod: public_bus
+      transportationNotes: Onward to Punta Arenas, Chile — around twelve hours by bus.

@@ -1,0 +1,137 @@
+title: Buenos Aires and the Argentine Pampas
+status: draft
+category:
+  - backpacking
+  - city_trip
+coverImage: argentina-step01-tigre-01.jpg
+description: "A soft landing in Argentina: the waterways of the Paraná Delta at Tigre, two quiet country towns out in the Pampas, and eight days in Buenos Aires itself — Spanish classes, parrillas, milongas and one of the greenest capital cities in South America. Built as the opening leg of a longer South American route."
+period: January 2024
+budget:
+  currency: EUR
+  perPerson: true
+activities: |-
+  City walking
+
+  Spanish language school
+
+  Tango and milongas
+
+  Delta boat trips
+
+  Markets and museums
+
+  Wine tasting
+added: "2025-12-26"
+countries:
+  - argentina
+importantPreparations: |-
+  - **Learn some Spanish first.** Outside tourist venues almost nobody speaks English. People are extremely helpful, but a week of classes at the start of the trip pays for itself.
+  - **Cash and inflation.** Inflation ran at around 140% in 2023, so peso prices move fast and quoted prices go stale quickly. The largest banknote is worth roughly one euro, so a single ATM withdrawal comes out as a brick of notes — bring something to carry it in.
+  - **Everything runs on WhatsApp.** Hotels, car rentals, tours and restaurants are usually booked by chat rather than through a website. Get a local SIM or eSIM early.
+  - **City buses** cost a few euro cents but need a SUBE card, sold at kiosks and metro stations. Working out which line to take takes a day or two; after that the network is excellent.
+  - **Food.** Cooking is simple and meat-centred, and vegetarian options outside the capital can be bare. Nothing is spicy, whatever the waiter warns you about. The Italian-style ice cream is exceptional.
+  - **Mate** is shared from a single cup passed around the group, and drinking it is a conversation ritual as much as a drink. Accept when it is offered.
+itinerary:
+  - time: Day 1
+    locationName: Tigre
+    description: "Tigre sits at the northern edge of Buenos Aires, where the Paraná Delta breaks into hundreds of channels lined with stilt houses. Almost everything here moves by boat, and the whole delta is a weekend escape for city residents — somewhere between a canal village and a holiday park spread over several kilometres of water. The slow pace makes it a good first stop for shaking off a long-haul flight and the four-hour time difference."
+    activities: |-
+      - Walk the riverfront and the delta-side streets of the town itself.
+      - Take a taxi boat further up the delta to the quieter channels, where riverside restaurants and kayak rentals cluster.
+      - Watch the boat traffic that serves the delta's houses — for most of them it is the only way in or out.
+      - Use the first evening to sort out cash, a local SIM and onward tickets before heading inland.
+    location:
+      - -58.5808967
+      - -34.4226513
+    gallery:
+      - media: argentina-step01-tigre-01.jpg
+      - media: argentina-step01-tigre-02.jpg
+      - media: argentina-step01-tigre-03.jpg
+      - media: argentina-step01-tigre-04.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: flight
+      departureMethod: bus
+  - time: Day 2
+    locationName: Capilla del Señor
+    description: "A small country town in the Pampas roughly 80 km from Buenos Aires, reachable by regional train. There is effectively no tourism here — no English, few services and very little onward public transport — which is exactly the appeal. A handful of rural hotels on the edge of town offer pools and outdoor kitchens at prices well below the capital."
+    activities: |-
+      - Base yourself at one of the rural hotels outside town; most have a pool and a shared outdoor kitchen for self-catering.
+      - Walk into the town and through its streets — you will likely be the only foreign visitors there.
+      - Hike the disused railway line running out of town, past horse paddocks and open farmland.
+      - Bring serious mosquito repellent: the marshy sections along the railway are brutal at dusk.
+      - Budget for taxis or rideshares. The station is not always where you expect it, and connections between Pampas towns are unreliable.
+    location:
+      - -59.0991865
+      - -34.2941087
+    gallery:
+      - media: argentina-step02-capilla-del-senor-01.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: train
+      departureMethod: taxi
+  - time: Day 3
+    locationName: San Antonio de Areco
+    description: "The best-known gaucho town in the Pampas, on the Areco river about 110 km from Buenos Aires. Colonial streets, silversmith workshops and a gaucho museum make it the classic overnight stop in the countryside, and unlike its neighbours it has a direct bus connection to the capital."
+    activities: |-
+      - Visit the gaucho museum on the edge of town. Displays are Spanish-only, so bring a translation app or a guide if you want to follow the story.
+      - Swim in the river running through the town centre — the local summer routine.
+      - Stay in one of the old hospedajes in the centre; several are barely staffed and simply hand you the keys to the whole building.
+      - Drink in the historic corner bars, several of which have been serving for over a century.
+      - Take the direct bus on to Buenos Aires (about two hours). Routing between small Pampas towns almost always means going via the capital.
+    location:
+      - -59.4734187
+      - -34.2437294
+    gallery:
+      - media: argentina-step03-san-antonio-des-areco-01.jpg
+      - media: argentina-step03-san-antonio-des-areco-02.jpg
+      - media: argentina-step03-san-antonio-des-areco-03.jpg
+      - media: argentina-step03-san-antonio-des-areco-04.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: public_bus
+  - time: Day 4
+    locationName: Buenos Aires (1/2)
+    description: "Buenos Aires is enormous and rewards a long stay — eight days is a sensible minimum and still feels short. A good way to structure the first half: enrol in a week of group Spanish classes in the morning and use the afternoons to work through the neighbourhoods one at a time."
+    activities: |-
+      - Take a week of group Spanish lessons. Several schools in the centre run rolling weekly courses, and the classes are a fast way to meet other travellers.
+      - Rent an apartment rather than a hotel; short-term duplexes and studios are plentiful and cheap by European standards.
+      - Visit Recoleta cemetery with a guide — an extraordinary city of mausoleums, and far more interesting with the stories attached.
+      - Walk the botanical garden and the Japanese garden in Palermo.
+      - Shop in Palermo, the city's design and boutique district.
+      - Book a tango show with dinner and hotel pick-up. Unashamedly touristy, and worth doing once.
+      - Eat at the upmarket vegan restaurants in Palermo and the centre — Buenos Aires has one of the best plant-based scenes in South America.
+    location:
+      - -58.40197044
+      - -34.589691162
+    gallery:
+      - media: argentina-step04-buenos-aires-12-01.jpg
+      - media: argentina-step04-buenos-aires-12-02.jpg
+      - media: argentina-step04-buenos-aires-12-03.jpg
+      - media: argentina-step04-buenos-aires-12-04.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+  - time: Day 5
+    locationName: Buenos Aires (2/2)
+    description: "The second half of a Buenos Aires stay is where the city's own rhythms surface: grill houses, long park afternoons, the painted docks of La Boca, Malbec, and the milongas where tango is danced rather than performed. Tango began as a dance between rival immigrant communities, and the neighbourhood halls still feel closer to that than the dinner shows do."
+    activities: |-
+      - Eat at a neighbourhood parrilla (grill house) — the default social setting for any group meal.
+      - Walk the Bosques de Palermo, the largest city park in the country and a genuine full afternoon.
+      - Visit La Boca, the birthplace of tango and the most colourful, most artistic quarter of the city.
+      - Taste Argentine wines, then head to a milonga such as La Catedral: beginner classes early in the evening, open dancing until late.
+      - Carry on to the city's electronic clubs afterwards — nightlife here does not really start before 2am.
+      - Spend a Sunday at the San Telmo market: fourteen blocks of stalls plus an indoor food hall.
+      - Watch a game of paleta frontón or padel, the local racquet sports, at a neighbourhood club.
+    location:
+      - -58.401997507
+      - -34.589697457
+    gallery:
+      - media: argentina-step05-buenos-aires-22-01.jpg
+      - media: argentina-step05-buenos-aires-22-02.jpg
+      - media: argentina-step05-buenos-aires-22-03.jpg
+      - media: argentina-step05-buenos-aires-22-04.jpg
+    blockType: fullDay
+    transportation:
+      departureMethod: flight
