@@ -146,7 +146,7 @@ export default function AboutPage() {
             Explore our collection of authentic travel itineraries and start planning your next journey.
           </p>
           <Link 
-            href="/trips"
+            href="/adventures"
             className="inline-block px-8 py-4 bg-primary text-primary-foreground font-heading font-bold text-lg rounded-full transition-opacity duration-300 hover:opacity-90"
           >
             Explore Our Adventures

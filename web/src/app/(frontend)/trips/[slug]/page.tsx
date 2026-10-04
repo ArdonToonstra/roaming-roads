@@ -49,11 +49,6 @@ export default async function TripDetailPage({ params }: TripPageProps) {
         <div className="absolute inset-0 bg-black/40" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <Link
-            href="/trips"
-            className="inline-flex items-center gap-2 text-white hover:text-[#F57D50] transition-colors duration-200 mb-8">
-          </Link>
-
           <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
             {trip.title}
           </h1>

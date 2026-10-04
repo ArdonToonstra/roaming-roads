@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
 import MapController from './MapController';
 import type * as L from 'leaflet';
+import leaflet from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 
 // Types for Leaflet
@@ -103,7 +104,9 @@ export interface TripDetailMapProps {
 export default function TripDetailMap({ trip, heightClass, activeIndex, interactive = true, onMarkerClick }: TripDetailMapProps) {
   // mapRef is used for initial bounds fitting when the map loads
   const mapRef = useRef<LeafletMapInstance | null>(null);
-  const leafletRef = useRef<LeafletModule | null>(null);
+  // Seeded synchronously so markers get their divIcon on the first render;
+  // otherwise Leaflet's default icon requests marker-icon.png relative to the page.
+  const leafletRef = useRef<LeafletModule | null>(leaflet as unknown as LeafletModule);
 
   const markers = useMemo(() => {
     if (!trip.itinerary) return [];

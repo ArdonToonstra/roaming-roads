@@ -108,7 +108,7 @@ export default async function HomePage() {
                   We're currently adding our travel stories and adventures. Check back soon for authentic travel experiences!
                 </p>
                 <Link
-                  href="/trips"
+                  href="/adventures"
                   className="inline-block px-6 py-3 bg-primary text-primary-foreground font-heading font-bold rounded-full hover:opacity-90 transition-opacity duration-300"
                 >
                   Explore Trips

@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
 import { getCombinedCountryBounds, getCountryBounds } from '@/lib/countryBounds';
 import type * as L from 'leaflet';
+import leaflet from 'leaflet';
 import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 
 // Types for Leaflet
@@ -60,7 +61,9 @@ function extractBlockCoords(block: FullDayBlock | WaypointBlock) {
 
 export default function SmallOverviewMap({ trip }: { trip: Trip }) {
   const mapRef = useRef<LeafletMapInstance | null>(null);
-  const leafletRef = useRef<LeafletModule | null>(null);
+  // Seeded synchronously so markers get their divIcon on the first render;
+  // otherwise Leaflet's default icon requests marker-icon.png relative to the page.
+  const leafletRef = useRef<LeafletModule | null>(leaflet as unknown as LeafletModule);
   const [isLeafletLoaded, setIsLeafletLoaded] = useState(false);
 
   const markers = useMemo(() => {

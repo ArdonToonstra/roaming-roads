@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { getImageUrl } from '@/lib/images';
 import { Clock } from 'lucide-react';
 import type * as L from 'leaflet';
+import leaflet from 'leaflet';
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
@@ -98,7 +99,9 @@ export interface TripMapProps {
 
 export default function TripMap({ trips, onMarkerHover, hoveredTripId }: TripMapProps) {
   const mapRef = useRef<LeafletMapInstance | null>(null);
-  const leafletRef = useRef<LeafletModule | null>(null);
+  // Seeded synchronously so markers get their divIcon on the first render;
+  // otherwise Leaflet's default icon requests marker-icon.png relative to the page.
+  const leafletRef = useRef<LeafletModule | null>(leaflet as unknown as LeafletModule);
 
   const markers = useMemo(() => {
     return trips.map(t => ({ trip: t, coord: extractRepresentativeCoordinate(t) })).filter(m => m.coord);
