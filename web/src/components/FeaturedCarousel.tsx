@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Trip } from '@/types/payload';
+import { Trip } from '@/types/content';
 import { getImageUrl } from '@/lib/images';
 
 // This is the card component

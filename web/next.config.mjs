@@ -1,24 +1,10 @@
-import { withPayload } from '@payloadcms/next/withPayload'
-
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  // Your Next.js config here
-  sassOptions: {
-    silenceDeprecations: ['legacy-js-api', 'import'],
-    quietDeps: true,
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '*.public.blob.vercel-storage.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'localhost',
-      }
-    ],
-  },
+export default {
+  // Plain HTML/CSS/JS in out/ — no Node server to run on the Pi.
+  output: 'export',
+  // Static export has no image optimizer; scripts/fetch-media.ts already
+  // resized everything into public/media.
+  images: { unoptimized: true },
+  // Emit /trips/foo/index.html so any web server resolves it without rewrites.
+  trailingSlash: true,
 }
-
-export default withPayload(nextConfig, { devBundleServerPackages: false })

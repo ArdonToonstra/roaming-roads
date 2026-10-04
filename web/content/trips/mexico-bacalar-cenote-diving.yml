@@ -1,0 +1,75 @@
+title: Bacalar Lagoon and Cenote Diving
+status: draft
+category:
+  - backpacking
+  - diving
+coverImage: mexico-step01-bacalar-01.jpg
+description: "The last stretch of the Yucatán before Cancún. Sailing the freshwater Laguna de los Siete Colores at Bacalar, then cave diving the cenotes near Akumal, including a technical route with passages as narrow as 1.2 metres."
+period: June 2024
+budget:
+  currency: EUR
+  perPerson: true
+activities: |-
+  Cenote diving
+
+  Sailing
+
+  Swimming
+
+  Beach time
+added: "2025-12-26"
+countries:
+  - mexico
+importantPreparations: |-
+  - **Cenote diving demands good buoyancy control.** Instructors assess it on the first dive and only then allow the advanced routes. These are overhead environments with real safety rules.
+  - **Book dives with a shop that briefs properly.** Expect a detailed run-through of the route and the safety procedure before entering the water.
+  - **Hurricane season runs June to November.** Storms turn cenote water brown and cancel dives at short notice, so keep the schedule loose.
+  - **Bacalar is cheaper and quieter than the Riviera Maya coast.** It is worth more nights than most itineraries give it.
+  - **Hire the dive shop's photographer** if you want images. Cameras are hard to handle in a cave.
+itinerary:
+  - time: Day 1
+    locationName: Bacalar
+    description: "A long freshwater lagoon known as the Lake of Seven Colours, with cenotes along its length and a low-key town on the shore."
+    activities: |-
+      - Sail the lagoon for an afternoon. A typical route takes in three cenotes and a bird island.
+      - Swim from the public piers, the cheap alternative to a boat trip.
+      - Eat tacos on the waterfront and watch the evening storms cross the lagoon.
+    location:
+      - -88.3922556
+      - 18.6782559
+    gallery:
+      - media: mexico-step01-bacalar-01.jpg
+      - media: mexico-step01-bacalar-02.jpg
+      - media: mexico-step01-bacalar-03.jpg
+      - media: mexico-step01-bacalar-04.jpg
+      - media: mexico-step01-bacalar-05.jpg
+      - media: mexico-step01-bacalar-06.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: public_bus
+  - time: Day 2
+    locationName: Akumal
+    description: "The base for cenote diving on the Riviera Maya, an hour south of Playa del Carmen. Dives run through flooded cave systems of stalactites, fossils and air pockets."
+    activities: |-
+      - Dive the cenotes for stalagmites, stalactites, shell and coral fossils, and a bat cave where you surface mid-dive.
+      - Ask about Tak Bi Ha if your buoyancy passes the first assessment. It includes sections only 1.2 m wide.
+      - Keep beach days flexible in storm season. Private cenotes silt up brown after heavy rain.
+      - Use Akumal as the final stop before flying out of Cancún, around two hours north.
+    location:
+      - -87.3173404
+      - 20.398797
+    gallery:
+      - media: mexico-step02-akumal-02.jpg
+      - media: mexico-step02-akumal-03.jpg
+      - media: mexico-step02-akumal-05.jpg
+      - media: mexico-step02-akumal-06.jpg
+      - media: mexico-step02-akumal-07.jpg
+      - media: mexico-step02-akumal-08.jpg
+      - media: mexico-step02-akumal-09.jpg
+      - media: mexico-step02-akumal-10.jpg
+      - media: mexico-step02-akumal-11.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: flight

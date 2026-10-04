@@ -9,7 +9,7 @@ const TripDetailMap = dynamic(() => import('@/components/TripDetailMap'), {
   loading: () => <div className="h-full w-full bg-muted/20 animate-pulse flex items-center justify-center text-muted-foreground text-sm">Loading Map...</div>
 });
 import RichText from '@/components/RichText';
-import { Trip, CmsFullDayBlock, CmsWaypointBlock, Media, Accommodation } from '@/types/payload';
+import { Trip, FullDayBlock, WaypointBlock, MediaItem, Accommodation } from '@/types/content';
 import {
   Clock, ChevronLeft, ChevronRight, X, Bed,
   Car, Plane, Train, Bus, Ship, MapPinIcon, Footprints,
@@ -32,23 +32,22 @@ interface TransportationData {
 // Override specific fields for better typing in this component
 type StepFieldsOverride = {
   transportation?: TransportationData;
-  accommodation?: string | { name?: string; notes?: Record<string, unknown>[] };
 };
 
 // Define StepBlock as a UNION of the two modified types
-type FullDayStep = Omit<CmsFullDayBlock, 'transportation' | 'accommodation'> & StepFieldsOverride;
-type WaypointStep = Omit<CmsWaypointBlock, 'transportation' | 'accommodation'> & StepFieldsOverride;
+type FullDayStep = Omit<FullDayBlock, 'transportation'> & StepFieldsOverride;
+type WaypointStep = Omit<WaypointBlock, 'transportation'> & StepFieldsOverride;
 
 export type StepBlock = FullDayStep | WaypointStep;
 
 interface StepsLayoutProps { trip: Trip }
 
-interface GalleryItem {
-  media?: Media | string | null;
-  id?: string | null;
-}
-
 // --- Helpers ---
+
+// Only fullDay steps carry an accommodation; narrow the union safely.
+function getAccommodation(block: StepBlock): Accommodation | undefined {
+  return 'accommodation' in block ? block.accommodation : undefined;
+}
 
 function getTransportationIcon(method: string) {
   const normalizedMethod = method.toLowerCase().replace(/[_\s-]/g, '_');
@@ -89,7 +88,7 @@ function buildConnectorLabel(prev: StepBlock | null, current: StepBlock) {
 
 // --- Sub-Components ---
 
-function GalleryCarousel({ items }: { items: GalleryItem[] }) {
+function GalleryCarousel({ items }: { items: MediaItem[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -155,8 +154,7 @@ function GalleryCarousel({ items }: { items: GalleryItem[] }) {
           className="flex gap-2 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 no-scrollbar"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {items.map((item, idx) => {
-            const media: Media | null = typeof item.media === 'object' ? item.media : null;
+          {items.map((media, idx) => {
             if (!media) return null;
             const alt = media.alt || `Photo ${idx + 1}`;
 
@@ -166,8 +164,7 @@ function GalleryCarousel({ items }: { items: GalleryItem[] }) {
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation(); // Prevent clicking image from activating the step card
-                  const galleryImages = items.map((item, i) => {
-                    const m: Media | null = typeof item.media === 'object' ? item.media : null;
+                  const galleryImages = items.map((m, i) => {
                     return m ? { url: getImageUrl(m.url), alt: m.alt || `Photo ${i + 1}` } : null;
                   }).filter(Boolean) as Array<{ url: string; alt: string }>;
 
@@ -359,21 +356,20 @@ function ItineraryBlock({
           </h3>
 
           <div className="flex flex-wrap items-center gap-3 text-xs text-[#2A9D8F] font-medium">
-            {block.accommodation && (
+            {getAccommodation(block) && (
               <div className="flex items-center gap-1" title="Accommodation">
                 <Bed size={14} />
-                <span 
+                <span
                   className="truncate max-w-[150px] sm:max-w-[200px] cursor-pointer hover:underline transition-all"
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (typeof block.accommodation === 'object' && block.accommodation) {
-                      setSelectedAccommodation(block.accommodation as Accommodation);
+                    const accommodation = getAccommodation(block);
+                    if (accommodation) {
+                      setSelectedAccommodation(accommodation);
                     }
                   }}
                 >
-                  {typeof block.accommodation === 'string'
-                    ? block.accommodation
-                    : (block.accommodation?.name || 'Accommodation')}
+                  {getAccommodation(block)?.name || 'Accommodation'}
                 </span>
               </div>
             )}
@@ -631,17 +627,19 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
             {trip.itinerary.map((block, index) => {
               const step = block as unknown as StepBlock;
               return (
-                <React.Fragment key={block.id || index}>
+                <React.Fragment key={index}>
                   <ItineraryBlock
                     block={step}
                     index={index}
                     active={activeIndex === index}
-                    onClick={() => handleStepClick(index)}                    setSelectedAccommodation={setSelectedAccommodation}                  />
+                    onClick={() => handleStepClick(index)}
+                    setSelectedAccommodation={setSelectedAccommodation}
+                  />
 
-                  {index < (trip.itinerary!.length - 1) && (
+                  {index < (trip.itinerary.length - 1) && (
                     <Connector
                       prevBlock={step}
-                      nextBlock={trip.itinerary![index + 1] as unknown as StepBlock}
+                      nextBlock={trip.itinerary[index + 1] as unknown as StepBlock}
                     />
                   )}
                 </React.Fragment>
@@ -674,16 +672,12 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
 
           {/* Fullmap overlay card — shown when a marker is clicked */}
           {view === 'fullmap' && selectedMarkerIndex !== null && (() => {
-            const block = trip.itinerary![selectedMarkerIndex] as unknown as StepBlock;
+            const block = trip.itinerary[selectedMarkerIndex] as unknown as StepBlock;
             const transportInfo = buildConnectorLabel(null, block);
             const TransportIcon = transportInfo?.Icon;
-            const accName = typeof block.accommodation === 'string'
-              ? block.accommodation
-              : block.accommodation?.name;
+            const accName = getAccommodation(block)?.name;
             const isFullDay = block.blockType === 'fullDay';
-            const firstMedia = block.gallery && block.gallery.length > 0
-              ? (typeof block.gallery[0].media === 'object' ? block.gallery[0].media as import('@/types/payload').Media : null)
-              : null;
+            const firstMedia = block.gallery && block.gallery.length > 0 ? block.gallery[0] : null;
             const coverUrl = firstMedia ? getImageUrl(firstMedia.url) : null;
 
             // Position: use drag position when dragged, otherwise auto-place above clicked marker
@@ -803,7 +797,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
             {/* Header Image */}
             {selectedAccommodation.media && selectedAccommodation.media.length > 0 && (() => {
               const coverPhoto = selectedAccommodation.media[0];
-              const url = typeof coverPhoto === 'object' ? getImageUrl(coverPhoto.url) : getImageUrl(coverPhoto);
+              const url = getImageUrl(coverPhoto.url);
               if (!url) return null;
               return (
                 <div className="relative h-64 w-full bg-gray-200">
@@ -830,9 +824,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
                   </span>
                   {selectedAccommodation.country && (
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
-                      {typeof selectedAccommodation.country === 'string' 
-                        ? selectedAccommodation.country 
-                        : selectedAccommodation.country.name}
+                      {selectedAccommodation.country.name}
                     </span>
                   )}
                 </div>
@@ -866,7 +858,7 @@ export default function StepsLayout({ trip }: StepsLayoutProps) {
                   <h3 className="text-lg font-semibold text-gray-800 mb-4">More Photos</h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {selectedAccommodation.media.slice(1).map((photo, idx) => {
-                      const url = typeof photo === 'object' ? getImageUrl(photo.url) : getImageUrl(photo);
+                      const url = getImageUrl(photo.url);
                       if (!url) return null;
                       return (
                         <div key={idx} className="relative aspect-video bg-gray-200 rounded-lg overflow-hidden">

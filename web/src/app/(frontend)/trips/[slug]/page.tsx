@@ -2,7 +2,7 @@ import { data } from '@/lib/data';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Calendar, Camera, Navigation, Globe, AlertTriangle, Bed, Target, Euro } from 'lucide-react';
-import { Trip, Country, Media } from '@/types/payload';
+import { Country } from '@/types/content';
 import { notFound } from 'next/navigation';
 import { getImageUrl } from '@/lib/images';
 // Removed embedded map + itinerary; now lives under /journey subpage
@@ -16,46 +16,19 @@ interface TripPageProps {
   }>;
 }
 
-async function getTrip(slugOrId: string): Promise<Trip | null> {
-  try {
-    // Skip API calls for static assets (images, css, js, etc.)
-    if (slugOrId.match(/\.(png|jpg|jpeg|gif|svg|css|js|ico|woff|woff2|ttf|eot)$/i)) {
-      return null;
-    }
-
-    console.log('Fetching trip with slug/ID:', slugOrId);
-    const response = await data.getTrip(slugOrId);
-    console.log('Trip response:', response ? 'Found' : 'Not Found');
-    return response;
-  } catch (error) {
-    console.error('Failed to fetch trip:', error);
-    console.error('Slug/ID was:', slugOrId);
-    return null;
-  }
+export async function generateStaticParams() {
+  return (await data.getTripSlugs()).map((slug) => ({ slug }));
 }
-
-
 
 export default async function TripDetailPage({ params }: TripPageProps) {
   const { slug } = await params;
-  const trip = await getTrip(slug);
+  const trip = await data.getTrip(slug);
 
   if (!trip) {
     notFound();
   }
 
-  const coverImage = trip.coverImage;
-  // Prefer hero size if available
-  let imageUrl = '/placeholder-trip.jpg';
-  if (typeof coverImage === 'object' && coverImage) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const sizes: any = (coverImage as any).sizes;
-    const heroSizeUrl = sizes?.hero?.url;
-    const baseUrl = coverImage.url;
-    imageUrl = getImageUrl(heroSizeUrl || baseUrl || '/placeholder-trip.jpg');
-  } else if (typeof coverImage === 'string') {
-    imageUrl = getImageUrl(coverImage);
-  }
+  const imageUrl = getImageUrl(trip.coverImage);
 
   const country = (trip.countries && Array.isArray(trip.countries) && trip.countries.length > 0 && typeof trip.countries[0] === 'object')
     ? (trip.countries[0] as Country).name
@@ -76,11 +49,6 @@ export default async function TripDetailPage({ params }: TripPageProps) {
         <div className="absolute inset-0 bg-black/40" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <Link
-            href="/trips"
-            className="inline-flex items-center gap-2 text-white hover:text-[#F57D50] transition-colors duration-200 mb-8">
-          </Link>
-
           <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
             {trip.title}
           </h1>
@@ -215,7 +183,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                       {trip.itinerary
                         .filter((item) => item.blockType === 'fullDay')
                         .map((day, index) => {
-                          const fullDay = day as any;
+                          const fullDay = day as import('@/types/content').FullDayBlock;
                           return (
                             <li key={index} className="flex justify-between items-start gap-3 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
                               <span className="text-gray-800 font-medium flex-1" style={{ fontFamily: 'Lato, sans-serif' }}>
@@ -360,27 +328,25 @@ export default async function TripDetailPage({ params }: TripPageProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {trip.highlightsMedia
-                .sort((a, b) => a.order - b.order)
-                .map((highlight, index) => {
-                  const media = typeof highlight.media === 'object' ? highlight.media as Media : null;
-                  if (!media) return null;
+                .map((media, index) => {
+                  if (!media?.url) return null;
 
                   return (
                     <div key={index} className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
                       <div className="relative overflow-hidden h-80">
                         <Image
                           src={getImageUrl(media.url)}
-                          alt={highlight.caption || media.alt || `Highlight ${index + 1}`}
+                          alt={media.caption || media.alt || `Highlight ${index + 1}`}
                           fill
                           className="object-cover group-hover:scale-110 transition-transform duration-700"
                           unoptimized
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       </div>
-                      {highlight.caption && (
+                      {media.caption && (
                         <div className="p-6">
                           <p className="text-gray-700 leading-relaxed" style={{ fontFamily: 'Lato, sans-serif' }}>
-                            {highlight.caption}
+                            {media.caption}
                           </p>
                         </div>
                       )}
@@ -398,5 +364,3 @@ export default async function TripDetailPage({ params }: TripPageProps) {
     </div>
   );
 }
-
-// ClientItinerary has been moved to a dedicated client component file.

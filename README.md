@@ -1,75 +1,52 @@
 # Roaming Roads
 
-A personal travel content platform built with Payload CMS and Next.js — documenting road trips and adventures around the world.
+A personal travel content site built with Next.js — documenting road trips
+and adventures around the world. No CMS, no database: content is static
+YAML + images, edited directly in git.
 
 ## Architecture
 
-A single Next.js application containing both the frontend website and the CMS:
+A single Next.js application, exported as a static site (`output: 'export'`):
 
-- **`/web`** — Main application (Next.js 16 + Payload 3)
-  - **`src/app/(frontend)`** — Public-facing travel website
-  - **`src/app/(payload)`** — Admin panel and CMS API (`/admin`, `/api`)
+- **`/web`** — the Next.js 16 app
+  - **`src/app/(frontend)`** — every page (there's no admin panel or API)
+  - **`content/`** — trips, countries, accommodations as YAML (see
+    `web/content/README.md` for the schema and how to add a trip)
+  - **`public/images/`** — the site's images, alongside its other static
+    assets
+
+Hosting is on a Raspberry Pi behind a Cloudflare Tunnel — see
+`PI-MIGRATION.md` and `deploy/pi/README.md`.
 
 ## Local Development
 
-**Prerequisites:** Node.js ≥ 20.9, pnpm, Docker
+**Prerequisites:** Node.js ≥ 20.9, pnpm
 
-1. **Start the database:**
-   ```bash
-   cd web
-   docker compose up -d
-   ```
+```bash
+cd web
+cp .env.local.template .env.local
+pnpm install
+pnpm dev
+```
 
-2. **Configure environment:**
-   ```bash
-   cp .env.local.template .env.local
-   # Fill in PAYLOAD_SECRET (any random string for local dev)
-   ```
+Website: http://localhost:3000
 
-3. **Install and run:**
-   ```bash
-   pnpm install
-   pnpm dev
-   ```
+## Adding or editing content
 
-   - Website: http://localhost:3000
-   - Admin panel: http://localhost:3000/admin
+See `web/content/README.md`. In short: trips are one YAML file each under
+`web/content/trips/`, referencing countries and accommodations by id from
+`web/content/countries/` / `web/content/accommodations/`. Commit the change,
+then run `deploy/pi/deploy.sh` to publish it.
 
 ## Deployment
 
-The app is deployed on Vercel with a [Neon](https://neon.tech) PostgreSQL database and [Vercel Blob](https://vercel.com/docs/storage/vercel-blob) for media storage.
+Self-hosted on a Raspberry Pi behind a Cloudflare Tunnel. Deploys are manual
+and run from home over the LAN:
 
-### Required environment variables
-
-```env
-# Database (Neon)
-DATABASE_URI=postgresql://user:pass@host.neon.tech/db?sslmode=require
-
-# Payload
-PAYLOAD_SECRET=your-32-char-secret-key
-NEXT_PUBLIC_SERVER_URL=https://your-domain.vercel.app
-
-# Media storage (Vercel Blob)
-BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
-
-# Optional — better map tiles in the admin interface
-NEXT_PUBLIC_MAPTILER_KEY=your_maptiler_key
+```bash
+deploy/pi/deploy.sh
 ```
 
-## Collections
-
-| Collection | Description |
-|------------|-------------|
-| **Trips** | Travel itineraries with day-by-day itinerary blocks (full days, waypoints, points) |
-| **Countries** | Destination info, travel tips, safety levels, visa requirements |
-| **Accommodations** | Lodging with type, location, and media |
-| **Media** | Photos and videos stored in Vercel Blob |
-| **Users** | CMS admin accounts |
-
-## API
-
-Payload exposes REST and GraphQL endpoints automatically:
-
-- **REST:** `/api/[collection]`
-- **GraphQL:** `/api/graphql`
-- **Admin:** `/admin`
+This builds the static export and ships it to the Pi, where Caddy serves it.
+GitHub Actions only runs lint/typecheck/tests — it does not deploy. See
+`deploy/pi/README.md` for the Pi setup.

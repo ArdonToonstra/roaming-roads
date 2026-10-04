@@ -1,0 +1,19 @@
+name: Iceland
+countryCode: ISL
+capital: Reykjavik
+currency: ISK
+currencyName: Icelandic Krona
+bestTimeToVisit:
+  - january
+  - february
+  - march
+  - april
+  - may
+  - june
+  - july
+  - august
+  - september
+  - october
+  - november
+  - december
+travelTimeFromBrussels: 3.5

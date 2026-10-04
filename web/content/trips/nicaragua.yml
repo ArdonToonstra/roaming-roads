@@ -1,0 +1,265 @@
+title: Lakes, Lava, and Little Corn in Nicaragua
+status: published
+category:
+  - backpacking
+coverImage: nicaragua-step01-playa-maderas-02.jpg
+description: "Exploration of Nicaragua’s unique geography, from the volcanic Maribios chain to the turquoise waters of the Caribbean. This route covers the country’s diverse offerings: world-class surfing in Popoyo and Playa Madras, the nightlife of the colonial cities, and the remote diving ecosystems of the Corn Islands."
+period: April – May 2024
+budget:
+  amount: 2000
+  currency: EUR
+  perPerson: true
+activities: |-
+  Surfing
+
+  Diving
+
+  Partying
+
+  Vulcano climbing
+
+  Hiking
+
+  Canoying
+
+  Coffeefarms
+
+  Roadtrip
+added: "2025-12-26"
+countries:
+  - nicaragua
+itinerary:
+  - locationName: Managua Airport
+    pointType: intermediate
+    location:
+      - -86.165034135
+      - 12.140529478
+    blockType: point
+  - time: 3 days - 2 nights
+    locationName: Granada
+    description: As one of Central America's oldest colonial cities, Granada is defined by its vibrant architecture and its role as a social crossroads for travelers. The city serves as a primary gateway for both high-energy jungle nightlife and the tranquil volcanic landscapes of the surrounding region. Given the intense tropical heat, exploration is often balanced between historical walking tours and retreats to nearby water sources or air-conditioned spaces.
+    activities: |-
+      - Attend the Treehouse Party, a famous jungle event featuring multiple stages connected by suspension bridges.
+      - Explore the historic city center to view the preserved colonial buildings and cathedrals.
+      - Visit Laguna de Apoyo, a volcanic crater lake known for its warm waters, ideal for swimming, tubing, and lakeside lounging.
+      - Experience the international food scene, including popular spots like the local falafel bars.
+      - Use the city as a strategic base to store heavy luggage or camping equipment before transitioning to a lighter daypack for the next leg of the journey.
+    location:
+      - -85.9535897
+      - 11.9303801
+    gallery:
+      - media: nicaragua-step03-granada-01.jpg
+      - media: nicaragua-step03-granada-02.jpg
+      - media: nicaragua-step03-granada-03.jpg
+      - media: nicaragua-step03-granada-04.jpg
+      - media: nicaragua-step03-granada-05.jpg
+      - media: nicaragua-step03-granada-06.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: public_bus
+  - time: 2 days - 1 night
+    locationName: Volcán Mombacho
+    description: Volcán Mombacho is a dormant volcano overlooking Lake Nicaragua, famous for its rare cloud forest ecosystem. The slopes are home to unique biodiversity and secluded eco-lodges that offer total immersion in the jungle. While the altitude provides a break from the coastal heat, the environment remains highly humid and active with wildlife, providing a raw experience of Nicaragua’s volcanic highlands.
+    activities: |-
+      - Stay in secluded jungle cabins located halfway up the volcano for proximity to the cloud forest.
+      - Hike the established trails toward the volcano's summit.
+    location:
+      - -85.96708341
+      - 11.8302672
+    gallery:
+      - media: nicaragua-step09-volcan-mombacho-02.jpg
+      - media: nicaragua-step09-volcan-mombacho-03.jpg
+      - media: nicaragua-step09-volcan-mombacho-04.jpg
+      - media: nicaragua-step09-volcan-mombacho-05.jpg
+      - media: nicaragua-step09-volcan-mombacho-06.jpg
+      - media: nicaragua-step09-volcan-mombacho-07.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: public_bus
+  - time: 4 days - 3 nights
+    locationName: Ometepe Island
+    description: Formed by two massive volcanic peaks rising from Lake Nicaragua, Ometepe is a freshwater island defined by its fertile landscape and "slow travel" atmosphere. The island is largely navigated by scooter, passing through dense mango groves and small villages. It has become a center for permaculture, organic farming, and volcanic hiking, offering a distinct hippie-influenced vibe compared to the mainland.
+    activities: |-
+      - Rent scooters to navigate the island's circuit, which is the primary mode of transport.
+      - Practice morning yoga at the local chocolate factory.
+      - Hike the volcanic slopes to reach the San Ramon waterfall.
+      - Explore the lake's coastline via kayak or visit freshwater swimming holes.
+      - Tour permaculture farms and specialized mushroom laboratories to learn about sustainable cultivation.
+      - Sample seasonal fruit from the island’s abundant mango trees.
+      - Visit the main villages for local cuisine and healthy food options.
+
+      Reaching the island requires coordinating multiple transport modes, including shuttles, local "chicken" buses, and the ferry from San Jorge. Ensure that all scooter rental documents and licenses are in order, as police checkpoints are frequent on the main roads.
+    location:
+      - -85.516702904
+      - 11.491949599
+    gallery:
+      - media: nicaragua-step02-ometepe-island-01.jpg
+      - media: nicaragua-step02-ometepe-island-04.jpg
+      - media: nicaragua-step02-ometepe-island-06.jpg
+      - media: nicaragua-step02-ometepe-island-07.jpg
+      - media: nicaragua-step02-ometepe-island-08.jpg
+      - media: nicaragua-step02-ometepe-island-09.jpg
+      - media: nicaragua-step02-ometepe-island-10.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: public_bus
+  - time: 5 days - 4 nights
+    locationName: Playa Maderas
+    description: Eat, sleep, surf and repeat!
+    activities: |-
+      - Surfing. Consistent waves ideal for beginners; best at sunrise and sunset to avoid peak heat. On-beach surf schools providing lessons for all levels.
+      - San Juan del Sur supply runs. Nearby hub for groceries, sun protection (zinc/lycra), and surf gear.
+      - Sunset viewing.
+    location:
+      - -85.907546205
+      - 11.292200988
+    gallery:
+      - media: nicaragua-step01-playa-maderas-02.jpg
+      - media: nicaragua-step01-playa-maderas-03.jpg
+      - media: nicaragua-step01-playa-maderas-05.jpg
+      - media: nicaragua-step01-playa-maderas-06.jpg
+      - media: nicaragua-step01-playa-maderas-07.jpg
+      - media: nicaragua-step01-playa-maderas-08.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: public_bus
+  - time: 2 days - 1 night
+    locationName: Popoyo
+    description: Popoyo is a premier destination on Nicaragua’s Emerald Coast, globally recognized for its consistent surf and offshore winds.
+    activities: |-
+      - Surf the breaks that cater to all skill levels, from the forgiving Main Break to the challenging Outer Reef.
+      - Access the region as a final beach chilling due to its relatively close proximity to the international airport in Managua.
+    location:
+      - -86.0960615
+      - 11.4495247
+    gallery:
+      - media: nicaragua-step10-popoyo-01.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: public_bus
+  - time: 2 days - 1 night
+    locationName: León / Las Peñitas
+    description: León serves as Nicaragua’s intellectual and political heart, characterized by its colonial history and landmark architecture. Just a short drive from the city center lies Las Peñitas, a tranquil fishing village and beach destination on the Pacific coast. This pairing allows for a quick cultural exploration of the city’s historic sites before retreating to the ocean to escape the inland heat.
+    activities: |-
+      - Climb the roof of the León Cathedral, the largest in Central America, for views of the surrounding volcanic chain.
+      - Take a walking tour through the city center to see the colonial plazas and local murals.
+      - Drive to the coast at Las Peñitas for beach walks along the volcanic sand.
+      - View the Pacific sunset from the various beachfront cafes and bars.
+    location:
+      - -86.8788302
+      - 12.4348568
+    gallery:
+      - media: nicaragua-step08-leon-las-penitas-01.jpg
+      - media: nicaragua-step08-leon-las-penitas-02.jpg
+      - media: nicaragua-step08-leon-las-penitas-03.jpg
+      - media: nicaragua-step08-leon-las-penitas-04.jpg
+      - media: nicaragua-step08-leon-las-penitas-05.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: public_bus
+  - time: 2 days - 1 night
+    locationName: Somoto Canyon/ Estelí
+    description: Located near the Honduran border, Somoto Canyon is one of the oldest rock formations in Central America, offering a rugged aquatic trekking experience. To the south lies Estelí, the industrial heart of Nicaragua’s tobacco region. This combination provides a transition from high-adrenaline river navigation to a deep dive into the world-class artisanal cigar industry.
+    activities: |-
+      - Somoto Canyon: get through a combination of hiking, swimming, and drifting with the river current. Cliff jumping from various heights into the deep canyon pools.
+      - Stay at rural fincas to experience traditional northern Nicaraguan hospitality and cuisine.
+      - Tour a professional cigar factory in Estelí to observe the fermentation and hand-rolling process.
+      - Sample world-renowned cigars directly from the production floor in the global "cigar mecca."
+    location:
+      - -86.70326411
+      - 13.45625745
+    gallery:
+      - media: nicaragua-step07-somoto-canyon-esteli-01.jpg
+      - media: nicaragua-step07-somoto-canyon-esteli-02.jpg
+      - media: nicaragua-step07-somoto-canyon-esteli-03.jpg
+      - media: nicaragua-step07-somoto-canyon-esteli-04.jpg
+      - media: nicaragua-step07-somoto-canyon-esteli-05.jpg
+      - media: nicaragua-step07-somoto-canyon-esteli-07.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: public_bus
+  - time: 2 days - 1 night
+    locationName: Reserva Natural Miraflor
+    description: Located in the northern highlands near Estelí, the Miraflor Nature Reserve is a high-altitude sanctuary known for its diverse microclimates and traditional farm-stay culture. Accessible via rugged roads that wind through expansive tobacco plantations, the area offers a cooler climate and a retreat into the Nicaraguan countryside. The reserve is characterized by its agricultural heritage, private waterfalls, and a high density of tropical birdlife, providing a focused look at rural life away from the primary tourist circuit.
+    activities: |-
+      - Navigate the scenic backroads and tobacco plantations by car for access to remote areas.
+      - Stay at a traditional finca (farm) to experience life among coffee and banana plantations.
+      - Hike through the forest to reach secluded waterfalls and natural swimming spots.
+      - Observe native bird species such as motmots, hummingbirds, and toucans from the finca gardens.
+      - Take advantage of the higher elevation for outdoor activities in more temperate conditions.
+    location:
+      - -86.27088554
+      - 13.21698405
+    gallery:
+      - media: nicaragua-step06-reserva-natural-miraflor-02.jpg
+      - media: nicaragua-step06-reserva-natural-miraflor-03.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: public_bus
+  - locationName: Managua Airport
+    pointType: intermediate
+    location:
+      - -86.165034135
+      - 12.140529478
+    blockType: point
+  - time: 6 days - 5 nights
+    locationName: Little Corn Island
+    description: Little Corn Island offers a stark contrast to the Nicaraguan mainland. This vehicle-free Caribbean island is defined by its Creole culture, limited infrastructure, and world-class marine biodiversity. With electricity typically restricted to specific daytime hours, the pace of life revolves around the ocean and the surrounding coral reefs. It is a premier destination for those seeking a disconnected, nature-focused retreat.
+    activities: |-
+      - Access the island via a domestic propeller flight to Big Corn followed by a local panga boat transfer.
+      - Multi-tank scuba diving excursions to observe nurse sharks, eagle rays, barracudas, and green moray eels.
+      - Experience night diving to view nocturnal marine life such as octopus, squid, and bioluminescent organisms.
+      - Oceanfront yoga sessions or snorkel the shallow reefs directly from the white sand beaches.
+      - Navigate the island entirely by foot, exploring secluded coastal paths and local Creole eateries.
+      - Enjoy a lifestyle disconnected from motorized noise and consistent power grids.
+    location:
+      - -82.98292077
+      - 12.28851035
+    gallery:
+      - media: nicaragua-step04-little-corn-island-01.jpg
+      - media: nicaragua-step04-little-corn-island-02.jpg
+      - media: nicaragua-step04-little-corn-island-04.jpg
+      - media: nicaragua-step04-little-corn-island-05.jpg
+      - media: nicaragua-step04-little-corn-island-07.jpg
+      - media: nicaragua-step04-little-corn-island-08.jpg
+      - media: nicaragua-step04-little-corn-island-09.jpg
+      - media: nicaragua-step04-little-corn-island-10.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: flight
+      departureMethod: boat
+  - time: 2 days - 1 nights
+    locationName: Big Corn Island
+    description: Big Corn Island serves as the more spacious counterpart to its smaller neighbor, offering a paved road network and a distinct Caribbean atmosphere. The island is characterized by its relaxed pace, reggae influences, and a local feel with fewer tourist crowds. It provides a blend of traditional Nicaraguan culture and island scenery, making it an ideal location for exploration by scooter.
+    activities: |-
+      - Transfer from Little Corn Island via the early morning panga boat to maximize daylight hours.
+      - Hire a scooter and discover secluded coastal spots.
+      - Sample a traditional Nicaraguan breakfast featuring gallo pinto (rice and beans), eggs, and fried plantains.
+      - Visit the island’s expansive white-sand beaches for swimming in turquoise waters.
+      - Take a boat shuttle to the offshore floating bar for sunset drinks.
+    location:
+      - -83.060856959
+      - 12.182645052
+    gallery:
+      - media: nicaragua-step05-big-corn-island-01.jpg
+      - media: nicaragua-step05-big-corn-island-02.jpg
+      - media: nicaragua-step05-big-corn-island-05.jpg
+      - media: nicaragua-step05-big-corn-island-06.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: boat
+      departureMethod: flight
+  - locationName: Managua Airport
+    pointType: intermediate
+    location:
+      - -86.165034135
+      - 12.140529478
+    blockType: point

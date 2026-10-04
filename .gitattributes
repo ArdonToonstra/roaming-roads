@@ -1,0 +1,3 @@
+# Files that run on Linux (the Pi) or under Git Bash must keep LF endings.
+*.sh text eol=lf
+Caddyfile text eol=lf

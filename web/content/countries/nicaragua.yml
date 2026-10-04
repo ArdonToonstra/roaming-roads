@@ -1,0 +1,17 @@
+name: Nicaragua
+countryCode: NIC
+capital: Managua
+currency: NIO
+currencyName: Córdoba
+officialLanguages:
+  - language: Spanish
+mainReligion: other
+mainReligionPercentage: 50
+visaRequirements: "From EU: No visa required for stays up to 90 days (tourist card required upon arrival, approx. $10)"
+safetyLevel: caution
+bestTimeToVisit:
+  - november
+  - december
+  - january
+  - february
+  - march

@@ -4,7 +4,7 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
 import { feature } from 'topojson-client'
 import worldData from 'world-atlas/countries-110m.json'
 import { geoCentroid } from 'd3-geo'
-import type { Trip, Country } from '@/types/payload'
+import type { Trip, Country } from '@/types/content'
 import type { Feature, FeatureCollection, Geometry } from 'geojson'
 
 // Country properties type for feature matching

@@ -1,0 +1,11 @@
+name: India
+countryCode: IND
+capital: New Delhi
+currency: INR
+currencyName: Indian Rupee
+bestTimeToVisit:
+  - november
+  - december
+  - january
+  - february
+  - march

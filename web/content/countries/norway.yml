@@ -1,0 +1,12 @@
+name: Norway
+countryCode: NOR
+capital: Oslo
+currency: NOK
+currencyName: Norwegian Krone
+officialLanguages:
+  - language: Norwegian
+  - language: Sami
+mainReligion: christianity
+mainReligionPercentage: 64
+visaRequirements: "From EU: No need for tourist visa"
+safetyLevel: very_safe

@@ -11,7 +11,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
         <p className="mb-6" style={{ color: '#263238' }}>We couldn't load this trip. This might be a temporary problem.</p>
         <div className="flex items-center justify-center gap-4">
           <button onClick={() => reset()} className="px-4 py-2 rounded bg-[#2A9D8F] text-white">Try again</button>
-          <Link href="/trips" className="px-4 py-2 rounded border">Back to trips</Link>
+          <Link href="/adventures" className="px-4 py-2 rounded border">Back to trips</Link>
         </div>
       </div>
     </div>

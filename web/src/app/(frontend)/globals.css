@@ -79,6 +79,11 @@
     color: hsl(255 35% 35%) !important;
   }
 
+  /* Leaflet panes use z-index 400–1000; keep them inside the map so they don't cover the nav (z-50) */
+  .leaflet-container {
+    isolation: isolate;
+  }
+
   /* Leaflet custom numbered markers */
   .rr-marker {
     display: flex;

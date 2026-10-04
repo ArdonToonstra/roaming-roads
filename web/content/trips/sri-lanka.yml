@@ -1,0 +1,284 @@
+title: Backpacking trip in Sri Lanka
+status: published
+category:
+  - backpacking
+coverImage: sri-lanka-overview.jpg
+highlightsMedia:
+  - media: IMG_2572.JPEG
+  - media: IMG_2592.JPEG
+  - media: IMG_2670.JPEG
+  - media: IMG_2693.JPEG
+  - media: IMG_3423.JPEG
+  - media: IMG_3708.JPEG
+  - media: IMG_3726.JPEG
+description: "Mist-covered mountains, ancient Buddhist temples, and palm-fringed coastlines. Sri Lanka is a backpacker's dream!  "
+period: January 2022
+budget:
+  amount: 2000
+  currency: EUR
+  perPerson: true
+activities: |-
+  - Tuktuk rides
+  - Visit ancient Buddhist temples 
+  - Diving & kite surfing 
+  - Game drive 
+  - Surfing
+  - ...
+importantPreparations: |-
+  - Buy your flights! We had tickets to Colombo for €850/person with Qatar Airlines (transfer in Doha). 
+  - Buy your travel permit in advance, through [the official site](https://www.eta.gov.lk/slvisa/). This will cost you around $50 for 30 days. 
+  - Install an eSim (only if you have eSim available on your phone).
+  - Bring cloths that cover your shoulders en knees if you want to visit the Buddhist temples. 
+  - Book a hotel for your first night. 
+  - Arrange a taxi from the airport to your first destination. We arranged all our taxi rides with Less Taxi (they have amazing whatsapp communication). 
+  - Good to know: We booked all our transport with Tuktuks and Taxi's. Public transport is complex and will take more time.
+added: "2025-10-26"
+countries:
+  - sri-lanka
+featuredAccommodations:
+  - margarita-village-kite-school
+  - polwaththa-eco-lodge
+itinerary:
+  - time: 3 days - 2 nights
+    locationName: Kalpitiya
+    description: "Arrive at the kitesurf paradise of Sri Lanka! "
+    activities: |-
+      - Once you arrive in Sri Lanka, Kalpitiya is a perfect first stop if you like to kite surf! You can arrange everything in the Margarita Village or in another kite school. 
+      - It is 3 hours driving from the airport, so if you arrive late, a closer destination would be more advisable (like Galle). 
+      - If you don't like to kitesurf there is plenty of other things to do here as diving, kayaking, swimming,.. 
+      - This place is not as touristic as other places. This makes this the perfect spot to acclimatize!
+    accommodation: margarita-village-kite-school
+    location:
+      - 79.752097207
+      - 8.239975144
+    gallery:
+      - media: 40fbdecb-6d40-4745-bead-971e6b90a122.jpg
+      - media: IMG_2400.JPEG
+      - media: IMG_2406-1.JPEG
+      - media: IMG_3290.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: taxi
+      departureMethod: taxi
+      travelTime:
+        value: 3
+        unit: hours
+      distance:
+        value: 140
+        unit: km
+  - time: 2 days - 1 night
+    locationName: Wilpattu National Park
+    description: "Do a safari in the biggest and older national park of Sri Lanka! See leopards, natural lakes, elephants,.. and many more! "
+    activities: |-
+      - Stay in one of the guesthouses around the park. They will happily arrange you with a safari ride in park. 
+      - You can choose between half day and full day trips. The trips start at 5:30am because then you will have the best changes to see wildlife in the park. We paid $100/full day trip. 
+      - Except a safari, there is not so much to do around here.
+    accommodation: green-sapphire-holiday-resort
+    location:
+      - 80.01301255
+      - 8.4496505
+    gallery:
+      - media: IMG_2423-1.JPEG
+      - media: IMG_2439.JPEG
+      - media: IMG_2446.JPEG
+      - media: IMG_2454-1.JPEG
+      - media: IMG_2472.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: taxi
+      departureMethod: taxi
+      travelTime:
+        value: 2
+        unit: hours
+      distance:
+        value: 100
+        unit: km
+  - time: 2 days - 1 night
+    locationName: Anuradhapura
+    description: Visit Sri Lanka's first ancient capital, a UNESCO World Heritage site known for its vast ruins of palaces, monasteries and massive stupas.
+    activities: |-
+      - You visit Anuradhapura for the culture. It is advisable to visit it with a guide who can explain about the history. 
+      - We booked a guide in our hotel who took us with the Tuktuk on a full day tour. Some of the temples are very expensive, that's why we decided to only visit the free sites and see the big temples from the outside.
+      - The guide took us to different places in Anuradhapura. In the evening he also brought us to Mihintale (where buddhism originated) where we climbed the stairs to the beautiful stupa and view over the jungle. 
+      - On you way to the next stop (Kandy) you can also visit the famous Sigiriya rock.
+    accommodation: hotel-heladiv
+    location:
+      - 80.4106096
+      - 8.334985
+    gallery:
+      - media: IMG_2485.JPEG
+      - media: IMG_2490.JPEG
+      - media: IMG_2500-1.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: taxi
+      departureMethod: taxi
+      travelTime:
+        value: 1
+        unit: hours
+      distance:
+        value: 40
+        unit: km
+  - time: 3 days - 2 nights
+    locationName: Kandy - Polwaththa Lodge
+    description: "Visit this lodge for a \"living-in-the-jungle\" experience near Kandy that focusing on nature, community, and authentic culture with activities like guided jungle treks, yoga and cooking classes. "
+    activities: |-
+      - This lodge is really worth visiting! It is in the middle of the jungle and you will have a great experience! 
+      - You can book different activities with the community: we visited the farm and the spice factory, yoga class, cooking class. Check [their website](https://www.polwaththa-ecolodges.com/thingstodo) for all the options!
+    accommodation: polwaththa-eco-lodge
+    location:
+      - 80.733159022
+      - 7.326125027
+    gallery:
+      - media: IMG_2522.JPEG
+      - media: IMG_2529.JPEG
+      - media: IMG_2538.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: taxi
+      departureMethod: taxi
+      travelTime:
+        value: 3.5
+        unit: hours
+      distance:
+        value: 140
+        unit: km
+  - time: 2 days - 1 night
+    locationName: Nuwara Eliya
+    description: A cool & scenic hill town, known as "Little England". Famous for its temperate climate, tea plantations, waterfalls and misty mountain landscapes
+    activities: |-
+      - We stopped somewhere half way between Kandy and Nuwara Eliya (in Ramboda close to the tea plantations) to avoid the massa tourism in Nuwara Eliya. 
+      - From here we visited a tea plantation and factory (Kingwood tea Factory for example), walked to the Ramboda waterfalls and visited an cute local food court. 
+      - Don't forget to eat in one of the restaurants with amazing views over the hills.
+      - After your visit in Ramboda, go to Nuwara Eliya and start the famous train ride to Ella! We bought our tickets at the train station but that seems to be a problem since the train ride became to popular..
+    accommodation: sicily-nature-resort
+    location:
+      - 80.693102462
+      - 7.058615777
+    gallery:
+      - media: IMG_2587-1.JPEG
+      - media: IMG_2624-1.JPEG
+      - media: IMG_2619.JPEG
+      - media: IMG_3623.JPEG
+      - media: IMG_3653.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: taxi
+      departureMethod: taxi
+      travelTime:
+        value: 3
+        unit: hours
+      distance:
+        value: 90
+        unit: km
+  - time: 3 days - 2 nights
+    locationName: Ella
+    description: "A town located in the hills of Sri Lanka with a laid-back atmosphere and unique attractions. "
+    activities: |-
+      - There are some 'must do's' in Ella like: 
+      - 
+        - Train spotting at Nine Arch Bridge
+        - Climb Ella Rock 
+        - Sunset at Little Adam's Peak 
+      - But there are other, lesser visited, things to do as well. Rent a scooter and drive to:
+      - 
+        - The Buduruwagala Temple
+        - Upper Diyaluma Waterfall
+    accommodation: hotel-rawana-den
+    location:
+      - 81.049014678
+      - 6.873194555
+    gallery:
+      - media: IMG_2642.JPEG
+      - media: IMG_2651.JPEG
+      - media: IMG_3679.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: train
+      departureMethod: taxi
+      travelTime:
+        value: 3
+        unit: hours
+      distance:
+        value: 60
+        unit: km
+  - time: 2 day - 1 night
+    locationName: Hiriketiya Beach
+    description: "A stunning, horseshoe-shaped bay on the south coast known for its golden sands, clear turquoise water, and lush jungle setting away from mass tourism. "
+    activities: |-
+      - Rent a surf board and a surf teacher! The waves are for beginners so perfect to start surfing here. 
+      - Relax on the beach and rent one of the chairs to read a book. 
+      - Walk to Blue Beach Island. 
+      - Attend a yoga or cooking class. 
+      - Watch the sunset from the beach.
+    accommodation: thatched-guest-house
+    location:
+      - 80.777105819
+      - 6.006209876
+    gallery:
+      - media: IMG_2658.JPEG
+      - media: IMG_2659.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: taxi
+      departureMethod: taxi
+      travelTime:
+        value: 3
+        unit: hours
+      distance:
+        value: 150
+        unit: km
+  - time: 3 days - 2 nights
+    locationName: Mirissa
+    description: "A popular beach and nightlife destination! "
+    activities: |-
+      Avoid Mirissa if you like the lesser touristic spots. Choose for another beach destination (as Hiriketiya Beach). 
+
+      What you can do in Mirissa: 
+
+      - Rent a surf board and a surf teacher! The waves are for beginners so perfect to start surfing here. 
+      - Relax on the beach and rent one of the chairs to read a book. 
+      - Watch the sunset from the beach. 
+      - Go whale and dolphin watching (if its the season) 
+      - Take pictures at the popular [Coconut Tree Hill](https://maps.app.goo.gl/Qk8r93MXyJxM1aDDA) spot. 
+      - Walk to Parrot Rock. 
+      - Go snorkling with seaturtles.
+    accommodation: morning-star
+    location:
+      - 80.4558128
+      - 5.9493634
+    gallery:
+      - media: IMG_2689.JPEG
+      - media: IMG_2692.JPEG
+      - media: IMG_2700.JPEG
+      - media: IMG_2705-1.JPEG
+      - media: IMG_3721.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: taxi
+      departureMethod: taxi
+      travelTime:
+        value: 1.5
+        unit: hours
+  - time: Daytrip
+    locationName: Galle
+    description: Visit Galle for the UNESCO  Fort, a remarkably preserved 17th-century Dutch fortress filled with colonial-era buildings, cobblestone streets, cafes and boutiques
+    activities: |-
+      - We visited Galle as a daytrip from Mirissa. It is also possible to stay the night here. 
+      - You can wander around the fort and buy souvenirs in the local stores and eat in the restaurants. 
+      - Walk on the city walls.
+    location:
+      - 80.214955
+      - 6.0328139
+    gallery:
+      - media: IMG_2728.JPEG
+    blockType: fullDay
+    transportation:
+      arrivalMethod: taxi
+      departureMethod: taxi
+      travelTime:
+        value: 1
+        unit: hours
+      distance:
+        value: 40
+        unit: km

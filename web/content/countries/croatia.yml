@@ -1,0 +1,17 @@
+name: Croatia
+countryCode: HRV
+capital: Zagreb
+currency: EUR
+currencyName: Euro
+officialLanguages:
+  - language: Croatian
+mainReligion: christianity
+mainReligionPercentage: 79
+visaRequirements: "From EU: No need for tourist visa"
+safetyLevel: very_safe
+bestTimeToVisit:
+  - may
+  - june
+  - july
+  - august
+  - september

@@ -1,0 +1,11 @@
+name: Chile
+countryCode: CGL
+capital: Santiago
+currency: CLP
+currencyName: Chilean Peso
+officialLanguages:
+  - language: Spanish
+mainReligion: christianity
+mainReligionPercentage: 54
+visaRequirements: "EU: no need for visa up to 90 days"
+safetyLevel: caution

@@ -2,11 +2,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useMemo, useRef, useEffect, useState } from 'react';
-import type { Trip, CmsFullDayBlock, CmsWaypointBlock } from '@/types/payload';
+import type { Trip, FullDayBlock, WaypointBlock } from '@/types/content';
 import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
 import { getCombinedCountryBounds, getCountryBounds } from '@/lib/countryBounds';
 import type * as L from 'leaflet';
+import leaflet from 'leaflet';
 import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 
 // Types for Leaflet
@@ -35,7 +36,7 @@ function toNumber(v: unknown): number | null {
   return null;
 }
 
-function extractBlockCoords(block: CmsFullDayBlock | CmsWaypointBlock) {
+function extractBlockCoords(block: FullDayBlock | WaypointBlock) {
   const b: any = block;
   const candidates: any[] = [];
   if (b.location?.coordinates) candidates.push(b.location.coordinates);
@@ -60,7 +61,9 @@ function extractBlockCoords(block: CmsFullDayBlock | CmsWaypointBlock) {
 
 export default function SmallOverviewMap({ trip }: { trip: Trip }) {
   const mapRef = useRef<LeafletMapInstance | null>(null);
-  const leafletRef = useRef<LeafletModule | null>(null);
+  // Seeded synchronously so markers get their divIcon on the first render;
+  // otherwise Leaflet's default icon requests marker-icon.png relative to the page.
+  const leafletRef = useRef<LeafletModule | null>(leaflet as unknown as LeafletModule);
   const [isLeafletLoaded, setIsLeafletLoaded] = useState(false);
 
   const markers = useMemo(() => {

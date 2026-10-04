@@ -1,0 +1,18 @@
+name: Guatemala
+countryCode: GTM
+capital: Guatemala City
+currency: GTQ
+currencyName: Guatemalan Quetzal
+officialLanguages:
+  - language: Spanish
+mainReligion: christianity
+mainReligionPercentage: 79
+visaRequirements: "From EU: No need for tourist visa up to 90 days"
+safetyLevel: caution
+bestTimeToVisit:
+  - november
+  - december
+  - january
+  - february
+  - march
+  - april

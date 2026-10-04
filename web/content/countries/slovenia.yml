@@ -1,0 +1,17 @@
+name: Slovenia
+countryCode: SVN
+capital: Ljubljana
+currency: EUR
+currencyName: Euro
+officialLanguages:
+  - language: Slovene
+mainReligion: christianity
+mainReligionPercentage: 58
+visaRequirements: "From EU: no visa requirements"
+safetyLevel: very_safe
+bestTimeToVisit:
+  - may
+  - june
+  - july
+  - august
+  - september

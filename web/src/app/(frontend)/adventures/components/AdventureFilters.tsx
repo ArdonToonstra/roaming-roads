@@ -4,7 +4,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { MapPin, Calendar, Filter, Search, X, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { Trip } from '@/types/payload';
+import { Trip } from '@/types/content';
 import Image from 'next/image';
 import { getImageUrl } from '@/lib/images';
 import {

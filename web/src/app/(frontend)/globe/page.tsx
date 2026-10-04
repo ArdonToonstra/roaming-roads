@@ -1,6 +1,6 @@
 import { data } from '@/lib/data';
 import MountTripMap from '@/components/mountTripMap';
-import type { Trip } from '@/types/payload';
+import type { Trip } from '@/types/content';
 
 async function getTrips(): Promise<Trip[]> {
   try {

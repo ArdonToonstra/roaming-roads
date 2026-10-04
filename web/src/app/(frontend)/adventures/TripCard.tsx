@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Calendar, Clock } from 'lucide-react';
 import { getImageUrl } from '@/lib/images';
-import type { Trip } from '@/types/payload';
+import type { Trip } from '@/types/content';
 
 export default function TripCard({ trip }: { trip: Trip }) {
   const imageUrl = getImageUrl(trip.coverImage);

@@ -2,11 +2,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useMemo, useRef } from 'react';
-import type { Trip, CmsFullDayBlock, CmsWaypointBlock, CmsPointBlock } from '@/types/payload';
+import type { Trip, FullDayBlock, WaypointBlock, PointBlock } from '@/types/content';
 import 'leaflet/dist/leaflet.css';
 import { env } from '@/lib/config';
 import MapController from './MapController';
 import type * as L from 'leaflet';
+import leaflet from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 
 // Types for Leaflet
@@ -35,7 +36,7 @@ function toNumber(v: unknown): number | null {
   return null;
 }
 
-function extractBlockCoords(block: CmsFullDayBlock | CmsWaypointBlock | CmsPointBlock) {
+function extractBlockCoords(block: FullDayBlock | WaypointBlock | PointBlock) {
   const b: any = block;
   // Candidate fields in descending priority
   const candidates: any[] = [];
@@ -103,11 +104,13 @@ export interface TripDetailMapProps {
 export default function TripDetailMap({ trip, heightClass, activeIndex, interactive = true, onMarkerClick }: TripDetailMapProps) {
   // mapRef is used for initial bounds fitting when the map loads
   const mapRef = useRef<LeafletMapInstance | null>(null);
-  const leafletRef = useRef<LeafletModule | null>(null);
+  // Seeded synchronously so markers get their divIcon on the first render;
+  // otherwise Leaflet's default icon requests marker-icon.png relative to the page.
+  const leafletRef = useRef<LeafletModule | null>(leaflet as unknown as LeafletModule);
 
   const markers = useMemo(() => {
     if (!trip.itinerary) return [];
-    const m: { coord: { lat: number; lng: number }; block: CmsFullDayBlock | CmsWaypointBlock | CmsPointBlock; idx: number }[] = [];
+    const m: { coord: { lat: number; lng: number }; block: FullDayBlock | WaypointBlock | PointBlock; idx: number }[] = [];
     trip.itinerary.forEach((block, idx) => {
       const coord = extractBlockCoords(block as unknown as any);
       if (coord) {

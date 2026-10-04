@@ -1,0 +1,9 @@
+name: Costa Rica
+countryCode: CRI
+continent: north_america
+capital: San José
+currency: CRC
+currencyName: Costa Rican Colón
+officialLanguages:
+  - language: Spanish
+safetyLevel: very_safe

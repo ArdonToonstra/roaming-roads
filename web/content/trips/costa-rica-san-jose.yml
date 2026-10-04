@@ -1,0 +1,44 @@
+title: A Stopover in San José
+status: draft
+category:
+  - backpacking
+coverImage: costa-rica-step01-san-jose-02.jpg
+description: "A short stop in the Costa Rican capital, used mostly as a transport hub between Central American destinations. Expensive and not especially scenic, but a day here is worth taking if you are passing through anyway."
+period: April 2024
+budget:
+  currency: EUR
+  perPerson: true
+activities: |-
+  City walking
+
+  Markets
+
+  Local food
+added: "2025-12-26"
+countries:
+  - costa-rica
+importantPreparations: |-
+  - **Treat San José as transit.** Most travellers use it to connect onward to the coast, Nicaragua or Panama. One full day covers it.
+  - **Costa Rica is expensive.** Budget roughly double what you would spend in Nicaragua or Guatemala.
+  - **Carry small change for city buses.** Drivers can be impatient if your payment does not work, though other passengers tend to step in and help.
+  - **Book border buses a day ahead.** Services to Nicaragua leave early and fill up.
+itinerary:
+  - time: Day 1
+    locationName: San José
+    description: "The capital and the country's main transport hub, with bus connections nationwide and across both borders. The centre gives up more on a guided walk than on an aimless one."
+    activities: |-
+      - Join a free walking tour. It is the fastest way to make sense of a city that does not reveal much on its own.
+      - Eat at the central market, where the food stalls are the best value in town.
+      - Try a sorbetera, a local ice cream flavoured with a mix of around a hundred spices.
+      - Use the day to sort onward tickets and cash before moving on.
+    location:
+      - -84.0795782
+      - 9.9325427
+    gallery:
+      - media: costa-rica-step01-san-jose-02.jpg
+      - media: costa-rica-step01-san-jose-03.jpg
+      - media: costa-rica-step01-san-jose-04.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: flight
+      departureMethod: public_bus
