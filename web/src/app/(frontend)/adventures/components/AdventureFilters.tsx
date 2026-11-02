@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { MapPin, Calendar, Filter, Search, X, Clock } from 'lucide-react';
+import { MapPin, Calendar, ChevronDown, SlidersHorizontal, Search, X, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Trip } from '@/types/content';
@@ -144,6 +144,7 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
 
     if (searchParams.get('search')) {
       setSearchTerm(searchParams.get('search')!);
+      setShowFilters(true);
     }
 
     if (searchParams.get('sort')) {
@@ -244,9 +245,37 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
   const hasActiveFilters = Object.values(filters).some(v => v) || searchTerm;
 
   return (
-    <div className="space-y-4">
-      {/* Search and Filter Controls */}
-      <div className="bg-card rounded-lg border border-border p-4">
+    <div>
+      {/* Results count with a quiet filter toggle */}
+      <div className="flex items-center justify-between gap-4 mb-4">
+        <h2 className="text-xl font-heading font-bold text-foreground">
+          {filteredAndSortedTrips.length === trips.length
+            ? `All Adventures (${trips.length})`
+            : `${filteredAndSortedTrips.length} of ${trips.length} Adventures`
+          }
+        </h2>
+        <button
+          type="button"
+          onClick={() => setShowFilters(!showFilters)}
+          aria-expanded={showFilters}
+          aria-controls="adventure-filters"
+          className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors"
+        >
+          <SlidersHorizontal className="w-4 h-4" />
+          Search &amp; filter
+          {hasActiveFilters && <span className="w-1.5 h-1.5 rounded-full bg-primary" aria-label="active" />}
+          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showFilters ? 'rotate-180' : ''}`} />
+        </button>
+      </div>
+
+      {/* Collapsible filter panel */}
+      <div
+        id="adventure-filters"
+        inert={!showFilters}
+        className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${showFilters ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
+      >
+      <div className="overflow-hidden">
+      <div className="bg-card rounded-lg border border-border p-4 mb-6">
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
           {/* Search Bar */}
           <div className="flex-1 max-w-sm">
@@ -262,20 +291,8 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
             </div>
           </div>
 
-          {/* Filter Toggle and Sort */}
+          {/* Sort */}
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors ${showFilters || hasActiveFilters
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-background border border-border text-foreground hover:bg-muted'
-                }`}
-            >
-              <Filter className="w-4 h-4" />
-              Filters
-              {hasActiveFilters && <span className="ml-1 text-xs">({Object.values(filters).filter(v => v).length})</span>}
-            </button>
-
             <select
               value={sortBy}
               onChange={(e) => updateSort(e.target.value as SortOption)}
@@ -288,8 +305,7 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
           </div>
         </div>
 
-        {/* Expandable Filters */}
-        {showFilters && (
+        {/* Filters */}
           <div className="mt-4 pt-4 border-t border-border">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <FilterDropdown
@@ -337,21 +353,12 @@ export default function AdventureFilters({ trips }: AdventureFiltersProps) {
               </div>
             )}
           </div>
-        )}
+      </div>
+      </div>
       </div>
 
       {/* Results */}
       <div>
-        {/* Results Count */}
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-heading font-bold text-foreground">
-            {filteredAndSortedTrips.length === trips.length
-              ? `All Adventures (${trips.length})`
-              : `${filteredAndSortedTrips.length} of ${trips.length} Adventures`
-            }
-          </h2>
-        </div>
-
         {/* Trip Grid */}
         {filteredAndSortedTrips.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

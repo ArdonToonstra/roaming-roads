@@ -21,8 +21,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Roaming Roads | Authentic Travel Itineraries",
-  description: "Authentic travel itineraries, honestly written. No ads. No affiliate links. Discover incredible journeys and adventures around the world.",
+  title: "Roaming Roads | Travel Itineraries",
+  description: "Travel guides written honestly with a sprinkle of AI. Because you deserve real travel tips, not 400 affiliate links to hotel booking sites.",
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },

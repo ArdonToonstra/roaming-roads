@@ -28,7 +28,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-              Authentic travel itineraries, honestly written. No ads. No affiliate links.
+              Itineraries crafted by a human, polished by a robot who’s never actually been outside. Zero ads, zero sponsored fluff.
             </p>
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Heart className="w-3 h-3 text-primary" />

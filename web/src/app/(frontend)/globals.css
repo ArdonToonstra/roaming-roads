@@ -53,8 +53,7 @@
     color: hsl(255 35% 35%) !important;
   }
 
-  /* White headings for homepage hero (only the main heading) and other hero sections */
-  .homepage h1,
+  /* White headings for hero sections */
   .text-white h1,
   h3.text-white {
     color: hsl(0 0% 100%) !important;
@@ -73,12 +72,7 @@
   }
 }
 
-/* Ensure muted-foreground color shows correctly inside homepage sections */
 @layer utilities {
-  .homepage .text-muted-foreground {
-    color: hsl(255 35% 35%) !important;
-  }
-
   /* Leaflet panes use z-index 400–1000; keep them inside the map so they don't cover the nav (z-50) */
   .leaflet-container {
     isolation: isolate;
@@ -181,4 +175,24 @@
     line-height: 1;
     user-select: none;
   }
+}
+
+/* Home page: each travel word pops in, then a light sweeps across it, like Claude's busy indicator. */
+.travel-shimmer {
+  background: linear-gradient(90deg, currentColor 40%, hsl(30 90% 85%) 50%, currentColor 60%) 0 0 / 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: travel-pop 350ms ease-out, travel-shimmer 2.2s linear infinite;
+}
+@keyframes travel-pop {
+  from { opacity: 0; transform: translateY(6px); }
+}
+@keyframes travel-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
+.globe-fade { transition: fill 1.5s ease, stroke 1.5s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .travel-shimmer { animation: none; }
 }

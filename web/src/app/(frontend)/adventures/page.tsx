@@ -29,18 +29,6 @@ export default async function AdventuresPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <section className="bg-gradient-to-r from-primary via-secondary to-primary py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-heading font-bold text-primary-foreground mb-4">
-            Our Adventures
-          </h1>
-          <p className="text-xl text-primary-foreground/90 max-w-2xl mx-auto">
-            Authentic travel itineraries from around the world. No ads, no affiliate links, just honest experiences and practical advice.
-          </p>
-        </div>
-      </section>
-
       {/* Adventures with Filters */}
       <main className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
