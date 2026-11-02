@@ -3,7 +3,7 @@ status: published
 category:
   - road_trip
   - hiking
-coverImage: kirkjufellsfoss_iceland.avif
+coverImage: iceland-cover.jpg
 description: "Ten days by rental car along Iceland's south coast, through the eastern fjords and across the north, and back to Reykjavík. The route takes in fresh lava fields on Reykjanes, the Golden Circle, black-sand beaches around Vík, a guided hike on Vatnajökull, the geothermal landscapes around Mývatn and whale watching from Húsavík. Late August and early September is a good window: the summer crowds are thinning, the roads are still easy, and the nights are getting dark again."
 period: August–September 2026
 budget:
@@ -45,6 +45,10 @@ itinerary:
     location:
       - -22.2494335
       - 63.8838027
+    gallery:
+      - media: iceland-fagradalsfjall-02.jpg
+      - media: iceland-fagradalsfjall-06.jpg
+      - media: iceland-fagradalsfjall-08.jpg
     blockType: waypoint
     transportation:
       arrivalMethod: flight
@@ -59,6 +63,8 @@ itinerary:
     location:
       - -22.1421882
       - 63.8351531
+    gallery:
+      - media: iceland-krysuvikurberg-03.jpg
     blockType: waypoint
   - locationName: Arnarker lava cave
     description: A lava tube you can explore without a guide.
@@ -71,6 +77,9 @@ itinerary:
     location:
       - -21.4205342
       - 63.9334612
+    gallery:
+      - media: iceland-arnarker-02.jpg
+      - media: iceland-arnarker-03.jpg
     blockType: waypoint
   - time: Day 1
     locationName: Hveragerði
@@ -82,6 +91,11 @@ itinerary:
     location:
       - -21.1868303
       - 63.9975943
+    gallery:
+      - media: iceland-hveragerdi-08.jpg
+      - media: iceland-hveragerdi-09.jpg
+      - media: iceland-hveragerdi-10.jpg
+      - media: iceland-hveragerdi-11.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: rental_car
@@ -97,6 +111,9 @@ itinerary:
     location:
       - -21.0819412
       - 64.2786082
+    gallery:
+      - media: iceland-thingvellir-01.jpg
+      - media: iceland-thingvellir-08.jpg
     blockType: waypoint
   - locationName: Geysir & Strokkur
     description: The geyser that erupts every few minutes.
@@ -109,6 +126,9 @@ itinerary:
     location:
       - -20.2117565
       - 64.3127262
+    gallery:
+      - media: iceland-geysir-01.jpg
+      - media: iceland-geysir-02.jpg
     blockType: waypoint
   - locationName: Gullfoss
     description: The great two-tiered waterfall of the Golden Circle.
@@ -120,6 +140,10 @@ itinerary:
     location:
       - -20.1495557
       - 64.314452
+    gallery:
+      - media: iceland-gullfoss-01.jpg
+      - media: iceland-gullfoss-03.jpg
+      - media: iceland-gullfoss-06.jpg
     blockType: waypoint
   - locationName: Kerið crater
     description: A volcanic crater lake with red walls.
@@ -131,6 +155,9 @@ itinerary:
     location:
       - -20.8690085
       - 64.0249635
+    gallery:
+      - media: iceland-kerid-01.jpg
+      - media: iceland-kerid-04.jpg
     blockType: waypoint
   - time: Day 2
     locationName: Eyjafjöll (Skarðshlíð)
@@ -141,6 +168,9 @@ itinerary:
     location:
       - -19.5672361
       - 63.5237363
+    gallery:
+      - media: iceland-skardshlid-01.jpg
+      - media: iceland-skardshlid-04.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: rental_car
@@ -154,6 +184,10 @@ itinerary:
     location:
       - -19.0054737
       - 63.4188166
+    gallery:
+      - media: iceland-vik-02.jpg
+      - media: iceland-vik-03.jpg
+      - media: iceland-vik-05.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: rental_car
@@ -168,6 +202,11 @@ itinerary:
     location:
       - -19.0304694
       - 63.3991408
+    gallery:
+      - media: iceland-reynisfjara-01.jpg
+      - media: iceland-reynisfjara-02.jpg
+      - media: iceland-reynisfjara-03.jpg
+      - media: iceland-reynisfjara-08.jpg
     blockType: waypoint
   - locationName: Sólheimasandur plane wreck
     description: A US Navy plane on a black-sand plain.
@@ -180,6 +219,9 @@ itinerary:
     location:
       - -19.3544968
       - 63.4533356
+    gallery:
+      - media: iceland-solheimasandur-03.jpg
+      - media: iceland-solheimasandur-06.jpg
     blockType: waypoint
   - locationName: Seljavallalaug
     description: An old swimming pool built into a mountain valley.
@@ -192,6 +234,10 @@ itinerary:
     location:
       - -19.6693416
       - 63.5734339
+    gallery:
+      - media: iceland-seljavallalaug-03.jpg
+      - media: iceland-seljavallalaug-04.jpg
+      - media: iceland-seljavallalaug-07.jpg
     blockType: waypoint
   - locationName: Skógafoss
     description: A 60 m curtain of water right next to the road.
@@ -204,6 +250,10 @@ itinerary:
     location:
       - -19.4949498
       - 63.5495018
+    gallery:
+      - media: iceland-skogafoss-01.jpg
+      - media: iceland-skogafoss-04.jpg
+      - media: iceland-skogafoss-05.jpg
     blockType: waypoint
   - time: Day 4
     locationName: Kirkjubæjarklaustur
@@ -215,6 +265,8 @@ itinerary:
     location:
       - -18.0418591
       - 63.793065
+    gallery:
+      - media: iceland-kirkjubaejarklaustur-05.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: rental_car
@@ -230,6 +282,10 @@ itinerary:
     location:
       - -17.2282428
       - 64.2419555
+    gallery:
+      - media: iceland-vatnajokull-03.jpg
+      - media: iceland-vatnajokull-06.jpg
+      - media: iceland-vatnajokull-14.jpg
     blockType: waypoint
   - locationName: Jökulsárlón & Diamond Beach
     description: Icebergs on black sand.
@@ -242,6 +298,10 @@ itinerary:
     location:
       - -16.1784043
       - 64.0506408
+    gallery:
+      - media: iceland-diamond-beach-01.jpg
+      - media: iceland-diamond-beach-02.jpg
+      - media: iceland-diamond-beach-03.jpg
     blockType: waypoint
   - time: Days 5–6
     locationName: Seyðisfjörður
@@ -253,6 +313,9 @@ itinerary:
     location:
       - -14.0049009
       - 65.2598475
+    gallery:
+      - media: iceland-seydisfjordur-04.jpg
+      - media: iceland-seydisfjordur-06.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: rental_car
@@ -268,6 +331,11 @@ itinerary:
     location:
       - -15.4248871
       - 65.129296
+    gallery:
+      - media: iceland-studlagil-02.jpg
+      - media: iceland-studlagil-04.jpg
+      - media: iceland-studlagil-08.jpg
+      - media: iceland-studlagil-12.jpg
     blockType: waypoint
   - locationName: Dettifoss & Selfoss
     description: The most powerful waterfall in Europe.
@@ -280,6 +348,9 @@ itinerary:
     location:
       - -16.3859094
       - 65.8219303
+    gallery:
+      - media: iceland-dettifoss-01.jpg
+      - media: iceland-dettifoss-03.jpg
     blockType: waypoint
   - locationName: Hverir
     description: Boiling mud and steaming vents.
@@ -292,6 +363,9 @@ itinerary:
     location:
       - -16.809182
       - 65.6411434
+    gallery:
+      - media: iceland-hverir-01.jpg
+      - media: iceland-hverir-03.jpg
     blockType: waypoint
   - time: Day 7
     locationName: Mývatn (Skútustaðagígar)
@@ -304,6 +378,9 @@ itinerary:
     location:
       - -17.033733
       - 65.5713765
+    gallery:
+      - media: iceland-skutustadagigar-01.jpg
+      - media: iceland-skutustadagigar-02.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: rental_car
@@ -318,6 +395,10 @@ itinerary:
     location:
       - -17.3410402
       - 66.0433168
+    gallery:
+      - media: iceland-husavik-02.jpg
+      - media: iceland-husavik-03.jpg
+      - media: iceland-husavik-04.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: rental_car
@@ -330,6 +411,8 @@ itinerary:
     location:
       - -16.9798203
       - 66.1675592
+    gallery:
+      - media: iceland-tjornes-03.jpg
     blockType: waypoint
   - locationName: Hljóðaklettar
     description: Twisted basalt in Vatnajökull National Park.
@@ -341,6 +424,14 @@ itinerary:
     location:
       - -16.5423457
       - 65.9329579
+    gallery:
+      - media: iceland-hljodaklettar-01.jpg
+      - media: iceland-hljodaklettar-02.jpg
+      - media: iceland-hljodaklettar-03.jpg
+      - media: iceland-hljodaklettar-05.jpg
+      - media: iceland-hljodaklettar-06.jpg
+      - media: iceland-hljodaklettar-07.jpg
+      - media: iceland-hljodaklettar-13.jpg
     blockType: waypoint
   - locationName: Kolugljúfur canyon
     description: A hidden canyon on the long drive back.
@@ -352,6 +443,10 @@ itinerary:
     location:
       - -20.5040369
       - 65.2148575
+    gallery:
+      - media: iceland-kolugljufur-01.jpg
+      - media: iceland-kolugljufur-03.jpg
+      - media: iceland-kolugljufur-04.jpg
     blockType: waypoint
   - time: Day 9
     locationName: Reykjavík
@@ -364,6 +459,8 @@ itinerary:
     location:
       - -21.9422367
       - 64.145981
+    gallery:
+      - media: iceland-reykjavik-03.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: rental_car

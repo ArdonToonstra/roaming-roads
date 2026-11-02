@@ -3,6 +3,7 @@ status: published
 category:
   - backpacking
   - culinary
+coverImage: india-goa-cover.jpg
 description: "A week of beach time to close a long India trip. North Goa has old Portuguese-colonial houses, lush gardens and sunset beaches. South Goa is quieter, with beach huts, river kayaking and jungle walks. In the hot season the days follow a simple routine: an early-morning activity, a long siesta, and back out once the heat breaks."
 period: April 2026
 budget:
@@ -39,6 +40,15 @@ itinerary:
     location:
       - 73.7399644
       - 15.5819474
+    gallery:
+      - media: india-goa-anjuna-02.jpg
+      - media: india-goa-anjuna-04.jpg
+      - media: india-goa-anjuna-05.jpg
+      - media: india-goa-anjuna-06.jpg
+      - media: india-goa-anjuna-09.jpg
+      - media: india-goa-anjuna-10.jpg
+      - media: india-goa-anjuna-11.jpg
+      - media: india-goa-anjuna-12.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: flight
@@ -55,6 +65,16 @@ itinerary:
     location:
       - 73.9882421
       - 15.0411042
+    gallery:
+      - media: india-goa-agonda-01.jpg
+      - media: india-goa-agonda-03.jpg
+      - media: india-goa-agonda-05.jpg
+      - media: india-goa-agonda-08.jpg
+      - media: india-goa-agonda-09.jpg
+      - media: india-goa-agonda-12.jpg
+      - media: india-goa-agonda-13.jpg
+      - media: india-goa-agonda-14.jpg
+      - media: india-goa-agonda-15.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: taxi

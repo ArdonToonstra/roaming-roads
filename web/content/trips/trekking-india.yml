@@ -45,6 +45,10 @@ itinerary:
     location:
       - 78.0436813
       - 30.3255646
+    gallery:
+      - media: india-himalaya-dehradun-01.jpg
+      - media: india-himalaya-dehradun-02.jpg
+      - media: india-himalaya-dehradun-04.jpg
     blockType: fullDay
     transportation:
       departureMethod: public_bus
@@ -62,6 +66,21 @@ itinerary:
     location:
       - 78.4130644
       - 31.1505819
+    gallery:
+      - media: india-himalaya-har-ki-dun-02.jpg
+      - media: india-himalaya-har-ki-dun-04.jpg
+      - media: india-himalaya-har-ki-dun-06.jpg
+      - media: india-himalaya-har-ki-dun-08.jpg
+      - media: india-himalaya-har-ki-dun-09.jpg
+      - media: india-himalaya-har-ki-dun-10.jpg
+      - media: india-himalaya-har-ki-dun-11.jpg
+      - media: india-himalaya-har-ki-dun-13.jpg
+      - media: india-himalaya-har-ki-dun-14.jpg
+      - media: india-himalaya-har-ki-dun-15.jpg
+      - media: india-himalaya-har-ki-dun-16.jpg
+      - media: india-himalaya-har-ki-dun-18.jpg
+      - media: india-himalaya-har-ki-dun-20.jpg
+      - media: india-himalaya-har-ki-dun-22.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: public_bus
@@ -77,6 +96,14 @@ itinerary:
     location:
       - 78.0782906
       - 30.4569012
+    gallery:
+      - media: india-himalaya-mussoorie-02.jpg
+      - media: india-himalaya-mussoorie-03.jpg
+      - media: india-himalaya-mussoorie-05.jpg
+      - media: india-himalaya-mussoorie-07.jpg
+      - media: india-himalaya-mussoorie-09.jpg
+      - media: india-himalaya-mussoorie-12.jpg
+      - media: india-himalaya-mussoorie-13.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: public_bus
@@ -92,6 +119,16 @@ itinerary:
     location:
       - 78.3381985
       - 30.1742659
+    gallery:
+      - media: india-himalaya-neer-waterfall-01.jpg
+      - media: india-himalaya-neer-waterfall-03.jpg
+      - media: india-himalaya-neer-waterfall-04.jpg
+      - media: india-himalaya-neer-waterfall-05.jpg
+      - media: india-himalaya-neer-waterfall-06.jpg
+      - media: india-himalaya-neer-waterfall-07.jpg
+      - media: india-himalaya-neer-waterfall-09.jpg
+      - media: india-himalaya-neer-waterfall-11.jpg
+      - media: india-himalaya-neer-waterfall-12.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: taxi
@@ -108,6 +145,17 @@ itinerary:
     location:
       - 79.5612607
       - 30.5555752
+    gallery:
+      - media: india-himalaya-kuari-pass-02.jpg
+      - media: india-himalaya-kuari-pass-05.jpg
+      - media: india-himalaya-kuari-pass-07.jpg
+      - media: india-himalaya-kuari-pass-09.jpg
+      - media: india-himalaya-kuari-pass-10.jpg
+      - media: india-himalaya-kuari-pass-11.jpg
+      - media: india-himalaya-kuari-pass-16.jpg
+      - media: india-himalaya-kuari-pass-20.jpg
+      - media: india-himalaya-kuari-pass-21.jpg
+      - media: india-himalaya-kuari-pass-24.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: taxi
@@ -123,6 +171,13 @@ itinerary:
     location:
       - 79.1276368
       - 30.5222448
+    gallery:
+      - media: india-himalaya-chopta-01.jpg
+      - media: india-himalaya-chopta-04.jpg
+      - media: india-himalaya-chopta-06.jpg
+      - media: india-himalaya-chopta-07.jpg
+      - media: india-himalaya-chopta-09.jpg
+      - media: india-himalaya-chopta-11.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: taxi
@@ -138,6 +193,11 @@ itinerary:
     location:
       - 78.2916193
       - 30.1086537
+    gallery:
+      - media: india-himalaya-rishikesh-01.jpg
+      - media: india-himalaya-rishikesh-02.jpg
+      - media: india-himalaya-rishikesh-03.jpg
+      - media: india-himalaya-rishikesh-04.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: public_bus
