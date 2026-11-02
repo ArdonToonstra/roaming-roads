@@ -1,5 +1,8 @@
 name: Italy
 countryCode: ITA
 capital: Rome
+capitalLocation:
+  - 12.4964
+  - 41.9028
 currency: EUR
 currencyName: Euro

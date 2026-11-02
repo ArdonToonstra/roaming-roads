@@ -1,4 +1,7 @@
 name: Malaysia
 countryCode: MYS
 capital: Kuala Lumpur
+capitalLocation:
+  - 101.6869
+  - 3.139
 currency: MYR

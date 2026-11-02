@@ -72,7 +72,7 @@ itinerary:
       - media: chile-step14-cochamo---basecamp-02.jpg
       - media: chile-step14-cochamo---basecamp-03.jpg
     blockType: fullDay
-  - time: Day 4
+  - time: Days 4–8
     locationName: Cochamó - Valley
     description: "A 12 km walk in to a valley of granite domes, waterfalls and swimming holes. It is a Chilean climbing and hiking hotspot with a relaxed, festival-like camp scene. Four days is better than two."
     activities: |-
@@ -94,7 +94,7 @@ itinerary:
     transportation:
       arrivalMethod: walking
       departureMethod: rental_car
-  - time: Day 5
+  - time: Day 9
     locationName: Hornopirén
     description: "First stop on the Ruta 7 proper, at the entrance to Hornopirén National Park. A small town with a good river and a strong local food scene."
     activities: |-
@@ -116,7 +116,7 @@ itinerary:
     transportation:
       arrivalMethod: rental_car
       departureMethod: boat
-  - time: Day 6
+  - time: Day 9
     locationName: Chaitén Volcano
     description: "Reached by a six hour ferry with sea lions along the way. The still-smoking Chaitén volcano sits in Pumalín Douglas Tompkins park, land donated to Chile by the founder of The North Face."
     activities: |-
@@ -134,7 +134,7 @@ itinerary:
     transportation:
       arrivalMethod: boat
       departureMethod: rental_car
-  - time: Day 7
+  - time: Days 10–11
     locationName: Futaleufú
     description: "A whitewater town near the Argentine border, built around one of the best rafting and kayaking rivers in the world. Entirely weather dependent."
     activities: |-
@@ -152,7 +152,7 @@ itinerary:
     transportation:
       arrivalMethod: rental_car
       departureMethod: rental_car
-  - time: Day 8
+  - time: Day 12
     locationName: Coyhaique
     description: "The largest town in Aysén and the main resupply point on the southern Carretera Austral. Roughly eight hours of rough, mostly unpaved road to get here."
     activities: |-
@@ -168,7 +168,7 @@ itinerary:
     blockType: fullDay
     transportation:
       arrivalMethod: rental_car
-  - time: Day 9
+  - time: Days 13–17
     locationName: Cerro Castillo
     description: "A four-day trek from Las Horquetas through glaciers, lagoons and high passes. Far less known than Torres del Paine and every bit as good, with a fraction of the traffic."
     activities: |-
@@ -192,7 +192,7 @@ itinerary:
     transportation:
       arrivalMethod: rental_car
       departureMethod: hitchhiking
-  - time: Day 10
+  - time: Days 18–20
     locationName: Chiloé
     description: "The largest island in Chile, reached by ferry on the way back north. Dunes, wooden churches, penguin colonies and a slower pace after Patagonia."
     activities: |-
@@ -213,7 +213,7 @@ itinerary:
     transportation:
       arrivalMethod: boat
       departureMethod: rental_car
-  - time: Day 11
+  - time: Days 21–24
     locationName: Pucón
     description: "The adventure capital of the Lake District, under the Villarrica volcano. Glaciers give way to cone volcanoes and a noticeably warmer climate. Arriving just after the Chilean holiday season means low prices and empty campsites."
     activities: |-
@@ -232,7 +232,7 @@ itinerary:
       - media: chile-step22-pucon-04.jpg
       - media: chile-step22-pucon-05.jpg
     blockType: fullDay
-  - time: Day 12
+  - time: Days 25–26
     locationName: Conguillío National Park
     description: "A lava desert centred on the Llaima volcano, with thousand-year-old ash layers exposed along the trails. Pumas live here, though they are rarely seen."
     activities: |-
@@ -249,7 +249,7 @@ itinerary:
     blockType: fullDay
     transportation:
       departureMethod: flight
-  - time: Day 13
+  - time: Days 27–32
     locationName: Olmué
     description: "A village inland from Valparaíso, in cactus country at the foot of La Campana National Park. Hot, dry and green, and a common weekend escape from Santiago."
     activities: |-
@@ -265,7 +265,7 @@ itinerary:
       - media: chile-step24-familie-reunie-olmue-05.jpg
       - media: chile-step24-familie-reunie-olmue-06.jpg
     blockType: fullDay
-  - time: Day 14
+  - time: Days 33–34
     locationName: Valparaíso and Viña del Mar
     description: "Two coastal cities side by side. Viña del Mar is the beach resort, Valparaíso the far more interesting one: a largely car-free maze of steep hills, stairways and street art."
     activities: |-
@@ -287,7 +287,7 @@ itinerary:
       - media: chile-step25-valparaiso-vina-del-mar-08.jpg
       - media: chile-step25-valparaiso-vina-del-mar-09.jpg
     blockType: fullDay
-  - time: Day 15
+  - time: Day 35
     locationName: Santiago
     description: "Worth more than the transit stop most travellers give it, but only in the right neighbourhoods. The area around the central station is grim; the rest of the centre is not."
     activities: |-

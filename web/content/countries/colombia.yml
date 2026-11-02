@@ -1,5 +1,8 @@
 name: Colombia
 countryCode: COL
 capital: Bogotá
+capitalLocation:
+  - -74.0721
+  - 4.711
 currency: COP
 currencyName: Colombian Peso

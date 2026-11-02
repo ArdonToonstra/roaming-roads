@@ -31,7 +31,7 @@ importantPreparations: |-
   - **Dinner starts late.** An invitation for seven in the evening can mean sitting down to eat at midnight. Eat something beforehand.
   - **Onward to Chile:** buses to Punta Arenas take around twelve hours and cross two border posts. Book a day or two ahead and keep passports and any fresh food declarations to hand.
 itinerary:
-  - time: Day 1
+  - time: Days 1–3
     locationName: Ushuaia
     description: "Ushuaia lies between the Beagle Channel and the Fuegian Andes, and is the jumping-off point for Antarctic cruises, Tierra del Fuego National Park and the trekking routes in the mountains behind town. Family-run campsites in the hills above the centre are the cheapest base and put the trailheads within reach."
     activities: |-
@@ -50,7 +50,7 @@ itinerary:
     blockType: fullDay
     transportation:
       arrivalMethod: flight
-  - time: Day 2
+  - time: Days 4–5
     locationName: Laguna del Caminante
     description: "The standard introduction to multi-day trekking around Ushuaia: two days into the Sierra Valdivieso to a lake camp, crossing a high pass on the way back. Distances are short, but the weather turns by the hour — sun, rain, wind and a snowstorm in a single crossing is an ordinary day. \"Que te sea leve\", roughly \"may it be light on you\", is what locals say to anyone setting off."
     activities: |-

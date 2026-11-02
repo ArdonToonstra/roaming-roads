@@ -75,6 +75,7 @@ export interface Country {
   countryCode?: string
   continent?: Continent
   capital?: string
+  capitalLocation?: GeoPoint
   currency?: string
   currencyName?: string
   officialLanguages?: string[]

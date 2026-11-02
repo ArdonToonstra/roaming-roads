@@ -1,6 +1,9 @@
 name: "Kyrgyzstan "
 countryCode: KGZ
 capital: Bishkek
+capitalLocation:
+  - 74.5698
+  - 42.8746
 currency: KGS
 currencyName: Kyrgyz som
 officialLanguages:

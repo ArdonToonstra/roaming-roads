@@ -2,6 +2,9 @@ name: Costa Rica
 countryCode: CRI
 continent: north_america
 capital: San José
+capitalLocation:
+  - -84.0907
+  - 9.9281
 currency: CRC
 currencyName: Costa Rican Colón
 officialLanguages:

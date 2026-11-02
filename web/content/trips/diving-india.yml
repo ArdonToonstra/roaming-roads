@@ -1,11 +1,92 @@
-title: Diving in the Andamanen & Nicabaren Islands
-status: coming_soon
+title: Diving in the Andaman Islands
+status: published
 category:
+  - diving
   - backpacking
 coverImage: 10-Best-Places-to-Visit-in-Andaman-and-Nicobar-in-2025-1200x720.webp
+description: "A week of tropical island time in the Bay of Bengal, a world away from mainland India. Swaraj Dweep (Havelock) is small enough to cover by scooter, with jungle trails, empty beaches, a surprising number of restaurants and some of the best diving in the country. One afternoon in Sri Vijaya Puram (Port Blair) on the way back adds the history: the colonial Cellular Jail, where the British imprisoned India's freedom fighters."
+period: March–April 2026
 budget:
   currency: EUR
   perPerson: true
+activities: |-
+  Scuba diving
+
+  Scooter trips around the island
+
+  Jungle hikes
+
+  Beach hopping
+
+  Colonial history
 added: "2025-12-29"
 countries:
   - india
+importantPreparations: |-
+  - **Season.** The dry season, roughly November to April, is the time for calm seas and good visibility. The monsoon arrives around May and turns ferries and dive trips unpredictable.
+  - **Getting there.** The islands lie more than 1,000 km off the mainland. Flights from Delhi, Chennai, Kolkata and other big cities land at Sri Vijaya Puram (Port Blair), the only real gateway.
+  - **Book ferries ahead.** The private catamarans to Swaraj Dweep are quick and comfortable, but they sell out in high season. Government ferries are cheaper but slower and harder to book. Fix your ferry before you fix your flight back.
+  - **Entry formalities.** The permit and registration rules for foreign visitors have changed several times. Check the current requirements before you book, especially if you want to go beyond Swaraj Dweep and Shaheed Dweep (Neil). The Nicobar Islands are closed to tourists.
+  - **Cash and connectivity.** ATMs on Swaraj Dweep are few and not always stocked, and mobile data is slow and patchy. Bring enough cash from Port Blair and download offline maps.
+  - **Diving.** Book a dive centre on Swaraj Dweep rather than doing day trips from Port Blair: the good sites are right off the island. Bring your certification card, and leave 24 hours between your last dive and the flight out.
+itinerary:
+  - time: Days 1–7
+    locationName: Swaraj Dweep (Havelock) — diving
+    description: "After the chaos of Delhi, Swaraj Dweep feels like stepping into a different country: warm air, palm-lined roads and a slow island pace. The island was renamed from Havelock in 2018, but both names are in everyday use. It is the diving hub of the Andamans, with a cluster of dive centres along the east coast and reefs, walls and pinnacles a short boat ride away."
+    activities: |-
+      - Plan around a week on the island, with time for eight or so dives spread over several days.
+      - Expect healthy coral, big schools of reef fish, turtles and the occasional reef shark.
+      - Ask your dive centre about the deeper sites further out for more experienced divers. Conditions decide the plan, so stay flexible.
+      - Mix dive days with lazy days: nitrogen, sun and heat add up quickly.
+    location:
+      - 93.0013722
+      - 12.0278316
+    gallery:
+      - media: india-andaman-havelock-02.jpg
+      - media: india-andaman-havelock-12.jpg
+      - media: india-andaman-havelock-22.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: boat
+  - time: Days 1–7
+    locationName: Swaraj Dweep (Havelock) — exploring the island
+    description: "The island is small enough to explore entirely by scooter in a day, and a rented scooter is the easiest way to get around between dives. The road runs between the main villages, the jetty and the beaches, with side tracks leading to jungle trails and quieter stretches of sand."
+    activities: |-
+      - Rent a scooter for the week. Traffic is light, but watch out for potholes and cows on the road.
+      - Hike through the jungle to Elephant Beach instead of taking the boat. The trail is muddy in places, so wear proper shoes.
+      - Watch the sunset at Radhanagar Beach on the west coast, one of the best-known beaches in India.
+      - Drive out to the smaller beaches on the east coast, where you often have the sand to yourself.
+      - Eat your way through the island's restaurants. For its size, Swaraj Dweep has a remarkable spread of seafood, Indian and backpacker cafés.
+    location:
+      - 92.9513
+      - 11.9839
+    gallery:
+      - media: india-andaman-havelock-06.jpg
+      - media: india-andaman-havelock-08.jpg
+      - media: india-andaman-havelock-13.jpg
+      - media: india-andaman-havelock-14.jpg
+      - media: india-andaman-havelock-17.jpg
+      - media: india-andaman-havelock-19.jpg
+    blockType: fullDay
+    transportation:
+      departureMethod: boat
+  - time: Day 8
+    locationName: Sri Vijaya Puram (Port Blair)
+    description: "The capital of the islands, renamed from Port Blair in 2024. It is the transit point for every flight and ferry, but an afternoon here is worth it for the Cellular Jail. The British built it as a colonial prison where Indian freedom fighters were held in solitary confinement far from home, and it is now a national memorial."
+    activities: |-
+      - Visit the Cellular Jail with a guide. The stories of the prisoners make the visit, and the displays alone tell you much less.
+      - Watch the sunset from a rooftop bar or restaurant over the harbour.
+      - Treat yourself to a proper dinner before the flight back to the mainland.
+    location:
+      - 92.7390448
+      - 11.6645348
+    gallery:
+      - media: india-andaman-port-blair-01.jpg
+      - media: india-andaman-port-blair-02.jpg
+      - media: india-andaman-port-blair-05.jpg
+      - media: india-andaman-port-blair-06.jpg
+      - media: india-andaman-port-blair-07.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: boat
+      departureMethod: flight

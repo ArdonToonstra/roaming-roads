@@ -1,11 +1,204 @@
 title: Trekking in the Indian Himalayas
-status: coming_soon
+status: published
 category:
   - hiking
+  - backpacking
 coverImage: GettyRF_450207051.avif
+description: "Three weeks in Uttarakhand, the Himalayan state north of Delhi. The trip covers two very different treks: an attempt at the Har Ki Dun valley done the hard way, on local buses with your own tent, and a fully organised climb to the 4,600 m Pangarchula summit via Kuari Pass. Between them come hill stations, glamping above a waterfall, the meadows around Chopta and the riverside temples of Rishikesh."
+period: April 2026
 budget:
   currency: EUR
   perPerson: true
+activities: |-
+  Multi-day treks
+
+  Summit climb
+
+  Wild camping
+
+  Hill stations
+
+  Waterfalls and day hikes
+
+  Ganga aarti
 added: "2025-12-29"
 countries:
   - india
+importantPreparations: |-
+  - **You cannot trek alone.** Most Himalayan trails in Uttarakhand run through protected areas, and forest checkpoints turn back trekkers without a local guide. Plan for a guide from the start, even if you carry your own tent and stove.
+  - **Use a local trekking agency.** For the bigger treks, a local agency takes care of permits, transport, a cook, a guide and acclimatisation days. It costs more than doing it yourself, but it removes most of the things that go wrong.
+  - **Medical check.** Higher treks may need a medical fitness certificate for the permit, including blood tests at a local hospital. Agencies can arrange this. Allow a day for it.
+  - **Altitude.** Trailheads already sit above 2,000 m and camps above 3,000 m. Build in acclimatisation nights, walk slowly, and turn back if symptoms of altitude sickness get worse.
+  - **Weather in April.** Spring is a good time for the lower treks, but snow can still fall overnight. A snowfall can close a trail, block roads with fallen trees and landslides, and leave you waiting for hours for a jeep down. Keep spare days.
+  - **Mountain roads.** Bus rides into the mountains take ten hours or more on winding roads, and motion sickness is common among passengers. Bring travel-sickness tablets. A private taxi is much faster and worth the price on the long legs.
+  - **Bus stations.** Ticket counters in Uttarakhand often have separate queues for men and women. Check which one you are in.
+  - **Weekends.** Delhi empties into the hills on weekends, so roads, waterfalls and viewpoints near Dehradun and Rishikesh get extremely busy. Travel on weekdays where possible.
+  - **Rishikesh is vegetarian and alcohol-free.** Meat and alcohol are banned in the town, so don't count on a beer after the trek.
+itinerary:
+  - time: Days 1–2
+    locationName: Dehradun
+    description: "The capital of Uttarakhand and the gateway to the western Garhwal Himalaya. If Delhi felt busy, Dehradun can feel even more chaotic: a fast-growing city of cars, scooters and rickshaws. Few travellers stay long, but it is the practical place to sort out transport into the mountains and stock up before a trek."
+    activities: |-
+      - Spend a morning on logistics: bus tickets, camping gas, food for the trek.
+      - Visit Robber's Cave, a narrow river gorge you walk through in the water. Go on a weekday, because on weekends and holidays the queues can stop you getting in at all.
+      - Drink masala chai and eat curries and parathas in the local dhabas.
+    location:
+      - 78.0436813
+      - 30.3255646
+    gallery:
+      - media: india-himalaya-dehradun-01.jpg
+      - media: india-himalaya-dehradun-02.jpg
+      - media: india-himalaya-dehradun-04.jpg
+    blockType: fullDay
+    transportation:
+      departureMethod: public_bus
+  - time: Days 3–6
+    locationName: Har Ki Dun valley
+    description: "Har Ki Dun is a glacial valley in the Govind Wildlife Sanctuary, with wooden villages, river meadows and snow peaks at its head. Reaching the base village of Sankri takes about ten hours by bus from Dehradun. The valley is classic trekking country, but it is protected, and trekking without a local guide is not allowed."
+    activities: |-
+      - Take the early bus from Dehradun to Sankri, and expect a long, winding and bumpy ride.
+      - Register at the forest checkpoint. If you arrive without a guide, guesthouses in Sankri can usually put you in touch with one.
+      - Take a jeep further up the valley to the trailhead, then walk in along the river. There are good camping spots on the meadows beside the water.
+      - Camp around 3,200 m on the second night, a couple of kilometres before the head of the valley. A campfire there makes up for a lot.
+      - Shelter in the small dhabas along the trail when it rains. They serve tea and simple meals.
+      - Watch for altitude sickness from the second day. A guide or porter can take over a heavy pack.
+      - Be ready to turn back if snow comes in: the views from the head of the valley disappear in fog, and the walk out through snow takes hours.
+    location:
+      - 78.4130644
+      - 31.1505819
+    gallery:
+      - media: india-himalaya-har-ki-dun-02.jpg
+      - media: india-himalaya-har-ki-dun-04.jpg
+      - media: india-himalaya-har-ki-dun-06.jpg
+      - media: india-himalaya-har-ki-dun-08.jpg
+      - media: india-himalaya-har-ki-dun-09.jpg
+      - media: india-himalaya-har-ki-dun-10.jpg
+      - media: india-himalaya-har-ki-dun-11.jpg
+      - media: india-himalaya-har-ki-dun-13.jpg
+      - media: india-himalaya-har-ki-dun-14.jpg
+      - media: india-himalaya-har-ki-dun-15.jpg
+      - media: india-himalaya-har-ki-dun-16.jpg
+      - media: india-himalaya-har-ki-dun-18.jpg
+      - media: india-himalaya-har-ki-dun-20.jpg
+      - media: india-himalaya-har-ki-dun-22.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: public_bus
+  - time: Days 7–9
+    locationName: Mussoorie
+    description: "A colonial-era hill station on a ridge above Dehradun, with views over the foothills to the snow-capped main Himalayan range. Mussoorie is a good place to recover between treks: there are comfortable cottages with mountain views, and you can wash everything and plan the next stage of the trip."
+    activities: |-
+      - Rent a scooter to explore the town and the ridge roads. It is the fastest way to get used to Indian traffic, where the horn is used all the time.
+      - Walk up to George Everest's House, the former home of the Surveyor General after whom Everest was named. It is now a viewpoint over the snow peaks.
+      - Take a day walk through one of the forested parks and estates around the town.
+      - Treat yourself to a cottage with a terrace. Prices are low compared with similar places in Europe.
+    location:
+      - 78.0782906
+      - 30.4569012
+    gallery:
+      - media: india-himalaya-mussoorie-02.jpg
+      - media: india-himalaya-mussoorie-03.jpg
+      - media: india-himalaya-mussoorie-05.jpg
+      - media: india-himalaya-mussoorie-07.jpg
+      - media: india-himalaya-mussoorie-09.jpg
+      - media: india-himalaya-mussoorie-12.jpg
+      - media: india-himalaya-mussoorie-13.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: taxi
+  - time: Days 10–11
+    locationName: Neer waterfall
+    description: "A waterfall in the forest above Rishikesh, and a good overnight stop on the way to the higher mountains. A steep trail climbs along the falls to a series of pools, and glamping sites higher up the slope have infinity pools, walking trails and sunset views."
+    activities: |-
+      - Avoid arriving on a weekend. Traffic from Delhi can leave the roads around Rishikesh at a standstill for hours.
+      - Hike up along the waterfall to the higher pools.
+      - Stay a night at one of the glamping sites above the falls.
+      - Talk to the other guests. Many are young people from Delhi on a weekend away, and they are happy to talk about family life, arranged marriages and religion.
+    location:
+      - 78.3381985
+      - 30.1742659
+    gallery:
+      - media: india-himalaya-neer-waterfall-01.jpg
+      - media: india-himalaya-neer-waterfall-03.jpg
+      - media: india-himalaya-neer-waterfall-04.jpg
+      - media: india-himalaya-neer-waterfall-05.jpg
+      - media: india-himalaya-neer-waterfall-06.jpg
+      - media: india-himalaya-neer-waterfall-07.jpg
+      - media: india-himalaya-neer-waterfall-09.jpg
+      - media: india-himalaya-neer-waterfall-11.jpg
+      - media: india-himalaya-neer-waterfall-12.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: taxi
+      departureMethod: taxi
+  - time: Days 12–17
+    locationName: Kuari Pass & Pangarchula summit
+    description: "One of the most rewarding treks in Uttarakhand, starting near Joshimath. Kuari Pass is a gentle viewpoint at roughly 3,800 m, with a wide panorama of the high Himalaya including Nanda Devi. Pangarchula is a real summit at about 4,600 m, climbed in the dark so you reach the top at sunrise. This trek works best fully organised: private transport, permits, a cook at base camp and an English-speaking guide."
+    activities: |-
+      - Book through a local trekking agency, which arranges the taxi, permits, guide, cook and medical check.
+      - Spend two nights in a mountain village guesthouse before the trek to acclimatise.
+      - Climb to base camp and walk to Kuari Pass the next day as a warm-up. It is about 5 km to the viewpoint.
+      - Start the summit climb around half past midnight to reach the top of Pangarchula around 6:30, in time for sunrise.
+      - Pace yourself on the descent. The sun warms you quickly, but it is a long way down on tired legs.
+    location:
+      - 79.5612607
+      - 30.5555752
+    gallery:
+      - media: india-himalaya-kuari-pass-02.jpg
+      - media: india-himalaya-kuari-pass-05.jpg
+      - media: india-himalaya-kuari-pass-07.jpg
+      - media: india-himalaya-kuari-pass-09.jpg
+      - media: india-himalaya-kuari-pass-10.jpg
+      - media: india-himalaya-kuari-pass-11.jpg
+      - media: india-himalaya-kuari-pass-16.jpg
+      - media: india-himalaya-kuari-pass-20.jpg
+      - media: india-himalaya-kuari-pass-21.jpg
+      - media: india-himalaya-kuari-pass-24.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: taxi
+      departureMethod: taxi
+  - time: Days 18–19
+    locationName: Chopta
+    description: "A high meadow area surrounded by rhododendron forest, often called the Switzerland of Uttarakhand. After a hard trek, Chopta is a quiet place to recover: mountain huts with hot water and wifi, easy day hikes and roadside dhabas with views."
+    activities: |-
+      - Book a hut with hot water and wifi to rest, do laundry and plan the rest of the trip.
+      - Take the day hike to Deoria Tal, a small lake that mirrors the Chaukhamba peaks on a clear morning.
+      - Stop at the dhabas along the road for tea and views.
+      - If you still have energy, Chopta is also the starting point for the walk up to Tungnath temple and Chandrashila peak.
+    location:
+      - 79.1276368
+      - 30.5222448
+    gallery:
+      - media: india-himalaya-chopta-01.jpg
+      - media: india-himalaya-chopta-04.jpg
+      - media: india-himalaya-chopta-06.jpg
+      - media: india-himalaya-chopta-07.jpg
+      - media: india-himalaya-chopta-09.jpg
+      - media: india-himalaya-chopta-11.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: taxi
+      departureMethod: public_bus
+  - time: Day 20
+    locationName: Rishikesh
+    description: "The town on the Ganges where the river leaves the mountains. Rishikesh is a pilgrimage centre and the self-styled yoga capital of the world. Most travel in the region passes through it, and it is a pleasant place to end a mountain trip, with good vegetarian food, cafés and the evening ceremony on the river."
+    activities: |-
+      - Stay in the centre, close to the river and the suspension bridges.
+      - Attend the Ganga aarti, the evening fire ceremony on the riverbank.
+      - Find the town's most popular lassi spot and work your way through the vegetarian restaurants.
+      - Fly onwards from Dehradun's airport, which lies between Dehradun and Rishikesh.
+    location:
+      - 78.2916193
+      - 30.1086537
+    gallery:
+      - media: india-himalaya-rishikesh-01.jpg
+      - media: india-himalaya-rishikesh-02.jpg
+      - media: india-himalaya-rishikesh-03.jpg
+      - media: india-himalaya-rishikesh-04.jpg
+    blockType: fullDay
+    transportation:
+      arrivalMethod: public_bus
+      departureMethod: flight

@@ -1,6 +1,9 @@
 name: Belize
 countryCode: BLZ
 capital: Belmopan
+capitalLocation:
+  - -88.759
+  - 17.251
 currency: BZD
 currencyName: Belize Dollar
 officialLanguages:

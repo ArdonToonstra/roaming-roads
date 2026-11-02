@@ -32,7 +32,7 @@ importantPreparations: |-
   - **Food.** Cooking is simple and meat-centred, and vegetarian options outside the capital can be bare. Nothing is spicy, whatever the waiter warns you about. The Italian-style ice cream is exceptional.
   - **Mate** is shared from a single cup passed around the group, and drinking it is a conversation ritual as much as a drink. Accept when it is offered.
 itinerary:
-  - time: Day 1
+  - time: Days 1–2
     locationName: Tigre
     description: "Tigre sits at the northern edge of Buenos Aires, where the Paraná Delta breaks into hundreds of channels lined with stilt houses. Almost everything here moves by boat, and the whole delta is a weekend escape for city residents — somewhere between a canal village and a holiday park spread over several kilometres of water. The slow pace makes it a good first stop for shaking off a long-haul flight and the four-hour time difference."
     activities: |-
@@ -52,7 +52,7 @@ itinerary:
     transportation:
       arrivalMethod: flight
       departureMethod: public_bus
-  - time: Day 2
+  - time: Days 3–4
     locationName: Capilla del Señor
     description: "A small country town in the Pampas roughly 80 km from Buenos Aires, reachable by regional train. There is effectively no tourism here — no English, few services and very little onward public transport — which is exactly the appeal. A handful of rural hotels on the edge of town offer pools and outdoor kitchens at prices well below the capital."
     activities: |-
@@ -70,7 +70,7 @@ itinerary:
     transportation:
       arrivalMethod: train
       departureMethod: taxi
-  - time: Day 3
+  - time: Day 5
     locationName: San Antonio de Areco
     description: "The best-known gaucho town in the Pampas, on the Areco river about 110 km from Buenos Aires. Colonial streets, silversmith workshops and a gaucho museum make it the classic overnight stop in the countryside, and unlike its neighbours it has a direct bus connection to the capital."
     activities: |-
@@ -91,7 +91,7 @@ itinerary:
     transportation:
       arrivalMethod: public_bus
       departureMethod: public_bus
-  - time: Day 4
+  - time: Days 6–9
     locationName: Buenos Aires (1/2)
     description: "Buenos Aires is enormous and rewards a long stay — eight days is a sensible minimum and still feels short. A good way to structure the first half: enrol in a week of group Spanish classes in the morning and use the afternoons to work through the neighbourhoods one at a time."
     activities: |-
@@ -113,7 +113,7 @@ itinerary:
     blockType: fullDay
     transportation:
       arrivalMethod: public_bus
-  - time: Day 5
+  - time: Days 10–13
     locationName: Buenos Aires (2/2)
     description: "The second half of a Buenos Aires stay is where the city's own rhythms surface: grill houses, long park afternoons, the painted docks of La Boca, Malbec, and the milongas where tango is danced rather than performed. Tango began as a dance between rival immigrant communities, and the neighbourhood halls still feel closer to that than the dinner shows do."
     activities: |-

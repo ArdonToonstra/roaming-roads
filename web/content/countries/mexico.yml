@@ -2,6 +2,9 @@ name: Mexico
 countryCode: MEX
 continent: north_america
 capital: Mexico City
+capitalLocation:
+  - -99.1332
+  - 19.4326
 currency: MXN
 currencyName: Mexican Peso
 officialLanguages:

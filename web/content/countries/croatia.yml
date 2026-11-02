@@ -1,6 +1,9 @@
 name: Croatia
 countryCode: HRV
 capital: Zagreb
+capitalLocation:
+  - 15.9819
+  - 45.815
 currency: EUR
 currencyName: Euro
 officialLanguages:

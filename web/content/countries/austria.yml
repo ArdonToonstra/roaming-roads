@@ -1,5 +1,8 @@
 name: Austria
 countryCode: AUT
 capital: Vienna
+capitalLocation:
+  - 16.3738
+  - 48.2082
 currency: EUR
 currencyName: Euro

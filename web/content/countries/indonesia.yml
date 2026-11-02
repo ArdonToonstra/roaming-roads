@@ -1,5 +1,8 @@
 name: Indonesia
 countryCode: IDN
 capital: Jakarta
+capitalLocation:
+  - 106.8456
+  - -6.2088
 currency: IDR
 currencyName: Indonesian Rupiah

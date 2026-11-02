@@ -1,6 +1,9 @@
 name: Madeira (Portugal)
 countryCode: PRT
 capital: Funchal
+capitalLocation:
+  - -16.9241
+  - 32.6669
 currency: EUR
 currencyName: Euro
 officialLanguages:
