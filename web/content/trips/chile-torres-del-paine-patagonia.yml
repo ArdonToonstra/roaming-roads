@@ -27,7 +27,7 @@ importantPreparations: |-
   - **Expect four seasons a day.** Wind, rain and snow are normal in summer. A storm-proof tent and a warm bag are not optional.
   - **Bring a backup water filter.** Most streams in the park are drinkable, but losing your only filter on the bus in is a real risk.
 itinerary:
-  - time: Day 1
+  - time: Days 1–3
     locationName: Punta Arenas
     description: "The largest city in Chilean Patagonia and the practical place to stock up. Not much to look at, but it has the best supermarkets and gear shops for hundreds of kilometres."
     activities: |-
@@ -43,7 +43,7 @@ itinerary:
     transportation:
       arrivalMethod: public_bus
       departureMethod: public_bus
-  - time: Day 2
+  - time: Day 4
     locationName: Puerto Natales
     description: "The last town before the park, about two hours from the entrance. Most trekkers spend a day here packing and weighing bags."
     activities: |-
@@ -56,7 +56,7 @@ itinerary:
     blockType: fullDay
     transportation:
       departureMethod: public_bus
-  - time: Day 3
+  - time: Day 5
     locationName: "Día 1: Central to Serón"
     description: "A gentle opening stage through a wide valley, good for settling into the pack weight. The bus ride in crosses open steppe with guanacos, rheas and flamingos along the roadside."
     activities: |-
@@ -74,7 +74,7 @@ itinerary:
     transportation:
       arrivalMethod: public_bus
       departureMethod: walking
-  - time: Day 4
+  - time: Day 6
     locationName: "Día 2: Serón to Dickson"
     description: "About 18 km further up the valley, with the mountains finally coming into view. Eating through the heaviest food early makes a noticeable difference."
     activities: |-
@@ -88,7 +88,7 @@ itinerary:
       - media: chile-step04-dia-2-seron---dickson-torres-del-paine-02.jpg
       - media: chile-step04-dia-2-seron---dickson-torres-del-paine-03.jpg
     blockType: fullDay
-  - time: Day 5
+  - time: Day 7
     locationName: "Día 3: Dickson to Los Perros"
     description: "The landscape turns alpine, with hanging glaciers above and cold rivers crossing the trail. Los Perros is the most basic camp on the circuit and the staging point for the pass."
     activities: |-
@@ -102,7 +102,7 @@ itinerary:
       - media: chile-step05-dia-3-dickson---los-perros-torres-del-paine-01.jpg
       - media: chile-step05-dia-3-dickson---los-perros-torres-del-paine-02.jpg
     blockType: fullDay
-  - time: Day 6
+  - time: Day 8
     locationName: "Día 4: Los Perros to Grey"
     description: "The hardest and the best stage: over the John Gardner pass, then a long descent alongside Glaciar Grey. Around nine hours of walking."
     activities: |-
@@ -119,7 +119,7 @@ itinerary:
       - media: chile-step06-dia-4-los-perros---grey-torres-del-paine-03.jpg
       - media: chile-step06-dia-4-los-perros---grey-torres-del-paine-04.jpg
     blockType: fullDay
-  - time: Day 7
+  - time: Day 9
     locationName: "Día 5: Grey to Paine Grande"
     description: "A short stage along the lake and a chance to recover after the pass. Paine Grande is the best equipped camp on the route."
     activities: |-
@@ -133,7 +133,7 @@ itinerary:
       - media: chile-step07-dia-5-grey---paine-grande-torres-del-paine-01.jpg
       - media: chile-step07-dia-5-grey---paine-grande-torres-del-paine-03.jpg
     blockType: fullDay
-  - time: Day 8
+  - time: Day 10
     locationName: "Día 6: Paine Grande to Francés"
     description: "23 km into the middle arm of the W, with a 1,368 m climb to the viewpoint. The busiest part of the park, though the lower trail still crosses forest burned in a 2011 fire started by a careless camper."
     activities: |-
@@ -149,7 +149,7 @@ itinerary:
       - media: chile-step08-dia-6-paine-grande---frances-torres-del-paine-04.jpg
       - media: chile-step08-dia-6-paine-grande---frances-torres-del-paine-05.jpg
     blockType: fullDay
-  - time: Day 9
+  - time: Day 11
     locationName: "Día 7: Francés to Central"
     description: "A steep, undulating stage back toward the park entrance. Camp choice matters here, since it sets how long the final morning will be."
     activities: |-
@@ -165,7 +165,7 @@ itinerary:
       - media: chile-step09-dia-7-frances---central-torres-del-paine-04.jpg
       - media: chile-step09-dia-7-frances---central-torres-del-paine-05.jpg
     blockType: fullDay
-  - time: Day 10
+  - time: Day 12
     locationName: "Día 8: Las Torres"
     description: "The final climb to the three towers, the most famous view in Patagonia. Starting in the dark means having the viewpoint almost to yourself."
     activities: |-
@@ -181,7 +181,7 @@ itinerary:
     blockType: fullDay
     transportation:
       departureMethod: public_bus
-  - time: Day 11
+  - time: Day 12
     locationName: Puerto Natales
     description: "Back in town for a shower, laundry and a real meal. From here the usual routes are north up the Carretera Austral or a flight out of Punta Arenas."
     activities: |-

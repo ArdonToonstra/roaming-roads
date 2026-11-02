@@ -1,0 +1,61 @@
+title: Slow Days in Goa
+status: published
+category:
+  - backpacking
+  - culinary
+description: "A week of beach time to close a long India trip. North Goa has old Portuguese-colonial houses, lush gardens and sunset beaches. South Goa is quieter, with beach huts, river kayaking and jungle walks. In the hot season the days follow a simple routine: an early-morning activity, a long siesta, and back out once the heat breaks."
+period: April 2026
+budget:
+  currency: EUR
+  perPerson: true
+activities: |-
+  Beaches and sunsets
+
+  Spice farm tour
+
+  Cooking workshops
+
+  River kayaking
+
+  Jungle walks
+added: "2026-11-02"
+countries:
+  - india
+importantPreparations: |-
+  - **Heat.** By late April temperatures reach the mid-thirties with high humidity. Plan activities for early morning and late afternoon, and pick a room with air conditioning.
+  - **End of season.** The monsoon arrives in early June, and many beach shacks and huts close from May until the autumn. In late April it is quiet and cheap, but not everything is open.
+  - **Beer is back.** Goa has a relaxed attitude to alcohol compared with much of India, and cold beer is easy to find again after the dry towns of the north.
+  - **Negotiate.** Kayak rentals and other small activities are often priced on the spot. Agree on the price and on exactly what you get (duration, route) before you set off.
+  - **Getting around.** Distances between the beaches are small but public transport is limited. Taxis and rented scooters are the usual way to get around.
+itinerary:
+  - time: Days 1–3
+    locationName: Anjuna (North Goa)
+    description: "Anjuna was once the centre of Goa's hippie scene and is now a relaxed beach village with a famous flea market and some of the best sunsets on the coast. Nearby, old Portuguese-colonial houses have been turned into guesthouses and small hotels with gardens and pools, good places to wind down after weeks on the road."
+    activities: |-
+      - Stay in a colonial-style guesthouse with a garden and a pool, a cool retreat from the heat.
+      - Watch the sunset from one of the beaches around Anjuna and Vagator, with a cold beer.
+      - Book a spice farm tour inland: a guided walk through the plantation (including cashew trees, whose nuts grow outside the fruit), birdwatching, a hands-on Goan cooking session and a big traditional lunch.
+      - Take the first days slowly. The jump to mid-thirties temperatures takes some getting used to.
+    location:
+      - 73.7399644
+      - 15.5819474
+    blockType: fullDay
+    transportation:
+      arrivalMethod: flight
+      departureMethod: taxi
+  - time: Days 4–7
+    locationName: Agonda (South Goa)
+    description: "A long, quiet beach in the south, lined with wooden beach huts and backed by jungle-covered hills. Agonda is calmer than the north and a good base for slow mornings on the water and walks into the hinterland."
+    activities: |-
+      - Stay in a beach hut right on the sand.
+      - Rent a kayak at sunrise and paddle up one of the backwaters. Kingfishers and monkeys are common sightings. Check how far the river is navigable first, because some channels end after a few minutes.
+      - Join a Goan cooking workshop to learn the curries and take the recipes home.
+      - Hike through the jungle to a waterfall in the hills. It is a hot walk, so start early and bring plenty of water, but the swim at the end is worth it.
+      - Keep the middle of the day for the beach or a siesta in the air conditioning.
+    location:
+      - 73.9882421
+      - 15.0411042
+    blockType: fullDay
+    transportation:
+      arrivalMethod: taxi
+      departureMethod: flight

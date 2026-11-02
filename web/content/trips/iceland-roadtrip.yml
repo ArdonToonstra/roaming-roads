@@ -1,9 +1,370 @@
-title: Roadtrip through Icelands wonders
-status: coming_soon
+title: Roadtrip through Iceland's wonders
+status: published
+category:
+  - road_trip
+  - hiking
 coverImage: kirkjufellsfoss_iceland.avif
+description: "Ten days by rental car along Iceland's south coast, through the eastern fjords and across the north, and back to Reykjavík. The route takes in fresh lava fields on Reykjanes, the Golden Circle, black-sand beaches around Vík, a guided hike on Vatnajökull, the geothermal landscapes around Mývatn and whale watching from Húsavík. Late August and early September is a good window: the summer crowds are thinning, the roads are still easy, and the nights are getting dark again."
+period: August–September 2026
 budget:
   currency: EUR
   perPerson: true
+activities: |-
+  Road trip
+
+  Waterfalls and canyons
+
+  Volcanoes and lava caves
+
+  Glacier hiking
+
+  Hot springs
+
+  Whale watching
 added: "2025-12-29"
 countries:
   - iceland
+importantPreparations: |-
+  - **Book early.** Accommodation along the Ring Road is limited and fills up months ahead, especially in the east and around Mývatn. Fix your overnight stops first and build the route around them.
+  - **Car.** A normal car is fine for the Ring Road and every stop on this route. You only need a 4x4 for the F-roads in the highlands. Take gravel and windscreen protection on the insurance, because loose stones are common.
+  - **Wind.** Gusts can rip a car door out of your hand. Park facing the wind and hold the door with both hands.
+  - **Check conditions daily.** Use vedur.is for weather, umferdin.is for road conditions and safetravel.is for warnings, including volcanic activity on the Reykjanes peninsula.
+  - **Don't stop on the road.** Use the parking areas for photos. Driving off-road is illegal and heavily fined, and speed cameras are common.
+  - **Costs.** Iceland is expensive. Shop at the Bónus and Krónan supermarkets and picnic, because restaurant meals add up fast. Tap water is excellent. Many sights now charge a parking fee, usually paid by app or QR code.
+  - **Fuel.** Petrol stations are unstaffed in rural areas and often need a card with a PIN. Fill up whenever the tank is half empty in the east and north.
+  - **Clothing.** Weather changes several times a day. Bring layers, a waterproof jacket and trousers, and proper hiking shoes. Bring swimwear too, for the hot pools.
+itinerary:
+  - locationName: Fagradalsfjall volcano
+    description: Fresh lava fields close to the airport.
+    activities: |-
+      The Reykjanes peninsula has erupted repeatedly since 2021. Fagradalsfjall's lava fields from 2021–2023 are a short drive from Keflavík airport, so they make an easy first stop after landing. Several marked trails lead to viewpoints over the young, black lava.
+
+      - Check safetravel.is before you go: activity has moved to the Sundhnúkur craters near Grindavík, and some areas can be closed.
+      - Stay on the marked paths. Fresh lava can be hollow and sharp, and gases collect in hollows.
+    connectionType: route
+    location:
+      - -22.2494335
+      - 63.8838027
+    blockType: waypoint
+    transportation:
+      arrivalMethod: flight
+  - locationName: Krýsuvíkurberg cliffs
+    description: Bird cliffs on the wild south coast of Reykjanes.
+    activities: |-
+      A long line of sea cliffs where thousands of seabirds nest in summer. A gravel track leads from the main road to the cliff edge.
+
+      - The track is rough but passable with a normal car if you drive slowly.
+      - Most of the puffins have left by late August, but the cliffs and the surf are worth it on their own.
+    connectionType: route
+    location:
+      - -22.1421882
+      - 63.8351531
+    blockType: waypoint
+  - locationName: Arnarker lava cave
+    description: A lava tube you can explore without a guide.
+    activities: |-
+      Arnarker is a lava tube near Þorlákshöfn that you can visit on your own. You climb down through the collapsed entrance into a large cave with lava formations.
+
+      - Bring a headlamp, gloves and solid shoes. The entrance is a scramble over rocks and the floor is uneven.
+      - It is cold and often icy inside, even in summer.
+    connectionType: route
+    location:
+      - -21.4205342
+      - 63.9334612
+    blockType: waypoint
+  - time: Day 1
+    locationName: Hveragerði
+    description: "A small town built on a geothermal field, with steaming vents in the gardens and greenhouses heated by the ground. It is a good first night, close to both Reykjanes and the Golden Circle."
+    activities: |-
+      - Hike up the Reykjadalur valley to bathe in the hot river. It is about 3–4 km each way from the parking area above town.
+      - Walk the geothermal park in town.
+      - Stock up on groceries before you set off on the Ring Road.
+    location:
+      - -21.1868303
+      - 63.9975943
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+  - locationName: Þingvellir National Park
+    description: The rift valley between two continents.
+    activities: |-
+      Þingvellir sits in the rift where the North American and Eurasian plates pull apart. It was also the meeting place of Iceland's parliament, the Alþingi, founded in 930. Today it is a UNESCO World Heritage site.
+
+      - Walk through the Almannagjá gorge along the edge of the North American plate.
+      - Snorkel or dive in Silfra, a fissure of glacial water with visibility of more than 100 m. Book it in advance.
+    connectionType: route
+    location:
+      - -21.0819412
+      - 64.2786082
+    blockType: waypoint
+  - locationName: Geysir & Strokkur
+    description: The geyser that erupts every few minutes.
+    activities: |-
+      The geothermal area that gave the word "geyser" to the world. Geysir itself is mostly quiet now, but Strokkur erupts every five to ten minutes, shooting water up to around 20 m high.
+
+      - Stand upwind, or you will get wet.
+      - Free to visit. There is a paid car park across the road.
+    connectionType: route
+    location:
+      - -20.2117565
+      - 64.3127262
+    blockType: waypoint
+  - locationName: Gullfoss
+    description: The great two-tiered waterfall of the Golden Circle.
+    activities: |-
+      The Hvítá river drops in two steps into a deep, narrow canyon. Paths lead to viewpoints above the falls and along the edge.
+
+      - Bring a waterproof jacket for the lower path, which is close to the spray.
+    connectionType: route
+    location:
+      - -20.1495557
+      - 64.314452
+    blockType: waypoint
+  - locationName: Kerið crater
+    description: A volcanic crater lake with red walls.
+    activities: |-
+      A collapsed crater with red and black walls around a turquoise lake. A path runs around the rim and down to the water. It takes half an hour.
+
+      - There is a small entrance fee.
+    connectionType: route
+    location:
+      - -20.8690085
+      - 64.0249635
+    blockType: waypoint
+  - time: Day 2
+    locationName: Eyjafjöll (Skarðshlíð)
+    description: "Farms at the foot of the Eyjafjöll mountains, under the Eyjafjallajökull ice cap, whose eruption grounded flights across Europe in 2010. It is a practical and scenic base for the south coast, between Seljalandsfoss and Skógafoss."
+    activities: |-
+      - Stay at one of the farm guesthouses along the Ring Road below the mountains.
+      - Use it as a base for the day trip to Vík and the black-sand beaches.
+    location:
+      - -19.5672361
+      - 63.5237363
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+  - time: Day 3
+    locationName: Vík
+    description: "The southernmost village in Iceland, with a red-roofed church on the hill above black-sand beaches and the Mýrdalsjökull ice cap behind it. It has the only real shops and restaurants on this stretch of coast."
+    activities: |-
+      - Walk up to the church for the view over the village and the sea stacks.
+      - Eat or shop here. Between Vík and Kirkjubæjarklaustur there is very little.
+    location:
+      - -19.0054737
+      - 63.4188166
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+  - locationName: Reynisfjara, Reynisdrangar & Hálsanefshellir
+    description: Black sand, basalt columns and sea stacks.
+    activities: |-
+      Reynisfjara is the famous black-sand beach west of Vík. Basalt columns rise at the end of the beach around the Hálsanefshellir cave, and the Reynisdrangar sea stacks stand just offshore.
+
+      - **Take the warning signs seriously.** Sneaker waves reach far up the beach without warning and have killed visitors. Never turn your back on the sea, and stay well above the waterline.
+    connectionType: side_trip
+    location:
+      - -19.0304694
+      - 63.3991408
+    blockType: waypoint
+  - locationName: Sólheimasandur plane wreck
+    description: A US Navy plane on a black-sand plain.
+    activities: |-
+      A US Navy DC-3 crash-landed on the sand here in 1973, and its fuselage has stayed on the plain ever since. Everyone on board survived.
+
+      - The walk from the car park takes about an hour each way over flat, featureless sand. A shuttle bus runs it too.
+      - Go early or late in the day for fewer people and better light.
+    connectionType: route
+    location:
+      - -19.3544968
+      - 63.4533356
+    blockType: waypoint
+  - locationName: Seljavallalaug
+    description: An old swimming pool built into a mountain valley.
+    activities: |-
+      One of Iceland's oldest swimming pools, built in 1923 against the valley wall and filled by a hot spring. The water is warm rather than hot.
+
+      - About 20 minutes' walk from the parking area, partly through a stream bed.
+      - The changing rooms are basic. Leave them as clean as you found them.
+    connectionType: side_trip
+    location:
+      - -19.6693416
+      - 63.5734339
+    blockType: waypoint
+  - locationName: Skógafoss
+    description: A 60 m curtain of water right next to the road.
+    activities: |-
+      One of the biggest waterfalls in Iceland. On sunny days a rainbow often hangs in the spray.
+
+      - Climb the stairs beside the falls to the viewpoint at the top.
+      - Follow the trail upstream for a series of smaller waterfalls. It is the start of the Fimmvörðuháls trek.
+    connectionType: route
+    location:
+      - -19.4949498
+      - 63.5495018
+    blockType: waypoint
+  - time: Day 4
+    locationName: Kirkjubæjarklaustur
+    description: "A small village between the lava fields and the black sands of the south coast, and the last proper stop before the long, empty stretch to Skaftafell. It makes a good base for the glacier hike the next day."
+    activities: |-
+      - Walk through Fjaðrárgljúfur, a winding moss-green canyon just west of the village.
+      - Look at Kirkjugólf, a natural floor of basalt columns that looks man-made.
+      - Fill up the tank and buy food here.
+    location:
+      - -18.0418591
+      - 63.793065
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+  - locationName: Vatnajökull glacier hike
+    description: Crampons on Iceland's largest ice cap.
+    activities: |-
+      Vatnajökull covers about 8% of Iceland. Guided hikes on its outlet glaciers, mostly from Skaftafell, take you across ice ridges, crevasses and meltwater channels.
+
+      - Only walk on the ice with a certified guide. Crampons, a harness and an ice axe are included.
+      - Book in advance and wear waterproof hiking boots.
+    connectionType: route
+    location:
+      - -17.2282428
+      - 64.2419555
+    blockType: waypoint
+  - locationName: Jökulsárlón & Diamond Beach
+    description: Icebergs on black sand.
+    activities: |-
+      Icebergs break off the glacier into the Jökulsárlón lagoon and drift out to sea. Pieces of ice then wash back onto the black-sand beach across the road, which is why it is called Diamond Beach.
+
+      - Stop at the lagoon first. Seals often swim near the outlet.
+      - From here the drive to the east fjords is long. Allow 4–5 hours to Seyðisfjörður.
+    connectionType: route
+    location:
+      - -16.1784043
+      - 64.0506408
+    blockType: waypoint
+  - time: Days 5–6
+    locationName: Seyðisfjörður
+    description: "An artsy village at the end of a deep fjord in the east, reached over a high mountain pass from Egilsstaðir. It has colourful wooden houses, a rainbow-painted street leading to the blue church, cafés and galleries. The ferry from Denmark docks here."
+    activities: |-
+      - Stay two nights to rest after the long drive from the south.
+      - Walk the rainbow street to the blue church, then up along the waterfalls on the hillside.
+      - Drive the Fjarðarheiði pass slowly, because fog and low cloud are common at the top.
+    location:
+      - -14.0049009
+      - 65.2598475
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+  - locationName: Stuðlagil canyon
+    description: A canyon of basalt columns.
+    activities: |-
+      A canyon lined with tall basalt columns along a blue-green glacier river. It only appeared after a hydropower dam upstream lowered the river.
+
+      - The west side has an easy viewpoint with stairs.
+      - The east side needs a longer walk but brings you down to the river among the columns, and it is worth the extra time.
+    connectionType: side_trip
+    location:
+      - -15.4248871
+      - 65.129296
+    blockType: waypoint
+  - locationName: Dettifoss & Selfoss
+    description: The most powerful waterfall in Europe.
+    activities: |-
+      Dettifoss pours a huge volume of grey glacial water into the Jökulsárgljúfur canyon. Selfoss lies a short walk upstream.
+
+      - Approach from the west side (road 862). It is paved and the closest to the falls.
+      - Expect spray and wind. The paths can be slippery.
+    connectionType: side_trip
+    location:
+      - -16.3859094
+      - 65.8219303
+    blockType: waypoint
+  - locationName: Hverir
+    description: Boiling mud and steaming vents.
+    activities: |-
+      A geothermal field below Námafjall, with orange and yellow ground, bubbling mud pots and roaring steam vents, and a strong smell of sulphur.
+
+      - Stay on the marked paths. The ground crust can be thin and the mud is boiling hot.
+      - Walk up Námafjall for a view over the whole area.
+    connectionType: route
+    location:
+      - -16.809182
+      - 65.6411434
+    blockType: waypoint
+  - time: Day 7
+    locationName: Mývatn (Skútustaðagígar)
+    description: "Lake Mývatn lies in an active volcanic area full of craters, lava formations and hot water. At Skútustaðagígar on the south shore, a short trail loops around pseudocraters, which formed when lava flowed over wet ground and the steam blasted through it."
+    activities: |-
+      - Walk the pseudocrater loop at Skútustaðagígar.
+      - Visit the lava labyrinth at Dimmuborgir and climb the Hverfjall crater.
+      - Soak at the Mývatn Nature Baths at the end of the day.
+      - Bring a head net in summer: the lake's name means "midge lake".
+    location:
+      - -17.033733
+      - 65.5713765
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+  - time: Day 8
+    locationName: Húsavík
+    description: "A harbour town on Skjálfandi bay and the whale-watching capital of Iceland. Humpback whales are seen on most trips in summer and early autumn, and sometimes blue whales too."
+    activities: |-
+      - Go whale watching. The traditional oak boats are the classic choice, and the fast RIBs get closer.
+      - Visit the Whale Museum by the harbour.
+      - Soak in the GeoSea baths on the cliffs above town, overlooking the bay.
+    location:
+      - -17.3410402
+      - 66.0433168
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: rental_car
+  - locationName: Tjörnes cliffs
+    description: Coastal cliffs on the way to Öxarfjörður.
+    activities: |-
+      The road north of Húsavík follows the Tjörnes peninsula, with cliffs dropping into the sea and views over Öxarfjörður bay. There are several pull-outs along the way.
+    connectionType: route
+    location:
+      - -16.9798203
+      - 66.1675592
+    blockType: waypoint
+  - locationName: Hljóðaklettar
+    description: Twisted basalt in Vatnajökull National Park.
+    activities: |-
+      The "echo rocks" in the Jökulsárgljúfur canyon are the remains of volcanic plugs, with basalt columns twisted in every direction. A short loop trail winds between them.
+
+      - Combine it with Ásbyrgi, a horseshoe-shaped canyon nearby.
+    connectionType: route
+    location:
+      - -16.5423457
+      - 65.9329579
+    blockType: waypoint
+  - locationName: Kolugljúfur canyon
+    description: A hidden canyon on the long drive back.
+    activities: |-
+      A narrow gorge in Víðidalur, where the Kolufossar waterfalls drop into the canyon. Few people stop here, and it is a good break on the long drive from the north to Reykjavík. It is named after a troll woman from local legend.
+
+      - It is a short detour from the Ring Road on a gravel road.
+    connectionType: route
+    location:
+      - -20.5040369
+      - 65.2148575
+    blockType: waypoint
+  - time: Day 9
+    locationName: Reykjavík
+    description: "The world's northernmost capital is small, walkable and lively, with colourful houses, the Hallgrímskirkja church on the hill and the Harpa concert hall on the harbour. It is a relaxed end to the trip, and close to the airport."
+    activities: |-
+      - Take the lift up Hallgrímskirkja for the view over the city.
+      - Walk along the harbour to Harpa.
+      - Soak in one of the city's geothermal pools, where locals go to talk, or at the Sky Lagoon on the coast.
+      - Return the car and take the bus to Keflavík airport, about 45 minutes away.
+    location:
+      - -21.9422367
+      - 64.145981
+    blockType: fullDay
+    transportation:
+      arrivalMethod: rental_car
+      departureMethod: flight

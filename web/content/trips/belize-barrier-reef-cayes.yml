@@ -27,7 +27,7 @@ importantPreparations: |-
   - **Plan around the heat.** It is intense year round, so do anything active early or late.
   - **Book diving on Ambergris, not Caye Caulker.** The bigger island has the established shops and easier reef access.
 itinerary:
-  - time: Day 1
+  - time: Days 1–2
     locationName: Caye Caulker
     description: "A small, car-free island whose official motto is go slow, which the heat enforces regardless. Best approached with no itinerary at all."
     activities: |-
@@ -47,7 +47,7 @@ itinerary:
     transportation:
       arrivalMethod: boat
       departureMethod: boat
-  - time: Day 2
+  - time: Days 3–6
     locationName: Ambergris Caye
     description: "The larger and far more developed island, closer to a resort town than a backpacker stop, where everyone moves by golf cart. The diving is the reason to come."
     activities: |-

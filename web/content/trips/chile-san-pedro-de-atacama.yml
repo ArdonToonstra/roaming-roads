@@ -113,7 +113,7 @@ itinerary:
       - media: chile-step30-lagunas-antiplatos-spda-06.jpg
       - media: chile-step30-lagunas-antiplatos-spda-07.jpg
     blockType: fullDay
-  - time: Day 5
+  - time: Days 5–6
     locationName: Laguna Cejar and Devil's Throat
     description: "A salt lake on the edge of the Salar de Atacama where the water is dense enough to float in, paired with a canyon trail that gets dangerously hot by late morning."
     activities: |-
@@ -130,7 +130,7 @@ itinerary:
       - media: chile-step31-laguna-cejardevils-throat-spda-04.jpg
       - media: chile-step31-laguna-cejardevils-throat-spda-05.jpg
     blockType: fullDay
-  - time: Day 6
+  - time: Day 7
     locationName: Fingerrocks and Cerro Toco
     description: "Camping at 4,500 m among wind-carved rock pillars, with guanacos and vizcachas around the tent. The staging point for Cerro Toco at 5,600 m, if you have the permit."
     activities: |-

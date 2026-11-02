@@ -1,5 +1,5 @@
 title: Lake Atitlán, Volcanoes and Maya Ruins
-status: draft
+status: published
 category:
   - backpacking
   - hiking
@@ -32,7 +32,7 @@ importantPreparations: |-
   - **Lanchas are the transport around Lake Atitlán.** Boats between the villages are frequent and cheap, so village hopping is easy.
   - **Pack layers.** The highlands are mild by day and cold at night, and genuinely cold on the volcano.
 itinerary:
-  - time: Day 1
+  - time: Days 1–2
     locationName: Antigua Guatemala
     description: "A colonial town ringed by volcanoes, with a mild climate and a dense cafe and restaurant scene. The standard first stop and the launch point for the Acatenango climb."
     activities: |-
@@ -57,7 +57,7 @@ itinerary:
     transportation:
       arrivalMethod: flight
       departureMethod: tour_bus
-  - time: Day 2
+  - time: Days 3–5
     locationName: "Lake Atitlán: Eagle's Nest Retreat"
     description: "Multi-day yoga retreats on the slopes above Lake Atitlán, with a shala looking straight out over the water. A common four-day stop on the route around the lake."
     activities: |-
@@ -78,7 +78,7 @@ itinerary:
     transportation:
       arrivalMethod: tour_bus
       departureMethod: boat
-  - time: Day 3
+  - time: Day 6
     locationName: San Juan La Laguna
     description: "The weaving village on Lake Atitlán, known for natural dyes and women's cooperatives. Small, bright and covered in murals."
     activities: |-
@@ -101,7 +101,7 @@ itinerary:
     transportation:
       arrivalMethod: boat
       departureMethod: boat
-  - time: Day 4
+  - time: Days 7–9
     locationName: Panajachel and Chichicastenango
     description: "Panajachel is the lake's transport hub and the easiest base for reaching the Sunday market at Chichicastenango, the largest in Guatemala."
     activities: |-
@@ -121,7 +121,7 @@ itinerary:
     transportation:
       arrivalMethod: boat
       departureMethod: tour_bus
-  - time: Day 5
+  - time: Days 10–11
     locationName: Acatenango and Fuego Volcanoes
     description: "An overnight climb up Acatenango to a camp facing Fuego, one of the most active volcanoes in the world. Around 1,200 m of steep ascent, with eruptions audible and visible through the night."
     activities: |-
@@ -140,7 +140,7 @@ itinerary:
     transportation:
       arrivalMethod: tour_bus
       departureMethod: tour_bus
-  - time: Day 6
+  - time: Days 12–13
     locationName: Semuc Champey
     description: "A natural monument of stepped limestone pools above a river, deep in jungle. The viewpoint above gives the classic shot, the pools themselves are the reward."
     activities: |-
@@ -158,7 +158,7 @@ itinerary:
     transportation:
       arrivalMethod: tour_bus
       departureMethod: tour_bus
-  - time: Day 7
+  - time: Days 14–15
     locationName: Tikal National Park
     description: "One of the largest Maya cities, deep in the jungle of the Petén. Flores, a small island town on a lake, is the usual base for two nights."
     activities: |-
