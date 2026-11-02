@@ -1,6 +1,9 @@
 name: Iceland
 countryCode: ISL
 capital: Reykjavik
+capitalLocation:
+  - -21.9426
+  - 64.1466
 currency: ISK
 currencyName: Icelandic Krona
 bestTimeToVisit:

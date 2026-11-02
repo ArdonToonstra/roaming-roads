@@ -1,6 +1,9 @@
 name: Slovenia
 countryCode: SVN
 capital: Ljubljana
+capitalLocation:
+  - 14.5058
+  - 46.0569
 currency: EUR
 currencyName: Euro
 officialLanguages:

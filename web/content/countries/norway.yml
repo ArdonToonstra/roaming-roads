@@ -1,6 +1,9 @@
 name: Norway
 countryCode: NOR
 capital: Oslo
+capitalLocation:
+  - 10.7522
+  - 59.9139
 currency: NOK
 currencyName: Norwegian Krone
 officialLanguages:

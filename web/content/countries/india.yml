@@ -1,6 +1,9 @@
 name: India
 countryCode: IND
 capital: New Delhi
+capitalLocation:
+  - 77.209
+  - 28.6139
 currency: INR
 currencyName: Indian Rupee
 bestTimeToVisit:

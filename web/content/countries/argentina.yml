@@ -1,6 +1,9 @@
 name: Argentina
 countryCode: ARG
 capital: Buenos Aires
+capitalLocation:
+  - -58.3816
+  - -34.6037
 currency: ARS
 currencyName: Argentine Peso
 officialLanguages:

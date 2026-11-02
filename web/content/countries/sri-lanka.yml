@@ -1,6 +1,9 @@
 name: Sri Lanka
 countryCode: LKA
 capital: Colombo
+capitalLocation:
+  - 79.8612
+  - 6.9271
 currency: LKR
 currencyName: Sri Lankan Rupee
 officialLanguages:

@@ -1,4 +1,7 @@
 name: Singapore
 countryCode: SGP
 capital: Singapore
+capitalLocation:
+  - 103.8198
+  - 1.3521
 currency: SGD

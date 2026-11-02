@@ -1,6 +1,9 @@
 name: Chile
-countryCode: CGL
+countryCode: CHL
 capital: Santiago
+capitalLocation:
+  - -70.6693
+  - -33.4489
 currency: CLP
 currencyName: Chilean Peso
 officialLanguages:

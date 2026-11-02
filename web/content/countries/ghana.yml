@@ -1,5 +1,8 @@
 name: Ghana
 countryCode: GHA
 capital: Accra
+capitalLocation:
+  - -0.187
+  - 5.6037
 currency: GHS
 currencyName: Cedi

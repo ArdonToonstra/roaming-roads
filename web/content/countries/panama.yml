@@ -1,4 +1,7 @@
 name: Panama
 countryCode: PAN
 capital: Panama City
+capitalLocation:
+  - -79.5199
+  - 8.9824
 currency: USD

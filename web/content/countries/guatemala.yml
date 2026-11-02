@@ -1,6 +1,9 @@
 name: Guatemala
 countryCode: GTM
 capital: Guatemala City
+capitalLocation:
+  - -90.5069
+  - 14.6349
 currency: GTQ
 currencyName: Guatemalan Quetzal
 officialLanguages:

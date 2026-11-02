@@ -1,6 +1,9 @@
 name: Nicaragua
 countryCode: NIC
 capital: Managua
+capitalLocation:
+  - -86.2362
+  - 12.115
 currency: NIO
 currencyName: Córdoba
 officialLanguages:

@@ -1,6 +1,9 @@
 name: Jordan
 countryCode: JOR
 capital: Amman
+capitalLocation:
+  - 35.9284
+  - 31.9454
 currency: JOD
 currencyName: Jordanian Dinar
 officialLanguages:

@@ -6,7 +6,7 @@ import { Country } from '@/types/content';
 import { notFound } from 'next/navigation';
 import { getImageUrl } from '@/lib/images';
 // Removed embedded map + itinerary; now lives under /journey subpage
-import MountSmallOverview from '@/components/mountSmallOverview';
+import TripSchematicMap from '@/components/TripSchematicMap';
 import RichText from '@/components/RichText';
 import FeaturedAccommodations from '@/components/FeaturedAccommodations';
 
@@ -158,23 +158,8 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                     </h3>
                   </div>
                   
-                  {/* Large Map with Hover CTA */}
-                  <div className="relative group cursor-pointer mb-8">
-                    <Link href={`/trips/${trip.slug || trip.id}/steps`}>
-                      <div className="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 min-h-[500px]">
-                        <MountSmallOverview trip={trip} />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-20 pointer-events-none">
-                          <div className="text-center">
-                            <p className="text-white text-2xl font-heading font-bold mb-2">
-                              View Step-by-Step
-                            </p>
-                            <p className="text-white/90 text-lg" style={{ fontFamily: 'Lato, sans-serif' }}>
-                              Explore the complete itinerary
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
+                  <div className="rounded-2xl overflow-hidden shadow-lg mb-8">
+                    <TripSchematicMap trip={trip} />
                   </div>
 
                   {/* Itinerary List */}
@@ -187,6 +172,7 @@ export default async function TripDetailPage({ params }: TripPageProps) {
                           return (
                             <li key={index} className="flex justify-between items-start gap-3 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
                               <span className="text-gray-800 font-medium flex-1" style={{ fontFamily: 'Lato, sans-serif' }}>
+                                <span className="inline-flex items-center justify-center w-6 h-6 mr-2 rounded-full text-xs font-bold text-white" style={{ backgroundColor: '#F57D50' }}>{index + 1}</span>
                                 {fullDay.locationName}
                               </span>
                               {fullDay.time && (
