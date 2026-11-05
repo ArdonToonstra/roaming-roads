@@ -45,8 +45,6 @@ itinerary:
       - -23.282454951
     gallery:
       - media: chile-step27-laguna-baltinache-spda-01.jpg
-      - media: chile-step27-laguna-baltinache-spda-02.jpg
-      - media: chile-step27-laguna-baltinache-spda-03.jpg
       - media: chile-step27-laguna-baltinache-spda-04.jpg
       - media: chile-step27-laguna-baltinache-spda-05.jpg
       - media: chile-step27-laguna-baltinache-spda-06.jpg
@@ -87,7 +85,6 @@ itinerary:
       - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-02.jpg
       - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-03.jpg
       - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-04.jpg
-      - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-05.jpg
       - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-06.jpg
       - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-07.jpg
       - media: chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-09.jpg
@@ -107,9 +104,7 @@ itinerary:
     gallery:
       - media: chile-step30-lagunas-antiplatos-spda-01.jpg
       - media: chile-step30-lagunas-antiplatos-spda-02.jpg
-      - media: chile-step30-lagunas-antiplatos-spda-03.jpg
       - media: chile-step30-lagunas-antiplatos-spda-04.jpg
-      - media: chile-step30-lagunas-antiplatos-spda-05.jpg
       - media: chile-step30-lagunas-antiplatos-spda-06.jpg
       - media: chile-step30-lagunas-antiplatos-spda-07.jpg
     blockType: fullDay
@@ -142,10 +137,8 @@ itinerary:
       - -67.425460625
       - -23.03115739
     gallery:
-      - media: chile-step32-fingerrocks-cerro-toco-spda-01.jpg
       - media: chile-step32-fingerrocks-cerro-toco-spda-02.jpg
       - media: chile-step32-fingerrocks-cerro-toco-spda-03.jpg
-      - media: chile-step32-fingerrocks-cerro-toco-spda-04.jpg
       - media: chile-step32-fingerrocks-cerro-toco-spda-05.jpg
     blockType: fullDay
   - time: Day 7

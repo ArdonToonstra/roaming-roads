@@ -34,10 +34,6 @@ IMG_0749.JPEG:
   width: 1536
   height: 2048
   mimeType: image/jpeg
-IMG_0761.JPEG:
-  width: 2048
-  height: 1536
-  mimeType: image/jpeg
 IMG_0764.JPEG:
   width: 1536
   height: 2048
@@ -694,10 +690,6 @@ IMG_3538.JPEG:
   width: 2048
   height: 1536
   mimeType: image/jpeg
-IMG_3550.JPEG:
-  width: 2048
-  height: 1536
-  mimeType: image/jpeg
 IMG_3575.JPEG:
   width: 2048
   height: 1536
@@ -1268,10 +1260,6 @@ chile-step09-dia-7-frances---central-torres-del-paine-01.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg
-chile-step09-dia-7-frances---central-torres-del-paine-02.jpg:
-  width: 960
-  height: 1417
-  mimeType: image/jpeg
 chile-step09-dia-7-frances---central-torres-del-paine-03.jpg:
   width: 960
   height: 1280
@@ -1304,10 +1292,6 @@ chile-step14-cochamo---basecamp-02.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg
-chile-step14-cochamo---basecamp-03.jpg:
-  width: 1280
-  height: 960
-  mimeType: image/jpeg
 chile-step15-cochamo---valley-01.jpg:
   width: 960
   height: 1280
@@ -1337,10 +1321,6 @@ chile-step16-hornopiren-03.jpg:
   height: 1280
   mimeType: image/jpeg
 chile-step16-hornopiren-04.jpg:
-  width: 960
-  height: 1280
-  mimeType: image/jpeg
-chile-step16-hornopiren-05.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg
@@ -1404,10 +1384,6 @@ chile-step20-cerro-castillo-06.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg
-chile-step20-cerro-castillo-07.jpg:
-  width: 960
-  height: 1280
-  mimeType: image/jpeg
 chile-step20-cerro-castillo-08.jpg:
   width: 960
   height: 1280
@@ -1444,10 +1420,6 @@ chile-step22-pucon-03.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg
-chile-step22-pucon-04.jpg:
-  width: 960
-  height: 1280
-  mimeType: image/jpeg
 chile-step22-pucon-05.jpg:
   width: 960
   height: 1280
@@ -1463,10 +1435,6 @@ chile-step23-conguillio-nationaal-park-02.jpg:
 chile-step23-conguillio-nationaal-park-03.jpg:
   width: 960
   height: 1280
-  mimeType: image/jpeg
-chile-step24-familie-reunie-olmue-03.jpg:
-  width: 1707
-  height: 960
   mimeType: image/jpeg
 chile-step24-familie-reunie-olmue-05.jpg:
   width: 960
@@ -1536,14 +1504,6 @@ chile-step27-laguna-baltinache-spda-01.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg
-chile-step27-laguna-baltinache-spda-02.jpg:
-  width: 1280
-  height: 960
-  mimeType: image/jpeg
-chile-step27-laguna-baltinache-spda-03.jpg:
-  width: 960
-  height: 1280
-  mimeType: image/jpeg
 chile-step27-laguna-baltinache-spda-04.jpg:
   width: 960
   height: 1280
@@ -1592,10 +1552,6 @@ chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-04.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg
-chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-05.jpg:
-  width: 960
-  height: 1280
-  mimeType: image/jpeg
 chile-step29-el-tatio-geyservalle-de-cactus-muerte-spda-06.jpg:
   width: 960
   height: 1280
@@ -1620,17 +1576,9 @@ chile-step30-lagunas-antiplatos-spda-02.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg
-chile-step30-lagunas-antiplatos-spda-03.jpg:
-  width: 1280
-  height: 960
-  mimeType: image/jpeg
 chile-step30-lagunas-antiplatos-spda-04.jpg:
   width: 960
   height: 1280
-  mimeType: image/jpeg
-chile-step30-lagunas-antiplatos-spda-05.jpg:
-  width: 1280
-  height: 960
   mimeType: image/jpeg
 chile-step30-lagunas-antiplatos-spda-06.jpg:
   width: 960
@@ -1660,19 +1608,11 @@ chile-step31-laguna-cejardevils-throat-spda-05.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg
-chile-step32-fingerrocks-cerro-toco-spda-01.jpg:
-  width: 960
-  height: 1280
-  mimeType: image/jpeg
 chile-step32-fingerrocks-cerro-toco-spda-02.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg
 chile-step32-fingerrocks-cerro-toco-spda-03.jpg:
-  width: 960
-  height: 1280
-  mimeType: image/jpeg
-chile-step32-fingerrocks-cerro-toco-spda-04.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg
@@ -2552,10 +2492,6 @@ iceland-seljavallalaug-07.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg
-iceland-skogafoss-01.jpg:
-  width: 960
-  height: 1280
-  mimeType: image/jpeg
 iceland-skogafoss-04.jpg:
   width: 1280
   height: 960
@@ -2633,10 +2569,6 @@ iceland-hverir-03.jpg:
   height: 1280
   mimeType: image/jpeg
 iceland-skutustadagigar-01.jpg:
-  width: 960
-  height: 1280
-  mimeType: image/jpeg
-iceland-skutustadagigar-02.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg
@@ -2721,10 +2653,6 @@ india-goa-anjuna-09.jpg:
   height: 1280
   mimeType: image/jpeg
 india-goa-anjuna-10.jpg:
-  width: 960
-  height: 1280
-  mimeType: image/jpeg
-india-goa-anjuna-11.jpg:
   width: 960
   height: 1280
   mimeType: image/jpeg

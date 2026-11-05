@@ -225,8 +225,6 @@ itinerary:
     location:
       - 77.516772486
       - 42.160263571
-    gallery:
-      - media: IMG_3550.JPEG
     blockType: waypoint
   - time: 1 dag - 1 night
     locationName: Jaichy Agro Yurt Camp

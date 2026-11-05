@@ -251,7 +251,6 @@ itinerary:
       - -19.4949498
       - 63.5495018
     gallery:
-      - media: iceland-skogafoss-01.jpg
       - media: iceland-skogafoss-04.jpg
       - media: iceland-skogafoss-05.jpg
     blockType: waypoint
@@ -380,7 +379,6 @@ itinerary:
       - 65.5713765
     gallery:
       - media: iceland-skutustadagigar-01.jpg
-      - media: iceland-skutustadagigar-02.jpg
     blockType: fullDay
     transportation:
       arrivalMethod: rental_car
